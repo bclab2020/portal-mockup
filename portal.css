@@ -1101,3 +1101,26 @@ iframe#measurementIframe {
     box-shadow: 0 0 10px rgba(0, 191, 255, 0.4);
 }
 
+/* Vertical Theme Overrides */
+body.theme-sports {
+    --accent-blue: #00bfff;
+    --accent-teal: #64ffda;
+    --accent-purple: #8a2be2;
+    background: radial-gradient(circle at top right, #0d1e40 0%, var(--bg-primary) 70%);
+}
+
+body.theme-health {
+    --accent-blue: #10b981; /* trustworthy mint green */
+    --accent-teal: #059669; 
+    --accent-purple: #34d399;
+    background: radial-gradient(circle at top right, #072a1a 0%, var(--bg-primary) 70%);
+}
+
+body.theme-beauty {
+    --accent-blue: #ff758f; /* premium rose gold / pink */
+    --accent-teal: #ffd6ff; 
+    --accent-purple: #c77dff;
+    background: radial-gradient(circle at top right, #33081a 0%, var(--bg-primary) 70%);
+}
+
+

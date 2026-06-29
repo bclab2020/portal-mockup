@@ -6,19 +6,19 @@
     <title>CORE CONNECT - 統合スポーツ・健康・美容プラットフォーム</title>
     <link rel="stylesheet" href="portal.css">
 </head>
-<body>
+<body class="theme-sports">
 
     <!-- Header & Navigation -->
     <header>
         <div class="logo">
-            CORE CONNECT <span class="logo-badge">Sports Portal</span>
+            CORE CONNECT <span class="logo-badge" id="portalLogoBadge">Sports Portal</span>
         </div>
         <nav class="nav-tabs">
-            <button class="tab-btn active" data-tab="sports">🏃 スポーツポータル</button>
+            <button class="tab-btn active" data-tab="sports">🏃 スポーツ</button>
+            <button class="tab-btn" data-tab="health">🏥 健康診断</button>
+            <button class="tab-btn" data-tab="beauty">✨ 美容骨格</button>
             <button class="tab-btn" data-tab="community">💬 コミュニティ</button>
             <button class="tab-btn" data-tab="lab">🧪 測定ラボ</button>
-            <button class="tab-btn disabled-btn" title="開発中 (第2フェーズ)" style="cursor: not-allowed;">🏥 健康診断 (準備中)</button>
-            <button class="tab-btn disabled-btn" title="開発中 (第3フェーズ)" style="cursor: not-allowed;">✨ 美容骨格 (準備中)</button>
         </nav>
     </header>
 
@@ -170,7 +170,235 @@
             </div>
         </div>
 
-        <!-- 2. COMMUNITY TAB -->
+        <!-- 2. HEALTH PORTAL TAB -->
+        <div id="healthPanel" class="tab-panel">
+            <div class="portal-grid">
+                
+                <!-- Left Feed: Articles -->
+                <div class="feed-section">
+                    <div class="feed-header">
+                        <h2>📰 最新ヘルスケア＆予防医学ナレッジ</h2>
+                        <p>健康寿命の延伸、生活習慣病予防、アライメントの健康影響に関する最新情報</p>
+                    </div>
+
+                    <!-- Horizontal Sponsor Ad: Health -->
+                    <div class="sponsor-banner-horizontal" onclick="alert('協賛スポンサー：サントリー ウェルネス特設ページへ移行します！')">
+                        <div class="sponsor-badge">SPONSORED AD</div>
+                        <div class="sponsor-banner-content">
+                            <div class="sponsor-logo-box">
+                                <span style="color:var(--accent-blue); font-weight:900;">SUNTORY</span> | Wellness
+                            </div>
+                            <div class="sponsor-banner-text">
+                                <h4 class="sponsor-headline">【科学が証明する若々しさ】セサミンEXでアクティブな関節・血流ケア</h4>
+                                <p class="sponsor-subline">40代以降の運動機能維持に。体幹ブレを抑え、歩行アライメントを内側から円滑にサポートします。CORE CONNECT限定特別モニター募集中。</p>
+                            </div>
+                            <button class="sponsor-banner-btn">詳細はこちら</button>
+                        </div>
+                    </div>
+                    
+                    <div class="article-list">
+                        <!-- Article 1: CS-30 Test -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">ロコモ予防</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>健康寿命を延ばす：立ち上がりテスト（CS-30）によるロコモ判定</h3>
+                                    <p>30秒間の椅子立ち上がりテストは、下肢の運動機能や将来の転倒リスクを測るための国際的な指標です。AIカメラによる姿勢動作追跡で、ご自宅で手軽に運動能力をチェックしてみましょう。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 3分</span>
+                                        <span>✍️ 理学療法士 田中</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('dyn_flex_fwd')">
+                                        📸 動作チェックをAIで測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 2: Visceral Fat and Posture -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">生活習慣</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>隠れメタボ・内臓下垂を防ぐ「骨盤ニュートラル」の健康効果</h3>
+                                    <p>骨盤が後傾すると内臓が押し下げられ、下腹部がぽっこり出るだけでなく、消化吸収効率の低下や基礎代謝の悪化を招きます。正しい骨盤アライメント（傾き角）を測定し、生活習慣病を予防しましょう。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 4分</span>
+                                        <span>✍️ 内科医師 渡辺</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('l_side')">
+                                        📸 骨盤傾きアライメントを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar Widgets -->
+                <div class="side-widgets">
+                    <!-- Widget: Health Advice -->
+                    <div class="widget">
+                        <h3>🏥 パーソナル健康指導</h3>
+                        <div class="mb-20" style="font-size:12px; color:var(--text-secondary); line-height: 1.5;">
+                            測定された姿勢・動揺データから、高血圧やメタボ予防、腰痛防止に適した個別ストレッチ・食事法をAIが推薦します。
+                        </div>
+                        <button class="btn-quick-start" onclick="switchTab('lab')">
+                            <span class="rec-badge"></span> 健康状態チェックへ
+                        </button>
+                    </div>
+
+                    <!-- Widget: Sponsored Challenge -->
+                    <div class="widget challenge-widget" style="border-color: rgba(16, 185, 129, 0.3); background: linear-gradient(180deg, var(--bg-card) 0%, rgba(16, 185, 129, 0.03) 100%);">
+                        <h3>🏆 健康増進協賛チャレンジ</h3>
+                        <div class="challenge-card">
+                            <div class="ad-badge" style="background:var(--accent-blue); color:#000;">協賛: TANITA</div>
+                            <div class="challenge-banner" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300');">
+                                <span class="challenge-brand">体組成計</span>
+                            </div>
+                            <div class="challenge-title">毎日測定・体幹バランス＆基礎代謝キープチャレンジ</div>
+                            <button class="challenge-btn" style="background:linear-gradient(135deg, var(--accent-blue) 0%, #10b981 100%);" onclick="alert('健康チャレンジに参加しました！体組成データとアライメントデータを連動させて健康ポイントを獲得しましょう。')">チャレンジに参加する</button>
+                        </div>
+                    </div>
+
+                    <!-- Side Ad: Health Drink -->
+                    <div class="widget ad-widget" style="border-color: rgba(52, 211, 153, 0.15);">
+                        <div class="ad-badge" style="background:var(--accent-blue); color:#000;">協賛: 明治 VAAM</div>
+                        <div class="ad-body">
+                            <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1470468969717-61d5d548a04b?auto=format&fit=crop&q=80&w=300');"></div>
+                            <div class="ad-title">ヴァームスマートフィットウォーター</div>
+                            <div class="ad-desc">カラダを動かすことで脂肪の燃焼を高める独自のアミノ酸（ARF）配合。アライメントチェック運動時の水分補給に最適です。</div>
+                            <button class="ad-btn" style="background:var(--accent-blue); color:#000;" onclick="alert('明治VAAM 特設ECページへ移行します！')">特別割引で購入する</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 3. BEAUTY PORTAL TAB -->
+        <div id="beautyPanel" class="tab-panel">
+            <div class="portal-grid">
+                
+                <!-- Left Feed: Articles -->
+                <div class="feed-section">
+                    <div class="feed-header">
+                        <h2>📰 最新エステ・美容骨格＆姿勢ボディメイク</h2>
+                        <p>美姿勢キープ、骨格スタイル診断、スタイルアップのためのアライメント科学</p>
+                    </div>
+
+                    <!-- Horizontal Sponsor Ad: Beauty -->
+                    <div class="sponsor-banner-horizontal" style="border-color: rgba(255, 117, 143, 0.25); box-shadow: 0 0 15px rgba(255, 117, 143, 0.08);" onclick="alert('協賛スポンサー：資生堂 エリクシール特別キャンペーンページへ移行します！')">
+                        <div class="sponsor-badge" style="background:linear-gradient(45deg, var(--accent-blue), var(--accent-purple)); color:#fff;">SPONSORED AD</div>
+                        <div class="sponsor-banner-content">
+                            <div class="sponsor-logo-box">
+                                <span style="color:var(--accent-blue); font-weight:900;">資生堂</span> | ELIXIR
+                            </div>
+                            <div class="sponsor-banner-text">
+                                <h4 class="sponsor-headline">【骨格から美しさを整える】姿勢アライメントと美しき表情・ハリ肌ケア</h4>
+                                <p class="sponsor-subline">猫背や首の前傾はデコルテ・顔の巡りを阻害し、くすみやハリ低下の原因に。美姿勢アライメントから理想のエイジングケアを提案。</p>
+                            </div>
+                            <button class="sponsor-banner-btn" style="background:var(--accent-blue); color:#fff;">詳細はこちら</button>
+                        </div>
+                    </div>
+                    
+                    <div class="article-list">
+                        <!-- Article 1: Bone types -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge" style="background:var(--accent-blue); color:#000;">骨格診断</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>3大骨格スタイルタイプ（ストレート・ウェーブ・ナチュラル）と美脚度アセスメント</h3>
+                                    <p>骨格タイプによって骨盤の傾きや脂肪・筋肉の付き方の特徴は異なります。姿勢アライメント測定から「O脚・X脚の偏位」を数値化し、あなたに最適な美脚アプローチを見つけましょう。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 3分</span>
+                                        <span>✍️ スタイリスト Rin</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('front')">
+                                        📸 骨格タイプと美脚アライメント測定 <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 2: Esthetic walking -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge" style="background:var(--accent-blue); color:#000;">美ボディ</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>太もも前側の張りを解消する：美歩行と骨盤アライメントの鍵</h3>
+                                    <p>歩くたびに太ももの前側が張ってしまうのは、骨盤の前傾によって反り腰になり、大腿直筋に頼った歩き方をしているからです。美しい歩行アライメントの基準ラインをAIで測定・可視化します。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 4分</span>
+                                        <span>✍️ 美容カイロプラクター 小林</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('l_side')">
+                                        📸 歩行・骨盤アライメントを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar Widgets -->
+                <div class="side-widgets">
+                    <!-- Widget: Beauty Profile -->
+                    <div class="widget">
+                        <h3>✨ 美ボディデザイン</h3>
+                        <div class="mb-20" style="font-size:12px; color:var(--text-secondary); line-height: 1.5;">
+                            AI骨格アライメントデータから、あなたの骨格スタイルに最も似合うアパレルシルエットや骨盤引締めヨガを提案。
+                        </div>
+                        <button class="btn-quick-start" style="background:linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);" onclick="switchTab('lab')">
+                            <span class="rec-badge"></span> 骨格・美脚測定へ
+                        </button>
+                    </div>
+
+                    <!-- Widget: Sponsored Challenge -->
+                    <div class="widget challenge-widget" style="border-color: rgba(255, 117, 143, 0.3); background: linear-gradient(180deg, var(--bg-card) 0%, rgba(255, 117, 143, 0.03) 100%);">
+                        <h3>🏆 美骨格協賛チャレンジ</h3>
+                        <div class="challenge-card">
+                            <div class="ad-badge" style="background:var(--accent-blue); color:#000;">協賛: SlimWalk</div>
+                            <div class="challenge-banner" style="background-image: url('https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&q=80&w=300');">
+                                <span class="challenge-brand">レッグケア</span>
+                            </div>
+                            <div class="challenge-title">14日間・骨盤ケア＆美脚ラインキープチャレンジ</div>
+                            <button class="challenge-btn" style="background:linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);" onclick="alert('美骨格チャレンジにエントリーしました！毎日骨格測定で美アライメントを追跡しましょう！')">チャレンジに参加する</button>
+                        </div>
+                    </div>
+
+                    <!-- Side Ad: Beauty Wear -->
+                    <div class="widget ad-widget" style="border-color: rgba(255, 117, 143, 0.15);">
+                        <div class="ad-badge" style="background:var(--accent-blue); color:#000;">協賛: SlimWalk</div>
+                        <div class="ad-body">
+                            <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=300');"></div>
+                            <div class="ad-title">スリムウォーク 骨盤をきっちり支えるタイツ</div>
+                            <div class="ad-desc">Wの骨盤引き締め設計と段階圧力で、骨盤をきっちり支えて美脚ラインをサポート。おやすみ時のアライメント補正に。</div>
+                            <button class="ad-btn" style="background:var(--accent-blue); color:#000;" onclick="alert('スリムウォーク公式ショップページへ移行します！')">CORE CONNECT限定クーポンで購入</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 4. COMMUNITY TAB -->
         <div id="communityPanel" class="tab-panel">
             <div class="community-grid">
                 

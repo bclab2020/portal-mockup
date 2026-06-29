@@ -13,13 +13,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    let currentVertical = 'sports';
+
     function switchTab(tabId) {
         tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tabId));
         panels.forEach(p => p.classList.toggle('active', p.id === `${tabId}Panel`));
         
+        // Update theme class and logo badge based on the selected vertical portal
+        if (tabId === 'sports' || tabId === 'health' || tabId === 'beauty') {
+            currentVertical = tabId;
+            document.body.className = `theme-${currentVertical}`;
+            
+            const badge = document.getElementById('portalLogoBadge');
+            if (badge) {
+                const names = {
+                    sports: 'Sports Portal',
+                    health: 'Health Portal',
+                    beauty: 'Beauty Portal'
+                };
+                badge.innerText = names[currentVertical];
+            }
+            // Update sidebar ads to match the active vertical context
+            updateLabSidebarAds(currentVertical);
+        }
+
         // Handle iframe focus/trigger
         if (tabId === 'lab') {
             iframe.contentWindow.focus();
+            updateLabSidebarAds(currentVertical);
         }
     }
 
@@ -570,4 +591,107 @@ document.addEventListener('DOMContentLoaded', () => {
 
         dynamicAdSpace.innerHTML = adHtml;
     }
+
+    function updateLabSidebarAds(vertical) {
+        const adSpace = document.getElementById('dynamicAdSpace');
+        const headline = document.querySelector('.ad-headline');
+        const container = document.getElementById('adWidgetContainer');
+        if (!adSpace || !container || !headline) return;
+
+        // Reset classes
+        container.className = 'dynamic-ad-container';
+        headline.innerHTML = `<span></span> スポンサー企業協賛広告枠`;
+
+        let adHtml = '';
+        if (vertical === 'sports') {
+            adHtml = `
+                <!-- Ad 1: Health/Furniture -->
+                <div class="ad-matched-box" style="margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom:15px;">
+                    <span class="matched-pill tilt" style="background:rgba(255,145,0,0.08); border-color:var(--accent-orange); color:var(--accent-orange);">骨盤ケア協賛: StyleKeep</span>
+                    <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1588286840104-8957b029727f?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
+                    <div class="ad-title" style="font-size:12px;">StyleKeep 骨盤サポート高反発クッション</div>
+                    <div class="ad-desc" style="font-size:11px; line-height:1.4;">アライメントの崩れによる腰部・背中への座姿勢負担を軽減する特許取得サポートクッション。</div>
+                    <div class="ad-product-price" style="font-size:13px;">特別価格: ¥5,440</div>
+                </div>
+                
+                <!-- Ad 2: Orthotics/Apparel -->
+                <div class="ad-matched-box" style="margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom:15px;">
+                    <span class="matched-pill sway" style="background:rgba(0,191,255,0.08); border-color:var(--accent-blue); color:var(--accent-blue);">インソール協賛: OrthoFit</span>
+                    <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
+                    <div class="ad-title" style="font-size:12px;">OrthoFit プレミアム・カスタムインソール</div>
+                    <div class="ad-desc" style="font-size:11px; line-height:1.4;">左右荷重バランスを足元から補正し、ランニング時の関節ブレを抑制するカスタムインソール。</div>
+                    <div class="ad-product-price" style="font-size:13px;">特別価格: ¥9,600</div>
+                </div>
+
+                <!-- Ad 3: Sports Apparel -->
+                <div class="ad-matched-box">
+                    <span class="matched-pill" style="background:rgba(138,43,226,0.08); border-color:var(--accent-purple); color:var(--accent-purple);">リカバリー協賛: UNDER ARMOUR</span>
+                    <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
+                    <div class="ad-title" style="font-size:12px;">UA Recovery 段階着圧リカバリータイツ</div>
+                    <div class="ad-desc" style="font-size:11px; line-height:1.4;">運動後のアライメント維持と筋肉疲労の回復を促進する特殊着圧コンプレッション。</div>
+                    <div class="ad-product-price" style="font-size:13px;">販売価格: ¥7,800</div>
+                </div>
+            `;
+        } else if (vertical === 'health') {
+            adHtml = `
+                <!-- Ad 1: Medical/Tech -->
+                <div class="ad-matched-box" style="margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom:15px;">
+                    <span class="matched-pill tilt" style="background:rgba(16,185,129,0.08); border-color:var(--accent-blue); color:var(--accent-blue);">ヘルスケア協賛: OMRON</span>
+                    <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
+                    <div class="ad-title" style="font-size:12px;">OMRON スマート上腕式血圧計</div>
+                    <div class="ad-desc" style="font-size:11px; line-height:1.4;">Bluetooth通信機能搭載。毎日の血圧アライメントを測定し、グラフでスマートに健康管理。</div>
+                    <div class="ad-product-price" style="font-size:13px;">販売価格: ¥9,800</div>
+                </div>
+                
+                <!-- Ad 2: Medical/Scale -->
+                <div class="ad-matched-box" style="margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom:15px;">
+                    <span class="matched-pill sway" style="background:rgba(16,185,129,0.08); border-color:var(--accent-blue); color:var(--accent-blue);">健康測定協賛: TANITA</span>
+                    <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
+                    <div class="ad-title" style="font-size:12px;">TANITA デュアルタイプ体組成計 インナースキャン</div>
+                    <div class="ad-desc" style="font-size:11px; line-height:1.4;">筋肉の「質」を分析する筋質点数を測定。全身のバランス指標を高精度に算出します。</div>
+                    <div class="ad-product-price" style="font-size:13px;">特別価格: ¥14,800</div>
+                </div>
+
+                <!-- Ad 3: Nutrition -->
+                <div class="ad-matched-box">
+                    <span class="matched-pill" style="background:rgba(16,185,129,0.08); border-color:var(--accent-blue); color:var(--accent-blue);">サプリ協賛: ファンケル</span>
+                    <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1470468969717-61d5d548a04b?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
+                    <div class="ad-title" style="font-size:12px;">ファンケル グルコサミン＆コンドロイチン</div>
+                    <div class="ad-desc" style="font-size:11px; line-height:1.4;">毎日のアクティブな一歩をスムーズに。年齢とともに気になる関節可動域の健康をサポート。</div>
+                    <div class="ad-product-price" style="font-size:13px;">販売価格: ¥2,400</div>
+                </div>
+            `;
+        } else if (vertical === 'beauty') {
+            adHtml = `
+                <!-- Ad 1: Beauty Device -->
+                <div class="ad-matched-box" style="margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom:15px;">
+                    <span class="matched-pill tilt" style="background:rgba(255,117,143,0.08); border-color:var(--accent-blue); color:var(--accent-blue);">フェイスケア協賛: ReFa</span>
+                    <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
+                    <div class="ad-title" style="font-size:12px;">ReFa CARAT RAY 美顔ローラー</div>
+                    <div class="ad-desc" style="font-size:11px; line-height:1.4;">プロの手技「ニーディング」を再現。姿勢の歪みによる血流滞留を整え、シャープなフェイスラインへ。</div>
+                    <div class="ad-product-price" style="font-size:13px;">特別価格: ¥21,000</div>
+                </div>
+                
+                <!-- Ad 2: Esthetic Apparel -->
+                <div class="ad-matched-box" style="margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom:15px;">
+                    <span class="matched-pill sway" style="background:rgba(255,117,143,0.08); border-color:var(--accent-blue); color:var(--accent-blue);">レッグケア協賛: スリムウォーク</span>
+                    <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=300'); height: 80px;"></div>
+                    <div class="ad-title" style="font-size:12px;">メディキュット 骨盤サポート骨格タイツ</div>
+                    <div class="ad-desc" style="font-size:11px; line-height:1.4;">寝ながら骨盤アライメントを優しく補正し、翌朝すっきり軽やかな美脚ラインへと整える段階圧力設計。</div>
+                    <div class="ad-product-price" style="font-size:13px;">特別価格: ¥3,200</div>
+                </div>
+
+                <!-- Ad 3: Cosmetics -->
+                <div class="ad-matched-box">
+                    <span class="matched-pill" style="background:rgba(255,117,143,0.08); border-color:var(--accent-blue); color:var(--accent-blue);">スキンケア協賛: ELIXIR</span>
+                    <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
+                    <div class="ad-title" style="font-size:12px;">エリクシール シュペリエル デザインタイムセラム</div>
+                    <div class="ad-desc" style="font-size:11px; line-height:1.4;">表情のベースとなる肌のハリに。アライメントマッサージと併せて豊かなハリ感を与えます。</div>
+                    <div class="ad-product-price" style="font-size:13px;">販売価格: ¥4,950</div>
+                </div>
+            `;
+        }
+        adSpace.innerHTML = adHtml;
+    }
 });
+

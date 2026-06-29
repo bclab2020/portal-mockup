@@ -398,6 +398,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const dynamicAdSpace = document.getElementById('dynamicAdSpace');
     const adHeadline = document.querySelector('.ad-headline');
 
+    let currentMetricsText = '';
+
     // Handle messages coming from the embedded app inside the iframe
     window.addEventListener('message', (event) => {
         // Safe origin checks can be skipped for local sandbox prototype
@@ -416,7 +418,101 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Update Dynamic Ads
             updateDynamicAds(metrics);
+
+            // Populate & Show Posture Report Card & SNS buttons
+            showPostureReportCard(metrics);
         }
+    });
+
+    function showPostureReportCard(metrics) {
+        const reportCard = document.getElementById('postureReportCard');
+        const gradeBadge = document.getElementById('reportGrade');
+        const wbVal = document.getElementById('reportWbVal');
+        const tiltVal = document.getElementById('reportTiltVal');
+        const swayVal = document.getElementById('reportSwayVal');
+        if (!reportCard || !gradeBadge || !wbVal || !tiltVal || !swayVal) return;
+
+        const tilt = metrics.pelvicTilt || 0;
+        const totalWBL = metrics.weightBearing ? metrics.weightBearing.total.L : 50.2;
+        const totalWBR = metrics.weightBearing ? metrics.weightBearing.total.R : 49.8;
+        const wDiff = Math.abs(totalWBL - 50) * 2;
+        const swayArea = metrics.swayMetrics ? metrics.swayMetrics.swayArea : 480;
+
+        // Calculate Grade
+        let grade = 'S';
+        let tiltStatus = '正常';
+        let swayStatus = '正常範囲';
+
+        if (Math.abs(tilt) > 10 || wDiff > 12 || swayArea > 1800) {
+            grade = 'C';
+        } else if (Math.abs(tilt) > 6 || wDiff > 7 || swayArea > 1200) {
+            grade = 'B';
+        } else if (Math.abs(tilt) > 3 || wDiff > 4 || swayArea > 600) {
+            grade = 'A';
+        }
+
+        if (Math.abs(tilt) > 3) {
+            tiltStatus = tilt > 0 ? `骨盤前傾 (${tilt.toFixed(1)}°)` : `骨盤後傾 (${Math.abs(tilt).toFixed(1)}°)`;
+        } else {
+            tiltStatus = `正常 (${tilt.toFixed(1)}°)`;
+        }
+
+        if (swayArea > 1200) {
+            swayStatus = `動揺大 (${swayArea.toFixed(0)}px²)`;
+        } else {
+            swayStatus = `正常範囲 (${swayArea.toFixed(0)}px²)`;
+        }
+
+        gradeBadge.innerText = grade;
+        wbVal.innerText = `L ${totalWBL.toFixed(1)}% : R ${totalWBR.toFixed(1)}%`;
+        tiltVal.innerText = tiltStatus;
+        swayVal.innerText = swayStatus;
+
+        reportCard.style.display = 'block';
+
+        // Prepare sharing text template
+        const modeNames = {
+            dyn_overhead: 'スクワット動作アライメント',
+            l_side: '側面姿勢アライメント',
+            front: '左右荷重バランスチェック',
+            dyn_flex_fwd: '健康動作バランス',
+            default: '姿勢アライメント'
+        };
+        const modeLabel = modeNames[metrics.mode] || '姿勢アライメント';
+        currentMetricsText = `【CORE CONNECT 姿勢測定結果】\n` +
+            `測定項目: ${modeLabel}\n` +
+            `総合判定: Grade 『${grade}』\n` +
+            `・左右荷重比: L ${totalWBL.toFixed(1)}% : R ${totalWBR.toFixed(1)}%\n` +
+            `・骨盤アライメント: ${tiltStatus}\n` +
+            `・重心動揺エリア: ${swayStatus}\n` +
+            `#CORECONNECT #姿勢改善 #アライメント測定`;
+    }
+
+    // Attach Event Listeners to SNS Share Buttons
+    document.getElementById('shareXBtn').addEventListener('click', () => {
+        if (!currentMetricsText) return;
+        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(currentMetricsText)}&url=${encodeURIComponent('https://bclab2020.github.io/portal-mockup/')}`;
+        window.open(url, '_blank');
+    });
+
+    document.getElementById('shareLineBtn').addEventListener('click', () => {
+        if (!currentMetricsText) return;
+        const url = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent('https://bclab2020.github.io/portal-mockup/')}&text=${encodeURIComponent(currentMetricsText)}`;
+        window.open(url, '_blank');
+    });
+
+    document.getElementById('copyReportBtn').addEventListener('click', () => {
+        if (!currentMetricsText) return;
+        navigator.clipboard.writeText(currentMetricsText).then(() => {
+            alert('📋 測定結果テキストをコピーしました！\nLINEや他のSNSにそのまま貼り付けられます。');
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+    });
+
+    document.getElementById('shareInternalBtn').addEventListener('click', () => {
+        switchTab('community');
+        alert('💬 コミュニティへ移動しました。\n最新のデータが添付されていますので、このまま「相談・共有を投稿」ボタンを押して投稿できます！');
     });
 
     // Handle Attach last session manually if it exists in DB

@@ -571,9 +571,49 @@
         <div id="labPanel" class="tab-panel">
             <div class="lab-grid">
                 
-                <!-- Embedded Measurement App Iframe -->
-                <div class="iframe-container">
-                    <iframe id="measurementIframe" src="./mock_app.html" allow="camera;gyroscope;accelerometer"></iframe>
+                <!-- Left Main Section -->
+                <div class="lab-main-section">
+                    <!-- Embedded Measurement App Iframe -->
+                    <div class="iframe-container">
+                        <iframe id="measurementIframe" src="./mock_app.html" allow="camera;gyroscope;accelerometer"></iframe>
+                    </div>
+                    
+                    <!-- Posture Report & SNS Share Card (Displays after measurement) -->
+                    <div id="postureReportCard" class="widget posture-report-card" style="display: none; margin-top: 20px;">
+                        <div class="report-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:15px; margin-bottom:15px;">
+                            <h3 style="margin:0;">📊 姿勢アライメント診断レポート</h3>
+                            <span id="reportGrade" class="report-grade-badge">A</span>
+                        </div>
+                        <div class="report-body">
+                            <div class="report-grid-metrics" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:15px; margin-bottom:20px;">
+                                <div class="metric-item" style="background:var(--bg-glass); border:1px solid var(--border-color); border-radius:10px; padding:12px; text-align:center;">
+                                    <div style="font-size:10px; color:var(--text-secondary); margin-bottom:5px;">左右荷重バランス</div>
+                                    <div id="reportWbVal" style="font-size:14px; font-weight:700; color:var(--text-primary);">L 50.2% : R 49.8%</div>
+                                </div>
+                                <div class="metric-item" style="background:var(--bg-glass); border:1px solid var(--border-color); border-radius:10px; padding:12px; text-align:center;">
+                                    <div style="font-size:10px; color:var(--text-secondary); margin-bottom:5px;">骨盤傾斜角度</div>
+                                    <div id="reportTiltVal" style="font-size:14px; font-weight:700; color:var(--text-primary);">0° (正常)</div>
+                                </div>
+                                <div class="metric-item" style="background:var(--bg-glass); border:1px solid var(--border-color); border-radius:10px; padding:12px; text-align:center;">
+                                    <div style="font-size:10px; color:var(--text-secondary); margin-bottom:5px;">体幹重心動揺エリア</div>
+                                    <div id="reportSwayVal" style="font-size:14px; font-weight:700; color:var(--text-primary);">正常範囲 (480px²)</div>
+                                </div>
+                            </div>
+                            
+                            <div class="sns-share-section" style="border-top:1px solid var(--border-color); padding-top:15px;">
+                                <h4 style="font-size:12px; color:var(--text-primary); margin-bottom:12px; font-weight:700;">📢 測定結果をSNSやコミュニティでシェアしよう！</h4>
+                                <div class="sns-btn-group" style="display:flex; flex-wrap:wrap; gap:10px;">
+                                    <button class="sns-btn x-btn" id="shareXBtn">
+                                        <svg style="width:12px; height:12px; fill:currentColor; vertical-align:middle; margin-right:4px;" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                        Xでポスト
+                                    </button>
+                                    <button class="sns-btn line-btn" id="shareLineBtn">🟢 LINEで送る</button>
+                                    <button class="sns-btn copy-btn" id="copyReportBtn">📋 結果をコピー</button>
+                                    <button class="sns-btn community-share-btn" id="shareInternalBtn">💬 コミュへ添付して相談</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Dynamic Ad Sidebar -->

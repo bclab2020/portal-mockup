@@ -219,75 +219,7 @@
                         </div>
                     </div>
                     
-                    <div class="article-list">
-                        <!-- Curated External Article 1 (Health) -->
-                        <div class="article-card" style="border-style: dashed; border-color: rgba(0,0,0,0.12);">
-                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a?auto=format&fit=crop&q=80&w=400');">
-                                <span class="article-badge" style="background:var(--accent-blue); color:#fff;">ニュース配信</span>
-                            </div>
-                            <div class="article-content">
-                                <div class="article-body">
-                                    <div style="font-size:10px; color:var(--accent-blue); font-weight:700; margin-bottom:5px;">📰 厚生労働省プレスリリース</div>
-                                    <h3>高齢者の転倒・骨折が年々増加、厚生労働省が予防ガイドラインで「身体バランスチェック」の推奨を強化</h3>
-                                    <p>【記事抜粋】厚生労働省の最新の国民健康調査によると、65歳以上の転倒による骨折件数は過去最高を記録。予防ガイドラインでは、自宅で簡単に行える片脚立ちや立ち上がり測定などの身体重心アライメント評価の重要性が指摘されています。</p>
-                                </div>
-                                <div class="article-footer">
-                                    <div class="article-meta">
-                                        <span>⏱️ 外部サイト遷移</span>
-                                        <span>✍️ 出所: 厚生労働省広報</span>
-                                    </div>
-                                    <button class="btn-hook" style="background:transparent; border:1px solid var(--accent-blue); color:var(--accent-blue);" onclick="window.open('https://www.mhlw.go.jp/', '_blank'); alert('著作権遵守：引用元官庁のオリジナルリリース詳細ページ（外部サイト）へ遷移します。')">
-                                        📖 配信元で全文を読む (厚生労働省) <span>↗</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Article 1: CS-30 Test -->
-                        <div class="article-card">
-                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400');">
-                                <span class="article-badge">ロコモ予防</span>
-                            </div>
-                            <div class="article-content">
-                                <div class="article-body">
-                                    <h3>健康寿命を延ばす：立ち上がりテスト（CS-30）によるロコモ判定</h3>
-                                    <p>30秒間の椅子立ち上がりテストは、下肢の運動機能や将来の転倒リスクを測るための国際的な指標です。AIカメラによる姿勢動作追跡で、ご自宅で手軽に運動能力をチェックしてみましょう。</p>
-                                </div>
-                                <div class="article-footer">
-                                    <div class="article-meta">
-                                        <span>⏱️ 所要時間: 3分</span>
-                                        <span>✍️ 理学療法士 田中</span>
-                                    </div>
-                                    <button class="btn-hook" onclick="launchMeasurement('dyn_flex_fwd')">
-                                        📸 動作チェックをAIで測定する <span>▶</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Article 2: Visceral Fat and Posture -->
-                        <div class="article-card">
-                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400');">
-                                <span class="article-badge">生活習慣</span>
-                            </div>
-                            <div class="article-content">
-                                <div class="article-body">
-                                    <h3>隠れメタボ・内臓下垂を防ぐ「骨盤ニュートラル」の健康効果</h3>
-                                    <p>骨盤が後傾すると内臓が押し下げられ、下腹部がぽっこり出るだけでなく、消化吸収効率の低下や基礎代謝の悪化を招きます。正しい骨盤アライメント（傾き角）を測定し、生活習慣病を予防しましょう。</p>
-                                </div>
-                                <div class="article-footer">
-                                    <div class="article-meta">
-                                        <span>⏱️ 所要時間: 4分</span>
-                                        <span>✍️ 内科医師 渡辺</span>
-                                    </div>
-                                    <button class="btn-hook" onclick="launchMeasurement('l_side')">
-                                        📸 骨盤傾きアライメントを測定する <span>▶</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <div id="healthArticleList" class="article-list"></div>
 
                 <!-- Right Sidebar Widgets -->
                 <div class="side-widgets">
@@ -356,75 +288,7 @@
                         </div>
                     </div>
                     
-                    <div class="article-list">
-                        <!-- Curated External Article 1 (Beauty) -->
-                        <div class="article-card" style="border-style: dashed; border-color: rgba(0,0,0,0.12);">
-                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=400');">
-                                <span class="article-badge" style="background:var(--accent-purple); color:#fff;">海外美容誌</span>
-                            </div>
-                            <div class="article-content">
-                                <div class="article-body">
-                                    <div style="font-size:10px; color:var(--accent-blue); font-weight:700; margin-bottom:5px;">🌐 Vogue Aesthetics (NY Edition)</div>
-                                    <h3>ニューヨークのトップモデルが実践する、骨格アライメント調整とリンパ循環・美肌のディープリレーション</h3>
-                                    <p>【AI翻訳抄録】モデル業界で重要視される「立ち姿の垂直アライメント」。姿勢の崩れは頸部リンパ節の圧迫を招き、顔のくすみやターンオーバー遅延の主要因になることが最新美容医学で実証。アライメントケアと美容液導入の相乗効果が注目されています。</p>
-                                </div>
-                                <div class="article-footer">
-                                    <div class="article-meta">
-                                        <span>⏱️ 外部サイト遷移</span>
-                                        <span>✍️ 出所: Vogue Aesthetics誌</span>
-                                    </div>
-                                    <button class="btn-hook" style="background:transparent; border:1px solid var(--accent-blue); color:var(--accent-blue);" onclick="window.open('https://www.vogue.com/', '_blank'); alert('著作権遵守：引用元メディアのオリジナルニュース詳細ページ（外部サイト）へ遷移します。')">
-                                        📖 配信元で全文を読む (Vogue) <span>↗</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Article 1: Bone types -->
-                        <div class="article-card">
-                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=400');">
-                                <span class="article-badge" style="background:var(--accent-blue); color:#000;">骨格診断</span>
-                            </div>
-                            <div class="article-content">
-                                <div class="article-body">
-                                    <h3>3大骨格スタイルタイプ（ストレート・ウェーブ・ナチュラル）と美脚度アセスメント</h3>
-                                    <p>骨格タイプによって骨盤の傾きや脂肪・筋肉の付き方の特徴は異なります。姿勢アライメント測定から「O脚・X脚の偏位」を数値化し、あなたに最適な美脚アプローチを見つけましょう。</p>
-                                </div>
-                                <div class="article-footer">
-                                    <div class="article-meta">
-                                        <span>⏱️ 所要時間: 3分</span>
-                                        <span>✍️ スタイリスト Rin</span>
-                                    </div>
-                                    <button class="btn-hook" onclick="launchMeasurement('front')">
-                                        📸 骨格タイプと美脚アライメント測定 <span>▶</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Article 2: Esthetic walking -->
-                        <div class="article-card">
-                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400');">
-                                <span class="article-badge" style="background:var(--accent-blue); color:#000;">美ボディ</span>
-                            </div>
-                            <div class="article-content">
-                                <div class="article-body">
-                                    <h3>太もも前側の張りを解消する：美歩行と骨盤アライメントの鍵</h3>
-                                    <p>歩くたびに太ももの前側が張ってしまうのは、骨盤の前傾によって反り腰になり、大腿直筋に頼った歩き方をしているからです。美しい歩行アライメントの基準ラインをAIで測定・可視化します。</p>
-                                </div>
-                                <div class="article-footer">
-                                    <div class="article-meta">
-                                        <span>⏱️ 所要時間: 4分</span>
-                                        <span>✍️ 美容カイロプラクター 小林</span>
-                                    </div>
-                                    <button class="btn-hook" onclick="launchMeasurement('l_side')">
-                                        📸 歩行・骨盤アライメントを測定する <span>▶</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <div id="beautyArticleList" class="article-list"></div>
 
                 <!-- Right Sidebar Widgets -->
                 <div class="side-widgets">

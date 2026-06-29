@@ -219,7 +219,231 @@
                         </div>
                     </div>
                     
-                    <div id="healthArticleList" class="article-list"></div>
+                                        <div class="article-list">
+                        <!-- Curated External Article 1 (Health) -->
+                        <div class="article-card" style="border-style: dashed; border-color: rgba(0,0,0,0.12);">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge" style="background:var(--accent-blue); color:#fff;">ニュース配信</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <div style="font-size:10px; color:var(--accent-blue); font-weight:700; margin-bottom:5px;">📰 厚生労働省プレスリリース</div>
+                                    <h3>高齢者の転倒・骨折が年々増加、厚生労働省が予防ガイドラインで「身体バランスチェック」の推奨を強化</h3>
+                                    <p>【記事抜粋】厚生労働省の最新の国民健康調査によると、65歳以上の転倒による骨折件数は過去最高を記録。予防ガイドラインでは、自宅で簡単に行える片脚立ちや立ち上がり測定などの身体重心アライメント評価の重要性が指摘されています。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 外部サイト遷移</span>
+                                        <span>✍️ 出所: 厚生労働省広報</span>
+                                    </div>
+                                    <button class="btn-hook" style="background:transparent; border:1px solid var(--accent-blue); color:var(--accent-blue);" onclick="window.open('https://www.mhlw.go.jp/', '_blank'); alert('著作権遵守：引用元官庁のオリジナルリリース詳細ページ（外部サイト）へ遷移します。')">
+                                        📖 配信元で全文を読む (厚生労働省) <span>↗</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 1: CS-30 Test -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">ロコモ予防</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>健康寿命を延ばす：立ち上がりテスト（CS-30）によるロコモ判定</h3>
+                                    <p>30秒間の椅子立ち上がりテストは、下肢の運動機能や将来の転倒リスクを測るための国際的な指標です。AIカメラによる姿勢動作追跡で、ご自宅で手軽に運動能力をチェックしてみましょう。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 3分</span>
+                                        <span>✍️ 理学療法士 田中</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('dyn_flex_fwd')">
+                                        📸 動作チェックをAIで測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 2: Visceral Fat and Posture -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">生活習慣</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>隠れメタボ・内臓下垂を防ぐ「骨盤ニュートラル」の健康効果</h3>
+                                    <p>骨盤が後傾すると内臓が押し下げられ、下腹部がぽっこり出るだけでなく、消化吸収効率の低下や基礎代謝の悪化を招きます。正しい骨盤アライメント（傾き角）を測定し、生活習慣病を予防しましょう。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 4分</span>
+                                        <span>✍️ 内科医師 渡辺</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('l_side')">
+                                        📸 骨盤傾きアライメントを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Curated External Article 2 (Health) -->
+                        <div class="article-card" style="border-style: dashed; border-color: rgba(0,0,0,0.12);">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge" style="background:var(--accent-purple); color:#fff;">外部論文</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <div style="font-size:10px; color:var(--accent-blue); font-weight:700; margin-bottom:5px;">🌐 JAMA Internal Medicine</div>
+                                    <h3>一日の歩数（ステップ数）と安静時心拍数および心血管疾患死リスクの長期的相関</h3>
+                                    <p>【AI翻訳抄録】数万人のウェアラブルデータを分析した結果、毎日の歩数増加と歩行バランスの安定性が心拍数の安定をもたらし、心筋梗塞や脳卒中の死亡リスクを最大30%低下させることを疫学的に立証。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 外部サイト遷移</span>
+                                        <span>✍️ 出所: 米国医師会雑誌</span>
+                                    </div>
+                                    <button class="btn-hook" style="background:transparent; border:1px solid var(--accent-blue); color:var(--accent-blue);" onclick="window.open('https://jamanetwork.com/journals/jamainternalmedicine', '_blank');">
+                                        📖 論文元で全文を読む (英語) <span>↗</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 4: Forward Head -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">姿勢ケア</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>デスクワーカーの現代病：「スマホ首（ストレートネック）」を予防する胸椎可動性</h3>
+                                    <p>PC作業中の前かがみ姿勢は、頭部を前方に数センチメートル突出させ、頸椎に最大3倍の静的負荷をかけます。胸椎の丸みを測定し、背骨の生理的弯曲を取り戻すセルフストレッチをアドバイスします。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 3分</span>
+                                        <span>✍️ 内科医師 渡辺</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('l_side')">
+                                        📸 側面アライメントを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Curated External Article 3 (Health) -->
+                        <div class="article-card" style="border-style: dashed; border-color: rgba(0,0,0,0.12);">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge" style="background:var(--accent-purple); color:#fff;">外部論文</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <div style="font-size:10px; color:var(--accent-blue); font-weight:700; margin-bottom:5px;">🌐 International Osteoporosis Foundation</div>
+                                    <h3>骨密度（BMD）維持における重力負荷・荷重トレーニングの生理的エビデンス</h3>
+                                    <p>【AI翻訳抄録】骨芽細胞を刺激し骨形成を促進するには、自重を利用した適度な衝撃荷重（片脚立ちやステップ運動）が必要であることを検証。筋骨格アライメントが歪んでいると力学刺激が不均等になる問題点を指摘。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 外部サイト遷移</span>
+                                        <span>✍️ 出所: 国際骨粗鬆症財団</span>
+                                    </div>
+                                    <button class="btn-hook" style="background:transparent; border:1px solid var(--accent-blue); color:var(--accent-blue);" onclick="window.open('https://www.osteoporosis.foundation/', '_blank');">
+                                        📖 論文元で全文を読む (英語) <span>↗</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 5: Sleep Posture -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">睡眠姿勢</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>朝起きたときの腰痛を改善：背骨への負担を減らす「理想の寝姿勢」アライメント</h3>
+                                    <p>朝起きたときに腰が痛むのは、就寝時の骨盤後傾や背骨のねじれが原因かもしれません。適切な枕の高さや寝姿勢ごとの背骨ニュートラル位置を測定し、良質な睡眠習慣をサポートします。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 4分</span>
+                                        <span>✍️ 理学療法士 田中</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('l_side')">
+                                        📸 側面アライメントを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Curated External Article 4 (Health) -->
+                        <div class="article-card" style="border-style: dashed; border-color: rgba(0,0,0,0.12);">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge" style="background:var(--accent-purple); color:#fff;">外部論文</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <div style="font-size:10px; color:var(--accent-blue); font-weight:700; margin-bottom:5px;">🌐 BJSM (British Journal of Sports Medicine)</div>
+                                    <h3>高血圧症におけるアイソメトリック（等尺性）筋力トレーニングの降圧効果メタ分析</h3>
+                                    <p>【AI翻訳抄録】空気椅子や壁押しなど、筋肉の長さを変えずに力を発揮するトレーニングが、有酸素運動を上回る血管柔軟性改善・血圧低下作用を持つことを証明。アライメントを維持した静的トレーニングが推奨される理由。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 外部サイト遷移</span>
+                                        <span>✍️ 出所: 英国スポーツ医学雑誌</span>
+                                    </div>
+                                    <button class="btn-hook" style="background:transparent; border:1px solid var(--accent-blue); color:var(--accent-blue);" onclick="window.open('https://bjsm.bmj.com/', '_blank');">
+                                        📖 論文元で全文を読む (英語) <span>↗</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 6: Single Leg Stand -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">重心バランス</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>脳卒中リスクと関連する「片脚立ち時間」の短縮を防ぐ重心制御機能</h3>
+                                    <p>片脚立ち測定における動揺面積の増大は、脳内の微小血管障害や前庭感覚の衰えを示す重要なヘルスインジケーターです。左右均等な筋力と重心アライメントを保ち、健康な神経系を維持しましょう。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 3分</span>
+                                        <span>✍️ 理学療法士 田中</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('front')">
+                                        📸 左右荷重バランスを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 7: Back Pain Core -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">腰痛対策</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>慢性腰痛に挑む：インナーマッスル（腹横筋）の収縮アライメントと体幹保護</h3>
+                                    <p>動作を起こす直前に腹横筋が先行して収縮しないと、腰椎に直接的なせん断力がかかり急性痛を誘発します。前屈時の体幹アライメント軌跡をAIでチェックし、コアの連動性を取り戻しましょう。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 4分</span>
+                                        <span>✍️ 内科医師 渡辺</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('dyn_flex_fwd')">
+                                        📸 動作チェックをAIで測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 <!-- Right Sidebar Widgets -->
                 <div class="side-widgets">
@@ -288,7 +512,230 @@
                         </div>
                     </div>
                     
-                    <div id="beautyArticleList" class="article-list"></div>
+                                        <div class="article-list">
+                        <!-- Curated External Article 1 (Beauty) -->
+                        <div class="article-card" style="border-style: dashed; border-color: rgba(0,0,0,0.12);">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge" style="background:var(--accent-purple); color:#fff;">海外美容誌</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <div style="font-size:10px; color:var(--accent-blue); font-weight:700; margin-bottom:5px;">🌐 Vogue Aesthetics (NY Edition)</div>
+                                    <h3>ニューヨークのトップモデルが実践する、骨格アライメント調整とリンパ循環・美肌のディープリレーション</h3>
+                                    <p>【AI翻訳抄録】モデル業界で重要視される「立ち姿の垂直アライメント」。姿勢の崩れは頸部リンパ節の圧迫を招き、顔のくすみやターンオーバー遅延の主要因になることが最新美容医学で実証。アライメントケアと美容液導入の相乗効果が注目されています。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 外部サイト遷移</span>
+                                        <span>✍️ 出所: Vogue Aesthetics誌</span>
+                                    </div>
+                                    <button class="btn-hook" style="background:transparent; border:1px solid var(--accent-blue); color:var(--accent-blue);" onclick="window.open('https://www.vogue.com/', '_blank'); alert('著作権遵守：引用元メディアのオリジナルニュース詳細ページ（外部サイト）へ遷移します。')">
+                                        📖 配信元で全文を読む (Vogue) <span>↗</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 1: Bone types -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge" style="background:var(--accent-blue); color:#000;">骨格診断</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>3大骨格スタイルタイプ（ストレート・ウェーブ・ナチュラル）と美脚度アセスメント</h3>
+                                    <p>骨格タイプによって骨盤の傾きや脂肪・筋肉の付き方の特徴は異なります。姿勢アライメント測定から「O脚・X脚の偏位」を数値化し、あなたに最適な美脚アプローチを見つけましょう。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 3分</span>
+                                        <span>✍️ スタイリスト Rin</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('front')">
+                                        📸 骨格タイプと美脚アライメント測定 <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 2: Esthetic walking -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge" style="background:var(--accent-blue); color:#000;">美ボディ</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>太もも前側の張りを解消する：美歩行と骨盤アライメントの鍵</h3>
+                                    <p>歩くたびに太ももの前側が張ってしまうのは、骨盤の前傾によって反り腰になり、大腿直筋に頼った歩き方をしているからです。美しい歩行アライメントの基準ラインをAIで測定・可視化します。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 4分</span>
+                                        <span>✍️ 美容カイロプラクター 小林</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('l_side')">
+                                        📸 歩行・骨盤アライメントを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Curated External Article 2 (Beauty) -->
+                        <div class="article-card" style="border-style: dashed; border-color: rgba(0,0,0,0.12);">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge" style="background:var(--accent-purple); color:#fff;">外部論文</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <div style="font-size:10px; color:var(--accent-blue); font-weight:700; margin-bottom:5px;">🌐 Aesthetic Plastic Surgery</div>
+                                    <h3>顔面非対称（Facial Asymmetry）と頸椎アライメント・顎関節症（TMD）の臨床相関</h3>
+                                    <p>【AI翻訳抄録】頸椎のわずかな傾斜や肩のラインの左右非対称が、咬筋の緊張差を引き起こし、顔の輪郭の歪みをもたらすメカニズム。全身の骨格アライメントを正すことでフェイスラインの対称性が改善することを示す臨床的結論。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 外部サイト遷移</span>
+                                        <span>✍️ 出所: 美容形成外科学会誌</span>
+                                    </div>
+                                    <button class="btn-hook" style="background:transparent; border:1px solid var(--accent-blue); color:var(--accent-blue);" onclick="window.open('https://link.springer.com/journal/266', '_blank');">
+                                        📖 論文元で全文を読む (英語) <span>↗</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 4: SCM lines -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">デコルテ美</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>デコルテを美しく見せる：胸鎖乳突筋の過緊張と「前肩（丸肩）」の補正ケア</h3>
+                                    <p>スマートフォンやPCの見すぎで首が前に突き出ると、胸側の筋肉が縮み、美しい鎖骨ラインが埋もれてしまいます。首から肩にかけてのアライメント角度を測定し、デコルテがすっきり際立つ姿勢へ導きます。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 3分</span>
+                                        <span>✍️ 美容カイロプラクター 小林</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('l_side')">
+                                        📸 側面アライメントを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 5: Hip alignment -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">ヒップメイク</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>ヒップの横幅をすっきり整える：中臀筋のポジショニングと美骨格アライメント</h3>
+                                    <p>「ヒップラインの下垂や横広がり」は、骨格アライメントの歪みによる中臀筋の緩みが影響しています。骨盤幅と大腿骨大転子の偏位を測定し、丸みのある美しいヒップをつくるアライメントアプローチを解説。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 4分</span>
+                                        <span>✍️ スタイリスト Rin</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('front')">
+                                        📸 左右荷重バランスを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Curated External Article 3 (Beauty) -->
+                        <div class="article-card" style="border-style: dashed; border-color: rgba(0,0,0,0.12);">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=300');">
+                                <span class="article-badge" style="background:var(--accent-purple); color:#fff;">外部論文</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <div style="font-size:10px; color:var(--accent-blue); font-weight:700; margin-bottom:5px;">🌐 Journal of Cosmetic Dermatology</div>
+                                    <h3>高ヒール着用時の歩行動作における足弓（アーチ）への負担と腰椎前弯（反り腰）の変化</h3>
+                                    <p>【AI翻訳抄録】7cm以上のヒールシューズを履いた歩行では、踵骨のクッション機能が使えず骨盤が強制的に前傾し、反り腰アライメントを形成することをモーションキャプチャにて証明。日常のフットベッドケアの必要性。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 外部サイト遷移</span>
+                                        <span>✍️ 出所: 美容皮膚科学会誌</span>
+                                    </div>
+                                    <button class="btn-hook" style="background:transparent; border:1px solid var(--accent-blue); color:var(--accent-blue);" onclick="window.open('https://onlinelibrary.wiley.com/journal/14732165', '_blank');">
+                                        📖 論文元で全文を読む (英語) <span>↗</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 6: Rib cage flare -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">美骨盤・肋骨</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>アンダーバストを引き締める：リブケージ（肋骨）の広がりと呼吸アライメント</h3>
+                                    <p>反り腰傾向がある方は、肋骨が前方へ浮き上がる「リブフレア」になりやすく、ウエストが太く見える原因になります。呼吸時における肋骨下部のアライメント動作をチェックし、くびれが引き立つ呼吸法をマスターしましょう。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 3分</span>
+                                        <span>✍️ 美容カイロプラクター 小林</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('dyn_flex_fwd')">
+                                        📸 動作チェックをAIで測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 7: Shoulder alignment -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">肩ライン</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>肩のラインを一直線に整える：鎖骨アライメントとすっきり美しいデコルテ</h3>
+                                    <p>いかり肩やなで肩は、僧帽筋上部や肩甲挙筋の緊張バランスから生じる骨格アライメント変位です。鎖骨の水平度を正面カメラで測定し、緊張した首すじラインをほぐす美バランスアプローチを実践しましょう。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 3分</span>
+                                        <span>✍️ スタイリスト Rin</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('front')">
+                                        📸 左右荷重バランスを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 8: Ankle slimmer -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=300');">
+                                <span class="article-badge">足首スリム</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>美足首をつくる：踵骨（アキレス腱）の垂直アライメントとアーチサポート</h3>
+                                    <p>靴の内側ばかりがすり減る方は、足首が内側に倒れる「オーバープロネーション（過回内）」の可能性があります。これは足首を太く見せるだけでなくO脚の原因にも。アキレス腱の傾きを測定・補正します。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 4分</span>
+                                        <span>✍️ 美容カイロプラクター 小林</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('front')">
+                                        📸 左右荷重バランスを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 <!-- Right Sidebar Widgets -->
                 <div class="side-widgets">

@@ -110,7 +110,7 @@ def main():
         "biomechanics.js",
         "api.js",
         "app.js",
-        "portal.html",
+        "measurement.html",
         "portal.css",
         "portal.js",
         "mock_app.html",

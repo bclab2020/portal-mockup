@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const panels = document.querySelectorAll('.tab-panel');
     const iframe = document.getElementById('measurementIframe');
     
+    let isPremiumUser = false;
+    
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             if (tab.classList.contains('disabled-btn')) return;
@@ -296,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 targetPost.replies.push({
                     author: "ゲストユーザー",
                     avatar: "ゲ",
-                    role: "アスリート",
+                    role: isPremiumUser ? "👑 PREMIUM" : "アスリート",
                     time: "1秒前",
                     content: text
                 });
@@ -314,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 id: Date.now(),
                 author: "ゲストユーザー",
                 avatar: "ゲ",
-                role: "アスリート",
+                role: isPremiumUser ? "👑 PREMIUM" : "アスリート",
                 time: "1秒前",
                 content: text,
                 sharedMetric: sharedMetric,
@@ -497,7 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('shareLineBtn').addEventListener('click', () => {
         if (!currentMetricsText) return;
-        const url = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent('https://bclab2020.github.io/portal-mockup/')}&text=${encodeURIComponent(currentMetricsText)}`;
+        const url = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(currentMetricsText)}&text=${encodeURIComponent(currentMetricsText)}`;
         window.open(url, '_blank');
     });
 
@@ -514,6 +516,83 @@ document.addEventListener('DOMContentLoaded', () => {
         switchTab('community');
         alert('💬 コミュニティへ移動しました。\n最新のデータが添付されていますので、このまま「相談・共有を投稿」ボタンを押して投稿できます！');
     });
+
+    // Premium Subscription Modal Handlers
+    const subscriptionModal = document.getElementById('subscriptionModal');
+    const premiumReportBtn = document.getElementById('premiumReportBtn');
+    const closeSubModalBtn = document.getElementById('closeSubModalBtn');
+    const subStandardBtn = document.getElementById('subStandardBtn');
+    const subPremiumBtn = document.getElementById('subPremiumBtn');
+
+    if (premiumReportBtn) {
+        premiumReportBtn.addEventListener('click', () => {
+            if (isPremiumUser) {
+                // If already premium, let them download the mock report
+                alert('📥 【PREMIUM会員限定ダウンロード】\n「AI姿勢判定に基づく理学療法士直伝・改善運動プログラムPDFレポート」をダウンロードしました！\n（※本番環境では個人の弱点アライメントに合わせたカスタムリハビリトレーニング処方箋PDFが出力されます）');
+            } else {
+                // Open pricing plan modal
+                if (subscriptionModal) subscriptionModal.style.display = 'flex';
+            }
+        });
+    }
+
+    if (closeSubModalBtn) {
+        closeSubModalBtn.addEventListener('click', () => {
+            if (subscriptionModal) subscriptionModal.style.display = 'none';
+        });
+    }
+
+    // Close on overlay click
+    if (subscriptionModal) {
+        subscriptionModal.addEventListener('click', (e) => {
+            if (e.target === subscriptionModal) {
+                subscriptionModal.style.display = 'none';
+            }
+        });
+    }
+
+    function executeSubscriptionSim(planName) {
+        isPremiumUser = true;
+        if (subscriptionModal) subscriptionModal.style.display = 'none';
+        
+        // Show success alert with value explanation
+        alert(`👑 【CORE CONNECT プレミアムプラン登録完了】\n\nスタンダードプラン（月額980円 / 初月無料）へのご登録ありがとうございます！\n\n🎁 会員限定特典獲得：\n1. ASICS/OrthoFit/StyleKeepで使える1,000円割引クーポンを発行しました！\n2. タイムラインで理学療法士などの専門家への「測定相談」が可能になりました！\n3. プレミアム限定詳細PDFレポートがダウンロード可能になりました！`);
+        
+        // Visual indicator in timeline composer
+        const composerAvatar = document.querySelector('.post-composer .composer-avatar');
+        if (composerAvatar) {
+            // Append premium badge next to it, or style it gold
+            composerAvatar.style.background = 'linear-gradient(45deg, #ffd700, #ffa500)';
+            composerAvatar.title = 'PREMIUM MEMBER';
+            // Also add badge in the HTML
+            const composerHeader = document.querySelector('.post-composer .composer-header');
+            if (composerHeader && !document.getElementById('composerPremiumBadge')) {
+                const badge = document.createElement('span');
+                badge.id = 'composerPremiumBadge';
+                badge.className = 'premium-user-badge';
+                badge.innerText = 'PREMIUM';
+                composerHeader.appendChild(badge);
+            }
+        }
+        
+        // Change premium button label
+        if (premiumReportBtn) {
+            premiumReportBtn.innerHTML = '📥 改善指導PDFレポートをダウンロード (PREMIUM特典)';
+            premiumReportBtn.style.background = 'linear-gradient(135deg, #ffd700, #ffa500)';
+        }
+    }
+
+    if (subStandardBtn) {
+        subStandardBtn.addEventListener('click', () => {
+            executeSubscriptionSim('スタンダード');
+        });
+    }
+
+    if (subPremiumBtn) {
+        subPremiumBtn.addEventListener('click', () => {
+            executeSubscriptionSim('プレミアム');
+        });
+    }
 
     // Handle Attach last session manually if it exists in DB
     attachSessionBtn.addEventListener('click', async () => {

@@ -610,6 +610,7 @@
                                     <button class="sns-btn line-btn" id="shareLineBtn">🟢 LINEで送る</button>
                                     <button class="sns-btn copy-btn" id="copyReportBtn">📋 結果をコピー</button>
                                     <button class="sns-btn community-share-btn" id="shareInternalBtn">💬 コミュへ添付して相談</button>
+                                    <button class="sns-btn premium-btn" id="premiumReportBtn" style="background:var(--accent-orange); color:#000;">📥 改善指導PDFレポート (プレミアム限定)</button>
                                 </div>
                             </div>
                         </div>
@@ -665,6 +666,60 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- Subscription Plan Modal (Popup) -->
+    <div id="subscriptionModal" class="modal-overlay" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-close-btn" id="closeSubModalBtn">&times;</div>
+            <div class="modal-header">
+                <h2>👑 CORE CONNECT PREMIUM</h2>
+                <p>AI測定無制限 ＆ 専門家オンライン指導で、最速の姿勢改善をサポート</p>
+            </div>
+            <div class="modal-body">
+                <div class="pricing-grid">
+                    <!-- Plan 1: Free -->
+                    <div class="pricing-card">
+                        <h3>ライト (Free)</h3>
+                        <div class="price">¥0 <span class="price-period">/ 月</span></div>
+                        <ul class="plan-features">
+                            <li>最新記事の閲覧</li>
+                            <li>簡易測定 (月1回のみ)</li>
+                            <li>タイムライン閲覧のみ</li>
+                        </ul>
+                        <button class="plan-btn disabled" disabled>現在のプラン</button>
+                    </div>
+                    
+                    <!-- Plan 2: Standard (Recommended) -->
+                    <div class="pricing-card recommended">
+                        <div class="rec-badge">RECOMMENDED</div>
+                        <h3>スタンダード</h3>
+                        <div class="price">¥980 <span class="price-period">/ 月</span></div>
+                        <ul class="plan-features">
+                            <li><strong>AI動作アライメント測定し放題</strong></li>
+                            <li><strong>専門家 (理学療法士) Q&A相談</strong></li>
+                            <li>協賛ブランド1,000円分クーポン</li>
+                            <li>姿勢改善データ履歴追跡</li>
+                        </ul>
+                        <button class="plan-btn active-btn" id="subStandardBtn">30日間無料でお試し</button>
+                    </div>
+                    
+                    <!-- Plan 3: Premium -->
+                    <div class="pricing-card">
+                        <h3>プレミアム</h3>
+                        <div class="price">¥1,980 <span class="price-period">/ 月</span></div>
+                        <ul class="plan-features">
+                            <li>スタンダードの全機能</li>
+                            <li>優先アドバイス返信保証</li>
+                            <li>個別ビデオ相談 (月1回15分)</li>
+                            <li>プレミアム限定レッスン動画</li>
+                        </ul>
+                        <button class="plan-btn" id="subPremiumBtn">プランを選択</button>
+                    </div>
+                </div>
+                <p class="modal-footer-note">※ スタンダードプランは登録後30日間は無料でお試しいただけます。いつでも解約可能です。</p>
+            </div>
+        </div>
     </div>
 
     <!-- Scripts -->

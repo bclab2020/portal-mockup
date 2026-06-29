@@ -1110,17 +1110,65 @@ body.theme-sports {
 }
 
 body.theme-health {
+    /* Clean Light Mode variables */
+    --bg-primary: #f2faf6;
+    --bg-secondary: #ffffff;
+    --bg-card: rgba(255, 255, 255, 0.75);
+    --bg-glass: rgba(255, 255, 255, 0.8);
+    --border-color: rgba(16, 185, 129, 0.18);
+    --text-primary: #1e293b;
+    --text-secondary: #5e6b7e;
+    --card-shadow: 0 8px 30px rgba(16, 185, 129, 0.05);
+    
     --accent-blue: #10b981; /* trustworthy mint green */
     --accent-teal: #059669; 
-    --accent-purple: #34d399;
-    background: radial-gradient(circle at top right, #072a1a 0%, var(--bg-primary) 70%);
+    --accent-purple: #059669; /* green headers */
+    --accent-glow: rgba(16, 185, 129, 0.12);
+    --accent-glow-bg: rgba(16, 185, 129, 0.08);
+    --accent-glow-border: rgba(16, 185, 129, 0.25);
+    --accent-glow-shadow: rgba(16, 185, 129, 0.1);
+    
+    --bg-input: rgba(255, 255, 255, 0.9);
+    --border-color-input: rgba(16, 185, 129, 0.2);
+    --bg-input-focus: #ffffff;
+
+    background: radial-gradient(circle at top right, #dcfce7 0%, var(--bg-primary) 75%) !important;
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
 }
 
 body.theme-beauty {
+    /* Clean Light Mode variables */
+    --bg-primary: #fff5f6;
+    --bg-secondary: #ffffff;
+    --bg-card: rgba(255, 255, 255, 0.75);
+    --bg-glass: rgba(255, 255, 255, 0.8);
+    --border-color: rgba(255, 117, 143, 0.18);
+    --text-primary: #2e1a22;
+    --text-secondary: #6e5b64;
+    --card-shadow: 0 8px 30px rgba(255, 117, 143, 0.05);
+
     --accent-blue: #ff758f; /* premium rose gold / pink */
     --accent-teal: #ffd6ff; 
     --accent-purple: #c77dff;
-    background: radial-gradient(circle at top right, #33081a 0%, var(--bg-primary) 70%);
+    --accent-glow: rgba(255, 117, 143, 0.12);
+    --accent-glow-bg: rgba(255, 117, 143, 0.08);
+    --accent-glow-border: rgba(255, 117, 143, 0.25);
+    --accent-glow-shadow: rgba(255, 117, 143, 0.1);
+    
+    --bg-input: rgba(255, 255, 255, 0.9);
+    --border-color-input: rgba(255, 117, 143, 0.2);
+    --bg-input-focus: #ffffff;
+
+    background: radial-gradient(circle at top right, #ffe4e6 0%, var(--bg-primary) 75%) !important;
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+}
+
+body.theme-health .iframe-container, 
+body.theme-beauty .iframe-container {
+    background: #ffffff;
+    border-color: var(--border-color);
 }
 
 /* ==========================================================================

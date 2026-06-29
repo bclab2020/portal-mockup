@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (badge) {
                 const names = {
                     sports: 'Sports Portal',
-                    health: 'Health Portal',
+                    health: 'Health Check',
                     beauty: 'Beauty Portal'
                 };
                 badge.innerText = names[currentVertical];

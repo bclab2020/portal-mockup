@@ -41,6 +41,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tabId === 'lab') {
             iframe.contentWindow.focus();
             updateLabSidebarAds(currentVertical);
+            
+            // Sync theme in the embedded iframe
+            const isLight = (currentVertical === 'health' || currentVertical === 'beauty');
+            const currentSrc = iframe.src || '';
+            if (isLight && !currentSrc.includes('theme=light')) {
+                iframe.src = `./mock_app.html?theme=light`;
+            } else if (!isLight && currentSrc.includes('theme=light')) {
+                iframe.src = `./mock_app.html`;
+            }
         }
     }
 
@@ -50,8 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Deep link and trigger mode in embedded app
     window.launchMeasurement = function(mode) {
         switchTab('lab');
+        const isLight = (currentVertical === 'health' || currentVertical === 'beauty');
+        const themeParam = isLight ? '&theme=light' : '';
         // Reload iframe with query parameters to trigger camera and mode
-        iframe.src = `./mock_app.html?mode=${mode}&autoStart=true`;
+        iframe.src = `./mock_app.html?mode=${mode}&autoStart=true${themeParam}`;
     };
 
     // ==========================================================================

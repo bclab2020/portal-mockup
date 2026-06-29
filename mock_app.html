@@ -12,6 +12,35 @@
             height: auto;
             min-height: 100vh;
         }
+        
+        /* Theme Light overrides for mock app controls box */
+        body.theme-light {
+            background: transparent;
+            color: #1e293b !important;
+        }
+        body.theme-light #controlsBox {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+            color: #1e293b !important;
+        }
+        body.theme-light #controlsBox h3,
+        body.theme-light #controlsBox label,
+        body.theme-light #controlsBox h4,
+        body.theme-light #controlsBox .sim-radio-label {
+            color: #1e293b !important;
+        }
+        body.theme-light #controlsBox select {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            color: #1e293b;
+        }
+        body.theme-light #controlsBox input[type="text"] {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            color: #1e293b;
+        }
+        
         .view-port {
             position: relative;
             width: 100%;
@@ -229,6 +258,11 @@
     const urlParams = new URLSearchParams(window.location.search);
     const initialMode = urlParams.get('mode');
     const autoStart = urlParams.get('autoStart');
+    const theme = urlParams.get('theme');
+
+    if (theme === 'light') {
+        document.body.classList.add('theme-light');
+    }
 
     if (initialMode) {
         modeSelect.value = initialMode;

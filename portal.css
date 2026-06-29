@@ -513,10 +513,10 @@ header {
 
 .composer-textarea {
     flex: 1;
-    background: rgba(15, 28, 63, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-input, rgba(15, 28, 63, 0.5));
+    border: 1px solid var(--border-color-input, rgba(255, 255, 255, 0.08));
     border-radius: 12px;
-    color: #fff;
+    color: var(--text-primary);
     padding: 12px;
     font-size: 13px;
     font-family: inherit;
@@ -527,8 +527,8 @@ header {
 }
 
 .composer-textarea:focus {
-    border-color: rgba(0, 191, 255, 0.4);
-    background: rgba(15, 28, 63, 0.8);
+    border-color: var(--accent-blue);
+    background: var(--bg-input-focus, rgba(15, 28, 63, 0.8));
 }
 
 .composer-footer {
@@ -1189,6 +1189,69 @@ body.theme-beauty {
         gap: 6px;
     }
 }
+
+/* ==========================================================================
+   Clean Light Theme Layout & Component Overrides
+   ========================================================================== */
+body.theme-health header, 
+body.theme-beauty header {
+    background: rgba(255, 255, 255, 0.85);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+body.theme-health .tab-btn:hover, 
+body.theme-beauty .tab-btn:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+body.theme-health .sponsor-banner-horizontal, 
+body.theme-beauty .sponsor-banner-horizontal {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 250, 0.95) 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    border-color: var(--border-color);
+}
+
+body.theme-health .sponsor-banner-horizontal:hover, 
+body.theme-beauty .sponsor-banner-horizontal:hover {
+    box-shadow: 0 8px 30px var(--accent-glow);
+    border-color: var(--accent-blue);
+}
+
+body.theme-health .sponsor-logo-box, 
+body.theme-beauty .sponsor-logo-box {
+    color: var(--text-primary);
+    border-right-color: rgba(0, 0, 0, 0.08);
+}
+
+body.theme-health .sponsor-headline, 
+body.theme-beauty .sponsor-headline {
+    color: var(--text-primary);
+}
+
+body.theme-health .article-card:hover, 
+body.theme-beauty .article-card:hover {
+    border-color: var(--accent-blue);
+    box-shadow: 0 12px 40px var(--accent-glow);
+}
+
+body.theme-health .post-composer,
+body.theme-beauty .post-composer {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+body.theme-health .attach-btn,
+body.theme-beauty .attach-btn {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: var(--border-color);
+}
+
+body.theme-health .attach-btn:hover,
+body.theme-beauty .attach-btn:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
 
 
 

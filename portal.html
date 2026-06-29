@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORE CONNECT - 統合スポーツ・健康・美容プラットフォーム</title>
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo">
+            CORE CONNECT <span class="logo-badge">Sports Portal</span>
+        </div>
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="sports">🏃 スポーツポータル</button>
+            <button class="tab-btn" data-tab="community">💬 コミュニティ</button>
+            <button class="tab-btn" data-tab="lab">🧪 測定ラボ</button>
+            <button class="tab-btn disabled-btn" title="開発中 (第2フェーズ)" style="cursor: not-allowed;">🏥 健康診断 (準備中)</button>
+            <button class="tab-btn disabled-btn" title="開発中 (第3フェーズ)" style="cursor: not-allowed;">✨ 美容骨格 (準備中)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="portal-container">
+
+        <!-- 1. SPORTS PORTAL TAB -->
+        <div id="sportsPanel" class="tab-panel active">
+            <div class="portal-grid">
+                
+                <!-- Left Feed: Articles -->
+                <div class="feed-section">
+                    <div class="feed-header">
+                        <h2>📰 最新トレーニング＆バイオメカニクスナレッジ</h2>
+                        <p>スポーツアライメントと怪我予防の科学に基づいた最新コンテンツ</p>
+                    </div>
+                    
+                    <div class="article-list">
+                        <!-- Article 1: Squat Knee Valgus -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">怪我予防</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>スクワット動作における「ニーイン (Knee Valgus)」の危険性と修正</h3>
+                                    <p>スクワットや着地動作時に膝が内側に折れ曲がる「ニーイン」は、前十字靭帯（ACL）損傷や膝蓋腱炎の最大の要因です。大臀筋の活動低下や足関節の硬さをAI姿勢追跡でチェックしましょう。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 3分</span>
+                                        <span>✍️ 理学療法士 田中</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('dyn_overhead')">
+                                        📸 OHS動作をAIで測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 2: Sway Back -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">アライメント</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>腰部ストレスを増大させる「スウェイバック姿勢」の臨床メカニズム</h3>
+                                    <p>骨盤が前方にスライドし、胸椎が後弯するスウェイバック姿勢。このアライメント不良は、腰方形筋の過緊張と仙腸関節の圧縮負担を引き起こします。重力線に対するアライメントを測定しましょう。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 4分</span>
+                                        <span>✍️ トレーナー 佐藤</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('l_side')">
+                                        📸 側面アライメントを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article 3: Weight Bearing -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&q=80&w=400');">
+                                <span class="article-badge">パフォーマンス</span>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-body">
+                                    <h3>スイング動作やジャンプの土台：左右荷重均等性（COM）の重要性</h3>
+                                    <p>ゴルフのスイングやバスケットボールの着地において、身体の質量中心（COM）が左右どちらかに5%以上偏っていると、反対側の腰椎に数倍の代償ストレスが生じます。全身荷重バランスを可視化します。</p>
+                                </div>
+                                <div class="article-footer">
+                                    <div class="article-meta">
+                                        <span>⏱️ 所要時間: 3分</span>
+                                        <span>✍️ コーチ 鈴木</span>
+                                    </div>
+                                    <button class="btn-hook" onclick="launchMeasurement('front')">
+                                        📸 左右荷重バランスを測定する <span>▶</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar Widgets -->
+                <div class="side-widgets">
+                    <!-- Widget: Quick Lab -->
+                    <div class="widget">
+                        <h3>🧪 クイック測定センター</h3>
+                        <div class="mb-20" style="font-size:12px; color:var(--text-secondary); line-height: 1.5;">
+                            AI骨格追跡を利用して、静的姿勢・動的動作アライメントをわずか10秒で測定・評価します。
+                        </div>
+                        <button class="btn-quick-start" onclick="switchTab('lab')">
+                            <span class="rec-badge"></span> 測定ラボを起動する
+                        </button>
+                    </div>
+
+                    <!-- Widget: Sponsored Challenge -->
+                    <div class="widget challenge-widget">
+                        <h3>🏆 スポンサー協賛チャレンジ</h3>
+                        <div class="challenge-card">
+                            <div class="ad-badge">協賛: OrthoFit</div>
+                            <div class="challenge-banner" style="background-image: url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=300');">
+                                <span class="challenge-brand">インソール</span>
+                            </div>
+                            <div class="challenge-title">14日間・左右荷重バランス改善チャレンジ</div>
+                            <div class="challenge-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; margin-top:2px;">
+                                    <span>現在 8日目達成 / 14日</span>
+                                    <span>参加者: 1,248人</span>
+                                </div>
+                            </div>
+                            <button class="challenge-btn" onclick="alert('チャレンジ登録完了！毎日測定ラボで測定して50/50の均等アライメントを目指しましょう！達成するとOrthoFit製品の限定クーポンを贈呈。')">チャレンジに参加中</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 2. COMMUNITY TAB -->
+        <div id="communityPanel" class="tab-panel">
+            <div class="community-grid">
+                
+                <!-- Left Section: Timeline & Input -->
+                <div class="feed-section">
+                    
+                    <!-- Composer -->
+                    <div class="post-composer">
+                        <div class="composer-header">
+                            <div class="composer-avatar">ゲ</div>
+                            <textarea id="postInput" class="composer-textarea" placeholder="測定した結果の感想や身体の悩みを共有しよう！最新の測定データを添付してトレーナーや仲間に相談できます..."></textarea>
+                        </div>
+                        <div class="composer-footer">
+                            <div class="composer-attachments">
+                                <button class="attach-btn" id="attachSessionBtn">
+                                    📊 最新の測定データを添付する
+                                </button>
+                            </div>
+                            <button class="composer-submit" id="postSubmitBtn">相談・共有を投稿</button>
+                        </div>
+                    </div>
+
+                    <div class="feed-header">
+                        <h2>💬 タイムライン（測定共有・Q&A）</h2>
+                    </div>
+
+                    <!-- Timeline Posts Container -->
+                    <div id="timelineContainer"></div>
+                </div>
+
+                <!-- Right Section: Sidebar -->
+                <div class="side-widgets">
+                    <div class="widget">
+                        <h3>👩‍⚕️ コミュニティの専門家</h3>
+                        <div class="flex-column" style="gap:15px; font-size:12px;">
+                            <div style="display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:10px;">
+                                <div class="composer-avatar" style="background:linear-gradient(45deg, var(--accent-orange), #ff5722);">田中</div>
+                                <div>
+                                    <div style="font-weight:700;">田中 誠 (理学療法士)</div>
+                                    <div style="color:var(--text-secondary);">脊柱・骨盤アライメント専門</div>
+                                </div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:10px;">
+                                <div class="composer-avatar" style="background:linear-gradient(45deg, var(--accent-orange), #ff5722);">佐藤</div>
+                                <div>
+                                    <div style="font-weight:700;">佐藤 翼 (トレーナー)</div>
+                                    <div style="color:var(--text-secondary);">OHS動作分析・怪我予防リハ</div>
+                                </div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <div class="composer-avatar" style="background:linear-gradient(45deg, var(--accent-orange), #ff5722);">鈴木</div>
+                                <div>
+                                    <div style="font-weight:700;">鈴木 翔 (スプリントコーチ)</div>
+                                    <div style="color:var(--text-secondary);">ジュニア運動機能・重心制御</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget">
+                        <h3>💬 専門家個別相談（予約）</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); line-height:1.5; margin-bottom:15px;">
+                            AI判定とコミュニティ解説だけでは解決しない痛みや、専門的なリハビリメニューの作成は、オンラインの個別指導枠をご予約ください。
+                        </p>
+                        <button class="challenge-btn" style="background:var(--accent-purple);" onclick="switchTab('lab'); alert('測定ラボに切り替えます。測定完了レポート下部の「個別予約」ボタンから担当メンターと予約を実行してください。');">
+                            📅 個別相談（予約枠）を開く
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 3. MEASUREMENT LAB TAB (IFRAME & ADS) -->
+        <div id="labPanel" class="tab-panel">
+            <div class="lab-grid">
+                
+                <!-- Embedded Measurement App Iframe -->
+                <div class="iframe-container">
+                    <iframe id="measurementIframe" src="./mock_app.html" allow="camera;gyroscope;accelerometer"></iframe>
+                </div>
+
+                <!-- Dynamic Ad Sidebar -->
+                <div class="lab-meta-panel">
+                    
+                    <div class="dynamic-ad-container" id="adWidgetContainer">
+                        <div class="ad-headline">
+                            <span></span> AI診断アライメント連動枠
+                        </div>
+                        
+                        <!-- Dynamically filled container -->
+                        <div id="dynamicAdSpace">
+                            <div class="dynamic-ad-placeholder">
+                                <div>🔍 診断アライメント待機中...</div>
+                                <div style="font-size:11px; color:#5c6b89; line-height:1.4;">
+                                    測定カメラを起動してアライメントのチェックを完了してください。
+                                    結果に応じて必要なリハビリ製品やクーポンがここに自動マッチングされます。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget">
+                        <h3>📏 スケール・マット校正</h3>
+                        <p style="font-size:11px; color:var(--text-secondary); line-height:1.5;">
+                            手持ち測定時のジャイロ補正、または測定ラボの「📏 マット校正(45cm)」を使用すると、1pxあたりのセンチメートル倍率が正確にロックされ、診断と連動広告の精度が向上します。
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="portal.js"></script>
+</body>
+</html>

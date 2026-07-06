@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORE CONNECT - 記事下書き・コンテンツ管理画面</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #050811;
+            --bg-card: rgba(13, 20, 38, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #8c9cb2;
+            --accent-blue: #00bfff;
+            --accent-pink: #ff1493;
+            --accent-purple: #8a2be2;
+            --accent-teal: #00ffff;
+            --btn-glow: rgba(0, 191, 255, 0.25);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 191, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 20, 147, 0.04) 0%, transparent 40%);
+        }
+
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(5, 8, 17, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #fff 30%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-section p {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 191, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .main-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 480px;
+            padding: 30px 40px;
+            gap: 30px;
+            max-width: 1600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .editor-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .control-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tabs-group {
+            display: flex;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 4px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .tab-btn-sport.active[data-sport="sports"] {
+            background: rgba(0, 191, 255, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .tab-btn-sport.active[data-sport="health"] {
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--accent-teal);
+        }
+
+        .tab-btn-sport.active[data-sport="beauty"] {
+            background: rgba(255, 20, 147, 0.15);
+            color: var(--accent-pink);
+        }
+
+        .drafts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .draft-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            position: relative;
+            transition: border-color 0.3s ease;
+        }
+
+        .draft-item.active-edit {
+            border-color: rgba(0, 191, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.05);
+        }
+
+        .draft-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 10px;
+            margin-bottom: 5px;
+        }
+
+        .draft-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(0, 191, 255, 0.1);
+            color: var(--accent-blue);
+            text-transform: uppercase;
+        }
+
+        .draft-badge.beauty {
+            background: rgba(255, 20, 147, 0.1);
+            color: var(--accent-pink);
+        }
+
+        .draft-badge.health {
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--accent-teal);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .form-group-full {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: var(--text-primary);
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 8px rgba(0, 191, 255, 0.2);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+            line-height: 1.5;
+        }
+
+        .preview-section {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .preview-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .preview-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #39ff14;
+            box-shadow: 0 0 8px #39ff14;
+        }
+
+        /* Portal Article Card Styles Mocked */
+        .portal-card-preview {
+            background: #0d1426;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .portal-card-image {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-color: #1a233d;
+        }
+
+        .portal-card-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent-blue);
+            color: #000;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .portal-card-badge.beauty {
+            background: var(--accent-pink);
+            color: #fff;
+        }
+
+        .portal-card-badge.health {
+            background: #00ffff;
+            color: #000;
+        }
+
+        .portal-card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .portal-card-body h3 {
+            font-size: 15px;
+            color: var(--text-primary);
+            line-height: 1.4;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .portal-card-body p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .portal-card-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 5px;
+        }
+
+        .portal-card-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 10px;
+        }
+
+        .portal-card-btn {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .portal-card-btn.beauty {
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+        }
+
+        .portal-card-btn:hover {
+            background: var(--accent-blue);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
+        }
+
+        .portal-card-btn.beauty:hover {
+            background: var(--accent-pink);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.3);
+        }
+
+        .dropzone-container {
+            border: 2px dashed rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            background: rgba(255,255,255,0.01);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .dropzone-container:hover {
+            border-color: var(--accent-blue);
+            background: rgba(0, 191, 255, 0.02);
+        }
+
+        .dropzone-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .dropzone-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #112244;
+            border: 1px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 12px 24px;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-section">
+            <h1>CORE CONNECT</h1>
+            <p>記事下書き・コンテンツ管理画面 (Draft Review & Editor)</p>
+        </div>
+        <div class="nav-actions">
+            <a href="index.html" class="btn btn-secondary">◀ ポータル画面に戻る</a>
+            <button class="btn btn-primary" onclick="exportDatabase()">💾 変更を保存してJSON出力</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="editor-section">
+            <!-- File Load Dropzone -->
+            <div class="dropzone-container" onclick="document.getElementById('fileInput').click()">
+                <input type="file" id="fileInput" accept=".json" style="display: none" onchange="loadCustomJSON(event)">
+                <div class="dropzone-title">📂 articles_db.json を読み込む</div>
+                <div class="dropzone-desc">クリックしてPC内のデータベースファイルを指定するか、デフォルトのデータが自動適用されます。</div>
+            </div>
+
+            <!-- Tab Selection Controls -->
+            <div class="control-bar">
+                <div>
+                    <label>配信日 (日付インデックス)</label>
+                    <div class="tabs-group" id="dayTabs">
+                        <button class="tab-btn active" data-day="day1" onclick="switchDay('day1')">Day 1 (明日配信)</button>
+                        <button class="tab-btn" data-day="day2" onclick="switchDay('day2')">Day 2 (明後日配信)</button>
+                        <button class="tab-btn" data-day="day3" onclick="switchDay('day3')">Day 3 (3日後配信)</button>
+                    </div>
+                </div>
+                <div>
+                    <label>メインカテゴリー</label>
+                    <div class="tabs-group" id="categoryTabs">
+                        <button class="tab-btn tab-btn-sport active" data-sport="sports" onclick="switchCategory('sports')">⚽ スポーツ</button>
+                        <button class="tab-btn tab-btn-sport" data-sport="health" onclick="switchCategory('health')">🧘 健康チェック</button>
+                        <button class="tab-btn tab-btn-sport" data-sport="beauty" onclick="switchCategory('beauty')">💄 美容骨格</button>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 11px; margin-top: 16px;" onclick="addNewArticle()">➕ 新しい下書き記事を追加</button>
+                </div>
+            </div>
+
+            <!-- Draft list editor -->
+            <div class="drafts-list" id="draftsList">
+                <!-- Injected dynamically -->
+            </div>
+        </div>
+
+        <!-- Preview Column -->
+        <div class="preview-section">
+            <div class="preview-title">リアルタイムカードプレビュー</div>
+            <div id="livePreviewContainer">
+                <!-- Card render preview -->
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; font-size: 11px; line-height: 1.5; color: var(--text-secondary);">
+                <strong>💡 下書き編集・確認の手順：</strong><br>
+                1. 各入力欄のテキストや画像IDを変更すると、右側のプレビューがリアルタイムに更新されます。<br>
+                2. 特に<strong>「野球」「サッカー」の記事と画像が正しく合致しているか</strong>、プレビューで視覚的に確認してください。<br>
+                3. 確認・修正後、右上の「変更を保存してJSON出力」ボタンをクリックして `articles_db.json` を保存します。<br>
+                4. 保存したファイルをデスクトップの `portal-mockup/articles_db.json` に上書きすれば、自動配信システムに即座に反映されます。
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">
+        <span id="toastIcon">✔️</span> <span id="toastText">JSONファイルをエクスポートしました！</span>
+    </div>
+
+    <script>
+        // Default Embedded Article Database (Day 1-3, Sports, Health, Beauty)
+        let articlesDb = {};
+        let currentDay = "day1";
+        let currentCategory = "sports";
+        let activeEditIdx = 0;
+
+        // Load Default Database from server or embedded fallback
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch('articles_db.json')
+                .then(response => {
+                    if (!response.ok) throw new Error("Could not find local JSON file.");
+                    return response.json();
+                })
+                .then(data => {
+                    articlesDb = data;
+                    showToast("articles_db.json をサーバーから読み込みました", "📂");
+                    renderDrafts();
+                })
+                .catch(err => {
+                    console.log("Using fallback database config:", err);
+                    // Minimal fallback to prevent empty page
+                    articlesDb = {
+                        "day1": { "sports": [], "health": [], "beauty": [] },
+                        "day2": { "sports": [], "health": [], "beauty": [] },
+                        "day3": { "sports": [], "health": [], "beauty": [] }
+                    };
+                    renderDrafts();
+                });
+        });
+
+        function loadCustomJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    articlesDb = JSON.parse(e.target.result);
+                    showToast("ローカルの articles_db.json を読み込みました", "📂");
+                    renderDrafts();
+                } catch (err) {
+                    alert("JSONファイルの解析に失敗しました。フォーマットをご確認ください。");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function switchDay(day) {
+            currentDay = day;
+            document.querySelectorAll('#dayTabs .tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-day') === day);
+            });
+            activeEditIdx = 0;
+            renderDrafts();
+        }
+
+        function switchCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('#categoryTabs .tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-sport') === cat);
+            });
+            activeEditIdx = 0;
+            renderDrafts();
+        }
+
+        function renderDrafts() {
+            const list = document.getElementById('draftsList');
+            list.innerHTML = "";
+
+            if (!articlesDb[currentDay] || !articlesDb[currentDay][currentCategory]) {
+                list.innerHTML = `<div style="text-align:center; padding: 40px; color:var(--text-secondary);">該当する下書き記事はありません。</div>`;
+                updatePreview(null);
+                return;
+            }
+
+            const arts = articlesDb[currentDay][currentCategory];
+
+            if (arts.length === 0) {
+                list.innerHTML = `<div style="text-align:center; padding: 40px; color:var(--text-secondary);">該当する下書き記事はありません。上のボタンから追加できます。</div>`;
+                updatePreview(null);
+                return;
+            }
+
+            arts.forEach((art, index) => {
+                const item = document.createElement('div');
+                item.className = `draft-item ${index === activeEditIdx ? 'active-edit' : ''}`;
+                item.onclick = () => {
+                    if (activeEditIdx !== index) {
+                        activeEditIdx = index;
+                        document.querySelectorAll('.draft-item').forEach((el, idx) => {
+                            el.classList.toggle('active-edit', idx === index);
+                        });
+                        updatePreview(art);
+                    }
+                };
+
+                // Badge class
+                let badgeClass = "";
+                if (currentCategory === "beauty") badgeClass = "beauty";
+                if (currentCategory === "health") badgeClass = "health";
+
+                item.innerHTML = `
+                    <div class="draft-item-header">
+                        <span class="draft-badge ${badgeClass}">${currentCategory.toUpperCase()} - 記事 ${index + 1}</span>
+                        <button class="btn btn-secondary" style="padding: 4px 8px; font-size:11px; border-color: rgba(255,0,0,0.2); color: #ff4500;" onclick="deleteArticle(${index}, event)">削除 🗑️</button>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group-full">
+                            <label>記事タイトル</label>
+                            <input type="text" value="${art.title || ''}" oninput="updateField(${index}, 'title', this.value)">
+                        </div>
+                        <div class="form-group-full">
+                            <label>本文（抜粋文）</label>
+                            <textarea oninput="updateField(${index}, 'p', this.value)">${art.p || ''}</textarea>
+                        </div>
+                        <div>
+                            <label>タグ（space区切りで複数可）</label>
+                            <input type="text" value="${art.sport || ''}" oninput="updateField(${index}, 'sport', this.value)">
+                        </div>
+                        <div>
+                            <label>バッジ表示名</label>
+                            <input type="text" value="${art.badge || ''}" oninput="updateField(${index}, 'badge', this.value)">
+                        </div>
+                        <div>
+                            <label>所要時間表記</label>
+                            <input type="text" value="${art.time || ''}" oninput="updateField(${index}, 'time', this.value)">
+                        </div>
+                        <div>
+                            <label>著者・監修者表記</label>
+                            <input type="text" value="${art.author || ''}" oninput="updateField(${index}, 'author', this.value)">
+                        </div>
+                        <div>
+                            <label>測定アクション設定</label>
+                            <select onchange="updateField(${index}, 'btn_hook', this.value)">
+                                <option value="launchMeasurement('front')" ${art.btn_hook === "launchMeasurement('front')" ? 'selected' : ''}>左右荷重バランス測定</option>
+                                <option value="launchMeasurement('l_side')" ${art.btn_hook === "launchMeasurement('l_side')" ? 'selected' : ''}>側面重心測定</option>
+                                <option value="launchMeasurement('dyn_flex_fwd')" ${art.btn_hook === "launchMeasurement('dyn_flex_fwd')" ? 'selected' : ''}>動作追跡測定</option>
+                                <option value="launchMeasurement('face_rppg')" ${art.btn_hook === "launchMeasurement('face_rppg')" ? 'selected' : ''}>自律神経ストレス測定</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>アクションボタン文言</label>
+                            <input type="text" value="${art.btn_text || ''}" oninput="updateField(${index}, 'btn_text', this.value)">
+                        </div>
+                    </div>
+                `;
+
+                list.appendChild(item);
+            });
+
+            // Update preview for currently selected
+            updatePreview(arts[activeEditIdx]);
+        }
+
+        function updateField(index, field, value) {
+            if (articlesDb[currentDay] && articlesDb[currentDay][currentCategory]) {
+                articlesDb[currentDay][currentCategory][index][field] = value;
+                updatePreview(articlesDb[currentDay][currentCategory][index]);
+            }
+        }
+
+        // Map categories to default fallback image IDs
+        const CATEGORY_IMAGE_FALLBACKS = {
+            "soccer": "photo-1504307651254-35680f356dfd",
+            "baseball": "photo-1516738901171-8eb4fc13bd20",
+            "volleyball": "photo-1612872087720-bb876e2e67d1",
+            "stress": "photo-1544367567-0f2fcb009e0b",
+            "sleep": "photo-1506126613408-eca07ce68773",
+            "makeup": "photo-1522335789203-aabd1fc54bc9",
+            "bodymake": "photo-1515886657613-9f3515b0c78f"
+        };
+
+        function updatePreview(art) {
+            const container = document.getElementById('livePreviewContainer');
+            if (!art) {
+                container.innerHTML = `<div style="text-align:center; padding: 40px; color:var(--text-secondary); background:var(--bg-card); border-radius:16px; border:1px solid var(--border-color)">下書きを選択するとここにプレビューが表示されます。</div>`;
+                return;
+            }
+
+            // Determine image URL
+            // Split sport tags and find the first matching fallback image
+            const tags = (art.sport || "").split();
+            let imgId = "photo-1506126613408-eca07ce68773"; // generic yoga fallback
+            
+            // Map tag specifically
+            for (let t of tags) {
+                if (CATEGORY_IMAGE_FALLBACKS[t]) {
+                    imgId = CATEGORY_IMAGE_FALLBACKS[t];
+                    break;
+                }
+            }
+
+            // Apply specific badges class
+            let badgeClass = "";
+            let btnClass = "";
+            if (currentCategory === "beauty") {
+                badgeClass = "beauty";
+                btnClass = "beauty";
+            }
+            if (currentCategory === "health") {
+                badgeClass = "health";
+                btnClass = "health";
+            }
+
+            const imgUrl = `https://images.unsplash.com/{imgId}?auto=format&fit=crop&q=80&w=400`.replace("{imgId}", imgId);
+
+            container.innerHTML = `
+                <div class="portal-card-preview">
+                    <div class="portal-card-image" style="background-image: url('${imgUrl}');">
+                        <span class="portal-card-badge ${badgeClass}">${art.badge || '記事カテゴリ'}</span>
+                    </div>
+                    <div class="portal-card-content">
+                        <div class="portal-card-body">
+                            <h3>${art.title || '（タイトル未設定）'}</h3>
+                            <p>${art.p || '（本文未設定）'}</p>
+                        </div>
+                        <div class="portal-card-footer">
+                            <div class="portal-card-meta">
+                                <span>${art.time || '⏱️ 所要時間: --分'}</span>
+                                <span>${art.author || '✍️ 監修者未設定'}</span>
+                            </div>
+                            <button class="portal-card-btn ${btnClass}">
+                                ${art.btn_text || '測定する'} <span>▶</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function addNewArticle() {
+            if (!articlesDb[currentDay]) {
+                articlesDb[currentDay] = {};
+            }
+            if (!articlesDb[currentDay][currentCategory]) {
+                articlesDb[currentDay][currentCategory] = [];
+            }
+
+            // Determine default sport tags based on category
+            let defaultSport = "soccer";
+            if (currentCategory === "health") defaultSport = "stress";
+            if (currentCategory === "beauty") defaultSport = "makeup";
+
+            const newArt = {
+                "sport": defaultSport,
+                "badge": currentCategory === "sports" ? "スポーツ" : (currentCategory === "health" ? "健康チェック" : "美容骨格"),
+                "title": "新しい記事のタイトル",
+                "p": "記事の導入文または解説文をここに記述します。",
+                "time": "⏱️ 所要時間: 3分",
+                "author": currentCategory === "sports" ? "✍️ スポーツトレーナー" : (currentCategory === "health" ? "✍️ 内科医師" : "✍️ ビューティアドバイザー"),
+                "btn_text": "📸 AIカメラ測定を起動する",
+                "btn_hook": "launchMeasurement('front')"
+            };
+
+            articlesDb[currentDay][currentCategory].unshift(newArt);
+            activeEditIdx = 0;
+            renderDrafts();
+            showToast("新しい下書きを追加しました", "➕");
+        }
+
+        function deleteArticle(index, event) {
+            event.stopPropagation();
+            if (confirm("この記事を削除してもよろしいですか？")) {
+                articlesDb[currentDay][currentCategory].splice(index, 1);
+                activeEditIdx = 0;
+                renderDrafts();
+                showToast("記事を削除しました", "🗑️");
+            }
+        }
+
+        function exportDatabase() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(articlesDb, null, 4));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "articles_db.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast("articles_db.json ファイルを出力しました！", "💾");
+        }
+
+        function showToast(message, icon = "✔️") {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastIcon').innerText = icon;
+            document.getElementById('toastText').innerText = message;
+            
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

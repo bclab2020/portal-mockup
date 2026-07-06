@@ -671,7 +671,7 @@
                         </div>
                         <div>
                             <label>個別画像ID (Unsplash Photo ID)</label>
-                            <input type="text" value="${art.img_id || ''}" placeholder="画像のURL（右クリックでコピーしたもの）をそのまま貼り付け可能です" oninput="updateField(${index}, 'img_id', this.value)">
+                            <input type="text" value="${art.img_id || ''}" placeholder="独自画像パス(例: images/my-photo.jpg)や他サイトの画像URLも貼り付け可能です" oninput="updateField(${index}, 'img_id', this.value)">
                         </div>
                         <div>
                             <label>バッジ表示名</label>
@@ -734,25 +734,28 @@
             }
 
             // Determine image URL
-            let imgId = "";
+            let imgUrl = "";
             if (art.img_id && art.img_id.trim()) {
                 const val = art.img_id.trim();
-                const match = val.match(/(photo-[0-9a-zA-Z\-]+)/);
-                if (match) {
-                    imgId = match[1];
+                // Check if it is a full URL, relative path, or file extension
+                if (val.startsWith("http://") || val.startsWith("https://") || val.startsWith("images/") || val.startsWith("assets/") || val.startsWith("./") || val.match(/\.(png|jpg|jpeg|webp|gif|svg)/i)) {
+                    imgUrl = val;
                 } else {
-                    imgId = val;
+                    const match = val.match(/(photo-[0-9a-zA-Z\-]+)/);
+                    const imgId = match ? match[1] : val;
+                    imgUrl = `https://images.unsplash.com/${imgId}?auto=format&fit=crop&q=80&w=400`;
                 }
             } else {
                 // Split sport tags and find the first matching fallback image
                 const tags = (art.sport || "").split(/\s+/);
-                imgId = "photo-1506126613408-eca07ce68773"; // generic yoga fallback
+                let imgId = "photo-1506126613408-eca07ce68773"; // generic yoga fallback
                 for (let t of tags) {
                     if (CATEGORY_IMAGE_FALLBACKS[t]) {
                         imgId = CATEGORY_IMAGE_FALLBACKS[t];
                         break;
                     }
                 }
+                imgUrl = `https://images.unsplash.com/${imgId}?auto=format&fit=crop&q=80&w=400`;
             }
 
             // Apply specific badges class
@@ -766,8 +769,6 @@
                 badgeClass = "health";
                 btnClass = "health";
             }
-
-            const imgUrl = `https://images.unsplash.com/{imgId}?auto=format&fit=crop&q=80&w=400`.replace("{imgId}", imgId);
 
             // Test if the image loads successfully
             const testImg = new Image();

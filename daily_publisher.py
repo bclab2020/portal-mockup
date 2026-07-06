@@ -31,12 +31,15 @@ def make_card_html(art):
     if art['sport'] in ['makeup', 'cosmetics', 'hairstyle', 'styling', 'bodymake']:
         badge_style = ' style="background:var(--accent-pink); color:#fff;"'
     
-    # Use custom img_id if defined, otherwise resolve from tags
+    # Use custom img_id if defined (supports local files, full URLs, or Unsplash IDs)
     if 'img_id' in art and art['img_id'].strip():
         val = art['img_id'].strip()
-        match = re.search(r'(photo-[0-9a-zA-Z\-]+)', val)
-        img_id = match.group(1) if match else val
-        img_url = f"https://images.unsplash.com/{img_id}?auto=format&fit=crop&q=80&w=400"
+        if val.startswith("http://") or val.startswith("https://") or val.startswith("images/") or val.startswith("assets/") or val.startswith("./") or re.search(r'\.(png|jpg|jpeg|webp|gif|svg)', val, re.IGNORECASE):
+            img_url = val
+        else:
+            match = re.search(r'(photo-[0-9a-zA-Z\-]+)', val)
+            img_id = match.group(1) if match else val
+            img_url = f"https://images.unsplash.com/{img_id}?auto=format&fit=crop&q=80&w=400"
     else:
         tags = art['sport'].split()
         img_url = None

@@ -5,7 +5,7 @@ import subprocess
 
 # Define image mapping for subcategories
 IMAGES_MAP = {
-    "soccer": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=400",
+    "soccer": "https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&q=80&w=400",
     "baseball": "https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?auto=format&fit=crop&q=80&w=400",
     "tennis": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&q=80&w=400",
     "basketball": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&q=80&w=400",
@@ -31,15 +31,18 @@ def make_card_html(art):
     if art['sport'] in ['makeup', 'cosmetics', 'hairstyle', 'styling', 'bodymake']:
         badge_style = ' style="background:var(--accent-pink); color:#fff;"'
     
-    # Split space-separated tags and find the first matching image
-    tags = art['sport'].split()
-    img_url = None
-    for tag in tags:
-        if tag in IMAGES_MAP:
-            img_url = IMAGES_MAP[tag]
-            break
-    if not img_url:
-        img_url = "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400" 
+    # Use custom img_id if defined, otherwise resolve from tags
+    if 'img_id' in art and art['img_id'].strip():
+        img_url = f"https://images.unsplash.com/{art['img_id']}?auto=format&fit=crop&q=80&w=400"
+    else:
+        tags = art['sport'].split()
+        img_url = None
+        for tag in tags:
+            if tag in IMAGES_MAP:
+                img_url = IMAGES_MAP[tag]
+                break
+        if not img_url:
+            img_url = "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400" 
     
     html = f"""
                         <!-- Daily Added Article ({art['badge']}) -->

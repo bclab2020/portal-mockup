@@ -114,6 +114,7 @@ def main():
         "portal.css",
         "portal.js",
         "mock_app.html",
+        "face_analyzer.html",
         "sw.js",
         "manifest.json",
         "icon-192.png",

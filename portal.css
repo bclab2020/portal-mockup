@@ -31,6 +31,14 @@
     padding: 0;
 }
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+    touch-action: pan-y;
+}
+
 body {
     font-family: var(--font-sans);
     background: radial-gradient(circle at top right, #0d1e40 0%, var(--bg-primary) 70%);
@@ -38,7 +46,6 @@ body {
     color: var(--text-primary);
     min-height: 100vh;
     overflow-y: auto;
-    overflow-x: hidden;
 }
 
 /* Scrollbar styling */
@@ -1597,6 +1604,43 @@ body.theme-beauty .sns-btn.copy-btn:hover {
     letter-spacing: 0.5px;
     display: inline-block;
     vertical-align: middle;
+}
+
+/* Sports subtabs filtering styling */
+.sports-subtabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.subtab-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.subtab-btn:hover {
+    border-color: var(--accent-blue);
+    color: var(--text-primary);
+    background: rgba(0, 191, 255, 0.05);
+}
+
+.subtab-btn.active {
+    background: var(--accent-blue);
+    color: #000;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
 }
 
 

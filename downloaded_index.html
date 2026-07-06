@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -216,10 +216,6 @@
 
 <!-- Float Controls Layout -->
 <div id="uiFloatingLayer">
-    <!-- Standalone Floating HUD Buttons -->
-    <button id="startBtn" disabled>⏳ 起動準備中...</button>
-    <button id="recBtn" style="display:none;" disabled>撮影</button>
-
     <div class="ui-top-buttons">
         <button id="toggleCameraModeBtn" class="ui-top-btn" style="border-color:var(--accent-teal); color:var(--accent-teal);">🤳 セルフ撮影へ</button>
         <button id="toggleUiBtn" class="ui-top-btn">🔽 UIを隠す</button>
@@ -300,6 +296,8 @@
                 <label class="toggle-label"><input type="checkbox" id="showSwayAlert" checked> 警告</label>
             </div>
             
+            <button id="startBtn" disabled>⏳ 起動準備中...</button>
+            <button id="recBtn" disabled>🔴 録画スタート</button>
         </div>
 
         <div class="controls" id="playbackControls" style="display:none;">
@@ -329,39 +327,17 @@
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js')
-      .then((reg) => {
-        console.log('ServiceWorker registered successfully with scope:', reg.scope);
-        // Trigger auto update check
-        reg.onupdatefound = () => {
-          const installingWorker = reg.installing;
-          installingWorker.onstatechange = () => {
-            if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              console.log("New service worker version found! Force refreshing...");
-              window.location.reload();
-            }
-          };
-        };
-      })
+      .then((reg) => console.log('ServiceWorker registered successfully with scope:', reg.scope))
       .catch((err) => console.error('ServiceWorker registration failed:', err));
-  });
-
-  // Automatically refresh the page once the new ServiceWorker activates
-  let refreshing = false;
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (!refreshing) {
-      refreshing = true;
-      console.log("ServiceWorker controller active. Reloading web app now...");
-      window.location.reload();
-    }
   });
 }
 </script>
 
 <!-- App Scripts -->
-<script src="db.js?v=2.9.2"></script>
-<script src="biomechanics.js?v=2.9.2"></script>
-<script src="api.js?v=2.9.2"></script>
-<script src="app.js?v=2.9.2"></script>
+<script src="db.js?v=2.8.2"></script>
+<script src="biomechanics.js?v=2.8.2"></script>
+<script src="api.js?v=2.8.2"></script>
+<script src="app.js?v=2.8.2"></script>
 
 <!-- CORE CONNECT Integration Hook -->
 <script>
@@ -485,3 +461,4 @@ window.addEventListener('load', () => {
 
 </body>
 </html>
+

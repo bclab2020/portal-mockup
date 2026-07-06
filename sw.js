@@ -1,4 +1,4 @@
-const CACHE_NAME = "elite-performance-cache-v1";
+const CACHE_NAME = "elite-performance-cache-v2.9.2";
 const ASSETS = [
   "./",
   "./index.html",

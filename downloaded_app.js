@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ÉLITE PERFORMANCE - Athletecore Pro
  * Main Application Controller
  * Coordinates camera loops, MediaPipe Pose estimations, auto-scale calibrations,
@@ -721,13 +721,12 @@ function updateModeUI(mode) {
     var modeSelect = document.getElementById('modeSelect');
     if (modeSelect) modeSelect.value = currentTab;
     
-    // V2.8.9: 次の測定ナビゲーションおよび結果閲覧のフローティングボタン表示制御
+    // V2.5.8: 次の測定ナビゲーションボタンの表示制御
     var nextBtn = document.getElementById('nextMeasureBtn');
-    var viewerBtn = document.getElementById('showViewerBtn');
     if (nextBtn) {
         var isStaticMode = ['front', 'back', 'l_side', 'r_side'].includes(mode);
         if (isStaticMode && appMode === 'playback') {
-            nextBtn.style.display = 'flex';
+            nextBtn.style.display = 'inline-block';
             var labels = {
                 'front': '決定して左側面へ ➡',
                 'l_side': '決定して後面へ ➡',
@@ -735,16 +734,8 @@ function updateModeUI(mode) {
                 'r_side': '決定してレポート表示 📊'
             };
             nextBtn.innerText = labels[mode] || '決定して次へ';
-            if (viewerBtn) viewerBtn.style.display = 'none';
         } else {
             nextBtn.style.display = 'none';
-            if (viewerBtn) {
-                if (appMode === 'playback') {
-                    viewerBtn.style.display = 'flex';
-                } else {
-                    viewerBtn.style.display = 'none';
-                }
-            }
         }
     }
     
@@ -809,15 +800,14 @@ async function advanceToNextMeasurement() {
         syncTabButtonsForMode(nextMode);
         modeSelect.value = nextMode;
     }
+    updateModeUI(nextMode);
     
-    // 4. 先にカメラモード（Live状態）に移行して、不要なHUDスライダーパネルを非表示にする
+    // 4. カメラを再起動してLive測定に戻る
     appMode = "camera";
     isPausedForEdit = false;
     isPlaying = false;
     selectedJointIndex = null;
     isEditingPlaybackFrame = false;
-    
-    updateModeUI(nextMode);
     
     document.getElementById('dpadPanel').style.display = 'none';
     document.getElementById('playbackControls').style.display = 'none';
@@ -1372,8 +1362,6 @@ window.loadSession = async function(id) {
             
             document.getElementById('mainControls').style.display = 'none'; 
             document.getElementById('playbackControls').style.display = 'flex';
-            document.getElementById('startBtn').style.display = 'none';
-            document.getElementById('recBtn').style.display = 'none';
             document.getElementById('downloadCsvBtn').disabled = false;
             
             updateInfoPanel();
@@ -1478,6 +1466,16 @@ function playLoop(startFrame) {
 
 // Camera/Live view setup loops
 async function init() {
+    // アプリ起動時に即座にスマホ・タブレット判定をして、不要な設定パネルを折りたたむ
+    var isMobileOrTablet = window.innerWidth < 1024;
+    if (isMobileOrTablet) {
+        var settings = document.getElementById('settingsWrapper');
+        var btn = document.getElementById('toggleUiBtn');
+        if (settings && btn) {
+            settings.style.display = 'none';
+            btn.innerText = '🔼 UIを表示';
+        }
+    }
 
     if (sessionStorage.getItem('isSpecialist') === 'true') {
         isSpecialist = true;
@@ -1552,12 +1550,7 @@ async function init() {
         console.error("AI Initialization Error:", e);
     }
 }
-// Safe document load binding to prevent event bypass
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    init();
-} else {
-    window.addEventListener('load', init);
-}
+window.addEventListener('load', init);
 // Camera Start Handler
 startBtn.onclick = async function() {
     renderSessionId++;
@@ -1583,88 +1576,61 @@ startBtn.onclick = async function() {
     
     document.getElementById('playbackControls').style.display = 'none';
     document.getElementById('mainControls').style.display = 'flex';
-    document.getElementById('startBtn').style.display = 'none';
-    document.getElementById('recBtn').style.display = 'block';
     document.getElementById('recBtn').disabled = false;
     updateCameraModeBadge(); // V2.5.1
     
-    // V2.8.6: Wait 150ms to let browser release hardware before requesting next camera stream
-    setTimeout(async () => {
-        if (currentSession !== renderSessionId) return;
+    try {
+        var constraints = {
+            video: {
+                width: { ideal: 1920 },
+                height: { ideal: 1080 }
+            }
+        };
+        if (isMobileView) {
+            // V2.5.7: モバイル時は選択したモードのカメラへ確実に強制固定する (exact)
+            constraints.video.facingMode = { exact: cameraFacingMode };
+        } else if (videoSource.value) {
+            constraints.video.deviceId = { exact: videoSource.value };
+        } else {
+            constraints.video.facingMode = { ideal: "environment" };
+        }
         
         try {
-            var constraints = {
-                video: {
-                    width: { ideal: 1920 },
-                    height: { ideal: 1080 }
-                }
-            };
-            
-            // Prioritize manually selected camera from dropdown
-            if (videoSource.value) {
-                constraints.video.deviceId = { exact: videoSource.value };
-            } else if (isMobileView) {
-                constraints.video.facingMode = { exact: cameraFacingMode };
-            } else {
-                constraints.video.facingMode = { ideal: "environment" };
+            currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+        } catch (err) {
+            console.warn("Exact facingMode constraint failed, falling back to ideal:", err);
+            // V2.5.7: フォールバック（PCや背面カメラのない特殊環境用）
+            if (constraints.video.facingMode) {
+                constraints.video.facingMode = { ideal: cameraFacingMode };
             }
-            
-            try {
-                currentStream = await navigator.mediaDevices.getUserMedia(constraints);
-            } catch (err) {
-                console.warn("Exact facingMode constraint failed, falling back to ideal:", err);
-                if (constraints.video.facingMode) {
-                    constraints.video.facingMode = { ideal: cameraFacingMode };
-                }
-                if (constraints.video.deviceId) {
-                    delete constraints.video.deviceId;
-                }
-                currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+            if (constraints.video.deviceId) {
+                delete constraints.video.deviceId;
             }
-            video.srcObject = currentStream;
-            video.onloadeddata = function() { 
-                canvasMP.width = video.videoWidth; 
-                canvasMP.height = video.videoHeight; 
-                canvasComb.width = video.videoWidth; 
-                canvasComb.height = video.videoHeight; 
-                isRunning = true;
-                video.play(); 
-                
-                // Hide setup, show record start button
-                document.getElementById('startBtn').style.display = 'none';
-                document.getElementById('recBtn').style.display = 'block';
-                document.getElementById('recBtn').disabled = false;
-                
-                // Collapse settings panel on mobile/tablet after feed starts
-                var isMobileOrTablet = window.innerWidth < 1024;
-                if (isMobileOrTablet) {
-                    var settings = document.getElementById('settingsWrapper');
-                    var btn = document.getElementById('toggleUiBtn');
-                    if (settings && btn) {
-                        settings.style.display = 'none';
-                        btn.innerText = '🔼 UIを表示';
-                    }
-                }
-                
-                // Check gyro settings on mobile startup
-                if (window.innerWidth < 768 && !isGyroEnabled) {
-                    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                        document.getElementById('gyroPermissionModal').style.display = 'block';
-                    } else {
-                        requestDeviceOrientationPermission();
-                    }
-                }
-                checkDeviceType();
-                render(currentSession); 
-            };
-        } catch (e) {
-            console.error("Camera startup failed:", e);
-            // Restore buttons to initial state if camera fails
-            document.getElementById('startBtn').style.display = 'block';
-            document.getElementById('recBtn').style.display = 'none';
-            alert("カメラの起動に失敗しました。カメラパーミッションを確認してください。");
+            currentStream = await navigator.mediaDevices.getUserMedia(constraints);
         }
-    }, 150);
+        video.srcObject = currentStream;
+        video.onloadeddata = function() { 
+            canvasMP.width = video.videoWidth; 
+            canvasMP.height = video.videoHeight; 
+            canvasComb.width = video.videoWidth; 
+            canvasComb.height = video.videoHeight; 
+            isRunning = true;
+            video.play(); 
+            
+            // Check gyro settings on mobile startup
+            if (window.innerWidth < 768 && !isGyroEnabled) {
+                if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    document.getElementById('gyroPermissionModal').style.display = 'block';
+                } else {
+                    requestDeviceOrientationPermission();
+                }
+            }
+            checkDeviceType();
+            render(currentSession); 
+        };
+    } catch (e) {
+        alert("カメラの起動に失敗しました。カメラパーミッションを確認してください。");
+    }
 };
 
 // Render Loop
@@ -1836,7 +1802,7 @@ recBtn.onclick = function() {
     swayHistoryMP = [];
     
     recBtn.disabled = true;
-    recBtn.innerText = "測定中";
+    recBtn.innerText = "🔴 測定中...";
     timerDisplay.style.display = 'block';
     
     var canvasStream = canvasComb.captureStream(25); 
@@ -1874,10 +1840,8 @@ recBtn.onclick = function() {
 // Stop Recording logic
 async function stopRecording() {
     isRecording = false;
-    recBtn.innerText = "撮影";
+    recBtn.innerText = "🔴 録画スタート";
     recBtn.disabled = false;
-    recBtn.style.display = 'none';
-    startBtn.style.display = 'none';
     timerDisplay.style.display = 'none';
     
     document.body.classList.remove('recording-active');
@@ -1970,8 +1934,6 @@ function exitPlaybackMode() {
     document.getElementById('dpadPanel').style.display = 'none';
     document.getElementById('playbackControls').style.display = 'none';
     document.getElementById('mainControls').style.display = 'flex';
-    document.getElementById('startBtn').style.display = 'block';
-    document.getElementById('recBtn').style.display = 'none';
     document.getElementById('editFrameBtn').innerText = "✂️ 微調整";
     document.getElementById('editFrameBtn').style.background = "var(--accent-orange)";
     document.getElementById('editFrameBtn').style.color = "#000";
@@ -2208,66 +2170,30 @@ window.prepareAndPrintReport = prepareAndPrintReport;
 async function seedDemoDataIfEmpty() {
     try {
         var sessions = await dbManager.getAllSessions();
+        
+        // 1. 古いデモデータ（demo_sarah_j_2026）があれば強制削除
+        var hasOldSarah = sessions.some(s => s.id === "demo_sarah_j_2026");
+        if (hasOldSarah) {
+            console.log("Found old Sarah J. demo data. Deleting...");
+            await dbManager.deleteSession("demo_sarah_j_2026");
+        }
+        
+        // 2. CONNECT TOWNのデモデータが既に存在する場合は、一旦削除して常に最新データを上書き（オーバーライト）する
         var hasNewDemo = sessions.some(s => s.id === "demo_connect_town_2026");
         if (hasNewDemo) {
-            return; // 既に存在する場合は何もしない
+            console.log("Updating existing CONNECT TOWN demo data with latest metrics...");
+            await dbManager.deleteSession("demo_connect_town_2026");
         }
         
-        console.log("Seeding lightweight demo data for CONNECT TOWN...");
-        var demoSession = {
-            id: "demo_connect_town_2026",
-            athleteName: "CONNECT TOWN",
-            height: 170,
-            footSize: 25,
-            timestamp: new Date().toISOString(),
-            mode: "dyn_squat",
-            aiReportText: "【動作解析デモデータ】\n膝の最大屈曲時に骨盤前傾ストレスが発生しています。\n大腿四頭筋（大腿直筋）の緊張を緩和し、骨盤を立てるスクワットを推奨します。",
-            measurements: {
-                l_side: { pelvicTilt: 4.8 },
-                r_side: { pelvicTilt: 4.5 }
-            },
-            history: []
-        };
+        console.log("Seeding demo data for Athlete 'CONNECT TOWN'...");
         
-        // ダミーの軌跡フレーム（タイムライン再生用）を生成
-        for (var f = 0; f < 60; f++) {
-            var ratio = f / 59;
-            var squatPhase = (Math.sin(ratio * Math.PI) + 1) / 2; // Squat motion 0..1
-            var kneeAngle = squatPhase * 105;
-            
-            // MediaPipe 座標のダミー
-            var kps = [
-                { name: "nose", x: 320, y: 120 + squatPhase * 30 },
-                { name: "left_ear", x: 310, y: 110 + squatPhase * 30 },
-                { name: "right_ear", x: 330, y: 110 + squatPhase * 30 },
-                { name: "left_shoulder", x: 290, y: 160 + squatPhase * 30 },
-                { name: "right_shoulder", x: 350, y: 160 + squatPhase * 30 },
-                { name: "left_hip", x: 295, y: 260 + squatPhase * 15 },
-                { name: "right_hip", x: 345, y: 260 + squatPhase * 15 },
-                { name: "left_knee", x: 290 - squatPhase * 20, y: 340 + squatPhase * 5 },
-                { name: "right_knee", x: 350 + squatPhase * 20, y: 340 + squatPhase * 5 },
-                { name: "left_ankle", x: 295, y: 420 },
-                { name: "right_ankle", x: 345, y: 420 }
-            ];
-            
-            demoSession.history.push({
-                frameIndex: f,
-                keypoints: kps,
-                timestamp: Date.now() + (f * 33)
-            });
-        }
-        
-        await dbManager.saveSession(demoSession);
-        console.log("Demo data seed successful!");
-        if (typeof window.refreshHistoryList === 'function') {
-            window.refreshHistoryList();
-        }
-    } catch (e) {
-        console.error("Error seeding demo data:", e);
-    }
-}
-
-window.closeFullscreenModal = function() {
+        function getKpsBase(mode) {
+            var kps = [];
+            for (var i = 0; i < 33; i++) {
+                kps.push({ x: 320, y: 240, z: 0, score: 0.99, name: i.toString() });
+            }
+            kps[0].name = "nose";
+      window.closeFullscreenModal = function() {
     // Legacy support, viewer modal deleted
 };
 
@@ -2411,23 +2337,12 @@ window.updateWebGLPose = function(keypoints, w, h) {
     
     hudWidth = w || 640;
     hudHeight = h || 480;
-
-    // Reset visibility if no keypoints provided
-    if (!keypoints || keypoints.length === 0) {
-        Object.keys(glJoints).forEach(k => glJoints[k].position.set(0, 0, -9999));
-        glMuscles.forEach(m => m.mesh.visible = false);
-        return;
-    }
     
-    // 1. Update Joint meshes positions with noise confidence filtering (score >= 0.55)
+    // 1. Update Joint meshes positions
     var foundKps = {};
     keypoints.forEach(kp => {
         var name = kp.name;
         if (glJoints[name]) {
-            if (kp.score !== undefined && kp.score < 0.55) {
-                glJoints[name].position.set(0, 0, -9999);
-                return;
-            }
             var glPos = mapMpToGl(kp.x, kp.y, hudWidth, hudHeight);
             glJoints[name].position.set(glPos.x, glPos.y, 0);
             foundKps[name] = glPos;
@@ -2571,3 +2486,4 @@ setTimeout(() => {
     
     seedDemoDataIfEmpty();
 }, 2000);
+

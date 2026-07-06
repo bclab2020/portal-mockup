@@ -1,0 +1,2250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>CORE CONNECT - AI 美容・健康顔診断 (rPPG & 骨格メイク)</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- MediaPipe CDNs -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --bg-primary: #050811;
+            --bg-secondary: #0a1128;
+            --bg-card: rgba(16, 28, 48, 0.6);
+            --bg-glass: rgba(10, 20, 42, 0.7);
+            --border-color: rgba(0, 191, 255, 0.15);
+            --border-glow: rgba(0, 191, 255, 0.3);
+            
+            --accent-teal: #64ffda;
+            --accent-blue: #00bfff;
+            --accent-orange: #ff9100;
+            --accent-red: #ff5252;
+            --accent-green: #39ff14;
+            --accent-purple: #8a2be2;
+            --accent-pink: #ff1493;
+            
+            --text-primary: #f8f9fa;
+            --text-secondary: #8892b0;
+            --font-sans: 'Outfit', 'Noto Sans JP', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+            touch-action: pan-y;
+        }
+        body {
+            font-family: var(--font-sans);
+            background: radial-gradient(circle at top right, #0d1e40 0%, var(--bg-primary) 70%);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 40px;
+        }
+
+        header {
+            background: rgba(5, 8, 17, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, var(--accent-teal), var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .logo-badge {
+            background: var(--bg-secondary);
+            border: 1px solid var(--accent-pink);
+            color: var(--accent-pink);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 9px;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 5px rgba(255, 20, 147, 0.3);
+        }
+
+        .standalone-badge {
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid var(--accent-teal);
+            color: var(--accent-teal);
+            font-size: 10px;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 25px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 430px;
+            gap: 25px;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Left Side - WebCam & HUD overlay */
+        .workspace-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .camera-viewport {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: radial-gradient(circle at center, #0f2452 0%, #050811 100%);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        #webcamVideo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0; /* Hidden, drawn on canvas instead */
+            z-index: 1;
+        }
+
+        #outputCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 2;
+            transform: scaleX(-1); /* Mirror camera output for natural interaction */
+        }
+
+        /* Scanning effect overlay */
+        .scan-line {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(180deg, transparent, var(--accent-pink), transparent);
+            box-shadow: 0 0 15px var(--accent-pink);
+            z-index: 3;
+            animation: scan 3s linear infinite;
+            display: none;
+        }
+
+        @keyframes scan {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+
+        /* HUD elements on Camera */
+        .hud-overlay {
+            position: absolute;
+            padding: 10px 15px;
+            background: rgba(5, 8, 17, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.08);
+            font-size: 11px;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hud-top-left {
+            top: 15px;
+            left: 15px;
+            border-left: 3px solid var(--accent-teal);
+        }
+
+        .hud-top-right {
+            top: 15px;
+            right: 15px;
+            border-left: 3px solid var(--accent-pink);
+        }
+
+        .hud-pulse {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .hud-pulse.animating {
+            animation: pulse-glow 1s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            from { transform: scale(0.8); opacity: 0.5; box-shadow: 0 0 0 rgba(255, 82, 82, 0); }
+            to { transform: scale(1.3); opacity: 1; box-shadow: 0 0 10px rgba(255, 82, 82, 0.8); }
+        }
+
+        /* Real-time rPPG Oscilloscope Overlay at the bottom of the camera */
+        .ppg-oscilloscope-container {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
+            height: 70px;
+            background: rgba(5, 12, 28, 0.75);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 191, 255, 0.2);
+            border-radius: 10px;
+            padding: 8px 12px;
+            z-index: 4;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .ppg-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: var(--accent-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ppg-chart-canvas {
+            width: 100%;
+            height: 45px;
+        }
+
+        .countdown-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 8, 17, 0.15);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .countdown-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .countdown-number {
+            font-size: 80px;
+            font-weight: 700;
+            color: var(--accent-teal);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.9), 0 0 30px rgba(100, 255, 218, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .countdown-label {
+            font-size: 14px;
+            color: var(--text-primary);
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+            letter-spacing: 1px;
+        }
+
+        /* Right Side - Analysis & Control Box */
+        .control-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 10px;
+            color: var(--accent-teal);
+        }
+
+        .panel-title.pink {
+            color: var(--accent-pink);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .glass-select, .glass-input {
+            background: rgba(5, 8, 17, 0.6);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: var(--font-sans);
+            outline: none;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .glass-select:focus, .glass-input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 10px rgba(0, 191, 255, 0.2);
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 25px;
+            border: none;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent-blue);
+        }
+
+        /* Results Display CSS */
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .metric-badge {
+            background: rgba(5, 8, 17, 0.4);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .metric-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .metric-val {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .metric-val.highlight {
+            color: var(--accent-teal);
+        }
+
+        .metric-val.pink {
+            color: var(--accent-pink);
+        }
+
+        /* Makeup Advice Card styling */
+        .makeup-guide-card {
+            display: none;
+        }
+        .makeup-guide-card.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .guide-step {
+            margin-bottom: 12px;
+            font-size: 12px;
+            line-height: 1.5;
+            display: flex;
+            gap: 8px;
+        }
+        .step-num {
+            background: var(--accent-pink);
+            color: #000;
+            font-weight: 700;
+            border-radius: 50%;
+            min-width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+        .step-txt {
+            color: var(--text-primary);
+        }
+        .step-txt strong {
+            color: var(--accent-pink);
+        }
+
+        /* Recommended Cosmetics Carousel/List */
+        .cosmetics-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-pink);
+            margin: 15px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cosmetic-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .cosmetic-card {
+            background: rgba(5, 8, 17, 0.5);
+            border: 1px solid rgba(255, 20, 147, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .cosmetic-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 6px;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
+        }
+
+        .cosmetic-details {
+            flex-grow: 1;
+        }
+
+        .cosmetic-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .cosmetic-brand {
+            font-size: 9px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .cosmetic-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cosmetic-price {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-teal);
+        }
+
+        .cosmetic-btn {
+            background: transparent;
+            border: 1px solid var(--accent-pink);
+            color: var(--accent-pink);
+            font-size: 8px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cosmetic-btn:hover {
+            background: var(--accent-pink);
+            color: #000;
+        }
+
+        /* Status bar */
+        .status-message {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        /* Integration/postMessage helper */
+        .portal-sender-box {
+            display: none; /* Only visible if running inside iframe */
+            margin-top: 15px;
+        }
+
+        /* Responsive face shape matching visual card */
+        .face-match-flex {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .face-model-img {
+            width: 105px;
+            height: 140px;
+            background-size: cover;
+            background-position: center;
+            border: 1.5px solid var(--accent-pink);
+            border-radius: 8px;
+            flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(255, 20, 147, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 580px) {
+            .face-match-flex {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 12px;
+            }
+            .face-model-img {
+                width: 150px;
+                height: 200px;
+                box-shadow: 0 0 18px rgba(255, 20, 147, 0.35);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            CORE CONNECT <span class="logo-badge">Beauty Lab</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+            <span class="standalone-badge">STANDALONE TEST APP</span>
+            <button class="btn btn-secondary" style="padding: 5px 12px; font-size:11px; border-radius:6px; width:auto;" id="togglePortalMock">ポータル送信用デモ</button>
+        </div>
+    </header>
+
+    <!-- Main Grid -->
+    <div class="main-container">
+        
+        <!-- Left Side: WebCam Viewport -->
+        <div class="workspace-panel">
+            
+            <div class="camera-viewport">
+                <!-- Video tag (hidden, used as MediaPipe source) -->
+                <video id="webcamVideo" autoplay playsinline muted></video>
+                
+                <!-- Drawing Canvas (mirrored) -->
+                <canvas id="outputCanvas"></canvas>
+                
+                <!-- Scanning animation overlay -->
+                <div class="scan-line" id="cameraScanLine"></div>
+                
+                <!-- HUD Top-Left: Face tracking status -->
+                <div class="hud-overlay hud-top-left" id="hudFaceStatus">
+                    <div style="width:6px; height:6px; background:#64ffda; border-radius:50%;"></div>
+                    <span>FACE ENGAGED: WAITING DETECT</span>
+                </div>
+                
+                <!-- HUD Top-Right: Heart rate status -->
+                <div class="hud-overlay hud-top-right">
+                    <div class="hud-pulse" id="hudPulseCircle"></div>
+                    <span>rPPG ENGINE: READY</span>
+                </div>
+                
+                <!-- Oscilloscope overlay -->
+                <div class="ppg-oscilloscope-container">
+                    <div class="ppg-header">
+                        <span>rPPG 心脈波リアルタイムモニタ (血流動態)</span>
+                        <span id="ppgSignalStrength">シグナル強度: 0.0</span>
+                    </div>
+                    <canvas class="ppg-chart-canvas" id="ppgCanvas"></canvas>
+                </div>
+                
+                <!-- Countdown Overlay -->
+                <div class="countdown-overlay" id="countdownOverlay">
+                    <div class="countdown-number" id="countdownNumber">30</div>
+                    
+                    <!-- Real-time pulse waveform inside overlay -->
+                    <div style="width: 220px; height: 50px; margin: 10px auto; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 4px; box-sizing: border-box; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                        <canvas id="countdownPpgCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+                    </div>
+                    
+                    <div class="countdown-label">脈波・血流スキャン中...動かないでください</div>
+                </div>
+            </div>
+
+            <!-- Standalone camera activation controls -->
+            <div class="glass-card" style="padding: 15px 20px;">
+                <div style="display:flex; gap:15px; justify-content:center;">
+                    <button class="btn btn-primary" id="startCamBtn" style="max-width:250px;">📷 カメラ起動</button>
+                    <button class="btn btn-secondary" id="startScanBtn" style="max-width:250px;" disabled>✨ 顔診断＆血流スキャン開始</button>
+                </div>
+                <div class="status-message" id="appStatusBar">カメラボタンを押してAI診断を起動してください。</div>
+            </div>
+
+        </div>
+
+        <!-- Right Side: Control Settings & Interactive Results -->
+        <div class="control-panel">
+            
+            <!-- Diagnosis setup -->
+            <div class="glass-card" id="beautyOptionsCard">
+                <div class="panel-title">🎯 診断オプション設定</div>
+                
+                <div class="input-group" id="desiredFaceTypeGroup">
+                    <label for="desiredFaceType">なりたい理想の顔イメージ</label>
+                    <select class="glass-select" id="desiredFaceType">
+                        <option value="cute">キュート・甘口 (丸みを強調し可愛らしく)</option>
+                        <option value="cool">クール・ハンサム (シャープで引き締まった印象)</option>
+                        <option value="elegant">エレガント・大人っぽ (卵型の黄金比率へ補正)</option>
+                    </select>
+                </div>
+                <div class="input-group" id="userAgeGroup" style="margin-top: 12px;">
+                    <label for="userAgeSegment">推定年齢（イメージモデル調整用）</label>
+                    <select class="glass-select" id="userAgeSegment">
+                        <option value="10">10代・学生 (スクール・プチプラ)</option>
+                        <option value="20">20代 (フレッシュ・トレンド)</option>
+                        <option value="30">30代 (フェミニン・上品)</option>
+                        <option value="40">40代〜 (エレガント・エイジングケア)</option>
+                    </select>
+                </div>
+                <div class="input-group" id="healthOptionsGroup" style="display: none; margin-bottom: 15px;">
+                    <label>自律神経測定モード</label>
+                    <div style="font-size: 13px; font-weight:700; color:var(--accent-blue); padding: 8px 12px; background:rgba(0,191,255,0.08); border:1px solid rgba(0,191,255,0.2); border-radius:8px; display:inline-block; width:100%; box-sizing:border-box;">
+                        💓 精密脈波（rPPG）＆自律神経バランス（HRV）解析
+                    </div>
+                </div>
+                <div class="input-group" style="margin-top: 15px;">
+                    <label>rPPG 測定スキャン時間</label>
+                    <div id="scanDurationBadge" style="font-size: 13px; font-weight:700; color:var(--accent-teal); padding: 8px 12px; background:rgba(100,255,218,0.08); border:1px solid rgba(100,255,218,0.2); border-radius:8px; display:inline-block; width:100%; box-sizing:border-box;">
+                        ⏱️ 30秒固定 (学術的エビデンスに基づく高精度測定)
+                    </div>
+                </div>
+                <div style="font-size:11px; color:var(--text-secondary); line-height:1.4; margin-top:10px;">
+                    ※rPPG（非接触脈波測定）における正確な心拍変動（HRV）および自律神経バランスの解析には、ノイズ排除のために最低30秒間の連続的なデータ取得が必要です。
+                </div>
+            </div>
+
+            <!-- Diagnostics results report -->
+            <div class="glass-card">
+                <div class="panel-title pink">📊 AI 顔分析＆脈拍測定レポート</div>
+                
+                <div class="results-grid">
+                    <div class="metric-badge">
+                        <span class="metric-label" id="labelFaceType">判定された顔の骨格型</span>
+                        <span class="metric-val highlight" id="resFaceType">未検出</span>
+                    </div>
+                    <div class="metric-badge">
+                        <span class="metric-label" id="labelSymmetry">顔の左右対称性（Symmetry）</span>
+                        <span class="metric-val highlight" id="resSymmetry">-- %</span>
+                    </div>
+                    <div class="metric-badge">
+                        <span class="metric-label">測定心拍数 (rPPG HR)</span>
+                        <span class="metric-val pink" id="resHeartRate">-- bpm</span>
+                    </div>
+                    <div class="metric-badge">
+                        <span class="metric-label">自律神経ストレス判定</span>
+                        <span class="metric-val pink" id="resStress">--</span>
+                    </div>
+                    <div class="metric-badge" style="grid-column: span 2; background: linear-gradient(135deg, rgba(100,255,218,0.05) 0%, rgba(100,255,218,0) 100%); border-color: rgba(100,255,218,0.25);">
+                        <span class="metric-label" style="color:var(--accent-teal); font-weight:700;">HRV心拍変動指標 (RMSSD)</span>
+                        <span class="metric-val highlight" style="color:var(--accent-teal);" id="resHrv">-- ms</span>
+                    </div>
+                </div>
+
+                <!-- Face Type Visualization & Celeb match (Only visible if face detected) -->
+                <div class="glass-card" id="faceVisualMatchCard" style="display: none; margin-top: 15px; border: 1px solid rgba(255, 20, 147, 0.2); background: rgba(10, 20, 42, 0.5); padding: 12px; border-radius: 10px;">
+                    <div style="font-size: 11px; font-weight: 700; color: var(--accent-pink); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                        <span>👤 あなたの顔骨格タイプ ＆ 理想のイメージモデル</span>
+                    </div>
+                    <div class="face-match-flex">
+                        <!-- Model Image container -->
+                        <div id="faceModelImage" class="face-model-img">
+                        </div>
+                        <!-- Description and famous figures -->
+                        <div style="flex-grow: 1;">
+                            <div id="faceShapeDesc" style="font-size: 11px; color: var(--text-primary); font-weight: 700; margin-bottom: 4px;">--</div>
+                            <div style="font-size: 10px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 6px;" id="faceShapeDetail">--</div>
+                            <div style="font-size: 9px; padding: 6px 10px; background: rgba(255, 255, 255, 0.02); border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.04); box-sizing: border-box; width: 100%;">
+                                <span style="color: var(--accent-teal); font-weight: 700;">🤝 同じ顔骨格型の偉人・有名人（著作権フリー）:</span><br>
+                                <span id="faceShapeCelebs" style="color: var(--text-primary);">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scientific Explanations Toggles -->
+                <div style="margin-top: 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+                    <details style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; cursor: pointer; transition: all 0.3s ease;">
+                        <summary style="font-size: 11px; font-weight: 700; color: var(--text-primary); list-style: none; display: flex; justify-content: space-between; align-items: center; user-select: none;">
+                            <span>💓 rPPG（非接触脈波測定）とは？ 詳しくはこちら</span>
+                            <span style="font-size: 10px; color: var(--accent-blue);">▼ 詳細展開</span>
+                        </summary>
+                        <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5; margin-top: 8px; border-top: 1px dashed rgba(255,255,255,0.06); padding-top: 8px; cursor: default;">
+                            <strong>rPPG (remote Photoplethysmography: 非接触皮膚血流光電容じき脈波)</strong><br>
+                            最新のスマートフォン（iPhone等）の高性能カメラを活用した先進ヘルスケアアプリや、遠隔医療・オンライン健康相談分野で既に広く導入・実用化されている、科学的エビデンスに裏付けられた信頼性の高い先進テクノロジーです。<br>
+                            カメラ映像から皮膚表面（顔面）の微細な輝度変化（血液量のゆらぎ）を非接触で捉え、心拍数や血流動態を測定します。心臓の鼓動に伴う皮膚の反射光変化を画像解析するため、スマートウォッチなどのデバイスを装着することなく、衛生的かつ手軽に精度の高いバイタル測定が可能です。
+                        </div>
+                    </details>
+
+                    <details style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; cursor: pointer; transition: all 0.3s ease;">
+                        <summary style="font-size: 11px; font-weight: 700; color: var(--text-primary); list-style: none; display: flex; justify-content: space-between; align-items: center; user-select: none;">
+                            <span>📊 HRV（心拍変動）とは？ 詳しくはこちら</span>
+                            <span style="font-size: 10px; color: var(--accent-blue);">▼ 詳細展開</span>
+                        </summary>
+                        <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5; margin-top: 8px; border-top: 1px dashed rgba(255,255,255,0.06); padding-top: 8px; cursor: default;">
+                            <strong>HRV (Heart Rate Variability: 心拍変動)</strong><br>
+                            一拍ごとの拍動間隔のミリ秒単位の揺らぎのことです。健康な心臓の鼓動リズムはメトロノームのように一定ではなく、自律神経（交感神経と副交感神経）の働きによって一拍ごとに微細に変化しています。<br>
+                            疲労やストレスが蓄積すると交感神経が興奮し、拍動の間隔が均一で柔軟性のない硬いリズム（HRVが低下）になります。逆にリラックスして自律神経の働きが健全なときは、拍動の間隔が豊かに変化（HRVが上昇）します。本測定では心臓副交感神経の活性を反映する国際標準指標「RMSSD（連続する拍動間隔 of 差の平方平均平方根）」を分析しています。
+
+                            <!-- Evaluation Scale / Reference Legend -->
+                            <div style="margin-top: 10px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 8px; box-sizing: border-box;">
+                                <div style="font-weight: 700; color: var(--text-primary); font-size: 10px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px;">📈 自律神経ストレス・HRV評価基準 (RMSSD値)</div>
+                                <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 2px;">
+                                    <span>🟢 <strong>50 ms 以上</strong>: リラックス状態 / 自律神経機能良好</span>
+                                    <span style="font-weight:700; color:var(--accent-teal);">良好</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 2px;">
+                                    <span>🟡 <strong>30 〜 49 ms</strong>: 通常範囲 / 日常の平均的コンディション</span>
+                                    <span style="font-weight:700; color:var(--accent-blue);">通常</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-secondary); line-height: 1.6;">
+                                    <span>🔴 <strong>30 ms 未満</strong>: ストレス過多・自律神経機能低下の兆候</span>
+                                    <span style="font-weight:700; color:var(--accent-red);">注意</span>
+                                </div>
+                                <div style="font-size: 9px; color: var(--text-secondary); margin-top: 6px; line-height: 1.3; border-top: 1px dashed rgba(255,255,255,0.04); padding-top: 4px;">
+                                    ※数値は安静時の目安です。年齢や体調によっても変動します。
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Interactive makeup advice steps -->
+                <div class="makeup-guide-card" id="makeupGuideCard">
+                    <div style="font-size:12px; font-weight:700; color:var(--text-primary); margin-bottom:10px; border-top:1px solid rgba(255,255,255,0.06); padding-top:10px;">
+                        💄 <span id="guideTitle">メイクアップアドバイス</span>
+                    </div>
+                    
+                    <div id="guideStepsContainer">
+                        <!-- Dynamic Steps -->
+                    </div>
+
+                    <!-- Recommended cosmetics -->
+                    <div class="cosmetics-title" id="cosmeticsTitle">
+                        🧴 おすすめの連動化粧品 (協賛スポンサー提供)
+                    </div>
+                    <div class="cosmetic-list" id="cosmeticListContainer">
+                        <!-- Dynamic cosmetic cards -->
+                    </div>
+                </div>
+
+                <!-- Parent Portal postMessage button (only visible inside portal iframe) -->
+                <div class="portal-sender-box" id="portalSenderBox">
+                    <button class="btn btn-primary" id="sendPortalBtn" style="background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-red) 100%); box-shadow: 0 4px 15px rgba(255, 145, 0, 0.3);">
+                        📥 測定結果データをポータルに送信
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Scripting Logic -->
+    <script>
+        // DOM Elements
+        const video = document.getElementById('webcamVideo');
+        const canvas = document.getElementById('outputCanvas');
+        const ctx = canvas.getContext('2d');
+        const startCamBtn = document.getElementById('startCamBtn');
+        const startScanBtn = document.getElementById('startScanBtn');
+        const appStatusBar = document.getElementById('appStatusBar');
+        const hudFaceStatus = document.getElementById('hudFaceStatus');
+        const hudPulseCircle = document.getElementById('hudPulseCircle');
+        const cameraScanLine = document.getElementById('cameraScanLine');
+        const countdownOverlay = document.getElementById('countdownOverlay');
+        const countdownNumber = document.getElementById('countdownNumber');
+        const desiredFaceTypeSelect = document.getElementById('desiredFaceType');
+        const userAgeSegmentSelect = document.getElementById('userAgeSegment');
+
+        const resFaceType = document.getElementById('resFaceType');
+        const resSymmetry = document.getElementById('resSymmetry');
+        const resHeartRate = document.getElementById('resHeartRate');
+        const resStress = document.getElementById('resStress');
+        const resHrv = document.getElementById('resHrv');
+        const makeupGuideCard = document.getElementById('makeupGuideCard');
+        const guideTitle = document.getElementById('guideTitle');
+        const guideStepsContainer = document.getElementById('guideStepsContainer');
+        const cosmeticListContainer = document.getElementById('cosmeticListContainer');
+        const portalSenderBox = document.getElementById('portalSenderBox');
+        const sendPortalBtn = document.getElementById('sendPortalBtn');
+        const togglePortalMock = document.getElementById('togglePortalMock');
+
+        // Face Visual Match DOM Elements
+        const faceVisualMatchCard = document.getElementById('faceVisualMatchCard');
+        const faceModelImage = document.getElementById('faceModelImage');
+        const faceShapeDesc = document.getElementById('faceShapeDesc');
+        const faceShapeDetail = document.getElementById('faceShapeDetail');
+        const faceShapeCelebs = document.getElementById('faceShapeCelebs');
+
+        // rPPG Signal processing variables
+        const ppgCanvas = document.getElementById('ppgCanvas');
+        const ppgCtx = ppgCanvas.getContext('2d');
+        const countdownPpgCanvas = document.getElementById('countdownPpgCanvas');
+        const countdownPpgCtx = countdownPpgCanvas ? countdownPpgCanvas.getContext('2d') : null;
+        const ppgSignalStrength = document.getElementById('ppgSignalStrength');
+
+        let cameraHelper = null;
+        let faceMesh = null;
+        let isCameraActive = false;
+        let isScanning = false;
+        let faceDetected = false;
+        let rawGreenValues = [];
+        let ppgBuffer = []; // Display buffer for plotting
+        const bufferSize = 180; // 6 seconds at 30 fps
+
+        // Landmark data caches
+        let currentLandmarks = null;
+        let currentFaceType = "未検出";
+        let currentSymmetry = 0;
+        let calculatedBPM = 0;
+        let calculatedStress = "分析中";
+
+        // Simulation parameters when camera is not available or for offline testing
+        let simulatedPulseWavePhase = 0;
+        let isSimulatedCamera = false;
+
+        // Explicitly release camera resources when unloading the iframe
+        window.addEventListener('beforeunload', () => {
+            if (video && video.srcObject) {
+                try {
+                    const stream = video.srcObject;
+                    const tracks = stream.getTracks();
+                    tracks.forEach(track => track.stop());
+                    video.srcObject = null;
+                } catch (e) {
+                    console.error("Error stopping webcam tracks:", e);
+                }
+            }
+            if (cameraHelper) {
+                try {
+                    cameraHelper.stop();
+                } catch (e) {
+                    console.error("Error stopping camera helper:", e);
+                }
+            }
+        });
+
+        // Setup initial UI layout based on vertical query parameter
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hide standalone header if running inside portal iframe to save space on mobile
+            if (window.self !== window.top) {
+                const headerEl = document.querySelector('header');
+                if (headerEl) headerEl.style.display = 'none';
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const vertical = urlParams.get('vertical') || 'beauty';
+            const isHealthMode = (vertical === 'health' || vertical === 'sports');
+            
+            if (isHealthMode) {
+                // Hide beauty option and age group, show health option
+                const faceGroup = document.getElementById('desiredFaceTypeGroup');
+                const ageGroup = document.getElementById('userAgeGroup');
+                const healthGroup = document.getElementById('healthOptionsGroup');
+                const optTitle = document.querySelector('#beautyOptionsCard .panel-title');
+                const optNote = document.querySelector('#beautyOptionsCard div[style*="font-size:11px"]');
+                const durationBadge = document.getElementById('scanDurationBadge');
+                
+                if (faceGroup) faceGroup.style.display = 'none';
+                if (ageGroup) ageGroup.style.display = 'none';
+                if (healthGroup) healthGroup.style.display = 'block';
+                if (optTitle) {
+                    optTitle.innerText = "🏥 測定オプション設定";
+                    optTitle.style.color = "var(--accent-blue)";
+                }
+                if (optNote) {
+                    optNote.innerText = "※PCやスマホのカメラで皮膚表面の輝度変化を捉え、心拍の間隔のゆらぎ（RMSSD指標）から、交感神経・副交感神経のトーンを評価します。";
+                }
+                if (durationBadge) {
+                    durationBadge.style.color = "var(--accent-blue)";
+                    durationBadge.style.borderColor = "rgba(0,191,255,0.2)";
+                    durationBadge.style.background = "rgba(0,191,255,0.08)";
+                }
+
+                // Customize results card title to health theme
+                const reportTitle = document.querySelector('.control-panel .glass-card:nth-child(2) .panel-title');
+                if (reportTitle) {
+                    reportTitle.innerText = "📊 AI 非接触バイタル＆ストレス分析レポート";
+                    reportTitle.classList.remove('pink');
+                    reportTitle.style.color = "var(--accent-blue)";
+                    reportTitle.style.borderBottomColor = "rgba(0,191,255,0.2)";
+                }
+
+                // Hide beauty results badges (face type and symmetry) from results grid
+                const faceTypeVal = document.getElementById('resFaceType');
+                const symmetryVal = document.getElementById('resSymmetry');
+                if (faceTypeVal && faceTypeVal.parentElement) {
+                    faceTypeVal.parentElement.style.display = 'none';
+                }
+                if (symmetryVal && symmetryVal.parentElement) {
+                    symmetryVal.parentElement.style.display = 'none';
+                }
+            }
+        });
+
+        // Cosmetic data sources
+        const cosmeticsDB = {
+            cute: [
+                {
+                    name: "メルティシフォンパウダーチーク (ピーチソーダ)",
+                    brand: "ELIXIR / 資生堂",
+                    price: "¥2,200 (税込)",
+                    img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&q=80&w=200",
+                    desc: "丸顔をふんわり可愛らしく見せるピンク系チーク"
+                },
+                {
+                    name: "パールグロウハイライト (サクラミント)",
+                    brand: "CEZANNE",
+                    price: "¥660 (税込)",
+                    img: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=80&w=200",
+                    desc: "目の下と顎先に入れて立体感を引き出す高輝度パール"
+                }
+            ],
+            cool: [
+                {
+                    name: "3Dクリエイト・コントゥアリングパウダー",
+                    brand: "KATE / カネボウ",
+                    price: "¥1,540 (税込)",
+                    img: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=200",
+                    desc: "頬骨の下からシャープに入れる影用シェーディング"
+                },
+                {
+                    name: "プリズムライト・ハイライター (ブロンズドゴールド)",
+                    brand: "MAQuillAGE / 資生堂",
+                    price: "¥3,850 (税込)",
+                    img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&q=80&w=200",
+                    desc: "シャープな顔立ちを引き出すクールゴールドハイライト"
+                }
+            ],
+            elegant: [
+                {
+                    name: "デザインタイムセラム (リフトアップ導入美容液)",
+                    brand: "ELIXIR / 資生堂",
+                    price: "¥4,950 (税込)",
+                    img: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&q=80&w=200",
+                    desc: "表情筋アライメントを整えハリのあるフェイスラインへ"
+                },
+                {
+                    name: "シアーヴェール・チークブラッシュ (カシスローズ)",
+                    brand: "COSMEDECORTE",
+                    price: "¥4,400 (税込)",
+                    img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&q=80&w=200",
+                    desc: "大人っぽい品格と奥行きを与えるくすみローズチーク"
+                }
+            ]
+        };
+
+        // Teen/Student cosmetics data sources (affordable Petit-price favorites)
+        const teenCosmeticsDB = {
+            cute: [
+                {
+                    name: "マシュマロフィニッシュパウダー (マットオークル)",
+                    brand: "CANMAKE (キャンメイク)",
+                    price: "¥1,034 (税込)",
+                    img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&q=80&w=200",
+                    desc: "中高生に大人気！ふわふわマシュマロ美肌を作るパウダー"
+                },
+                {
+                    name: "パウダーチークス (シアーピンク)",
+                    brand: "CANMAKE (キャンメイク)",
+                    price: "¥660 (税込)",
+                    img: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=80&w=200",
+                    desc: "スクールメイクでも浮かないナチュラルな血色感チーク"
+                }
+            ],
+            cool: [
+                {
+                    name: "ダブルラインエキスパート (極薄ブラウン)",
+                    brand: "KATE / カネボウ",
+                    price: "¥935 (税込)",
+                    img: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=200",
+                    desc: "二重や涙袋の影を自然に強調して、切れ長でクールな目元を作る影用ライナー"
+                },
+                {
+                    name: "ミックスカラーチークN (シェーディングカラー)",
+                    brand: "CEZANNE (セザンヌ)",
+                    price: "¥748 (税込)",
+                    img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&q=80&w=200",
+                    desc: "プチプラで簡単に陰影を作り、すっきり小顔に見せるマットパウダー"
+                }
+            ],
+            elegant: [
+                {
+                    name: "リップモンスター (憧れラスボス色)",
+                    brand: "KATE / カネボウ",
+                    price: "¥1,540 (税込)",
+                    img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&q=80&w=200",
+                    desc: "落ちにくくツヤ続く！少し大人っぽく品のある唇に仕上げるバズリップ"
+                },
+                {
+                    name: "パールグロウハイライト (シャンパンベージュ)",
+                    brand: "CEZANNE (セザンヌ)",
+                    price: "¥660 (税込)",
+                    img: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=80&w=200",
+                    desc: "塗るレフ板！鼻筋や目元に透明感あるエレガントな輝きを与える名品"
+                }
+            ]
+        };
+
+        // Makeup advice guide steps
+        const makeupGuides = {
+            cute: {
+                title: "甘口キュートメイク・ contouring レシピ",
+                steps: [
+                    "<strong>ハイライト(光):</strong> 額中央と目の下、顎先に丸く入れ、顔の中心を高く見せて「ふんわり感」を出します。",
+                    "<strong>シェーディング(影):</strong> 面長さをカバーするため、おでとの生え際とあご先に縦ラインを打ち消すように横に影を入れます。",
+                    "<strong>チーク(頬紅):</strong> ニコッと笑って一番高くなる場所に、楕円形ではなく「円を描くように」丸く淡いピンクをのせます。",
+                    "<strong>アイブロウ(眉):</strong> 太めのアーチ型で眉頭をぼかし、全体的に柔らかな曲線を描くことで可愛い印象をさらに強めます。"
+                ]
+            },
+            cool: {
+                title: "辛口クール・ハンサムコントゥア レシピ",
+                steps: [
+                    "<strong>シェーディング(影):</strong> 頬骨の下からこめかみ、またエラに沿ってシャープに斜め下に向かって影を入れ、輪郭を引き締めます。",
+                    "<strong>ハイライト(光):</strong> 鼻筋（Tゾーン）に細くスッと入れ、また顎先にシャープに縦に入れます。丸みではなく直線を意識します。",
+                    "<strong>チーク(頬紅):</strong> ベージュまたはオレンジ系のチークを、耳の横（こめかみ付近）から頬中央に向けて斜め上からシャープに入れます。",
+                    "<strong>アイブロウ(眉):</strong> 眉山をしっかりと角ばらせた、少し濃いめのストレート眉にすることで知的な顔立ちを作ります。"
+                ]
+            },
+            elegant: {
+                title: "大人上品フェミニン・黄金比アライメント レシピ",
+                steps: [
+                    "<strong>シェーディング(影):</strong> 現在の顔立ち（丸顔・ベース型など）の外形に沿って、卵型の理想比率からはみ出た部分（額の両サイドや顎の外側）を影で削ります。",
+                    "<strong>ハイライト(光):</strong> 目頭の下から目尻へかけた「美肌ゾーン（Cゾーン）」と、鼻筋の中央、唇の山の上部分に艶のあるハイライトを配置します。",
+                    "<strong>チーク(頬紅):</strong> 黒目の外側からこめかみに向かって、斜めにふわりとローズチークをのせ、自然なリフトアップ効果を生みます。",
+                    "<strong>アイブロウ(眉):</strong> 目元のカーブに沿って、少し長めのゆるやかな美人眉を描くことで、品格のある優雅さを醸し出します。"
+                ]
+            }
+        };
+
+        // Is this running inside an iframe?
+        const isIframe = window.parent && window.parent !== window;
+        if (isIframe) {
+            portalSenderBox.style.display = 'block';
+        }
+
+        // Initialize drawing canvas properties
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        // Active theme checker / query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const autoStart = urlParams.get('autoStart');
+        if (autoStart === 'true') {
+            setTimeout(() => {
+                activateCamera();
+            }, 500);
+        }
+
+        // Action: start camera
+        startCamBtn.addEventListener('click', activateCamera);
+
+        function activateCamera() {
+            if (isCameraActive) return;
+            appStatusBar.innerText = "カメラ起動要求を送信中... 許可してください。";
+            
+            // Initialize MediaPipe Face Mesh object
+            faceMesh = new FaceMesh({
+                locateFile: (file) => {
+                    return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+                }
+            });
+
+            faceMesh.setOptions({
+                maxNumFaces: 1,
+                refineLandmarks: true,
+                minDetectionConfidence: 0.5,
+                minTrackingConfidence: 0.5
+            });
+
+            faceMesh.onResults(onFaceMeshResults);
+
+            // Access WebCam
+            navigator.mediaDevices.getUserMedia({
+                video: { width: 640, height: 480, facingMode: 'user' },
+                audio: false
+            }).then((stream) => {
+                function onMetadataLoaded() {
+                    if (isCameraActive) return; // Prevent duplicate initialization
+                    isCameraActive = true;
+                    startCamBtn.disabled = true;
+                    startScanBtn.disabled = false;
+                    appStatusBar.innerText = "カメラ起動成功。顔を画面中央に合わせて「スキャン開始」を押してください。";
+                    resizeCanvas();
+                    
+                    // Create MediaPipe camera instance
+                    cameraHelper = new Camera(video, {
+                        onFrame: async () => {
+                            if (isCameraActive) {
+                                await faceMesh.send({ image: video });
+                            }
+                        },
+                        width: 640,
+                        height: 480
+                    });
+                    cameraHelper.start();
+                }
+
+                // 1. Register listener FIRST to avoid race condition
+                video.addEventListener('loadedmetadata', onMetadataLoaded);
+                
+                // 2. Assign stream to srcObject
+                video.srcObject = stream;
+                
+                // 3. Explicitly trigger play (required in some browsers for muted streams)
+                video.play().then(() => {
+                    // Check if metadata loaded instantly
+                    if (video.readyState >= 1) {
+                        onMetadataLoaded();
+                    }
+                }).catch((playErr) => {
+                    console.warn("Video play error:", playErr);
+                    // Force start if play was deferred
+                    if (video.readyState >= 1) {
+                        onMetadataLoaded();
+                    }
+                });
+            }).catch((err) => {
+                console.error("Camera access error:", err);
+                appStatusBar.innerText = "エラー: カメラの起動に失敗しました。パーミッション設定を確認してください。";
+                // Fallback simulation mode
+                appStatusBar.innerText += " (デモシミュレータとして起動します)";
+                startCameraSimulation();
+            });
+        }
+
+        // Offline Simulator mode (if webcam is blocked or not available in environment)
+        let simulatedLandmarks = [];
+        function generateSimulatedLandmarks() {
+            const list = [];
+            const cX = canvas.width / 2;
+            const cY = canvas.height / 2;
+            
+            // Outer oval (36 points)
+            for (let i = 0; i < 36; i++) {
+                const angle = (i / 36) * 2 * Math.PI;
+                list.push({
+                    x: (cX + 85 * Math.cos(angle)) / canvas.width,
+                    y: (cY - 10 + 120 * Math.sin(angle)) / canvas.height
+                });
+            }
+            // Inner cheeks and forehead grid (80 points)
+            for (let r = 20; r < 90; r += 15) {
+                const num = Math.floor(r / 2);
+                for (let i = 0; i < num; i++) {
+                    const angle = (i / num) * 2 * Math.PI;
+                    list.push({
+                        x: (cX + r * Math.cos(angle)) / canvas.width,
+                        y: (cY - 10 + r * 1.2 * Math.sin(angle)) / canvas.height
+                    });
+                }
+            }
+            // Eyes (2 * 16 points)
+            for (let i = 0; i < 16; i++) {
+                const angle = (i / 16) * 2 * Math.PI;
+                // Left Eye
+                list.push({
+                    x: (cX - 30 + 12 * Math.cos(angle)) / canvas.width,
+                    y: (cY - 30 + 7 * Math.sin(angle)) / canvas.height
+                });
+                // Right Eye
+                list.push({
+                    x: (cX + 30 + 12 * Math.cos(angle)) / canvas.width,
+                    y: (cY - 30 + 7 * Math.sin(angle)) / canvas.height
+                });
+            }
+            // Eyebrows
+            for (let i = 0; i < 10; i++) {
+                list.push({
+                    x: (cX - 45 + i * 3.3) / canvas.width,
+                    y: (cY - 45 - Math.sin((i / 9) * Math.PI) * 5) / canvas.height
+                });
+                list.push({
+                    x: (cX + 15 + i * 3.3) / canvas.width,
+                    y: (cY - 45 - Math.sin((i / 9) * Math.PI) * 5) / canvas.height
+                });
+            }
+            // Nose (20 points)
+            for (let i = 0; i < 10; i++) {
+                list.push({
+                    x: cX / canvas.width,
+                    y: (cY - 30 + i * 5) / canvas.height
+                });
+                list.push({
+                    x: (cX - 12 + i * 2.7) / canvas.width,
+                    y: (cY + 20) / canvas.height
+                });
+            }
+            // Lips (24 points)
+            for (let i = 0; i < 24; i++) {
+                const angle = (i / 24) * 2 * Math.PI;
+                list.push({
+                    x: (cX + 22 * Math.cos(angle)) / canvas.width,
+                    y: (cY + 45 + 11 * Math.sin(angle)) / canvas.height
+                });
+            }
+            return list;
+        }
+
+        function startCameraSimulation() {
+            isCameraActive = true;
+            isSimulatedCamera = true;
+            startCamBtn.disabled = true;
+            startScanBtn.disabled = false;
+            resizeCanvas();
+
+            simulatedLandmarks = generateSimulatedLandmarks();
+            
+            // Start local loop rendering dummy face and sine pulse wave
+            function simLoop() {
+                if (!isCameraActive) return;
+                
+                // Clear and draw mock face in mirror coordinates
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Dark background gradient
+                ctx.fillStyle = "#050f28";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Grid guides
+                ctx.strokeStyle = "rgba(0, 191, 255, 0.05)";
+                ctx.lineWidth = 1;
+                for(let i=0; i<canvas.width; i+=40) {
+                    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+                }
+                for(let j=0; j<canvas.height; j+=40) {
+                    ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(canvas.width, j); ctx.stroke();
+                }
+
+                // Draw mock landmark point cloud (simulated MediaPipe 468 points)
+                ctx.fillStyle = isScanning ? "rgba(255, 20, 147, 0.65)" : "rgba(100, 255, 218, 0.65)";
+                simulatedLandmarks.forEach(pt => {
+                    // Add subtle micro-jitter for high-fidelity scanning aesthetic
+                    const jitterX = (Math.random() - 0.5) * 0.8;
+                    const jitterY = (Math.random() - 0.5) * 0.8;
+                    ctx.beginPath();
+                    ctx.arc(pt.x * canvas.width + jitterX, pt.y * canvas.height + jitterY, 1.2, 0, 2 * Math.PI);
+                    ctx.fill();
+                });
+
+                // Draw mock face contour (Neon Pink/Cyan)
+                const cX = canvas.width / 2;
+                const cY = canvas.height / 2;
+                
+                ctx.strokeStyle = isScanning ? "#ff1493" : "#64ffda";
+                ctx.shadowColor = ctx.strokeStyle;
+                ctx.shadowBlur = 12;
+                ctx.lineWidth = 1.2;
+                
+                // Oval face contour
+                ctx.beginPath();
+                ctx.ellipse(cX, cY - 10, 85, 120, 0, 0, 2*Math.PI);
+                ctx.stroke();
+
+                // Eyes
+                ctx.beginPath();
+                ctx.ellipse(cX - 30, cY - 30, 12, 7, 0, 0, 2 * Math.PI);
+                ctx.ellipse(cX + 30, cY - 30, 12, 7, 0, 0, 2 * Math.PI);
+                ctx.stroke();
+
+                // Eyebrows
+                ctx.beginPath();
+                ctx.moveTo(cX - 45, cY - 45); ctx.quadraticCurveTo(cX - 30, cY - 50, cX - 15, cY - 45);
+                ctx.moveTo(cX + 15, cY - 45); ctx.quadraticCurveTo(cX + 30, cY - 50, cX + 45, cY - 45);
+                ctx.stroke();
+
+                // Nose line
+                ctx.beginPath();
+                ctx.moveTo(cX, cY - 30);
+                ctx.lineTo(cX, cY + 15);
+                ctx.lineTo(cX - 12, cY + 20);
+                ctx.lineTo(cX + 12, cY + 20);
+                ctx.stroke();
+
+                // Mouth
+                ctx.beginPath();
+                ctx.ellipse(cX, cY + 45, 22, 10, 0, 0, 2 * Math.PI);
+                ctx.stroke();
+
+                ctx.shadowBlur = 0; // Reset shadow
+
+                // Draw target makeup mapping coordinates if results are active
+                if (makeupGuideCard.classList.contains('active')) {
+                    drawMakeupGuidesOnCanvas(cX, cY);
+                }
+
+                // Simulate rPPG signal data loop
+                processSimulatedrPPG();
+
+                requestAnimationFrame(simLoop);
+            }
+            
+            faceDetected = true;
+            hudFaceStatus.innerHTML = `<div style="width:6px; height:6px; background:#39ff14; border-radius:50%;"></div><span>SIMULATED FACE ACTIVE</span>`;
+            
+            requestAnimationFrame(simLoop);
+        }
+
+        // Draw overlay annotations representing highlight and shading
+        function drawMakeupGuidesOnCanvas(cX, cY, scale = 1.0) {
+            const target = desiredFaceTypeSelect.value;
+            
+            // Mirror canvas: x coords left/right swapped
+            if (target === 'cute') {
+                // Round cheeks blusher (soft pink circle)
+                ctx.fillStyle = "rgba(255, 20, 147, 0.15)";
+                ctx.beginPath();
+                ctx.arc(cX - 35*scale, cY + 10*scale, 20*scale, 0, 2*Math.PI);
+                ctx.arc(cX + 35*scale, cY + 10*scale, 20*scale, 0, 2*Math.PI);
+                ctx.fill();
+                
+                // Highlight spots (soft yellow/white dash)
+                ctx.strokeStyle = "rgba(255, 215, 0, 0.6)";
+                ctx.lineWidth = 2.5;
+                ctx.setLineDash([2, 3]);
+                // Forehead round highlight
+                ctx.beginPath(); ctx.arc(cX, cY - 70*scale, 15*scale, 0, 2*Math.PI); ctx.stroke();
+                // Chin highlight
+                ctx.beginPath(); ctx.arc(cX, cY + 80*scale, 10*scale, 0, 2*Math.PI); ctx.stroke();
+                ctx.setLineDash([]);
+            } 
+            else if (target === 'cool') {
+                // Shading (violet dashed contour lines along jaw and cheekbones)
+                ctx.strokeStyle = "rgba(138, 43, 226, 0.7)";
+                ctx.lineWidth = 3;
+                ctx.setLineDash([4, 4]);
+                // Left diagonal cheek shade
+                ctx.beginPath(); ctx.moveTo(cX - 80*scale, cY - 10*scale); ctx.lineTo(cX - 45*scale, cY + 15*scale); ctx.stroke();
+                // Right diagonal cheek shade
+                ctx.beginPath(); ctx.moveTo(cX + 80*scale, cY - 10*scale); ctx.lineTo(cX + 45*scale, cY + 15*scale); ctx.stroke();
+                // Jaw contour
+                ctx.beginPath(); ctx.moveTo(cX - 75*scale, cY + 70*scale); ctx.lineTo(cX, cY + 115*scale); ctx.lineTo(cX + 75*scale, cY + 70*scale); ctx.stroke();
+                
+                // Highlight (T-zone narrow lines)
+                ctx.strokeStyle = "rgba(0, 191, 255, 0.7)";
+                ctx.beginPath();
+                ctx.moveTo(cX, cY - 60*scale); ctx.lineTo(cX, cY + 10*scale); // Nose line
+                ctx.stroke();
+                ctx.setLineDash([]);
+            } 
+            else if (target === 'elegant') {
+                // Diagonal chic blush
+                ctx.fillStyle = "rgba(199, 21, 133, 0.18)";
+                ctx.beginPath();
+                // Left cheek diagonal oval
+                ctx.ellipse(cX - 40*scale, cY - 5*scale, 12*scale, 25*scale, -Math.PI/6, 0, 2*Math.PI);
+                // Right cheek diagonal oval
+                ctx.ellipse(cX + 40*scale, cY - 5*scale, 12*scale, 25*scale, Math.PI/6, 0, 2*Math.PI);
+                ctx.fill();
+                
+                // Upper forehead shading (egg shape contour corrector)
+                ctx.strokeStyle = "rgba(138, 43, 226, 0.5)";
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.arc(cX, cY - 100*scale, 40*scale, Math.PI, 2*Math.PI);
+                ctx.stroke();
+            }
+        }
+
+        // Helper to convert normalized landmarks coords to correct canvas pixels maintaining aspect ratio
+        function getCanvasCoords(pt) {
+            const imgW = video.videoWidth || 640;
+            const imgH = video.videoHeight || 480;
+            const canvasW = canvas.width;
+            const canvasH = canvas.height;
+            
+            const imgRatio = imgW / imgH;
+            const canvasRatio = canvasW / canvasH;
+            
+            let sx = 0, sy = 0, sWidth = imgW, sHeight = imgH;
+            if (imgRatio > canvasRatio) {
+                // Video is wider than canvas viewport - crop left/right
+                sWidth = imgH * canvasRatio;
+                sx = (imgW - sWidth) / 2;
+            } else {
+                // Video is taller than canvas viewport - crop top/bottom
+                sHeight = imgW / canvasRatio;
+                sy = (imgH - sHeight) / 2;
+            }
+            
+            const px = pt.x * imgW;
+            const py = pt.y * imgH;
+            
+            const xCanvas = (px - sx) / sWidth;
+            const yCanvas = (py - sy) / sHeight;
+            
+            return {
+                x: (1 - xCanvas) * canvasW, // Mirrored output
+                y: yCanvas * canvasH
+            };
+        }
+
+        // MediaPipe Face Mesh results callback
+        function onFaceMeshResults(results) {
+            if (!isCameraActive) return;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Compute cropping bounds
+            const imgW = results.image.width;
+            const imgH = results.image.height;
+            const canvasW = canvas.width;
+            const canvasH = canvas.height;
+            
+            const imgRatio = imgW / imgH;
+            const canvasRatio = canvasW / canvasH;
+            
+            let sx = 0, sy = 0, sWidth = imgW, sHeight = imgH;
+            if (imgRatio > canvasRatio) {
+                sWidth = imgH * canvasRatio;
+                sx = (imgW - sWidth) / 2;
+            } else {
+                sHeight = imgW / canvasRatio;
+                sy = (imgH - sHeight) / 2;
+            }
+
+            // Draw webcam frame mirrored and cropped to aspect ratio (No stretching!)
+            ctx.save();
+            ctx.scale(-1, 1);
+            ctx.drawImage(results.image, sx, sy, sWidth, sHeight, -canvasW, 0, canvasW, canvasH);
+            ctx.restore();
+
+            if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
+                faceDetected = true;
+                const landmarks = results.multiFaceLandmarks[0];
+                currentLandmarks = landmarks;
+                
+                hudFaceStatus.innerHTML = `<div style="width:6px; height:6px; background:#39ff14; border-radius:50%;"></div><span>FACE DETECTED: LOCKED</span>`;
+
+                // Draw face mesh glow wireframe
+                drawSleekFaceMesh(landmarks);
+
+                // Run rPPG extraction from Forehead
+                processrPPGFrame(landmarks, results.image);
+
+                // Overlay active makeup guidelines
+                if (makeupGuideCard.classList.contains('active')) {
+                    // Estimate scaling based on distance between temples (e.g. landmarks 33 and 263)
+                    const p1 = landmarks[33];
+                    const p2 = landmarks[263];
+                    const coords1 = getCanvasCoords(p1);
+                    const coords2 = getCanvasCoords(p2);
+                    const d = Math.sqrt(Math.pow(coords2.x - coords1.x, 2) + Math.pow(coords2.y - coords1.y, 2));
+                    const scale = d / 120.0;
+                    
+                    // Face center point
+                    const nose = landmarks[4];
+                    const noseCoords = getCanvasCoords(nose);
+                    const cX = noseCoords.x;
+                    const cY = noseCoords.y;
+                    
+                    drawMakeupGuidesOnCanvas(cX, cY, scale);
+                }
+            } else {
+                faceDetected = false;
+                hudFaceStatus.innerHTML = `<div style="width:6px; height:6px; background:#ff5252; border-radius:50%;"></div><span>FACE DISENGAGED: LOST</span>`;
+            }
+        }
+
+        // Draw custom sleek facial wireframe instead of heavy default lines
+        function drawSleekFaceMesh(landmarks) {
+            // Draw all 468 MediaPipe Face Mesh landmark points as small glowing dots
+            ctx.fillStyle = isScanning ? "rgba(255, 20, 147, 0.75)" : "rgba(100, 255, 218, 0.75)";
+            for (let i = 0; i < landmarks.length; i++) {
+                const pt = landmarks[i];
+                const coords = getCanvasCoords(pt);
+                ctx.beginPath();
+                ctx.arc(coords.x, coords.y, 1.2, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+
+            ctx.strokeStyle = isScanning ? "#ff1493" : "#64ffda";
+            ctx.lineWidth = 0.8;
+            ctx.fillStyle = isScanning ? "rgba(255, 20, 147, 0.02)" : "rgba(100, 255, 218, 0.01)";
+
+            // 1. Draw outer face contour
+            const faceContourPoints = [
+                10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 361, 288, 397, 365, 379, 378, 400, 377, 152, 148, 176, 149, 150, 136, 172, 58, 132, 93, 234, 127, 162, 21, 54, 103, 67, 109
+            ];
+            
+            ctx.beginPath();
+            faceContourPoints.forEach((idx, i) => {
+                const pt = landmarks[idx];
+                const coords = getCanvasCoords(pt);
+                if (i === 0) ctx.moveTo(coords.x, coords.y);
+                else ctx.lineTo(coords.x, coords.y);
+            });
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fill();
+
+            // 2. Draw Eyes
+            drawLoop(landmarks, [33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161, 246]); // Left
+            drawLoop(landmarks, [362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 386, 385, 384, 398]); // Right
+
+            // 3. Draw Eyebrows
+            drawPath(landmarks, [70, 63, 105, 66, 107]); // Left
+            drawPath(landmarks, [300, 293, 334, 296, 336]); // Right
+
+            // 4. Nose bridge and base
+            drawPath(landmarks, [168, 6, 197, 195, 5]);
+            drawPath(landmarks, [98, 97, 2, 326, 327]);
+
+            // 5. Mouth
+            drawLoop(landmarks, [78, 95, 88, 178, 87, 14, 317, 402, 318, 325, 308, 415, 310, 311, 312, 13, 82, 81, 80, 191]);
+        }
+
+        function drawLoop(landmarks, indices) {
+            ctx.beginPath();
+            indices.forEach((idx, i) => {
+                const pt = landmarks[idx];
+                const coords = getCanvasCoords(pt);
+                if (i === 0) ctx.moveTo(coords.x, coords.y);
+                else ctx.lineTo(coords.x, coords.y);
+            });
+            ctx.closePath();
+            ctx.stroke();
+        }
+
+        function drawPath(landmarks, indices) {
+            ctx.beginPath();
+            indices.forEach((idx, i) => {
+                const pt = landmarks[idx];
+                const coords = getCanvasCoords(pt);
+                if (i === 0) ctx.moveTo(coords.x, coords.y);
+                else ctx.lineTo(coords.x, coords.y);
+            });
+            ctx.stroke();
+        }
+
+        // ==========================================================================
+        // rPPG (脈波・血流) 実モジュール・アルゴリズム
+        // ==========================================================================
+        let smoothedVal = 0; // State variable for exponential smoothing
+
+        function processrPPGFrame(landmarks, videoFrame) {
+            // Forehead ROI bounding box calculation
+            // Center forehead landmarks: 9, 107, 336, 109, 338, 10
+            const lIdxs = [109, 108, 10, 338, 337, 67, 297, 9];
+            let minX = 1.0, maxX = 0.0, minY = 1.0, maxY = 0.0;
+
+            lIdxs.forEach(idx => {
+                const pt = landmarks[idx];
+                if (pt.x < minX) minX = pt.x;
+                if (pt.x > maxX) maxX = pt.x;
+                if (pt.y < minY) minY = pt.y;
+                if (pt.y > maxY) maxY = pt.y;
+            });
+
+            // Convert to canvas/frame absolute pixel values
+            // Video raw dimensions: videoFrame.width, videoFrame.height
+            const vW = videoFrame.width || 640;
+            const vH = videoFrame.height || 480;
+
+            const roiX = Math.floor(minX * vW);
+            const roiY = Math.floor(minY * vH);
+            const roiW = Math.floor((maxX - minX) * vW);
+            const roiH = Math.floor((maxY - minY) * vH);
+
+            if (roiW <= 0 || roiH <= 0) return;
+
+            // Draw green ROI bounds on Canvas for UX clarity
+            ctx.strokeStyle = "rgba(57, 255, 20, 0.5)";
+            ctx.lineWidth = 1;
+            ctx.strokeRect((1 - maxX) * canvas.width, minY * canvas.height, roiW * (canvas.width/vW), roiH * (canvas.height/vH));
+
+            // Extract pixels and compute spatial average of Green channel
+            // Using offscreen temporary canvas to extract ImageData
+            const offscreen = document.createElement('canvas');
+            offscreen.width = roiW;
+            offscreen.height = roiH;
+            const oCtx = offscreen.getContext('2d');
+            try {
+                oCtx.drawImage(video, roiX, roiY, roiW, roiH, 0, 0, roiW, roiH);
+                const imgData = oCtx.getImageData(0, 0, roiW, roiH);
+                const pixels = imgData.data;
+
+                let sumG = 0;
+                let count = 0;
+                for (let i = 0; i < pixels.length; i += 4) {
+                    // R = i, G = i+1, B = i+2, A = i+3
+                    sumG += pixels[i + 1];
+                    count++;
+                }
+
+                if (count > 0) {
+                    const avgG = sumG / count;
+                    pushrPPGValue(avgG);
+                }
+            } catch (e) {
+                console.warn("ImageData extract failed (cross-origin):", e);
+                // Fallback to simulated pulse wave if browser security blocks pixel access
+                processSimulatedrPPG();
+            }
+        }
+
+        function pushrPPGValue(val) {
+            rawGreenValues.push(val);
+            if (rawGreenValues.length > bufferSize) {
+                rawGreenValues.shift();
+            }
+
+            // Signal Processing: 1. Bandpass filter / Detrending
+            // We subtract a moving average of the last 30 frames (1 second) to remove DC drift
+            const windowSize = 30;
+            let filteredVal = 0;
+            if (rawGreenValues.length >= windowSize) {
+                let sum = 0;
+                for(let i = rawGreenValues.length - windowSize; i < rawGreenValues.length; i++) {
+                    sum += rawGreenValues[i];
+                }
+                const mean = sum / windowSize;
+                filteredVal = val - mean; // Detrended AC component
+            }
+
+            // 2. Low-pass filter (Exponential smoothing)
+            const alpha = 0.15;
+            smoothedVal = alpha * filteredVal + (1 - alpha) * smoothedVal;
+
+            ppgBuffer.push(smoothedVal);
+            if (ppgBuffer.length > bufferSize) {
+                ppgBuffer.shift();
+            }
+
+            // Signal strength text indicator
+            const max = Math.max(...ppgBuffer);
+            const min = Math.min(...ppgBuffer);
+            ppgSignalStrength.innerText = `シグナル強度: ${(max - min).toFixed(2)}`;
+
+            drawPPGWaveform();
+        }
+
+        // Fallback or Simulation pulse generator
+        function processSimulatedrPPG() {
+            simulatedPulseWavePhase += 0.12 + Math.random()*0.02; // Heart rate baseline
+            // Simulate arterial pulse wave contour (systolic peak + dicrotic notch)
+            let baseSim = Math.sin(simulatedPulseWavePhase) + 0.3 * Math.sin(2 * simulatedPulseWavePhase);
+            
+            // Add slight noise
+            baseSim += (Math.random() - 0.5) * 0.05;
+
+            ppgBuffer.push(baseSim * 5); // scaled
+            if (ppgBuffer.length > bufferSize) {
+                ppgBuffer.shift();
+            }
+            ppgSignalStrength.innerText = `シグナル強度: 安定 (デモ)`;
+            
+            drawPPGWaveform();
+        }
+
+        // Helper to draw waveform on any target canvas
+        function drawWaveformOnCanvas(canvasEl, ctxEl) {
+            if (!canvasEl || !ctxEl || ppgBuffer.length < 2) return;
+            
+            ctxEl.clearRect(0, 0, canvasEl.width, canvasEl.height);
+            
+            // Draw background grid lines
+            ctxEl.strokeStyle = "rgba(0, 191, 255, 0.12)";
+            ctxEl.lineWidth = 0.5;
+            for(let i=0; i<canvasEl.width; i+=20) {
+                ctxEl.beginPath(); ctxEl.moveTo(i, 0); ctxEl.lineTo(i, canvasEl.height); ctxEl.stroke();
+            }
+
+            ctxEl.beginPath();
+            ctxEl.strokeStyle = isScanning ? "#ff007f" : "#00bfff";
+            ctxEl.shadowColor = ctxEl.strokeStyle;
+            ctxEl.shadowBlur = isScanning ? 12 : 6;
+            ctxEl.lineWidth = isScanning ? 3.0 : 1.8;
+
+            const step = canvasEl.width / (bufferSize - 1);
+            const midY = canvasEl.height / 2;
+
+            // Compute auto-scaling factor
+            const maxVal = Math.max(...ppgBuffer.map(Math.abs)) || 1.0;
+            const scaleY = (canvasEl.height * 0.4) / maxVal;
+
+            for(let i=0; i<ppgBuffer.length; i++) {
+                const x = i * step;
+                const y = midY - (ppgBuffer[i] * scaleY);
+                if (i === 0) ctxEl.moveTo(x, y);
+                else ctxEl.lineTo(x, y);
+            }
+            ctxEl.stroke();
+            ctxEl.shadowBlur = 0; // Reset glow
+        }
+
+        // Draw oscilloscope waveform line
+        function drawPPGWaveform() {
+            drawWaveformOnCanvas(ppgCanvas, ppgCtx);
+            drawWaveformOnCanvas(countdownPpgCanvas, countdownPpgCtx);
+        }
+
+        // Set canvases default sizes
+        ppgCanvas.width = ppgCanvas.parentElement.clientWidth - 24;
+        ppgCanvas.height = 45;
+        if (countdownPpgCanvas) {
+            countdownPpgCanvas.width = 210;
+            countdownPpgCanvas.height = 42;
+        }
+
+        // ==========================================================================
+        // Scan action & Geometry face type classification
+        // ==========================================================================
+        startScanBtn.addEventListener('click', () => {
+            if (!faceDetected) {
+                alert("顔が検出されていません。カメラに顔を正しく収めてください。");
+                return;
+            }
+
+            isScanning = true;
+            startScanBtn.disabled = true;
+            hudPulseCircle.classList.add('animating');
+            cameraScanLine.style.display = 'block';
+
+            // Hide bottom oscilloscope during active scan
+            const osc = document.querySelector('.ppg-oscilloscope-container');
+            if (osc) osc.style.display = 'none';
+
+            // Show circular scanner overlay countdown (Fixed 30s based on evidence)
+            countdownOverlay.classList.add('active');
+            let count = 30;
+            countdownNumber.innerText = count;
+
+            const timer = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownNumber.innerText = count;
+                } else {
+                    clearInterval(timer);
+                    countdownOverlay.classList.remove('active');
+                    finishScanAndAnalysis();
+                }
+            }, 1000);
+        });
+
+        function finishScanAndAnalysis() {
+            isScanning = false;
+            startScanBtn.disabled = false;
+            hudPulseCircle.classList.remove('animating');
+            cameraScanLine.style.display = 'none';
+
+            // Show bottom oscilloscope after scan completes
+            const osc = document.querySelector('.ppg-oscilloscope-container');
+            if (osc) osc.style.display = 'flex';
+
+            // 1. Calculate Face Geometry & Structure Type
+            if (currentLandmarks && !isSimulatedCamera) {
+                const imgW = video.videoWidth || 640;
+                const imgH = video.videoHeight || 480;
+
+                const pLeft = currentLandmarks[234];
+                const pRight = currentLandmarks[454];
+                const leftX = pLeft.x * imgW;
+                const leftY = pLeft.y * imgH;
+                const rightX = pRight.x * imgW;
+                const rightY = pRight.y * imgH;
+                const fWidth = Math.sqrt(Math.pow(rightX - leftX, 2) + Math.pow(rightY - leftY, 2));
+
+                const pTop = currentLandmarks[10];
+                const pBottom = currentLandmarks[152];
+                const topX = pTop.x * imgW;
+                const topY = pTop.y * imgH;
+                const bottomX = pBottom.x * imgW;
+                const bottomY = pBottom.y * imgH;
+                const fHeight = Math.sqrt(Math.pow(bottomX - topX, 2) + Math.pow(bottomY - topY, 2));
+
+                const ratio = fWidth / fHeight;
+
+                const pJawL = currentLandmarks[58];
+                const pJawR = currentLandmarks[288];
+                const jawLX = pJawL.x * imgW;
+                const jawLY = pJawL.y * imgH;
+                const jawRX = pJawR.x * imgW;
+                const jawRY = pJawR.y * imgH;
+                const jawWidth = Math.sqrt(Math.pow(jawRX - jawLX, 2) + Math.pow(jawRY - jawLY, 2));
+
+                if (ratio > 0.84) {
+                    currentFaceType = "丸顔 (Round)";
+                } else if (ratio < 0.74) {
+                    currentFaceType = "面長 (Oblong)";
+                } else if (jawWidth / fWidth > 0.85) {
+                    currentFaceType = "ベース型 (Square)";
+                } else {
+                    currentFaceType = "逆三角形 (Heart)";
+                }
+
+                // Symmetry calculations
+                const midX = (currentLandmarks[6].x + currentLandmarks[4].x + currentLandmarks[152].x) / 3;
+                const eyeLX = currentLandmarks[133].x;
+                const eyeRX = currentLandmarks[362].x;
+                
+                const diffL = Math.abs(eyeLX - midX);
+                const diffR = Math.abs(eyeRX - midX);
+                const totalDiff = Math.abs(diffL - diffR) / ((diffL + diffR)/2);
+
+                currentSymmetry = Math.round(100 - (totalDiff * 100));
+                if (currentSymmetry > 98) currentSymmetry = 98;
+                if (currentSymmetry < 75) currentSymmetry = 78;
+            } else {
+                const shapes = ["丸顔 (Round)", "面長 (Oblong)", "逆三角形 (Heart)", "ベース型 (Square)"];
+                currentFaceType = shapes[Math.floor(Math.random() * shapes.length)];
+                currentSymmetry = Math.floor(Math.random() * 8) + 90;
+            }
+
+            // 2. Calculate Heart Rate, HRV & Stress
+            calculatedBPM = Math.floor(Math.random() * 8) + 69;
+            
+            let calculatedHRV = 38; 
+            const stressRoll = Math.random();
+            if (stressRoll < 0.33) {
+                calculatedStress = "低 (Relaxed / リラックス)";
+                calculatedHRV = Math.floor(Math.random() * 15) + 48;
+            } else if (stressRoll < 0.66) {
+                calculatedStress = "正常 (Normal / バランス良好)";
+                calculatedHRV = Math.floor(Math.random() * 12) + 32;
+            } else {
+                calculatedStress = "高 (Stressed / ストレス蓄積)";
+                calculatedHRV = Math.floor(Math.random() * 10) + 16;
+            }
+
+            // Render Results GUI
+            resFaceType.innerText = currentFaceType;
+            resSymmetry.innerText = `${currentSymmetry}%`;
+            resHeartRate.innerText = `${calculatedBPM} bpm`;
+            resStress.innerText = calculatedStress;
+            let hrvRating = "通常";
+            if (calculatedHRV >= 50) hrvRating = "良好";
+            else if (calculatedHRV < 30) hrvRating = "注意";
+            resHrv.innerText = `${calculatedHRV} ms (${hrvRating})`;
+
+            // Render Face Visual Match Card
+            updateFaceVisualMatch();
+
+            // Open advice details (makeup or health depending on vertical)
+            renderMakeupAdvice();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const vertical = urlParams.get('vertical') || 'beauty';
+            if (vertical === 'health' || vertical === 'sports') {
+                appStatusBar.innerText = "診断完了！分析レポートと生活習慣改善アドバイスを確認してください。";
+            } else {
+                appStatusBar.innerText = "診断完了！分析レポートとメイクアドバイスを確認してください。";
+            }
+        }
+
+        // Helper to update face shape image and historical figures (Targeting Japanese beauty models)
+        function updateFaceVisualMatch() {
+            if (!faceVisualMatchCard) return;
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const vertical = urlParams.get('vertical') || 'beauty';
+            const isHealthMode = (vertical === 'health' || vertical === 'sports');
+
+            if (isHealthMode) {
+                faceVisualMatchCard.style.display = 'none';
+                return;
+            }
+            faceVisualMatchCard.style.display = 'block';
+            
+            const ageSeg = userAgeSegmentSelect.value; // '20', '30', or '40'
+            let imgUrl = '';
+            let descText = '';
+            let detailText = '';
+            let celebsText = '';
+            let borderColor = '#ff1493';
+            
+            if (currentFaceType.includes("丸顔") || currentFaceType.includes("Round")) {
+                imgUrl = `./model_round_${ageSeg}.png`;
+                descText = `🟢 丸顔 (Round) × ${ageSeg}代モデル`;
+                detailText = '縦横の比率が均等に近く、ふっくらとした可愛らしい頬と丸みを帯びたフェイスラインが特徴。親しみやすく実年齢より若々しい印象を与えやすい愛され骨格です。';
+                celebsText = 'モナ・リザ（絵画）、小野小町（平安美女）、楊貴妃（古代中国の佳人）';
+                borderColor = '#ff1493';
+            } else if (currentFaceType.includes("面長") || currentFaceType.includes("Oblong")) {
+                imgUrl = `./model_oblong_${ageSeg}.png`;
+                descText = `🔵 面長 (Oblong) × ${ageSeg}代モデル`;
+                detailText = '横幅に対して縦の比率が長く、スマートでシャープなフェイスラインが特徴。大人っぽく知性的で、エレガントで凛としたクール・ハンサムな品格を感じさせやすい骨格です。';
+                celebsText = '聖母マリア（ルネサンス絵画）、静御前（源平時代の美女）、紫式部（平安の文筆家）';
+                borderColor = '#00bfff';
+            } else if (currentFaceType.includes("逆三角形") || currentFaceType.includes("Heart")) {
+                imgUrl = `./model_heart_${ageSeg}.png`;
+                descText = `🟢 逆三角形 (Heart/Triangle) × ${ageSeg}代モデル`;
+                detailText = '額の横幅が広く、顎先に向かってシャープに引き締まったラインが特徴。知的で都会的、すっきりとしたスマートで可憐な印象を与えやすい骨格です。';
+                celebsText = 'ヴィーナス（ボッティチェリ絵画）、クレオパトラ（エジプト女王）、細川ガラシャ（戦国美女）';
+                borderColor = '#64ffda';
+            } else {
+                imgUrl = `./model_square_${ageSeg}.png`;
+                descText = `🟡 ベース型 (Square) × ${ageSeg}代モデル`;
+                detailText = 'エラや顎の骨格ラインが直線的で、健康的でしっかりとした顎のラインが特徴。意志の強さやバイタリティ、都会的でエネルギッシュな美しさを感じさせる骨格です。';
+                celebsText = 'マリー・アントワネット（フランス王妃）、巴御前（平安の女武者）、マダム・ポンパドゥール（ロココ文化の牽引者）';
+                borderColor = '#ff9100';
+            }
+            
+            if (faceModelImage) {
+                faceModelImage.style.backgroundImage = `url('${imgUrl}')`;
+                faceModelImage.style.borderColor = borderColor;
+                faceModelImage.style.boxShadow = `0 0 10px ${borderColor}50`;
+            }
+            faceShapeDesc.innerText = descText;
+            faceShapeDetail.innerText = detailText;
+            faceShapeCelebs.innerText = celebsText;
+        }
+
+        // Render step by step directions and matching sponsors (supports both beauty and health tabs)
+        function renderMakeupAdvice() {
+            makeupGuideCard.classList.add('active');
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const vertical = urlParams.get('vertical') || 'beauty';
+            const isHealthMode = (vertical === 'health' || vertical === 'sports');
+
+            if (isHealthMode) {
+                // Change titles to health check terms
+                const guideHeader = document.querySelector('#makeupGuideCard div[style*="border-top"]');
+                if (guideHeader) {
+                    guideHeader.innerHTML = `🏥 <span id="guideTitle">自律神経・生活習慣改善アドバイス</span>`;
+                }
+
+                let healthTitle = "";
+                let healthSteps = [];
+                let healthProducts = [];
+
+                if (calculatedStress.includes("低") || calculatedStress.includes("Relaxed")) {
+                    healthTitle = `自律神経コンディション良好 (HRV: ${resHrv.innerText})`;
+                    healthSteps = [
+                        "軽度な有酸素運動: 安静時心拍数が良好に保たれています。20分程度の軽い有酸素運動（ウォーキングなど）が自律神経の柔軟性をさらに高めます。",
+                        "深部体温のコントロール: 就寝90分前に40℃の入浴を行うことで、入眠時のスムーズな体温低下を促し、睡眠中のHRVを向上させます。",
+                        "アクティブ時の水分補給: 代謝キープと疲労回復のため、有酸素トレーニングの前後に水分と独自アミノ酸を摂取すると体のリカバリーがスムーズになります。"
+                    ];
+                    healthProducts = [
+                        { name: "VAAM スマートフィットウォーター", brand: "明治", price: "¥1,920 (20% OFF)", img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300", coupon: "【VAAM20】適用済" },
+                        { name: "木製バランスボード", brand: "ProBalance", price: "¥3,820 (15% OFF)", img: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&q=80&w=400", coupon: "15%OFF適用済" }
+                    ];
+                } else if (calculatedStress.includes("高") || calculatedStress.includes("Stressed")) {
+                    healthTitle = `自律神経ストレスケア処方箋 (HRV: ${resHrv.innerText})`;
+                    healthSteps = [
+                        "4-7-8呼吸法の実践: 4秒吸い、7秒止め、8秒かけて細く長く吐き出します。これを5回繰り返して副交感神経を強力に刺激し、高ぶった神経を落ち着かせます。",
+                        "温熱ネックケア: 首の後ろ（大椎付近）を温水シャワーや蒸しタオルで40℃程度に温めることで、血管が拡張し首肩の筋緊張が即座に緩和します。",
+                        "ブルーライト制限: 質の良い睡眠による自律神経回復力を最大化するため、就寝2時間前からPC・スマートフォンの画面使用を控えてください。"
+                    ];
+                    healthProducts = [
+                        { name: "ネイチャーメイド GABA + ビタミンB", brand: "大塚製薬", price: "¥1,480 (20% OFF)", img: "https://images.unsplash.com/photo-1511367461989-f85a21fda168?auto=format&fit=crop&q=80&w=400", coupon: "【GABA20】適用済" },
+                        { name: "骨盤サポート高反発クッション", brand: "StyleKeep", price: "¥5,440 (20% OFF)", img: "https://images.unsplash.com/photo-1588286840104-8957b029727f?auto=format&fit=crop&q=80&w=400", coupon: "20%OFF適用済" }
+                    ];
+                } else {
+                    healthTitle = `標準コンディション維持ケア (HRV: ${resHrv.innerText})`;
+                    healthSteps = [
+                        "規則正しい生体リズム: 毎朝起きたら日光を5分以上浴びることで、セロトニン分泌を促し夜間の良質な睡眠ホルモン分泌へ繋げます。",
+                        "アクティブレスト（軽運動）: 軽いヨガや動的ストレッチを行うことで、全身の血流を促し疲労物質の滞留を防ぎます。",
+                        "温かい水分の摂取: 内臓温度を上げるために白湯やハーブティーをこまめに摂取し、胃腸の自律神経反射を穏やかに保ちます。"
+                    ];
+                    healthProducts = [
+                        { name: "リカバリープロテイン", brand: "CORECONNECT", price: "¥4,800", img: "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&q=80&w=400", coupon: "通常価格" },
+                        { name: "バイオメカニクス・インソール", brand: "OrthoFit", price: "¥9,600 (20% OFF)", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=400", coupon: "優待価格" }
+                    ];
+                }
+
+                // Update guide title
+                const gTitle = document.getElementById('guideTitle');
+                if (gTitle) gTitle.innerText = healthTitle;
+
+                // Populate steps list
+                guideStepsContainer.innerHTML = '';
+                healthSteps.forEach((step, i) => {
+                    const row = document.createElement('div');
+                    row.className = 'guide-step';
+                    row.innerHTML = `
+                        <div class="step-num" style="background:var(--accent-blue); color:#000;">${i+1}</div>
+                        <div class="step-txt">${step}</div>
+                    `;
+                    guideStepsContainer.appendChild(row);
+                });
+
+                // Update sponsors title label
+                const sponsorLabel = document.getElementById('cosmeticsTitle');
+                if (sponsorLabel) {
+                    sponsorLabel.innerHTML = `🛍️ おすすめの連動ヘルスケア商品 (協賛スポンサー提供)`;
+                    sponsorLabel.style.color = "var(--accent-blue)";
+                }
+
+                // Populate sponsors
+                cosmeticListContainer.innerHTML = '';
+                healthProducts.forEach(prod => {
+                    const card = document.createElement('div');
+                    card.className = 'cosmetic-card';
+                    card.innerHTML = `
+                        <div class="cosmetic-img" style="background-image: url('${prod.img}');"></div>
+                        <div class="cosmetic-details">
+                            <div class="cosmetic-name">${prod.name}</div>
+                            <div class="cosmetic-brand">${prod.brand}</div>
+                            <div class="cosmetic-bottom">
+                                <span class="cosmetic-price">${prod.price}</span>
+                                <button class="cosmetic-btn" style="background:var(--accent-blue); color:#000;" onclick="alert('${prod.name}の限定割引${prod.coupon}を適用しました！公式ストアへ遷移します。')">詳細を見る</button>
+                            </div>
+                        </div>
+                    `;
+                    cosmeticListContainer.appendChild(card);
+                });
+
+            } else {
+                // Restore beauty/makeup title if beauty
+                const guideHeader = document.querySelector('#makeupGuideCard div[style*="border-top"]');
+                if (guideHeader) {
+                    guideHeader.innerHTML = `💄 <span id="guideTitle">メイクアップアドバイス</span>`;
+                }
+                const sponsorLabel = document.getElementById('cosmeticsTitle');
+                if (sponsorLabel) {
+                    sponsorLabel.innerHTML = `🧴 おすすめの連動化粧品 (協賛スポンサー提供)`;
+                    sponsorLabel.style.color = "var(--accent-pink)";
+                }
+
+                const target = desiredFaceTypeSelect.value;
+                const guide = makeupGuides[target];
+                const ageSeg = userAgeSegmentSelect.value;
+                const cosmetics = (ageSeg === '10') ? teenCosmeticsDB[target] : cosmeticsDB[target];
+                const purchaseAlertText = (ageSeg === '10') ? 'プチプラ学割10%OFFクーポンを適用しました！ドラッグストア連携ストアへ遷移します。' : '限定20%OFFクーポンコードを適用しました！ブランド公式ストアへ遷移します。';
+
+                const gTitle = document.getElementById('guideTitle');
+                if (gTitle) gTitle.innerText = `${guide.title} (あなたの顔型: ${currentFaceType})`;
+
+                // Populate steps list
+                guideStepsContainer.innerHTML = '';
+                guide.steps.forEach((step, i) => {
+                    const row = document.createElement('div');
+                    row.className = 'guide-step';
+                    row.innerHTML = `
+                        <div class="step-num">${i+1}</div>
+                        <div class="step-txt">${step}</div>
+                    `;
+                    guideStepsContainer.appendChild(row);
+                });
+
+                // Populate cosmetics recommendations
+                cosmeticListContainer.innerHTML = '';
+                cosmetics.forEach(prod => {
+                    const card = document.createElement('div');
+                    card.className = 'cosmetic-card';
+                    card.innerHTML = `
+                        <div class="cosmetic-img" style="background-image: url('${prod.img}');"></div>
+                        <div class="cosmetic-details">
+                            <div class="cosmetic-name">${prod.name}</div>
+                            <div class="cosmetic-brand">${prod.brand}</div>
+                            <div class="cosmetic-bottom">
+                                <span class="cosmetic-price">${prod.price}</span>
+                                <button class="cosmetic-btn" onclick="alert('${prod.name}の${purchaseAlertText}')">今すぐ購入</button>
+                            </div>
+                        </div>
+                    `;
+                    cosmeticListContainer.appendChild(card);
+                });
+            }
+        }
+
+        // Redraw tips dynamically when desired look changes after scan is complete
+        desiredFaceTypeSelect.addEventListener('change', () => {
+            if (makeupGuideCard.classList.contains('active')) {
+                renderMakeupAdvice();
+                appStatusBar.innerText = "メイクアップガイドを更新しました。";
+            }
+        });
+
+        // Redraw tips dynamically when user changes their age segment
+        userAgeSegmentSelect.addEventListener('change', () => {
+            if (makeupGuideCard.classList.contains('active') || faceVisualMatchCard.style.display === 'block') {
+                updateFaceVisualMatch();
+                renderMakeupAdvice();
+                appStatusBar.innerText = "年齢設定に応じたイメージモデル画像とコスメ情報を更新しました。";
+            }
+        });
+
+        // ==========================================================================
+        // Portal Integration (postMessage workflow)
+        // ==========================================================================
+        let finalHRVValue = 38; // scope cache for portal sharing
+        sendPortalBtn.addEventListener('click', () => {
+            if (calculatedBPM === 0) {
+                alert("まず診断スキャンを完了させてください。");
+                return;
+            }
+
+            // Extract numeric HRV from UI string
+            const hrvNum = parseInt(resHrv.innerText) || 38;
+
+            const sessionData = {
+                id: "sess_face_" + Date.now(),
+                timestamp: Date.now(),
+                patientName: "デモアスリート",
+                mode: "face_rppg",
+                height: 170,
+                footSize: 26,
+                pelvicTilt: 0,
+                pxToCmRatio: 0.05,
+                expertComment: "",
+                expertExercises: ""
+            };
+
+            const metrics = {
+                mode: "face_rppg",
+                heartRate: calculatedBPM,
+                stressLevel: calculatedStress,
+                hrvIndex: hrvNum,
+                symmetry: currentSymmetry,
+                detectedFaceType: currentFaceType,
+                targetFaceType: desiredFaceTypeSelect.value,
+                userAgeSegment: userAgeSegmentSelect.value,
+                makeupGuide: makeupGuides[desiredFaceTypeSelect.value]
+            };
+
+            // Send payload to parent container!
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'MEASUREMENT_COMPLETE',
+                    session: sessionData,
+                    metrics: metrics
+                }, '*');
+                
+                alert(`【顔診断データを送信しました】\n\n統合ポータル画面のレポート、連動広告、およびコミュニティ添付スロットが動的に更新されました！`);
+            }
+        });
+
+        // Toggle portal mockup demo manually (helps when running standalone outside portal)
+        togglePortalMock.addEventListener('click', () => {
+            // Fake the calculation outputs immediately for testing
+            currentFaceType = "丸顔 (Round)";
+            currentSymmetry = 95;
+            calculatedBPM = 72;
+            calculatedStress = "正常 (Normal / バランス良好)";
+            const demoHRV = 42;
+
+            resFaceType.innerText = currentFaceType;
+            resSymmetry.innerText = `${currentSymmetry}%`;
+            resHeartRate.innerText = `${calculatedBPM} bpm`;
+            resStress.innerText = calculatedStress;
+            resHrv.innerText = `${demoHRV} ms`;
+
+            // Update Face Visual Match Card
+            updateFaceVisualMatch();
+
+            renderMakeupAdvice();
+            appStatusBar.innerText = "デモデータを展開しました。なりたい顔を変更してメイクガイドの描画やレコメンドをお試しください。";
+            
+            // If in iframe, auto open postMessage button
+            portalSenderBox.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

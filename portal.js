@@ -7,6 +7,35 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let isPremiumUser = false;
     
+    // Category subtabs filtering (Sports, Health, Beauty)
+    const subtabButtons = document.querySelectorAll('.subtab-btn');
+    subtabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const parentPanel = btn.closest('.tab-panel');
+            if (!parentPanel) return;
+            
+            // Toggle active class on buttons within the same panel
+            parentPanel.querySelectorAll('.subtab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const selectedCategory = btn.getAttribute('data-sport');
+            const cards = parentPanel.querySelectorAll('.article-list .article-card');
+            
+            cards.forEach(card => {
+                if (selectedCategory === 'all') {
+                    card.style.display = ''; // Restore default display
+                } else {
+                    const cardSports = card.getAttribute('data-sport') || '';
+                    if (cardSports.split(' ').includes(selectedCategory)) {
+                        card.style.display = ''; // Restore default display
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+    
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             if (tab.classList.contains('disabled-btn')) return;
@@ -44,13 +73,47 @@ document.addEventListener('DOMContentLoaded', () => {
             iframe.contentWindow.focus();
             updateLabSidebarAds(currentVertical);
             
-            // Sync theme in the embedded iframe
+            // Sync theme in the embedded iframe and set default page based on active portal vertical
             const isLight = (currentVertical === 'health' || currentVertical === 'beauty');
+            const themeParam = isLight ? '&theme=light' : '';
             const currentSrc = iframe.src || '';
-            if (isLight && !currentSrc.includes('theme=light')) {
-                iframe.src = `./mock_app.html?theme=light`;
-            } else if (!isLight && currentSrc.includes('theme=light')) {
-                iframe.src = `./mock_app.html`;
+            
+            if (currentVertical === 'beauty') {
+                if (!currentSrc.includes('face_analyzer.html')) {
+                    iframe.src = `./face_analyzer.html?vertical=${currentVertical}${themeParam}`;
+                }
+                setTimeout(() => {
+                    const btnBody = document.getElementById('btnModeBody');
+                    const btnFace = document.getElementById('btnModeFace');
+                    if (btnBody && btnFace) {
+                        btnBody.classList.remove('active');
+                        btnBody.style.background = 'transparent';
+                        btnBody.style.borderColor = 'var(--border-color)';
+                        btnBody.style.color = 'var(--text-secondary)';
+                        btnFace.classList.add('active');
+                        btnFace.style.background = 'rgba(255, 20, 147, 0.15)';
+                        btnFace.style.borderColor = 'rgba(255, 20, 147, 0.3)';
+                        btnFace.style.color = 'var(--accent-pink)';
+                    }
+                }, 50);
+            } else {
+                if (!currentSrc.includes('mock_app.html')) {
+                    iframe.src = `./mock_app.html${themeParam}`;
+                }
+                setTimeout(() => {
+                    const btnBody = document.getElementById('btnModeBody');
+                    const btnFace = document.getElementById('btnModeFace');
+                    if (btnBody && btnFace) {
+                        btnFace.classList.remove('active');
+                        btnFace.style.background = 'transparent';
+                        btnFace.style.borderColor = 'var(--border-color)';
+                        btnFace.style.color = 'var(--text-secondary)';
+                        btnBody.classList.add('active');
+                        btnBody.style.background = 'rgba(0, 191, 255, 0.15)';
+                        btnBody.style.borderColor = 'rgba(0, 191, 255, 0.3)';
+                        btnBody.style.color = 'var(--accent-blue)';
+                    }
+                }, 50);
             }
         }
     }
@@ -63,9 +126,79 @@ document.addEventListener('DOMContentLoaded', () => {
         switchTab('lab');
         const isLight = (currentVertical === 'health' || currentVertical === 'beauty');
         const themeParam = isLight ? '&theme=light' : '';
-        // Reload iframe with query parameters to trigger camera and mode
-        iframe.src = `./mock_app.html?mode=${mode}&autoStart=true${themeParam}`;
+        
+        if (mode === 'face_rppg') {
+            iframe.src = `./face_analyzer.html?mode=face_rppg&autoStart=true&vertical=${currentVertical}${themeParam}`;
+            setTimeout(() => {
+                const btnBody = document.getElementById('btnModeBody');
+                const btnFace = document.getElementById('btnModeFace');
+                if (btnBody && btnFace) {
+                    btnBody.classList.remove('active');
+                    btnBody.style.background = 'transparent';
+                    btnBody.style.borderColor = 'var(--border-color)';
+                    btnBody.style.color = 'var(--text-secondary)';
+                    btnFace.classList.add('active');
+                    btnFace.style.background = 'rgba(255, 20, 147, 0.15)';
+                    btnFace.style.borderColor = 'rgba(255, 20, 147, 0.3)';
+                    btnFace.style.color = 'var(--accent-pink)';
+                }
+            }, 50);
+        } else {
+            // Reload iframe with query parameters to trigger camera and mode
+            iframe.src = `./mock_app.html?mode=${mode}&autoStart=true${themeParam}`;
+            setTimeout(() => {
+                const btnBody = document.getElementById('btnModeBody');
+                const btnFace = document.getElementById('btnModeFace');
+                if (btnBody && btnFace) {
+                    btnFace.classList.remove('active');
+                    btnFace.style.background = 'transparent';
+                    btnFace.style.borderColor = 'var(--border-color)';
+                    btnFace.style.color = 'var(--text-secondary)';
+                    btnBody.classList.add('active');
+                    btnBody.style.background = 'rgba(0, 191, 255, 0.15)';
+                    btnBody.style.borderColor = 'rgba(0, 191, 255, 0.3)';
+                    btnBody.style.color = 'var(--accent-blue)';
+                }
+            }, 50);
+        }
     };
+
+    // Click listeners for Lab Tab toggles
+    setTimeout(() => {
+        const btnBody = document.getElementById('btnModeBody');
+        const btnFace = document.getElementById('btnModeFace');
+        if (btnBody && btnFace) {
+            btnBody.addEventListener('click', () => {
+                const isLight = (currentVertical === 'health' || currentVertical === 'beauty');
+                const themeParam = isLight ? '?theme=light' : '';
+                iframe.src = `./mock_app.html${themeParam}`;
+                
+                btnFace.classList.remove('active');
+                btnFace.style.background = 'transparent';
+                btnFace.style.borderColor = 'var(--border-color)';
+                btnFace.style.color = 'var(--text-secondary)';
+                btnBody.classList.add('active');
+                btnBody.style.background = 'rgba(0, 191, 255, 0.15)';
+                btnBody.style.borderColor = 'rgba(0, 191, 255, 0.3)';
+                btnBody.style.color = 'var(--accent-blue)';
+            });
+
+            btnFace.addEventListener('click', () => {
+                const isLight = (currentVertical === 'health' || currentVertical === 'beauty');
+                const themeParam = isLight ? '&theme=light' : '';
+                iframe.src = `./face_analyzer.html?vertical=${currentVertical}${themeParam}`;
+                
+                btnBody.classList.remove('active');
+                btnBody.style.background = 'transparent';
+                btnBody.style.borderColor = 'var(--border-color)';
+                btnBody.style.color = 'var(--text-secondary)';
+                btnFace.classList.add('active');
+                btnFace.style.background = 'rgba(255, 20, 147, 0.15)';
+                btnFace.style.borderColor = 'rgba(255, 20, 147, 0.3)';
+                btnFace.style.color = 'var(--accent-pink)';
+            });
+        }
+    }, 100);
 
     // ==========================================================================
     // Mock Community Data & Rendering
@@ -328,16 +461,29 @@ document.addEventListener('DOMContentLoaded', () => {
             communityPosts.unshift(newPost);
             
             // Trigger automatic simulated expert review after 3 seconds!
-            const textLower = text.toLowerCase();
             const triggerAutoReply = true;
             if (triggerAutoReply) {
                 setTimeout(() => {
+                    let expertName = "田中 誠 (理学療法士)";
+                    let expertAvatar = "誠";
+                    let replyContent = "ご投稿ありがとうございます！測定結果を拝見しました。アライメントの崩れに対するセルフエクササイズとして、当ポータルの「ストレッチ動画セッション」の受講が有効です。希望があれば45分の個別指導予約も枠が空いていますよ！";
+                    
+                    if (newPost.sharedMetric && newPost.sharedMetric.modeName.includes("顔")) {
+                        expertName = "Rin (ビューティアドバイザー)";
+                        expertAvatar = "凛";
+                        if (newPost.sharedMetric.userAgeSegment === '10') {
+                            replyContent = "中高生メンバーさん、測定結果の共有ありがとう！✨ 校則が厳しくてもバレにくい超自然なスクールメイクのコツや、放課後のお出かけにぴったりなプチプラ（キャンメイクやケイト）を使った簡単コントゥアリングをアドバイスカードに載せておいたよ！テスト前の息抜きや、スマホの見すぎで疲れたときは深呼吸してみてね。応援してるよ！";
+                        } else {
+                            replyContent = "顔骨格とrPPG脈拍測定の共有ありがとうございます！ご希望の顔立ちに向けたコントゥアリングメイクと併せて、デコルテ付近のリンパマッサージを行うと、血流がさらに良くなりrPPG指標や肌のトーンが向上しますよ。おすすめ化粧品もぜひ試してみてくださいね！";
+                        }
+                    }
+
                     newPost.replies.push({
-                        author: "田中 誠 (理学療法士)",
-                        avatar: "誠",
+                        author: expertName,
+                        avatar: expertAvatar,
                         role: "専門家メンター",
                         time: "たった今",
-                        content: `ご投稿ありがとうございます！測定結果を拝見しました。${newPost.sharedMetric ? 'アライメントの崩れに対するセルフエクササイズとして、当ポータルの「ストレッチ動画セッション」の受講が有効です。希望があれば45分の個別指導予約も枠が空いていますよ！' : 'アライメント測定も行なっていただくと、よりパーソナライズされた関節可動域トレーニング法を処方できます。'}`
+                        content: replyContent
                     });
                     renderTimeline();
                 }, 3000);
@@ -354,6 +500,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Helper to format attached IndexedDB metrics into community layout
     function formatAttachedMetric(session) {
+        if (session.mode === 'face_rppg') {
+            const metricsList = [];
+            metricsList.push({
+                name: "判定顔骨格型",
+                val: session.metrics.detectedFaceType,
+                status: "good",
+                statusText: "測定完了"
+            });
+            metricsList.push({
+                name: "左右対称性",
+                val: `${session.metrics.symmetry}%`,
+                status: session.metrics.symmetry < 85 ? "warn" : "good",
+                statusText: session.metrics.symmetry < 85 ? "非対称" : "対称性良好"
+            });
+            metricsList.push({
+                name: "心拍数(rPPG)",
+                val: `${session.metrics.heartRate} bpm`,
+                status: "good",
+                statusText: "安定"
+            });
+            metricsList.push({
+                name: "HRV心拍変動",
+                val: `${session.metrics.hrvIndex || 38} ms`,
+                status: (session.metrics.hrvIndex && session.metrics.hrvIndex < 25) ? "warn" : "good",
+                statusText: (session.metrics.hrvIndex && session.metrics.hrvIndex < 25) ? "ストレス有" : "自律神経安定"
+            });
+            metricsList.push({
+                name: "ストレスレベル",
+                val: session.metrics.stressLevel,
+                status: session.metrics.stressLevel.includes("高") ? "warn" : "good",
+                statusText: "測定完了"
+            });
+
+            return {
+                modeName: "✨ 顔アライメント＆rPPGメイク",
+                metrics: metricsList,
+                swayArea: null,
+                userAgeSegment: session.metrics.userAgeSegment
+            };
+        }
+
         const modeNames = {
             'front': '🧍 前面アライメント', 'back': '🧍 後面アライメント',
             'l_side': '🧍 左側面アライメント', 'r_side': '🧍 右側面アライメント',
@@ -402,6 +589,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentMetricsText = '';
 
+    let currentFaceMetricsText = '';
+
     // Handle messages coming from the embedded app inside the iframe
     window.addEventListener('message', (event) => {
         // Safe origin checks can be skipped for local sandbox prototype
@@ -422,17 +611,153 @@ document.addEventListener('DOMContentLoaded', () => {
             updateDynamicAds(metrics);
 
             // Populate & Show Posture Report Card & SNS buttons
-            showPostureReportCard(metrics);
+            if (metrics.mode === 'face_rppg') {
+                showFaceReportCard(metrics);
+            } else {
+                showPostureReportCard(metrics);
+            }
         }
     });
 
+    function showFaceReportCard(metrics) {
+        const reportCard = document.getElementById('faceReportCard');
+        const postureCard = document.getElementById('postureReportCard');
+        const typeVal = document.getElementById('faceReportType');
+        const symmetryVal = document.getElementById('faceReportSymmetry');
+        const hrVal = document.getElementById('faceReportHeartRate');
+        const stressVal = document.getElementById('faceReportStress');
+        const hrvVal = document.getElementById('faceReportHrv');
+        const adviceVal = document.getElementById('faceReportAdvice');
+        const gradeBadge = document.getElementById('faceReportGrade');
+        if (!reportCard || !typeVal || !symmetryVal || !hrVal || !stressVal || !adviceVal || !gradeBadge) return;
+
+        // Hide posture card, show face card
+        if (postureCard) postureCard.style.display = 'none';
+        
+        typeVal.innerText = metrics.detectedFaceType;
+        symmetryVal.innerText = `${metrics.symmetry}%`;
+        hrVal.innerText = `${metrics.heartRate} bpm`;
+        stressVal.innerText = metrics.stressLevel;
+        if (hrvVal) {
+            const val = metrics.hrvIndex || 38;
+            let rating = "通常";
+            if (val >= 50) rating = "良好";
+            else if (val < 30) rating = "注意";
+            hrvVal.innerText = `${val} ms (${rating})`;
+        }
+        
+        // Populate step-by-step advice summary
+        let adviceHtml = '';
+        if (metrics.makeupGuide) {
+            adviceHtml = `<strong>目標イメージ: ${metrics.makeupGuide.title}</strong><br><br>`;
+            metrics.makeupGuide.steps.forEach(step => {
+                adviceHtml += `・ ${step}<br>`;
+            });
+        }
+        adviceVal.innerHTML = adviceHtml;
+
+        // Grade calculation
+        let grade = 'S';
+        if (metrics.symmetry < 85 || metrics.stressLevel.includes("高")) {
+            grade = 'A';
+        }
+        gradeBadge.innerText = grade;
+
+        // Toggle visibility of beauty elements based on active portal vertical
+        const typeBox = document.getElementById('faceReportTypeBox');
+        const symmetryBox = document.getElementById('faceReportSymmetryBox');
+        const adviceBox = document.getElementById('faceReportAdviceBox');
+        const isHealth = (currentVertical === 'health' || currentVertical === 'sports');
+
+        if (typeBox) typeBox.style.display = isHealth ? 'none' : 'block';
+        if (symmetryBox) symmetryBox.style.display = isHealth ? 'none' : 'block';
+        if (adviceBox) adviceBox.style.display = isHealth ? 'none' : 'block';
+
+        // Adjust title and badge color based on mode
+        const titleEl = reportCard.querySelector('.report-header h3');
+        if (isHealth) {
+            if (titleEl) {
+                titleEl.innerText = "📊 自律神経＆ストレス診断レポート";
+                titleEl.style.color = "var(--accent-blue)";
+            }
+            gradeBadge.style.background = "var(--accent-blue)";
+            gradeBadge.style.color = "#000";
+            reportCard.style.borderColor = "rgba(0, 191, 255, 0.3)";
+            reportCard.style.background = "linear-gradient(180deg, var(--bg-card) 0%, rgba(0, 191, 255, 0.02) 100%)";
+        } else {
+            if (titleEl) {
+                titleEl.innerText = "📊 美容顔アライメント＆健康診断レポート";
+                titleEl.style.color = "var(--accent-pink)";
+            }
+            gradeBadge.style.background = "var(--accent-pink)";
+            gradeBadge.style.color = "#000";
+            reportCard.style.borderColor = "rgba(255, 20, 147, 0.3)";
+            reportCard.style.background = "linear-gradient(180deg, var(--bg-card) 0%, rgba(255, 20, 147, 0.02) 100%)";
+        }
+
+        reportCard.style.display = 'block';
+
+        // Prepare sharing text template
+        currentFaceMetricsText = `【CORE CONNECT 美容顔＆健康測定結果】\n` +
+            `判定顔型: ${metrics.detectedFaceType}\n` +
+            `左右対称性: ${metrics.symmetry}%\n` +
+            `測定心拍数 (rPPG): ${metrics.heartRate} bpm\n` +
+            `HRV心拍変動指標: ${metrics.hrvIndex || 38} ms\n` +
+            `ストレスレベル: ${metrics.stressLevel}\n` +
+            `なりたい顔: ${metrics.targetFaceType.toUpperCase()}メイクアドバイス適用中！\n` +
+            `#CORECONNECT #顔アライメント #rPPGスキャン #美容メイク`;
+    }
+
+    // Attach Event Listeners to Face SNS Share Buttons
+    setTimeout(() => {
+        const faceShareXBtn = document.getElementById('faceShareXBtn');
+        const faceShareLineBtn = document.getElementById('faceShareLineBtn');
+        const faceCopyReportBtn = document.getElementById('faceCopyReportBtn');
+        const faceShareInternalBtn = document.getElementById('faceShareInternalBtn');
+
+        if (faceShareXBtn) {
+            faceShareXBtn.addEventListener('click', () => {
+                if (!currentFaceMetricsText) return;
+                const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(currentFaceMetricsText)}&url=${encodeURIComponent('https://bclab2020.github.io/portal-mockup/')}`;
+                window.open(url, '_blank');
+            });
+        }
+        if (faceShareLineBtn) {
+            faceShareLineBtn.addEventListener('click', () => {
+                if (!currentFaceMetricsText) return;
+                const url = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(currentFaceMetricsText)}&text=${encodeURIComponent(currentFaceMetricsText)}`;
+                window.open(url, '_blank');
+            });
+        }
+        if (faceCopyReportBtn) {
+            faceCopyReportBtn.addEventListener('click', () => {
+                if (!currentFaceMetricsText) return;
+                navigator.clipboard.writeText(currentFaceMetricsText).then(() => {
+                    alert('📋 顔測定結果テキストをコピーしました！\nLINEや他のSNSにそのまま貼り付けられます。');
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            });
+        }
+        if (faceShareInternalBtn) {
+            faceShareInternalBtn.addEventListener('click', () => {
+                switchTab('community');
+                alert('💬 コミュニティへ移動しました。\n最新のデータが添付されていますので、このまま「相談・共有を投稿」ボタンを押して投稿できます！');
+            });
+        }
+    }, 100);
+
     function showPostureReportCard(metrics) {
         const reportCard = document.getElementById('postureReportCard');
+        const faceCard = document.getElementById('faceReportCard');
         const gradeBadge = document.getElementById('reportGrade');
         const wbVal = document.getElementById('reportWbVal');
         const tiltVal = document.getElementById('reportTiltVal');
         const swayVal = document.getElementById('reportSwayVal');
         if (!reportCard || !gradeBadge || !wbVal || !tiltVal || !swayVal) return;
+
+        // Hide face card, show posture card
+        if (faceCard) faceCard.style.display = 'none';
 
         const tilt = metrics.pelvicTilt || 0;
         const totalWBL = metrics.weightBearing ? metrics.weightBearing.total.L : 50.2;
@@ -702,6 +1027,145 @@ document.addEventListener('DOMContentLoaded', () => {
         let adHtml = '';
         let isMatched = false;
 
+        // Special check: Face rPPG dynamic ads
+        if (metrics.mode === 'face_rppg') {
+            // Style matches the portal vertical
+            const isHealthMode = (currentVertical === 'health' || currentVertical === 'sports');
+            
+            if (isHealthMode) {
+                container.classList.add('matching-sway'); // Cyan theme styling matching health
+                const hrv = metrics.hrvIndex || 38;
+                
+                if (hrv < 25) {
+                    adHtml = `
+                        <div class="ad-matched-box">
+                            <span class="matched-pill sway" style="background:rgba(0,191,255,0.08); border-color:var(--accent-blue); color:var(--accent-blue);">自律神経ストレス連動 (HRV: ${hrv} ms)</span>
+                            <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1511367461989-f85a21fda168?auto=format&fit=crop&q=80&w=400');"></div>
+                            <div class="ad-title">大塚製薬 ネイチャーメイド GABA + ビタミンB群</div>
+                            <div class="ad-desc">検出された高ストレス・自律神経負荷（心拍変動 ${hrv}ms）に対応。副交感神経の働きを内側からサポートし、疲労回復と上質な睡眠を促します。</div>
+                            <div class="ad-product-price">
+                                <span class="orig">¥1,850</span>
+                                <span class="promo">¥1,480 (20% OFF)</span>
+                            </div>
+                            <button class="ad-btn" onclick="alert('公式ストアへ遷移します！ストレス軽減モニタークーポン【GABA20】適用済')">特別クーポンで購入する</button>
+                        </div>
+                    `;
+                } else {
+                    adHtml = `
+                        <div class="ad-matched-box">
+                            <span class="matched-pill sway" style="background:rgba(0,191,255,0.08); border-color:var(--accent-blue); color:var(--accent-blue);">自律神経コンディション良好 (HRV: ${hrv} ms)</span>
+                            <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300');"></div>
+                            <div class="ad-title">明治 VAAM スマートフィットウォーター</div>
+                            <div class="ad-desc">良好な自律神経バランス状態での脂肪燃焼効率をさらに最大化。独自のアミノ酸（ARF）配合で、有酸素運動時の持久力と基礎代謝を向上させます。</div>
+                            <div class="ad-product-price">
+                                <span class="orig">¥2,400</span>
+                                <span class="promo">¥1,920 (20% OFF)</span>
+                            </div>
+                            <button class="ad-btn" onclick="alert('明治VAAM公式ストアへ遷移します！アライメントチェックメンバー優待適用済')">特別優待価格で購入する</button>
+                        </div>
+                    `;
+                }
+            } else {
+                container.classList.add('matching-tilt'); // Pink border/shadow styling matching beauty
+                const target = metrics.targetFaceType;
+                const isTeen = (metrics.userAgeSegment === '10');
+                
+                if (target === 'cute') {
+                    if (isTeen) {
+                        adHtml = `
+                            <div class="ad-matched-box">
+                                <span class="matched-pill tilt" style="background:rgba(255,20,147,0.08); border-color:var(--accent-pink); color:var(--accent-pink);">学生向けスクールメイク連動 (毛穴・テカリカバー)</span>
+                                <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&q=80&w=400');"></div>
+                                <div class="ad-title">CANMAKE マシュマロフィニッシュパウダー</div>
+                                <div class="ad-desc">中高生に絶大な人気を誇るふんわり肌パウダー。テカリを抑えて自然な毛穴カバーを叶え、スクールメイクにも最適！</div>
+                                <div class="ad-product-price">
+                                    <span class="orig">¥1,034</span>
+                                    <span class="promo">¥930 (学割 10% OFF)</span>
+                                </div>
+                                <button class="ad-btn" style="background:var(--accent-pink); color:#000;" onclick="alert('マツモトキヨシ公式オンラインへ遷移します！学生割引クーポン【TEENCUTE】適用済')">学割クーポンで購入する</button>
+                            </div>
+                        `;
+                    } else {
+                        adHtml = `
+                            <div class="ad-matched-box">
+                                <span class="matched-pill tilt" style="background:rgba(255,20,147,0.08); border-color:var(--accent-pink); color:var(--accent-pink);">甘口キュートメイク連動 (丸顔強調)</span>
+                                <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&q=80&w=400');"></div>
+                                <div class="ad-title">ELIXIR メルティシフォンパウダーチーク</div>
+                                <div class="ad-desc">丸顔アライメントをふんわり可愛らしく引き立てるピーチピンク。AIメイクガイドラインの位置にのせるだけで自然な血色感に。</div>
+                                <div class="ad-product-price">
+                                    <span class="orig">¥2,750</span>
+                                    <span class="promo">¥2,200 (20% OFF)</span>
+                                </div>
+                                <button class="ad-btn" style="background:var(--accent-pink); color:#000;" onclick="alert('資生堂ELIXIR公式ショップへ遷移します！クーポンコード【CUTE20】適用済')">特別クーポンで購入する</button>
+                            </div>
+                        `;
+                    }
+                } else if (target === 'cool') {
+                    if (isTeen) {
+                        adHtml = `
+                            <div class="ad-matched-box">
+                                <span class="matched-pill tilt" style="background:rgba(255,20,147,0.08); border-color:var(--accent-pink); color:var(--accent-pink);">学生向けプチプラメイク連動 (デカ目シェーディング)</span>
+                                <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=400');"></div>
+                                <div class="ad-title">KATE ダブルラインエキスパート</div>
+                                <div class="ad-desc">涙袋の影や二重線をくっきり強調する極薄カラーライナー。デカ目効果＆ハンサムな目元づくりをプチプラで実現。</div>
+                                <div class="ad-product-price">
+                                    <span class="orig">¥935</span>
+                                    <span class="promo">¥840 (学割 10% OFF)</span>
+                                </div>
+                                <button class="ad-btn" style="background:var(--accent-pink); color:#000;" onclick="alert('ココカラファイン公式オンラインへ遷移します！学生割引クーポン【TEENCOOL】適用済')">学割クーポンで購入する</button>
+                            </div>
+                        `;
+                    } else {
+                        adHtml = `
+                            <div class="ad-matched-box">
+                                <span class="matched-pill tilt" style="background:rgba(255,20,147,0.08); border-color:var(--accent-pink); color:var(--accent-pink);">クールハンサムメイク連動 (シェーディング)</span>
+                                <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=400');"></div>
+                                <div class="ad-title">KATE 3Dクリエイトコントゥア</div>
+                                <div class="ad-desc">頬骨の下やエラ骨格を補正してシャープに引き締める影色。AIのガイド座標に沿ってブラシを滑らせるだけで陰影をコントロール。</div>
+                                <div class="ad-product-price">
+                                    <span class="orig">¥1,920</span>
+                                    <span class="promo">¥1,540 (20% OFF)</span>
+                                </div>
+                                <button class="ad-btn" style="background:var(--accent-pink); color:#000;" onclick="alert('KATE公式ショップへ遷移します！クーポンコード【COOL20】適用済')">特別クーポンで購入する</button>
+                            </div>
+                        `;
+                    }
+                } else { // elegant
+                    if (isTeen) {
+                        adHtml = `
+                            <div class="ad-matched-box">
+                                <span class="matched-pill tilt" style="background:rgba(255,20,147,0.08); border-color:var(--accent-pink); color:var(--accent-pink);">学生向けトレンドリップ連動 (落ちない大人色)</span>
+                                <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&q=80&w=400');"></div>
+                                <div class="ad-title">KATE リップモンスター</div>
+                                <div class="ad-desc">落ちにくさと発色の良さでバズり続ける伝説リップ。大人っぽい表情を作る抜け感カラーで、背伸びしたい日のメイクに。</div>
+                                <div class="ad-product-price">
+                                    <span class="orig">¥1,540</span>
+                                    <span class="promo">¥1,380 (学割 10% OFF)</span>
+                                </div>
+                                <button class="ad-btn" style="background:var(--accent-pink); color:#000;" onclick="alert('アットコスメショッピングへ遷移します！学生割引クーポン【TEENELEGANT】適用済')">学割クーポンで購入する</button>
+                            </div>
+                        `;
+                    } else {
+                        adHtml = `
+                            <div class="ad-matched-box">
+                                <span class="matched-pill tilt" style="background:rgba(255,20,147,0.08); border-color:var(--accent-pink); color:var(--accent-pink);">エレガント大人顔連動 (ハリ肌美容液)</span>
+                                <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&q=80&w=400');"></div>
+                                <div class="ad-title">ELIXIR デザインタイムセラム</div>
+                                <div class="ad-desc">表情の動きと肌アライメント（ハリ）に着目した先進美容液。顔の血流巡りを整え、リフトアップメイクの効果を引き出します。</div>
+                                <div class="ad-product-price">
+                                    <span class="orig">¥6,180</span>
+                                    <span class="promo">¥4,950 (20% OFF)</span>
+                                </div>
+                                <button class="ad-btn" style="background:var(--accent-pink); color:#000;" onclick="alert('資生堂ELIXIR公式ショップへ遷移します！クーポンコード【ELEGANT20】適用済')">特別クーポンで購入する</button>
+                            </div>
+                        `;
+                    }
+                }
+            }
+            dynamicAdSpace.innerHTML = adHtml;
+            return;
+        }
+
         const tilt = metrics.pelvicTilt;
         const totalWBL = metrics.weightBearing ? metrics.weightBearing.total.L : 50;
         const wDiff = Math.abs(totalWBL - 50) * 2; // L/R difference percentage
@@ -722,7 +1186,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="orig">¥6,800</span>
                         <span class="promo">¥5,440 (20% OFF)</span>
                     </div>
-                    <button class="ad-btn" onclick="alert('CORE CONNECT限定：クッションの購入割引ページへ移行します！')">特別コードを適用して購入</button>
+                    <button class="ad-btn" onclick="alert('CORE CONNECT限定：クッション of の購入割引ページへ移行します！')">特別コードを適用して購入</button>
                 </div>
             `;
         } else if (wDiff > 6.0) {

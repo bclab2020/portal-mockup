@@ -352,42 +352,120 @@ select:hover {
 }
 
 #startBtn {
-    background: linear-gradient(135deg, var(--accent-blue) 0%, #007acc 100%);
-    color: white;
-    min-width: 140px;
-    box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
+    display: block;
+    position: fixed !important;
+    bottom: 75px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 200px !important;
+    height: 50px !important;
+    border-radius: 25px !important;
+    background: linear-gradient(135deg, var(--accent-blue) 0%, #007acc 100%) !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 8px 25px rgba(0, 191, 255, 0.4), inset 0 0 5px rgba(0,0,0,0.3) !important;
+    color: white !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    z-index: 9999 !important; /* Always on top */
+    cursor: pointer !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+    outline: none !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
 }
 
 #startBtn:hover:not(:disabled) {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(0, 191, 255, 0.45);
+    transform: translateX(-50%) scale(1.04) !important;
+    box-shadow: 0 10px 30px rgba(0, 191, 255, 0.6) !important;
+    border-color: #ffffff !important;
 }
 
 #startBtn:disabled {
-    background: #2a364f;
-    color: var(--text-secondary);
-    cursor: not-allowed;
-    box-shadow: none;
+    background: #2a364f !important;
+    border-color: rgba(255,255,255,0.3) !important;
+    color: var(--text-secondary) !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
 }
 
 #recBtn {
-    background: linear-gradient(135deg, var(--accent-red) 0%, #b30000 100%);
-    color: white;
-    min-width: 160px;
-    font-size: 15px;
-    box-shadow: 0 4px 15px rgba(255, 82, 82, 0.3);
+    display: none;
+    position: fixed !important;
+    bottom: 75px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 50% !important;
+    background: radial-gradient(circle, #ff3c00 0%, #b30000 100%) !important;
+    border: 4px solid rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 8px 25px rgba(255, 60, 0, 0.5), inset 0 0 8px rgba(0,0,0,0.4) !important;
+    color: white !important;
+    font-size: 13px !important;
+    font-weight: bold !important;
+    z-index: 9999 !important; /* Always on top of everything */
+    cursor: pointer !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s cubic-bezier(0.1, 0.9, 0.2, 1) !important;
+    outline: none !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
 }
 
 #recBtn:hover:not(:disabled) {
-    transform: scale(1.02);
-    box-shadow: 0 6px 22px rgba(255, 82, 82, 0.5);
+    transform: translateX(-50%) scale(1.08) !important;
+    box-shadow: 0 10px 30px rgba(255, 60, 0, 0.7) !important;
+    border-color: #ffffff !important;
 }
 
 #recBtn:disabled {
-    background: #2a364f;
-    color: var(--text-secondary);
-    cursor: not-allowed;
-    box-shadow: none;
+    background: #2a364f !important;
+    border-color: rgba(255,255,255,0.3) !important;
+    color: var(--text-secondary) !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+}
+
+#nextMeasureBtn, #showViewerBtn {
+    display: none;
+    position: fixed !important;
+    bottom: 75px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 220px !important;
+    height: 50px !important;
+    border-radius: 25px !important;
+    z-index: 9999 !important; /* Always on top */
+    cursor: pointer !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    transition: all 0.2s ease !important;
+    outline: none !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+#nextMeasureBtn {
+    background: linear-gradient(135deg, #00e676 0%, #00a152 100%) !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    color: white !important;
+    box-shadow: 0 8px 25px rgba(0, 230, 118, 0.45) !important;
+}
+
+#showViewerBtn {
+    background: linear-gradient(135deg, var(--accent-teal) 0%, #008080 100%) !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    color: white !important;
+    box-shadow: 0 8px 25px rgba(0, 128, 128, 0.45) !important;
+}
+
+#nextMeasureBtn:hover:not(:disabled), #showViewerBtn:hover:not(:disabled) {
+    transform: translateX(-50%) scale(1.04) !important;
 }
 
 /* Specific buttons for playback */
@@ -1240,11 +1318,204 @@ select:hover {
 .recording-active #tiltPanel,
 .recording-active #radarWrapperMP,
 .recording-active .hud-label,
+.recording-active .camera-mode-badge,
 .recording-active .info-panel,
+.recording-active #autoRecReadyMessage,
 .recording-active #gyroLevelContainer {
     opacity: 0 !important;
     pointer-events: none !important;
     transition: opacity 0.5s ease !important;
+}
+
+/* カメラモードバッジ */
+.camera-mode-badge {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 30px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    background: rgba(0, 230, 118, 0.15);
+    color: #00e676;
+    border: 1px solid rgba(0, 230, 118, 0.3);
+    white-space: nowrap;
+}
+
+.camera-mode-badge.selfie-active {
+    background: rgba(0, 191, 255, 0.15);
+    color: #00bfff;
+    border: 1px solid rgba(0, 191, 255, 0.3);
+}
+
+/* 自撮りモードアクティブ時のトグルボタンの強調 */
+.ui-top-btn.selfie-active {
+    background: rgba(0, 191, 255, 0.25) !important;
+    color: #00bfff !important;
+    border-color: #00bfff !important;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.4) !important;
+}
+
+/* 自動録画スタンバイ案内メッセージ */
+.auto-rec-ready-message {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: 800;
+    color: #ffeb3b;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 0 10px rgba(255, 235, 59, 0.5);
+    z-index: 900;
+    pointer-events: none;
+    background: rgba(5, 8, 17, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: 1.5px solid rgba(255, 235, 59, 0.4);
+    animation: ready-pulse 0.8s infinite alternate;
+    text-align: center;
+    white-space: nowrap;
+}
+
+@keyframes ready-pulse {
+    0% { opacity: 0.75; transform: translate(-50%, -50%) scale(0.96); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1.02); }
+}
+
+/* 分析カテゴリ切り替えタブ */
+.analysis-tabs {
+    display: flex;
+    background: rgba(10, 17, 40, 0.6);
+    border: 1px solid rgba(100, 255, 218, 0.15);
+    border-radius: 30px;
+    padding: 2px;
+    gap: 2px;
+}
+
+.analysis-tab {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+.analysis-tab:hover {
+    color: var(--text-primary);
+}
+
+.analysis-tab.active {
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.25) 0%, rgba(100, 255, 218, 0.25) 100%);
+    color: var(--accent-teal);
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.2);
+}
+
+/* ナビゲーションボタンのパルス点滅アニメーション */
+.active-pulse {
+    animation: active-green-pulse 1.2s infinite alternate;
+}
+
+@keyframes active-green-pulse {
+    0% {
+        box-shadow: 0 0 8px rgba(57, 255, 20, 0.25);
+        border-color: rgba(57, 255, 20, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 18px rgba(57, 255, 20, 0.6);
+        border-color: rgba(57, 255, 20, 0.9);
+    }
+}
+
+/* レポート内の4方向画像グリッドレイアウト */
+.report-image-section {
+    margin: 25px 0;
+}
+
+.report-image-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent-teal);
+    border-bottom: 2px solid rgba(100, 255, 218, 0.2);
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.report-image-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.report-image-card {
+    background: rgba(10, 17, 40, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.report-image-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid rgba(100, 255, 218, 0.15);
+    background: #000;
+    object-fit: contain;
+    aspect-ratio: 4/3;
+}
+
+.report-image-label {
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 8px;
+    color: var(--text-primary);
+}
+
+.report-image-sub {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* 印刷時のレポート最適化 */
+@media print {
+    .report-image-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 10px !important;
+    }
+    .report-image-card {
+        background: #fff !important;
+        border: 1px solid #ccc !important;
+        color: #000 !important;
+        padding: 5px !important;
+    }
+    .report-image-card img {
+        border: 1px solid #999 !important;
+    }
+    .report-image-label {
+        color: #000 !important;
+    }
+    .report-image-sub {
+        color: #555 !important;
+    }
 }
 
 /* スマホ表示 (768px未満) の場合のレスポンシブスタイル */
@@ -1288,6 +1559,8 @@ select:hover {
         border-radius: 8px;
         max-width: 80%;
     }
+
+
 
     /* 情報ステータス */
     .info-panel {
@@ -1486,3 +1759,248 @@ select:hover {
         text-align: center;
     }
 }
+
+/* ==========================================================================
+   V2.8.0 WebGL Stealth HUD Styles
+   ========================================================================== */
+.hud-main-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: #050505;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.visual-area {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    background: radial-gradient(circle at center, #111111 0%, #050505 100%);
+}
+
+/* Layer the WebGL Canvas perfectly over the main 2D Canvas */
+#webgl-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none; /* Float silently above webcam canvas */
+}
+
+/* Make sure the 2D video/pose canvas stays centered at z-index 1 */
+#canvasMP {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Adjust floating controls to sit cleanly in the visual-area */
+#uiFloatingLayer {
+    z-index: 10;
+}
+
+/* Right Analytics Panel */
+.analytics-area {
+    width: 380px;
+    height: 100%;
+    background-color: #0c0c0c;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    z-index: 15;
+    border-left: 1px solid #1a1a1a;
+}
+
+.panel-header {
+    padding: 24px;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.panel-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.panel-sub {
+    margin: 4px 0 0 0;
+    font-size: 11px;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.metrics-list {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.metric-card {
+    border-bottom: 1px solid #121212;
+    padding-bottom: 16px;
+}
+
+.metric-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+}
+
+.metric-label {
+    font-size: 11px;
+    color: #888888;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.metric-value {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.bar-container {
+    width: 100%;
+    height: 4px;
+    background-color: #1a1a1a;
+    position: relative;
+    overflow: hidden;
+    margin-top: 8px;
+    border-radius: 2px;
+}
+
+.bar-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #333333;
+    transition: width 0.08s linear, background-color 0.1s ease;
+}
+
+.status-console {
+    height: 120px;
+    background-color: #030303;
+    border-top: 1px solid #1a1a1a;
+    padding: 16px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 10px;
+    color: #555555;
+    overflow-y: hidden;
+    box-sizing: border-box;
+    line-height: 1.6;
+}
+
+.console-line {
+    margin-bottom: 4px;
+}
+
+.active-alert {
+    color: #ffaa00 !important;
+}
+
+.limit-alert {
+    color: #ff3c00 !important;
+    text-shadow: 0 0 4px rgba(255, 60, 0, 0.4);
+}
+
+/* ==========================================================================
+   V2.8.1 Responsive Layout Adaptations (Stealth HUD Columns Stack)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    /* Make visual container full screen always to prevent camera distortion */
+    html body .hud-main-container {
+        position: relative !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        overflow: hidden !important;
+        display: block !important;
+    }
+
+    html body .hud-main-container .visual-area {
+        width: 100vw !important;
+        height: 100vh !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        z-index: 10 !important;
+    }
+
+    /* Show the toggle button for mobile/tablet */
+    html body #toggleAnalyticsBtn {
+        display: block !important;
+    }
+
+    /* Transform the right analytics sidebar into a drawer overlay */
+    html body .hud-main-container .analytics-area {
+        position: fixed !important;
+        right: -380px !important; /* Hide offscreen right */
+        top: 0 !important;
+        width: 340px !important;
+        height: 100vh !important;
+        z-index: 1500 !important; /* Stand above floating layers */
+        background: rgba(12, 12, 12, 0.95) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-left: 1px solid #1a1a1a !important;
+        border-top: none !important;
+        transition: right 0.3s cubic-bezier(0.1, 0.9, 0.2, 1) !important;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    /* Slide open when active class is added */
+    html body .hud-main-container .analytics-area.analytics-open {
+        right: 0 !important;
+    }
+    
+    /* V2.8.2: Ensure floating controls on tablets/mobiles never get pushed below screen edge */
+    html body #uiFloatingLayer {
+        max-height: 82vh !important;
+        overflow-y: auto !important;
+        padding-bottom: 30px !important;
+        box-sizing: border-box !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    html body #controlsBox {
+        padding: 6px !important;
+    }
+
+    html body .controls {
+        padding: 10px 12px !important;
+        gap: 8px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Compact drawer for small smartphones */
+    html body .hud-main-container .analytics-area {
+        width: 280px !important;
+        right: -320px !important;
+    }
+    
+    html body .hud-main-container .analytics-area.analytics-open {
+        right: 0 !important;
+    }
+    
+    html body .hud-main-container .analytics-area .metrics-list {
+        padding: 16px !important;
+        gap: 12px !important;
+    }
+}
+
+

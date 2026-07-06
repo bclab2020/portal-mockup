@@ -5,11 +5,11 @@ import subprocess
 
 # Define image mapping for subcategories
 IMAGES_MAP = {
-    "soccer": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=400",
-    "baseball": "https://images.unsplash.com/photo-1530541930197-df161472b38f?auto=format&fit=crop&q=80&w=400",
+    "soccer": "https://images.unsplash.com/photo-1518063319789-7217e6706b04?auto=format&fit=crop&q=80&w=400",
+    "baseball": "https://images.unsplash.com/photo-1562088287-bde35a1ea917?auto=format&fit=crop&q=80&w=400",
     "tennis": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&q=80&w=400",
     "basketball": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&q=80&w=400",
-    "volleyball": "https://images.unsplash.com/photo-1592656094267-764a45068526?auto=format&fit=crop&q=80&w=400",
+    "volleyball": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&q=80&w=400",
     "track": "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=400",
     
     "stress": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400",
@@ -31,7 +31,15 @@ def make_card_html(art):
     if art['sport'] in ['makeup', 'cosmetics', 'hairstyle', 'styling', 'bodymake']:
         badge_style = ' style="background:var(--accent-pink); color:#fff;"'
     
-    img_url = IMAGES_MAP.get(art['sport'], "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400")
+    # Split space-separated tags and find the first matching image
+    tags = art['sport'].split()
+    img_url = None
+    for tag in tags:
+        if tag in IMAGES_MAP:
+            img_url = IMAGES_MAP[tag]
+            break
+    if not img_url:
+        img_url = "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400" 
     
     html = f"""
                         <!-- Daily Added Article ({art['badge']}) -->

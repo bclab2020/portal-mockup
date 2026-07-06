@@ -33,7 +33,10 @@ def make_card_html(art):
     
     # Use custom img_id if defined, otherwise resolve from tags
     if 'img_id' in art and art['img_id'].strip():
-        img_url = f"https://images.unsplash.com/{art['img_id']}?auto=format&fit=crop&q=80&w=400"
+        val = art['img_id'].strip()
+        match = re.search(r'(photo-[0-9a-zA-Z\-]+)', val)
+        img_id = match.group(1) if match else val
+        img_url = f"https://images.unsplash.com/{img_id}?auto=format&fit=crop&q=80&w=400"
     else:
         tags = art['sport'].split()
         img_url = None

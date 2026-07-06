@@ -531,7 +531,7 @@
 
         <!-- Preview Column -->
         <div class="preview-section">
-            <div class="preview-title">リアルタイムカードプレビュー</div>
+            <div class="preview-title" style="display:flex; justify-content:space-between; align-items:center; width:100%;">リアルタイムカードプレビュー <span id="previewImageError" style="display:none; color:#ff4500; font-size:12px; font-weight:700;">⚠️ 画像の読み込み失敗 (404 / タイムアウト)</span></div>
             <div id="livePreviewContainer">
                 <!-- Card render preview -->
             </div>
@@ -671,7 +671,7 @@
                         </div>
                         <div>
                             <label>個別画像ID (Unsplash Photo ID)</label>
-                            <input type="text" value="${art.img_id || ''}" placeholder="空欄時はカテゴリから自動選択" oninput="updateField(${index}, 'img_id', this.value)">
+                            <input type="text" value="${art.img_id || ''}" placeholder="画像のURL（右クリックでコピーしたもの）をそのまま貼り付け可能です" oninput="updateField(${index}, 'img_id', this.value)">
                         </div>
                         <div>
                             <label>バッジ表示名</label>
@@ -736,7 +736,13 @@
             // Determine image URL
             let imgId = "";
             if (art.img_id && art.img_id.trim()) {
-                imgId = art.img_id.trim();
+                const val = art.img_id.trim();
+                const match = val.match(/(photo-[0-9a-zA-Z\-]+)/);
+                if (match) {
+                    imgId = match[1];
+                } else {
+                    imgId = val;
+                }
             } else {
                 // Split sport tags and find the first matching fallback image
                 const tags = (art.sport || "").split(/\s+/);
@@ -762,6 +768,17 @@
             }
 
             const imgUrl = `https://images.unsplash.com/{imgId}?auto=format&fit=crop&q=80&w=400`.replace("{imgId}", imgId);
+
+            // Test if the image loads successfully
+            const testImg = new Image();
+            const errSpan = document.getElementById('previewImageError');
+            testImg.onload = () => {
+                if (errSpan) errSpan.style.display = 'none';
+            };
+            testImg.onerror = () => {
+                if (errSpan) errSpan.style.display = 'inline';
+            };
+            testImg.src = imgUrl;
 
             container.innerHTML = `
                 <div class="portal-card-preview">

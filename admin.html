@@ -480,6 +480,14 @@
     </style>
 </head>
 <body>
+    <!-- Deploying Loading Overlay -->
+    <div id="deployOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 8, 17, 0.96); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 10000; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 20px; transition: all 0.3s ease;">
+        <div class="spinner" style="width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1); border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <div id="deployStatusText" style="font-family:'Outfit', sans-serif; font-size: 18px; font-weight: 700; color: #fff; text-align: center;">本番サーバーに接続しています...</div>
+        <div id="deploySubStatusText" style="font-size: 12px; color: var(--text-secondary); max-width: 340px; text-align: center; line-height: 1.6; margin-top: 5px;">この処理には10秒ほどかかります。ブラウザを閉じずにお待ちください。</div>
+        <button id="deployCloseBtn" class="btn btn-secondary" onclick="hideDeployOverlay()" style="display: none; margin-top: 15px; padding: 8px 20px; font-size:12px; font-weight:700;">閉じる</button>
+    </div>
+    
     <!-- Login Gateway Overlay -->
     <div id="loginOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 8, 17, 0.96); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: all 0.5s ease;">
         <div style="background: rgba(13, 20, 38, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 40px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
@@ -504,7 +512,8 @@
         </div>
         <div class="nav-actions">
             <a href="index.html" class="btn btn-secondary">◀ ポータル画面に戻る</a>
-            <button class="btn btn-primary" onclick="exportDatabase()">💾 変更を保存してJSON出力</button>
+            <button class="btn btn-secondary" onclick="exportDatabase()">💾 JSONダウンロード</button>
+            <button class="btn btn-primary" id="saveAndDeployBtn" onclick="saveAndDeployToGithub()" style="background:var(--accent-teal); color:#000; box-shadow:0 0 15px rgba(100,255,218,0.25); border-color:var(--accent-teal); font-weight:700;">🟢 本番サイトを更新する</button>
         </div>
     </header>
 
@@ -547,6 +556,37 @@
             <!-- Draft list editor -->
             <div class="drafts-list" id="draftsList">
                 <!-- Injected dynamically -->
+            </div>
+            
+            <!-- GitHub Integration Settings (Collapsible) -->
+            <div id="githubConfigSection" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; margin-top: 30px;">
+                <h3 style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 0; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select:none;" onclick="toggleGithubConfig()">
+                    <span>⚙️ 運営向けシステム連携設定 (本番自動更新用)</span>
+                    <span id="githubConfigArrow" style="font-size: 10px;">▼</span>
+                </h3>
+                <div id="githubConfigContent" style="display: none; flex-direction: column; gap: 15px; margin-top: 15px;">
+                    <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">
+                        ※設定を行うと、専門家が「本番サイトを更新する」ボタンを押すだけで、GitHub上の画像とデータベースが直接自動更新されます。設定情報はブラウザ（Local Storage）にのみ安全に保存されます。
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+                        <div>
+                            <label style="font-size:10px; color:var(--text-secondary); display:block; margin-bottom:5px; font-weight:700;">GitHubアカウント名 (所有者)</label>
+                            <input type="text" id="ghOwner" placeholder="例: bclab2020" style="width:100%; padding:10px; border-radius:8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#fff; font-size:12px; font-weight:600;">
+                        </div>
+                        <div>
+                            <label style="font-size:10px; color:var(--text-secondary); display:block; margin-bottom:5px; font-weight:700;">GitHubリポジトリ名</label>
+                            <input type="text" id="ghRepo" placeholder="例: portal-mockup" style="width:100%; padding:10px; border-radius:8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#fff; font-size:12px; font-weight:600;">
+                        </div>
+                    </div>
+                    <div>
+                        <label style="font-size:10px; color:var(--text-secondary); display:block; margin-bottom:5px; font-weight:700;">GitHubパーソナルアクセストークン (PAT)</label>
+                        <input type="password" id="ghToken" placeholder="github_pat_..." style="width:100%; padding:10px; border-radius:8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#fff; font-size:12px; font-weight:600;">
+                        <div style="font-size:10px; color:var(--accent-blue); margin-top:5px; line-height:1.4;">
+                            <a href="https://github.com/settings/tokens/new?scopes=repo" target="_blank" style="color:var(--accent-blue); text-decoration:underline;">👉 こちらからトークンを新規作成</a> (「repo」スコープにチェックを入れて作成し、貼り付けてください)
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="saveGithubConfig()" style="padding: 8px 16px; font-size: 11px; align-self: flex-start; font-weight:700;">設定を保存する</button>
+                </div>
             </div>
         </div>
 
@@ -1236,6 +1276,237 @@
                     if (e.key === 'Enter') attemptLogin();
                 });
             }
+        });
+    
+        // Global variables for pending file upload
+        let pendingUploadFile = null;
+        let pendingUploadPath = "";
+
+        // Global keypress listener for paste events
+        window.addEventListener('paste', (event) => {
+            const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            let file = null;
+            for (let idx in items) {
+                const item = items[idx];
+                if (item.kind === 'file' && item.type.startsWith('image/')) {
+                    file = item.getAsFile();
+                    break;
+                }
+            }
+            
+            if (file) {
+                const timestamp = Date.now();
+                const ext = file.name ? file.name.split('.').pop() : 'png';
+                const fileName = `pasted_image_${timestamp}.${ext}`;
+                const renamedFile = new File([file], fileName, { type: file.type });
+                
+                if (currentCategory === 'experts') {
+                    handleExpertPhotoUpload({ files: [renamedFile] }, activeEditIdx);
+                } else if (articlesDb[currentDay] && articlesDb[currentDay][currentCategory]) {
+                    handleArticlePhotoUpload({ files: [renamedFile] }, activeEditIdx);
+                }
+                event.preventDefault();
+            }
+        });
+
+        // GitHub Integration Settings Handlers
+        function saveGithubConfig() {
+            const owner = document.getElementById('ghOwner').value.trim();
+            const repo = document.getElementById('ghRepo').value.trim();
+            const token = document.getElementById('ghToken').value.trim();
+            
+            localStorage.setItem('ghOwner', owner);
+            localStorage.setItem('ghRepo', repo);
+            localStorage.setItem('ghToken', token);
+            
+            showToast("GitHub連携設定を保存しました", "⚙️");
+            toggleGithubConfig();
+        }
+
+        function loadGithubConfig() {
+            const owner = localStorage.getItem('ghOwner') || "";
+            const repo = localStorage.getItem('ghRepo') || "";
+            const token = localStorage.getItem('ghToken') || "";
+            
+            const ownerEl = document.getElementById('ghOwner');
+            const repoEl = document.getElementById('ghRepo');
+            const tokenEl = document.getElementById('ghToken');
+            
+            if (ownerEl) ownerEl.value = owner;
+            if (repoEl) repoEl.value = repo;
+            if (tokenEl) tokenEl.value = token;
+        }
+
+        function toggleGithubConfig() {
+            const content = document.getElementById('githubConfigContent');
+            const arrow = document.getElementById('githubConfigArrow');
+            if (content.style.display === 'none') {
+                content.style.display = 'flex';
+                arrow.innerText = '▲';
+            } else {
+                content.style.display = 'none';
+                arrow.innerText = '▼';
+            }
+        }
+
+        // Deploy Overlay Controls
+        function showDeployOverlay(statusText) {
+            const overlay = document.getElementById('deployOverlay');
+            const spinner = overlay.querySelector('.spinner');
+            const btn = document.getElementById('deployCloseBtn');
+            
+            overlay.style.display = 'flex';
+            document.getElementById('deployStatusText').innerText = statusText;
+            document.getElementById('deploySubStatusText').innerText = "この処理には10秒ほどかかります。ブラウザを閉じずにお待ちください。";
+            spinner.style.display = 'block';
+            btn.style.display = 'none';
+        }
+
+        function showDeploySuccess() {
+            const overlay = document.getElementById('deployOverlay');
+            const spinner = overlay.querySelector('.spinner');
+            const btn = document.getElementById('deployCloseBtn');
+            
+            spinner.style.display = 'none';
+            document.getElementById('deployStatusText').innerText = "🎉 更新が完了しました！";
+            document.getElementById('deploySubStatusText').innerText = "本本番サイト（GitHub Pages）に反映されるまで1〜2分かかります。このブラウザ画面は閉じてしまって問題ありません。";
+            btn.style.display = 'inline-block';
+            btn.innerText = "完了して閉じる";
+        }
+
+        function showDeployError(errMsg) {
+            const overlay = document.getElementById('deployOverlay');
+            const spinner = overlay.querySelector('.spinner');
+            const btn = document.getElementById('deployCloseBtn');
+            
+            spinner.style.display = 'none';
+            document.getElementById('deployStatusText').innerText = "⚠️ 更新に失敗しました";
+            document.getElementById('deploySubStatusText').innerText = "エラー詳細: " + errMsg;
+            btn.style.display = 'inline-block';
+            btn.innerText = "閉じる";
+        }
+
+        function hideDeployOverlay() {
+            document.getElementById('deployOverlay').style.display = 'none';
+        }
+
+        // GitHub API Push Logic
+        async function saveAndDeployToGithub() {
+            const owner = localStorage.getItem('ghOwner') || document.getElementById('ghOwner').value.trim();
+            const repo = localStorage.getItem('ghRepo') || document.getElementById('ghRepo').value.trim();
+            const token = localStorage.getItem('ghToken') || document.getElementById('ghToken').value.trim();
+            
+            if (!owner || !repo || !token) {
+                alert("⚠️ 運営用の「システム連携設定（GitHub設定）」が完了していません。設定を行ってから実行してください。");
+                document.getElementById('githubConfigContent').style.display = 'flex';
+                document.getElementById('githubConfigSection').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            
+            showDeployOverlay("🔄 本番サーバーに接続しています...");
+            
+            try {
+                // 1. Upload pending photo if exists
+                if (pendingUploadFile) {
+                    showDeployOverlay("🖼️ 写真をアップロードしています...");
+                    
+                    const base64Content = await getBase64(pendingUploadFile);
+                    let imageSha = null;
+                    
+                    // Fetch existing SHA if file exists to overwrite
+                    try {
+                        const getResp = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${pendingUploadPath}`, {
+                            headers: { "Authorization": `token ${token}` }
+                        });
+                        if (getResp.ok) {
+                            const data = await getResp.json();
+                            imageSha = data.sha;
+                        }
+                    } catch (e) {
+                        // ignore
+                    }
+                    
+                    const putBody = {
+                        message: `Upload image ${pendingUploadPath} via portal editor`,
+                        content: base64Content
+                    };
+                    if (imageSha) putBody.sha = imageSha;
+                    
+                    const uploadResp = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${pendingUploadPath}`, {
+                        method: "PUT",
+                        headers: {
+                            "Authorization": `token ${token}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(putBody)
+                    });
+                    
+                    if (!uploadResp.ok) {
+                        const errData = await uploadResp.json();
+                        throw new Error("画像のアップロードに失敗しました: " + (errData.message || ""));
+                    }
+                }
+                
+                // 2. Update articles_db.json
+                showDeployOverlay("📝 データベースを更新しています...");
+                
+                let dbSha = null;
+                const getDbResp = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/articles_db.json`, {
+                    headers: { "Authorization": `token ${token}` }
+                });
+                if (!getDbResp.ok) {
+                    throw new Error("データベースファイルの取得に失敗しました。リポジトリ設定をご確認ください。");
+                }
+                const dbData = await getDbResp.json();
+                dbSha = dbData.sha;
+                
+                const jsonStr = JSON.stringify(articlesDb, null, 4);
+                // Safe UTF-8 base64 encoding support for Japanese text
+                const utf8Base64Db = btoa(unescape(encodeURIComponent(jsonStr)));
+                
+                const updateDbResp = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/articles_db.json`, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `token ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: `Update articles_db.json via portal editor`,
+                        content: utf8Base64Db,
+                        sha: dbSha
+                    })
+                });
+                
+                if (!updateDbResp.ok) {
+                    const errData = await updateDbResp.json();
+                    throw new Error("データベースの更新に失敗しました: " + (errData.message || ""));
+                }
+                
+                // Success!
+                showDeploySuccess();
+                pendingUploadFile = null;
+                pendingUploadPath = "";
+                
+            } catch (err) {
+                showDeployError(err.message);
+            }
+        }
+
+        function getBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    const base64 = reader.result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // Initialize Github config on load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadGithubConfig();
         });
     </script>
 </body>

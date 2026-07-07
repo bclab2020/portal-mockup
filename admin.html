@@ -505,9 +505,12 @@
                 <div>
                     <label>配信日 (日付インデックス)</label>
                     <div class="tabs-group" id="dayTabs">
-                        <button class="tab-btn active" data-day="day1" onclick="switchDay('day1')">Day 1 (明日配信)</button>
-                        <button class="tab-btn" data-day="day2" onclick="switchDay('day2')">Day 2 (明後日配信)</button>
-                        <button class="tab-btn" data-day="day3" onclick="switchDay('day3')">Day 3 (3日後配信)</button>
+                        <button class="tab-btn active" data-day="baseline" onclick="switchDay('baseline')">ベースライン (初期表示)</button>
+                        <button class="tab-btn" data-day="day1" onclick="switchDay('day1')">Day 1</button>
+                        <button class="tab-btn" data-day="day2" onclick="switchDay('day2')">Day 2</button>
+                        <button class="tab-btn" data-day="day3" onclick="switchDay('day3')">Day 3</button>
+                        <button class="tab-btn" data-day="day4" onclick="switchDay('day4')">Day 4</button>
+                        <button class="tab-btn" data-day="day5" onclick="switchDay('day5')">Day 5</button>
                     </div>
                 </div>
                 <div>
@@ -553,7 +556,7 @@
     <script>
         // Default Embedded Article Database (Day 1-3, Sports, Health, Beauty)
         let articlesDb = {};
-        let currentDay = "day1";
+        let currentDay = "baseline";
         let currentCategory = "sports";
         let activeEditIdx = 0;
 
@@ -573,9 +576,13 @@
                     console.log("Using fallback database config:", err);
                     // Minimal fallback to prevent empty page
                     articlesDb = {
+                        "current_day": "day1",
+                        "baseline": { "sports": [], "health": [], "beauty": [] },
                         "day1": { "sports": [], "health": [], "beauty": [] },
                         "day2": { "sports": [], "health": [], "beauty": [] },
-                        "day3": { "sports": [], "health": [], "beauty": [] }
+                        "day3": { "sports": [], "health": [], "beauty": [] },
+                        "day4": { "sports": [], "health": [], "beauty": [] },
+                        "day5": { "sports": [], "health": [], "beauty": [] }
                     };
                     renderDrafts();
                 });

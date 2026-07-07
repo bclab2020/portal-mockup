@@ -1094,6 +1094,10 @@
             const objectUrl = URL.createObjectURL(file);
             const expectedPath = "images/" + file.name;
             
+            // Set pending upload
+            pendingUploadFile = file;
+            pendingUploadPath = expectedPath;
+            
             // Update model
             articlesDb[currentDay][currentCategory][index].img_id = expectedPath;
             
@@ -1105,7 +1109,7 @@
             if (inputEl) inputEl.value = expectedPath;
             
             updatePreview(articlesDb[currentDay][currentCategory][index]);
-            showToast("画像を選択しました。実際のファイルは images/ フォルダに保存してください。", "🖼️");
+            showToast("画像を選択しました。更新ボタンを押すと本番保存されます。", "🖼️");
         }
 
         function handleExpertPhotoUpload(input, index) {
@@ -1114,6 +1118,10 @@
             
             const objectUrl = URL.createObjectURL(file);
             const expectedPath = "images/" + file.name;
+            
+            // Set pending upload
+            pendingUploadFile = file;
+            pendingUploadPath = expectedPath;
             
             // Update model
             articlesDb.experts[index].img_id = expectedPath;
@@ -1126,7 +1134,7 @@
             if (inputEl) inputEl.value = expectedPath;
             
             updateExpertPreview(articlesDb.experts[index]);
-            showToast("画像を選択しました。実際のファイルは images/ フォルダに保存してください。", "🖼️");
+            showToast("画像を選択しました。更新ボタンを押すと本番保存されます。", "🖼️");
         }
 
         function showToast(message, icon = "✔️") {

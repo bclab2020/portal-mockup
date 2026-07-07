@@ -519,10 +519,11 @@
                         <button class="tab-btn tab-btn-sport active" data-sport="sports" onclick="switchCategory('sports')">⚽ スポーツ</button>
                         <button class="tab-btn tab-btn-sport" data-sport="health" onclick="switchCategory('health')">🧘 健康チェック</button>
                         <button class="tab-btn tab-btn-sport" data-sport="beauty" onclick="switchCategory('beauty')">💄 美容骨格</button>
+                        <button class="tab-btn tab-btn-sport" data-sport="experts" onclick="switchCategory('experts')">👥 専門家管理</button>
                     </div>
                 </div>
                 <div>
-                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 11px; margin-top: 16px;" onclick="addNewArticle()">➕ 新しい下書き記事を追加</button>
+                    <button id="addArticleBtn" class="btn btn-secondary" style="padding: 6px 12px; font-size: 11px; margin-top: 16px;" onclick="addNewArticle()">➕ 新しい下書き記事を追加</button>
                 </div>
             </div>
 
@@ -625,6 +626,78 @@
         function renderDrafts() {
             const list = document.getElementById('draftsList');
             list.innerHTML = "";
+
+            if (currentCategory === "experts") {
+                // Hide Day Tabs selection since experts are global
+                document.getElementById('dayTabs').parentElement.style.opacity = '0.3';
+                document.getElementById('dayTabs').parentElement.style.pointerEvents = 'none';
+                document.getElementById('addArticleBtn').innerText = "👥 専門家を追加";
+                document.getElementById('addArticleBtn').setAttribute('onclick', 'addNewExpert()');
+
+                if (!articlesDb.experts) {
+                    articlesDb.experts = [];
+                }
+                const exps = articlesDb.experts;
+
+                if (exps.length === 0) {
+                    list.innerHTML = `<div style="text-align:center; padding: 40px; color:var(--text-secondary);">登録されている専門家はいません。「専門家を追加」ボタンから追加できます。</div>`;
+                    updateExpertPreview(null);
+                    return;
+                }
+
+                exps.forEach((exp, index) => {
+                    const item = document.createElement('div');
+                    item.className = `draft-item ${index === activeEditIdx ? 'active-edit' : ''}`;
+                    item.onclick = () => {
+                        if (activeEditIdx !== index) {
+                            activeEditIdx = index;
+                            document.querySelectorAll('.draft-item').forEach((el, idx) => {
+                                el.classList.toggle('active-edit', idx === index);
+                            });
+                            updateExpertPreview(exp);
+                        }
+                    };
+
+                    item.innerHTML = `
+                        <div class="draft-item-header">
+                            <span class="draft-badge health">👤 専門家 ${index + 1}: ${exp.name || '名前未入力'}</span>
+                            <button class="btn btn-secondary" style="padding: 4px 8px; font-size:11px; border-color: rgba(255,0,0,0.2); color: #ff4500;" onclick="deleteExpert(${index}, event)">削除 🗑️</button>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group-full">
+                                <label>専門家氏名</label>
+                                <input type="text" value="${exp.name || ''}" oninput="updateExpertField(${index}, 'name', this.value)">
+                            </div>
+                            <div>
+                                <label>専門分野（バッジ表示）</label>
+                                <input type="text" value="${exp.field || ''}" placeholder="例: 医療分野、歯科分野" oninput="updateExpertField(${index}, 'field', this.value)">
+                            </div>
+                            <div>
+                                <label>顔写真 (Unsplash ID または画像パス)</label>
+                                <input type="text" value="${exp.img_id || ''}" placeholder="例: photo-xxxxx" oninput="updateExpertField(${index}, 'img_id', this.value)">
+                            </div>
+                            <div class="form-group-full">
+                                <label>肩書・所属・資格（カンマやスラッシュ区切り）</label>
+                                <input type="text" value="${exp.title || ''}" placeholder="例: 医師 / 医学博士" oninput="updateExpertField(${index}, 'title', this.value)">
+                            </div>
+                            <div class="form-group-full">
+                                <label>プロフィール経歴・自己紹介</label>
+                                <textarea oninput="updateExpertField(${index}, 'profile', this.value)">${exp.profile || ''}</textarea>
+                            </div>
+                        </div>
+                    `;
+                    list.appendChild(item);
+                });
+
+                updateExpertPreview(exps[activeEditIdx]);
+                return;
+            } else {
+                // Restore Day Tabs
+                document.getElementById('dayTabs').parentElement.style.opacity = '1';
+                document.getElementById('dayTabs').parentElement.style.pointerEvents = 'auto';
+                document.getElementById('addArticleBtn').innerText = "➕ 新しい下書き記事を追加";
+                document.getElementById('addArticleBtn').setAttribute('onclick', 'addNewArticle()');
+            }
 
             if (!articlesDb[currentDay] || !articlesDb[currentDay][currentCategory]) {
                 list.innerHTML = `<div style="text-align:center; padding: 40px; color:var(--text-secondary);">該当する下書き記事はありません。</div>`;
@@ -861,6 +934,88 @@
             downloadAnchor.click();
             downloadAnchor.remove();
             showToast("articles_db.json ファイルを出力しました！", "💾");
+        }
+
+        function updateExpertField(index, field, value) {
+            if (articlesDb.experts && articlesDb.experts[index]) {
+                articlesDb.experts[index][field] = value;
+                updateExpertPreview(articlesDb.experts[index]);
+            }
+        }
+
+        function updateExpertPreview(exp) {
+            const container = document.getElementById('livePreviewContainer');
+            if (!exp) {
+                container.innerHTML = `<div style="text-align:center; padding: 40px; color:var(--text-secondary); background:var(--bg-card); border-radius:16px; border:1px solid var(--border-color)">専門家を選択するとここにプレビューが表示されます。</div>`;
+                return;
+            }
+
+            let imgUrl = "";
+            if (exp.img_id && exp.img_id.trim()) {
+                const val = exp.img_id.trim();
+                if (val.startsWith("http://") || val.startsWith("https://") || val.startsWith("images/") || val.startsWith("assets/") || val.startsWith("./") || val.match(/\.(png|jpg|jpeg|webp|gif|svg)/i)) {
+                    imgUrl = val;
+                } else {
+                    const match = val.match(/(photo-[0-9a-zA-Z\-]+)/);
+                    const cleanId = match ? match[1] : val;
+                    imgUrl = `https://images.unsplash.com/${cleanId}?auto=format&fit=crop&q=80&w=200`;
+                }
+            } else {
+                imgUrl = "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200";
+            }
+
+            const testImg = new Image();
+            const errSpan = document.getElementById('previewImageError');
+            testImg.onload = () => { if (errSpan) errSpan.style.display = 'none'; };
+            testImg.onerror = () => { if (errSpan) errSpan.style.display = 'inline'; };
+            testImg.src = imgUrl;
+
+            const isDental = exp.field && exp.field.includes("歯科");
+            const badgeStyle = isDental ? "background: rgba(100, 255, 218, 0.12); border: 1px solid rgba(100, 255, 218, 0.3); color: var(--accent-teal);" : "background: rgba(0, 191, 255, 0.15); border: 1px solid rgba(0, 191, 255, 0.3); color: var(--accent-blue);";
+
+            container.innerHTML = `
+                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 25px; text-align: left; display: flex; flex-direction: column; gap: 15px; margin-top: 10px;">
+                    <div style="display: flex; gap: 20px; align-items: flex-start;">
+                        <div style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); background-image: url('${imgUrl}'); background-size: cover; background-position: center; flex-shrink: 0;"></div>
+                        <div style="flex-grow: 1;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                                <span style="font-family:'Outfit', sans-serif; font-size: 18px; font-weight: 800; color: #fff;">${exp.name || '名前未指定'}</span>
+                                <span style="font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 20px; ${badgeStyle}">${exp.field || '分野未指定'}</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-secondary); font-weight: 600; margin-bottom: 8px;">${exp.title || '肩書未指定'}</div>
+                            <div style="font-size: 12px; color: #d1dbe5; line-height: 1.5;">${exp.profile || 'プロフィール未指定'}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function addNewExpert() {
+            if (!articlesDb.experts) {
+                articlesDb.experts = [];
+            }
+            const newExp = {
+                "id": "new_expert_" + Date.now(),
+                "name": "新しい専門家",
+                "field": "医療分野",
+                "title": "医師 / 医学博士",
+                "profile": "ここに専門家の略歴や自己紹介文を入力してください。",
+                "img_id": "photo-1559839734-2b71ea197ec2"
+            };
+            articlesDb.experts.unshift(newExp);
+            activeEditIdx = 0;
+            renderDrafts();
+            showToast("新しい専門家を追加しました", "👥");
+        }
+
+        function deleteExpert(index, event) {
+            event.stopPropagation();
+            if (confirm("この専門家プロフィールを削除してもよろしいですか？")) {
+                articlesDb.experts.splice(index, 1);
+                activeEditIdx = 0;
+                renderDrafts();
+                showToast("専門家を削除しました", "🗑️");
+            }
         }
 
         function showToast(message, icon = "✔️") {

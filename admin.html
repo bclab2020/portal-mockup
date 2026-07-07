@@ -574,6 +574,7 @@
     <script>
         // Default Embedded Article Database (Day 1-3, Sports, Health, Beauty)
         let articlesDb = {};
+        const localPhotoPreviews = {}; // Temporary local Object URL mapping
         let currentDay = "baseline";
         let currentCategory = "sports";
         let activeEditIdx = 0;
@@ -691,7 +692,11 @@
                             </div>
                             <div>
                                 <label>顔写真 (Unsplash ID または画像パス)</label>
-                                <input type="text" value="${exp.img_id || ''}" placeholder="例: photo-xxxxx" oninput="updateExpertField(${index}, 'img_id', this.value)">
+                                <input type="text" id="expertImgInput_${index}" value="${exp.img_id || ''}" placeholder="例: photo-xxxxx" oninput="updateExpertField(${index}, 'img_id', this.value)">
+                                <div style="display:flex; gap:10px; margin-top:5px;">
+                                    <input type="file" id="expertPhotoFile_${index}" accept="image/*" style="display:none;" onchange="handleExpertPhotoUpload(this, ${index})">
+                                    <button type="button" class="btn btn-secondary" style="padding:4px 8px; font-size:10px; height:auto; margin-top:0;" onclick="document.getElementById('expertPhotoFile_${index}').click()">📂 ローカル画像を選択</button>
+                                </div>
                             </div>
                             <div class="form-group-full">
                                 <label>肩書・所属・資格（カンマやスラッシュ区切り）</label>
@@ -768,7 +773,11 @@
                         </div>
                         <div>
                             <label>個別画像ID (Unsplash Photo ID)</label>
-                            <input type="text" value="${art.img_id || ''}" placeholder="独自画像パス(例: images/my-photo.jpg)や他サイトの画像URLも貼り付け可能です" oninput="updateField(${index}, 'img_id', this.value)">
+                            <input type="text" id="articleImgInput_${index}" value="${art.img_id || ''}" placeholder="独自画像パス(例: images/my-photo.jpg)や他サイトの画像URLも貼り付け可能です" oninput="updateField(${index}, 'img_id', this.value)">
+                            <div style="display:flex; gap:10px; margin-top:5px;">
+                                <input type="file" id="articlePhotoFile_${index}" accept="image/*" style="display:none;" onchange="handleArticlePhotoUpload(this, ${index})">
+                                <button type="button" class="btn btn-secondary" style="padding:4px 8px; font-size:10px; height:auto; margin-top:0;" onclick="document.getElementById('articlePhotoFile_${index}').click()">📂 ローカル画像を選択</button>
+                            </div>
                         </div>
                         <div>
                             <label>バッジ表示名</label>
@@ -1033,6 +1042,48 @@
                 renderDrafts();
                 showToast("専門家を削除しました", "🗑️");
             }
+        }
+
+        function handleArticlePhotoUpload(input, index) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            const objectUrl = URL.createObjectURL(file);
+            const expectedPath = "images/" + file.name;
+            
+            // Update model
+            articlesDb[currentDay][currentCategory][index].img_id = expectedPath;
+            
+            // Register local preview URL
+            localPhotoPreviews[expectedPath] = objectUrl;
+            
+            // Update input box value
+            const inputEl = document.getElementById(`articleImgInput_${index}`);
+            if (inputEl) inputEl.value = expectedPath;
+            
+            updatePreview(articlesDb[currentDay][currentCategory][index]);
+            showToast("画像を選択しました。実際のファイルは images/ フォルダに保存してください。", "🖼️");
+        }
+
+        function handleExpertPhotoUpload(input, index) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            const objectUrl = URL.createObjectURL(file);
+            const expectedPath = "images/" + file.name;
+            
+            // Update model
+            articlesDb.experts[index].img_id = expectedPath;
+            
+            // Register local preview URL
+            localPhotoPreviews[expectedPath] = objectUrl;
+            
+            // Update input box value
+            const inputEl = document.getElementById(`expertImgInput_${index}`);
+            if (inputEl) inputEl.value = expectedPath;
+            
+            updateExpertPreview(articlesDb.experts[index]);
+            showToast("画像を選択しました。実際のファイルは images/ フォルダに保存してください。", "🖼️");
         }
 
         function showToast(message, icon = "✔️") {

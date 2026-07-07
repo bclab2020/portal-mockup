@@ -480,9 +480,26 @@
     </style>
 </head>
 <body>
+    <!-- Login Gateway Overlay -->
+    <div id="loginOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 8, 17, 0.96); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: all 0.5s ease;">
+        <div style="background: rgba(13, 20, 38, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 40px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+            <div style="font-size: 40px; margin-bottom: 20px;">🔑</div>
+            <h2 style="font-family:'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px;">CORE CONNECT Gateway</h2>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 25px; line-height: 1.5;">アクセス権限を認証します。<br>管理パスコードを入力してください。</p>
+            <input type="password" id="passcodeInput" placeholder="パスコードを入力" style="width: 100%; padding: 14px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; font-size: 14px; font-weight: 600; text-align: center; margin-bottom: 20px; outline: none; transition: border-color 0.3s ease; border-color: rgba(255,255,255,0.15);">
+            <button class="btn btn-primary" onclick="attemptLogin()" style="width: 100%; padding: 14px; border-radius: 12px; background: var(--accent-blue); color: #000; font-weight: 700; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(0, 191, 255, 0.25);">サインイン</button>
+            <div id="loginError" style="display: none; color: #ff4500; font-size: 11px; font-weight: 600; margin-top: 15px;">⚠️ パスコードが正しくありません</div>
+            <div style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; font-size: 11px; color: var(--text-secondary); text-align: left; line-height: 1.5;">
+                <strong>💡 テスト用パスコード：</strong><br>
+                ・運営管理者: <code>admin</code><br>
+                ・久保 肇 氏専用: <code>kubo</code><br>
+                ・井出 徹 氏専用: <code>ide</code>
+            </div>
+        </div>
+    </div>
     <header>
         <div class="logo-section">
-            <h1>CORE CONNECT</h1>
+            <h1 style="display:flex; align-items:center; gap:12px;">CORE CONNECT <span id="loginRoleBadge" style="font-size:11px; padding:3px 10px; border-radius:20px; font-weight:700; background:rgba(255,255,255,0.05); color:var(--text-secondary); border:1px solid rgba(255,255,255,0.1);">未認証</span></h1>
             <p>記事下書き・コンテンツ管理画面 (Draft Review & Editor)</p>
         </div>
         <div class="nav-actions">
@@ -1028,6 +1045,147 @@
                 toast.classList.remove('show');
             }, 3000);
         }
+    
+        // Login & Role-Based Access Control State
+        let userRole = null;
+
+        function attemptLogin() {
+            const code = document.getElementById('passcodeInput').value.trim();
+            const err = document.getElementById('loginError');
+            
+            if (code === 'admin') {
+                userRole = 'admin';
+            } else if (code === 'kubo') {
+                userRole = 'kubo';
+            } else if (code === 'ide') {
+                userRole = 'ide';
+            } else {
+                err.style.display = 'block';
+                return;
+            }
+            
+            err.style.display = 'none';
+            
+            // Animate overlay slide out
+            const overlay = document.getElementById('loginOverlay');
+            overlay.style.opacity = '0';
+            overlay.style.transform = 'translateY(-50px)';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 500);
+            
+            // Apply restrictions
+            applyRoleRestrictions();
+        }
+
+        function applyRoleRestrictions() {
+            const badge = document.getElementById('loginRoleBadge');
+            if (userRole === 'admin') {
+                currentCategory = 'sports';
+                currentDay = 'baseline';
+                if (badge) {
+                    badge.innerText = "🔑 運営管理者モード";
+                    badge.style.background = "rgba(0, 191, 255, 0.15)";
+                    badge.style.color = "var(--accent-blue)";
+                    badge.style.border = "1px solid rgba(0, 191, 255, 0.3)";
+                }
+                
+                document.getElementById('categoryTabs').style.display = 'flex';
+                document.getElementById('dayTabs').parentElement.style.display = 'block';
+                document.getElementById('addArticleBtn').style.display = 'inline-block';
+                
+                document.querySelectorAll('#categoryTabs .tab-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-sport') === 'sports');
+                });
+                
+                renderDrafts();
+            } else {
+                // Expert Restricted view
+                currentCategory = 'experts';
+                
+                document.querySelectorAll('#categoryTabs .tab-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-sport') === 'experts');
+                });
+                
+                document.getElementById('categoryTabs').style.display = 'none';
+                document.getElementById('dayTabs').parentElement.style.display = 'none';
+                document.getElementById('addArticleBtn').style.display = 'none';
+                
+                const nameMap = {
+                    kubo: "久保 肇 氏",
+                    ide: "井出 徹 氏"
+                };
+                
+                if (badge) {
+                    badge.innerText = `👤 専門家マイページ: ${nameMap[userRole]}`;
+                    badge.style.background = "rgba(100, 255, 218, 0.12)";
+                    badge.style.color = "var(--accent-teal)";
+                    badge.style.border = "1px solid rgba(100, 255, 218, 0.3)";
+                }
+                
+                renderRestrictedExpertDrafts();
+            }
+        }
+
+        function renderRestrictedExpertDrafts() {
+            const list = document.getElementById('draftsList');
+            list.innerHTML = "";
+            
+            if (!articlesDb.experts) articlesDb.experts = [];
+            
+            const expIdx = articlesDb.experts.findIndex(exp => exp.id === userRole);
+            if (expIdx === -1) {
+                list.innerHTML = `<div style="text-align:center; padding: 40px; color:var(--text-secondary);">プロフィールデータが見つかりません。</div>`;
+                updateExpertPreview(null);
+                return;
+            }
+            
+            const exp = articlesDb.experts[expIdx];
+            activeEditIdx = expIdx;
+            
+            const item = document.createElement('div');
+            item.className = 'draft-item active-edit';
+            item.style.cursor = 'default';
+            item.innerHTML = `
+                <div class="draft-item-header">
+                    <span class="draft-badge health">👤 マイプロフィール編集</span>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group-full">
+                        <label>専門家氏名</label>
+                        <input type="text" value="${exp.name || ''}" oninput="updateExpertField(${expIdx}, 'name', this.value)">
+                    </div>
+                    <div>
+                        <label>専門分野（バッジ表示）</label>
+                        <input type="text" value="${exp.field || ''}" placeholder="例: 医療分野、歯科分野" oninput="updateExpertField(${expIdx}, 'field', this.value)">
+                    </div>
+                    <div>
+                        <label>顔写真 (Unsplash ID または画像パス)</label>
+                        <input type="text" value="${exp.img_id || ''}" placeholder="例: photo-xxxxx" oninput="updateExpertField(${expIdx}, 'img_id', this.value)">
+                    </div>
+                    <div class="form-group-full">
+                        <label>肩書・所属・資格（カンマやスラッシュ区切り）</label>
+                        <input type="text" value="${exp.title || ''}" placeholder="例: 医師 / 医学博士" oninput="updateExpertField(${expIdx}, 'title', this.value)">
+                    </div>
+                    <div class="form-group-full">
+                        <label>プロフィール経歴・自己紹介</label>
+                        <textarea oninput="updateExpertField(${expIdx}, 'profile', this.value)">${exp.profile || ''}</textarea>
+                    </div>
+                </div>
+            `;
+            list.appendChild(item);
+            updateExpertPreview(exp);
+        }
+
+        // Add Enter key event listener to login input
+        window.addEventListener('DOMContentLoaded', () => {
+            const input = document.getElementById('passcodeInput');
+            if (input) {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') attemptLogin();
+                });
+            }
+        });
     </script>
 </body>
 </html>

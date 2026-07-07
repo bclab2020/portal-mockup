@@ -621,7 +621,7 @@
 
         // Load Default Database from server or embedded fallback
         window.addEventListener('DOMContentLoaded', () => {
-            fetch('articles_db.json')
+            fetch('articles_db.json?t=' + Date.now())
                 .then(response => {
                     if (!response.ok) throw new Error("Could not find local JSON file.");
                     return response.json();

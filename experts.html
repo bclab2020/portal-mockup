@@ -1628,7 +1628,7 @@
 
         window.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch('articles_db.json');
+                const response = await fetch('articles_db.json?t=' + Date.now());
                 if (!response.ok) throw new Error("Status " + response.status);
                 articlesDb = await response.json();
             } catch (e) {

@@ -2613,7 +2613,7 @@ const visibleCounts = {
 
 async function initDatabase() {
     try {
-        const response = await fetch('articles_db.json');
+        const response = await fetch('articles_db.json?t=' + Date.now());
         if (!response.ok) throw new Error("Status " + response.status);
         articlesDb = await response.json();
         console.log("Database loaded from server JSON successfully.");

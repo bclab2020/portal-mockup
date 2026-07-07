@@ -883,8 +883,9 @@
             let imgUrl = "";
             if (art.img_id && art.img_id.trim()) {
                 const val = art.img_id.trim();
-                // Check if it is a full URL, relative path, or file extension
-                if (val.startsWith("http://") || val.startsWith("https://") || val.startsWith("images/") || val.startsWith("assets/") || val.startsWith("./") || val.match(/\.(png|jpg|jpeg|webp|gif|svg)/i)) {
+                if (localPhotoPreviews[val]) {
+                    imgUrl = localPhotoPreviews[val];
+                } else if (val.startsWith("http://") || val.startsWith("https://") || val.startsWith("images/") || val.startsWith("assets/") || val.startsWith("./") || val.match(/\.(png|jpg|jpeg|webp|gif|svg)/i)) {
                     imgUrl = val;
                 } else {
                     const match = val.match(/(photo-[0-9a-zA-Z\-]+)/);
@@ -1019,7 +1020,9 @@
             let imgUrl = "";
             if (exp.img_id && exp.img_id.trim()) {
                 const val = exp.img_id.trim();
-                if (val.startsWith("http://") || val.startsWith("https://") || val.startsWith("images/") || val.startsWith("assets/") || val.startsWith("./") || val.match(/\.(png|jpg|jpeg|webp|gif|svg)/i)) {
+                if (localPhotoPreviews[val]) {
+                    imgUrl = localPhotoPreviews[val];
+                } else if (val.startsWith("http://") || val.startsWith("https://") || val.startsWith("images/") || val.startsWith("assets/") || val.startsWith("./") || val.match(/\.(png|jpg|jpeg|webp|gif|svg)/i)) {
                     imgUrl = val;
                 } else {
                     const match = val.match(/(photo-[0-9a-zA-Z\-]+)/);

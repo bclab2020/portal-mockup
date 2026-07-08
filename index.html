@@ -1,1067 +1,1058 @@
-<!DOCTYPE html>
-
-<html lang="ja">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CORE CONNECT - 統合スポーツ・健康・美容プラットフォーム</title>
-
-    <link rel="stylesheet" href="portal.css">
-
-<style>
-        .load-more-btn:hover {
-            background: rgba(255, 255, 255, 0.1) !important;
-            border-color: var(--accent-blue) !important;
-            box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
-            transform: translateY(-2px);
-        }
-        .theme-health .load-more-btn:hover {
-            border-color: var(--accent-teal) !important;
-            box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
-        }
-        .theme-beauty .load-more-btn:hover {
-            border-color: var(--accent-pink) !important;
-            box-shadow: 0 0 15px rgba(255, 20, 147, 0.2);
-        }
-        .load-more-btn:active {
-            transform: translateY(0);
-        }
-        </style>
-</head>
-
-<body class="theme-sports">
-
-
-
-    <!-- Header & Navigation -->
-
-    <header>
-
-        <div class="logo">
-
-            CORE CONNECT <span class="logo-badge" id="portalLogoBadge">Sports Portal</span>
-
-        </div>
-
-        <nav class="nav-tabs">
-
-            <button class="tab-btn active" data-tab="sports">🏃 スポーツ</button>
-
-            <button class="tab-btn" data-tab="health">🏥 健康チェック</button>
-
-            <button class="tab-btn" data-tab="beauty">✨ 美容骨格</button>
-
-            <button class="tab-btn" data-tab="community">💬 コミュニティ</button>
-
-            <button class="tab-btn" data-tab="lab">🧪 測定ラボ</button>
-            <a href="experts.html" class="admin-link-btn" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; border: 1px solid rgba(255,255,255,0.1); margin-left: 10px; font-size: 12px; height: 36px; padding: 0 12px; border-radius: 8px; color: var(--text-secondary); cursor: pointer; transition: all 0.3s ease; vertical-align: middle;">👥 専門家紹介</a>
-            <a href="admin.html" class="admin-link-btn" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; border: 1px dashed rgba(255,255,255,0.15); margin-left: 10px; font-size: 12px; height: 36px; padding: 0 12px; border-radius: 8px; color: var(--text-secondary); cursor: pointer; transition: all 0.3s ease; vertical-align: middle;">⚙️ 管理画面</a>
-
-        </nav>
-
-    </header>
-
-
-
-    <!-- Main Container -->
-
-    <div class="portal-container">
-
-
-
-        <!-- 1. SPORTS PORTAL TAB -->
-
-        <div id="sportsPanel" class="tab-panel active">
-
-            <div class="portal-grid">
-
-                
-
-                <!-- Left Feed: Articles -->
-
-                <div class="feed-section">
-
-                    <div class="feed-header">
-
-                        <h2>📰 最新トレーニング＆バイオメカニクスナレッジ</h2>
-
-                        <p>スポーツアライメントと怪我予防の科学に基づいた最新コンテンツ</p>
-
-                    </div>
-
-
-
-                    <!-- Horizontal Corporate Sponsor Banner Ad -->
-
-                    <div class="sponsor-banner-horizontal" onclick="alert('協賛スポンサー：ASICS バイオメカニクスシューズ特設ページへ移行します！')">
-
-                        <div class="sponsor-badge">SPONSORED AD</div>
-
-                        <div class="sponsor-banner-content">
-
-                            <div class="sponsor-logo-box">
-
-                                <span style="color:var(--accent-blue); font-weight:900;">ASICS</span> | Science of Motion
-
-                            </div>
-
-                            <div class="sponsor-banner-text">
-
-                                <h4 class="sponsor-headline">【足元アライメントを科学する】最新メタスピードシリーズ発売開始</h4>
-
-                                <p class="sponsor-subline">荷重バランスの左右差を安定させ、推進力へと変換する独自の底面プレート構造。CORE CONNECTメンバー限定10%OFFクーポン配布中。</p>
-
-                            </div>
-
-                            <button class="sponsor-banner-btn">詳細はこちら</button>
-
-                        </div>
-
-                    </div>
-
-                    
-
-                                        <!-- Sports Category Filter Sub-tab Bar -->
-                    <div class="sports-subtabs">
-                        <button class="subtab-btn active" data-sport="all">全て</button>
-                        <button class="subtab-btn" data-sport="soccer">サッカー</button>
-                        <button class="subtab-btn" data-sport="baseball">野球</button>
-                        <button class="subtab-btn" data-sport="volleyball">バレー</button>
-                        <button class="subtab-btn" data-sport="tennis">テニス</button>
-                        <button class="subtab-btn" data-sport="track">陸上</button>
-                    </div>
-                    <div class="article-list" id="sportsList"></div>
-                    <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
-                        <button id="sportsLoadMore" class="load-more-btn" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-primary); padding: 12px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px); display: none;">もっと見る 📸</button>
-                    </div>>
-
-                </div>
-
-
-
-                <!-- Right Sidebar Widgets -->
-
-                <div class="side-widgets">
-
-                    <!-- Widget: Quick Lab -->
-
-                    <div class="widget">
-
-                        <h3>🧪 クイック測定センター</h3>
-
-                        <div class="mb-20" style="font-size:12px; color:var(--text-secondary); line-height: 1.5;">
-
-                            AI骨格追跡を利用して、静的姿勢・動的動作アライメントをわずか10秒で測定・評価します。
-
-                        </div>
-
-                        <button class="btn-quick-start" onclick="switchTab('lab')">
-
-                            <span class="rec-badge"></span> 測定ラボを起動する
-
-                        </button>
-
-                    </div>
-
-
-
-                    <!-- Widget: Sponsored Challenge -->
-
-                    <div class="widget challenge-widget">
-
-                        <h3>🏆 スポンサー協賛チャレンジ</h3>
-
-                        <div class="challenge-card">
-
-                            <div class="ad-badge">協賛: OrthoFit</div>
-
-                            <div class="challenge-banner" style="background-image: url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=300');">
-
-                                <span class="challenge-brand">インソール</span>
-
-                            </div>
-
-                            <div class="challenge-title">14日間・左右荷重バランス改善チャレンジ</div>
-
-                            <div class="challenge-progress">
-
-                                <div class="progress-bar">
-
-                                    <div class="progress-fill"></div>
-
-                                </div>
-
-                                <div style="display:flex; justify-content:space-between; margin-top:2px;">
-
-                                    <span>現在 8日目達成 / 14日</span>
-
-                                    <span>参加者: 1,248人</span>
-
-                                </div>
-
-                            </div>
-
-                            <button class="challenge-btn" onclick="alert('チャレンジ登録完了！毎日測定ラボで測定して50/50の均等アライメントを目指しましょう！達成するとOrthoFit製品の限定クーポンを贈呈。')">チャレンジに参加中</button>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- Side Ad: Beverage Brand -->
-
-                    <div class="widget ad-widget" style="border-color: rgba(0, 191, 255, 0.15);">
-
-                        <div class="ad-badge" style="background:var(--accent-teal); color:#000;">協賛: RECOVER WATER</div>
-
-                        <div class="ad-body">
-
-                            <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&q=80&w=300');"></div>
-
-                            <div class="ad-title">リカバーウォーター・イオンアクティブ</div>
-
-                            <div class="ad-desc">アライメント測定後の発汗で失われた電解質をスマートに補給。低浸透圧・ノンカロリー設計で運動後の回復をサポートします。</div>
-
-                            <button class="ad-btn" style="background:var(--accent-teal); color:#000;" onclick="alert('公式ストア商品ページに移行します！')">今すぐお試しサンプル請求</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-        </div>
-
-
-
-        <!-- 2. HEALTH PORTAL TAB -->
-
-        <div id="healthPanel" class="tab-panel">
-
-            <div class="portal-grid">
-
-                
-
-                <!-- Left Feed: Articles -->
-
-                <div class="feed-section">
-
-                    <div class="feed-header">
-
-                        <h2>📰 最新ヘルスケア＆予防医学ナレッジ</h2>
-
-                        <p>健康寿命の延伸、生活習慣病予防、アライメントの健康影響に関する最新情報</p>
-
-                    </div>
-
-
-
-                    <!-- Horizontal Sponsor Ad: Health -->
-
-                    <div class="sponsor-banner-horizontal" onclick="alert('協賛スポンサー：サントリー ウェルネス特設ページへ移行します！')">
-
-                        <div class="sponsor-badge">SPONSORED AD</div>
-
-                        <div class="sponsor-banner-content">
-
-                            <div class="sponsor-logo-box">
-
-                                <span style="color:var(--accent-blue); font-weight:900;">SUNTORY</span> | Wellness
-
-                            </div>
-
-                            <div class="sponsor-banner-text">
-
-                                <h4 class="sponsor-headline">【科学が証明する若々しさ】セサミンEXでアクティブな関節・血流ケア</h4>
-
-                                <p class="sponsor-subline">40代以降の運動機能維持に。体幹ブレを抑え、歩行アライメントを内側から円滑にサポートします。CORE CONNECT限定特別モニター募集中。</p>
-
-                            </div>
-
-                            <button class="sponsor-banner-btn">詳細はこちら</button>
-
-                        </div>
-
-                    </div>
-
-                    
-
-                                        <!-- Health Category Filter Sub-tab Bar -->
-                    <div class="sports-subtabs">
-                        <button class="subtab-btn active" data-sport="all">全て</button>
-                        <button class="subtab-btn" data-sport="stress">ストレス</button>
-                        <button class="subtab-btn" data-sport="sleep">睡眠</button>
-                        <button class="subtab-btn" data-sport="nutrition">食事・栄養</button>
-                        <button class="subtab-btn" data-sport="pain">肩こり・腰痛</button>
-                        <button class="subtab-btn" data-sport="check">自律神経</button>
-                    </div>
-                    <div class="article-list" id="healthList"></div>
-                    <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
-                        <button id="healthLoadMore" class="load-more-btn" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-primary); padding: 12px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px); display: none;">もっと見る 📸</button>
-                    </div>>
-
-                </div>
-
-
-
-                <!-- Right Sidebar Widgets -->
-
-                <div class="side-widgets">
-
-                    <!-- Widget: Health Advice -->
-
-                    <div class="widget">
-
-                        <h3>🏥 パーソナル健康指導</h3>
-
-                        <div class="mb-20" style="font-size:12px; color:var(--text-secondary); line-height: 1.5;">
-
-                            測定された姿勢・動揺データから、高血圧やメタボ予防、腰痛防止に適した個別ストレッチ・食事法をAIが推薦します。
-
-                        </div>
-
-                        <button class="btn-quick-start" onclick="switchTab('lab')">
-
-                            <span class="rec-badge"></span> 健康状態チェックへ
-
-                        </button>
-
-                    </div>
-
-
-
-                    <!-- Widget: Sponsored Challenge -->
-
-                    <div class="widget challenge-widget" style="border-color: rgba(16, 185, 129, 0.3); background: linear-gradient(180deg, var(--bg-card) 0%, rgba(16, 185, 129, 0.03) 100%);">
-
-                        <h3>🏆 健康増進協賛チャレンジ</h3>
-
-                        <div class="challenge-card">
-
-                            <div class="ad-badge" style="background:var(--accent-blue); color:#000;">協賛: TANITA</div>
-
-                            <div class="challenge-banner" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300');">
-
-                                <span class="challenge-brand">体組成計</span>
-
-                            </div>
-
-                            <div class="challenge-title">毎日測定・体幹バランス＆基礎代謝キープチャレンジ</div>
-
-                            <button class="challenge-btn" style="background:linear-gradient(135deg, var(--accent-blue) 0%, #10b981 100%);" onclick="alert('健康チャレンジに参加しました！体組成データとアライメントデータを連動させて健康ポイントを獲得しましょう。')">チャレンジに参加する</button>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- Side Ad: Health Drink -->
-
-                    <div class="widget ad-widget" style="border-color: rgba(52, 211, 153, 0.15);">
-
-                        <div class="ad-badge" style="background:var(--accent-blue); color:#000;">協賛: 明治 VAAM</div>
-
-                        <div class="ad-body">
-
-                            <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300');"></div>
-
-                            <div class="ad-title">ヴァームスマートフィットウォーター</div>
-
-                            <div class="ad-desc">カラダを動かすことで脂肪の燃焼を高める独自のアミノ酸（ARF）配合。アライメントチェック運動時の水分補給に最適です。</div>
-
-                            <button class="ad-btn" style="background:var(--accent-blue); color:#000;" onclick="alert('明治VAAM 特設ECページへ移行します！')">特別割引で購入する</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-        </div>
-
-
-
-        <!-- 3. BEAUTY PORTAL TAB -->
-
-        <div id="beautyPanel" class="tab-panel">
-
-            <div class="portal-grid">
-
-                
-
-                <!-- Left Feed: Articles -->
-
-                <div class="feed-section">
-
-                    <div class="feed-header">
-
-                        <h2>📰 最新エステ・美容骨格＆姿勢ボディメイク</h2>
-
-                        <p>美姿勢キープ、骨格スタイル診断、スタイルアップのためのアライメント科学</p>
-
-                    </div>
-
-
-
-                    <!-- Horizontal Sponsor Ad: Beauty -->
-
-                    <div class="sponsor-banner-horizontal" style="border-color: rgba(255, 117, 143, 0.25); box-shadow: 0 0 15px rgba(255, 117, 143, 0.08);" onclick="alert('協賛スポンサー：資生堂 エリクシール特別キャンペーンページへ移行します！')">
-
-                        <div class="sponsor-badge" style="background:linear-gradient(45deg, var(--accent-blue), var(--accent-purple)); color:#fff;">SPONSORED AD</div>
-
-                        <div class="sponsor-banner-content">
-
-                            <div class="sponsor-logo-box">
-
-                                <span style="color:var(--accent-blue); font-weight:900;">資生堂</span> | ELIXIR
-
-                            </div>
-
-                            <div class="sponsor-banner-text">
-
-                                <h4 class="sponsor-headline">【骨格から美しさを整える】姿勢アライメントと美しき表情・ハリ肌ケア</h4>
-
-                                <p class="sponsor-subline">猫背や首の前傾はデコルテ・顔の巡りを阻害し、くすみやハリ低下の原因に。美姿勢アライメントから理想のエイジングケアを提案。</p>
-
-                            </div>
-
-                            <button class="sponsor-banner-btn" style="background:var(--accent-blue); color:#fff;">詳細はこちら</button>
-
-                        </div>
-
-                    </div>
-
-                    
-
-                                        <!-- Beauty Category Filter Sub-tab Bar -->
-                    <div class="sports-subtabs">
-                        <button class="subtab-btn active" data-sport="all">全て</button>
-                        <button class="subtab-btn" data-sport="makeup">メイク</button>
-                        <button class="subtab-btn" data-sport="cosmetics">スキンケア</button>
-                        <button class="subtab-btn" data-sport="hairstyle">髪型</button>
-                        <button class="subtab-btn" data-sport="styling">骨格診断</button>
-                        <button class="subtab-btn" data-sport="bodymake">ボディメイク</button>
-                    </div>
-                    <div class="article-list" id="beautyList"></div>
-                    <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
-                        <button id="beautyLoadMore" class="load-more-btn" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-primary); padding: 12px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px); display: none;">もっと見る 📸</button>
-                    </div>>
-
-                </div>
-
-
-
-                <!-- Right Sidebar Widgets -->
-
-                <div class="side-widgets">
-
-                    <!-- Widget: Beauty Profile -->
-
-                    <div class="widget">
-
-                        <h3>✨ 美ボディデザイン</h3>
-
-                        <div class="mb-20" style="font-size:12px; color:var(--text-secondary); line-height: 1.5;">
-
-                            AI骨格アライメントデータから、あなたの骨格スタイルに最も似合うアパレルシルエットや骨盤引締めヨガを提案。
-
-                        </div>
-
-                        <button class="btn-quick-start" style="background:linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);" onclick="switchTab('lab')">
-
-                            <span class="rec-badge"></span> 骨格・美脚測定へ
-
-                        </button>
-
-                    </div>
-
-
-
-                    <!-- Widget: Sponsored Challenge -->
-
-                    <div class="widget challenge-widget" style="border-color: rgba(255, 117, 143, 0.3); background: linear-gradient(180deg, var(--bg-card) 0%, rgba(255, 117, 143, 0.03) 100%);">
-
-                        <h3>🏆 美骨格協賛チャレンジ</h3>
-
-                        <div class="challenge-card">
-
-                            <div class="ad-badge" style="background:var(--accent-blue); color:#000;">協賛: SlimWalk</div>
-
-                            <div class="challenge-banner" style="background-image: url('https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&q=80&w=300');">
-
-                                <span class="challenge-brand">レッグケア</span>
-
-                            </div>
-
-                            <div class="challenge-title">14日間・骨盤ケア＆美脚ラインキープチャレンジ</div>
-
-                            <button class="challenge-btn" style="background:linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);" onclick="alert('美骨格チャレンジにエントリーしました！毎日骨格測定で美アライメントを追跡しましょう！')">チャレンジに参加する</button>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- Side Ad: Beauty Wear -->
-
-                    <div class="widget ad-widget" style="border-color: rgba(255, 117, 143, 0.15);">
-
-                        <div class="ad-badge" style="background:var(--accent-blue); color:#000;">協賛: SlimWalk</div>
-
-                        <div class="ad-body">
-
-                            <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=300');"></div>
-
-                            <div class="ad-title">スリムウォーク 骨盤をきっちり支えるタイツ</div>
-
-                            <div class="ad-desc">Wの骨盤引き締め設計と段階圧力で、骨盤をきっちり支えて美脚ラインをサポート。おやすみ時のアライメント補正に。</div>
-
-                            <button class="ad-btn" style="background:var(--accent-blue); color:#000;" onclick="alert('スリムウォーク公式ショップページへ移行します！')">CORE CONNECT限定クーポンで購入</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-        </div>
-
-
-
-        <!-- 4. COMMUNITY TAB -->
-
-        <div id="communityPanel" class="tab-panel">
-
-            <div class="community-grid">
-
-                
-
-                <!-- Left Section: Timeline & Input -->
-
-                <div class="feed-section">
-
-                    
-
-                    <!-- Composer -->
-
-                    <div class="post-composer">
-
-                        <div class="composer-header">
-
-                            <div class="composer-avatar">ゲ</div>
-
-                            <textarea id="postInput" class="composer-textarea" placeholder="測定した結果の感想や身体の悩みを共有しよう！最新の測定データを添付してトレーナーや仲間に相談できます..."></textarea>
-
-                        </div>
-
-                        <div class="composer-footer">
-
-                            <div class="composer-attachments">
-
-                                <button class="attach-btn" id="attachSessionBtn">
-
-                                    📊 最新の測定データを添付する
-
-                                </button>
-
-                            </div>
-
-                            <button class="composer-submit" id="postSubmitBtn">相談・共有を投稿</button>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- Horizontal Sponsor Ad: Smartwatch -->
-
-                    <div class="sponsor-banner-horizontal" style="border-color: rgba(138, 43, 226, 0.25); box-shadow: 0 0 15px rgba(138, 43, 226, 0.08); margin-bottom: 20px;" onclick="alert('協賛スポンサー：GARMIN 心拍アクティビティメーター特設ページへ移行します！')">
-
-                        <div class="sponsor-badge" style="background:linear-gradient(45deg, var(--accent-purple), var(--accent-pink)); color:#fff;">SPONSORED AD</div>
-
-                        <div class="sponsor-banner-content">
-
-                            <div class="sponsor-logo-box">
-
-                                <span style="color:var(--accent-purple); font-weight:900;">GARMIN</span> | Active Vitals
-
-                            </div>
-
-                            <div class="sponsor-banner-text">
-
-                                <h4 class="sponsor-headline">【心拍＆ブレ測定連動】GARMIN アスリートGPSスマートウォッチ登場</h4>
-
-                                <p class="sponsor-subline">ポータルのアライメント測定値と同期可能。リアルタイム心拍ゾーン分析と歩行バランスデータを自動トラッキングし、ランニングフォームを改善。</p>
-
-                            </div>
-
-                            <button class="sponsor-banner-btn" style="background:var(--accent-purple); color:#fff;">詳細はこちら</button>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="feed-header">
-
-                        <h2>💬 タイムライン（測定共有・Q&A）</h2>
-
-                    </div>
-
-
-
-                    <!-- Timeline Posts Container -->
-
-                    <div id="timelineContainer"></div>
-
-                </div>
-
-
-
-                <!-- Right Section: Sidebar -->
-
-                <div class="side-widgets">
-
-                    <div class="widget">
-
-                        <h3>👩‍⚕️ コミュニティの専門家</h3>
-
-                        <div class="flex-column" style="gap:15px; font-size:12px;">
-
-                            <div style="display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:10px;">
-
-                                <div class="composer-avatar" style="background:linear-gradient(45deg, var(--accent-orange), #ff5722);">田中</div>
-
-                                <div>
-
-                                    <div style="font-weight:700;">田中 誠 (理学療法士)</div>
-
-                                    <div style="color:var(--text-secondary);">脊柱・骨盤アライメント専門</div>
-
-                                </div>
-
-                            </div>
-
-                            <div style="display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:10px;">
-
-                                <div class="composer-avatar" style="background:linear-gradient(45deg, var(--accent-orange), #ff5722);">佐藤</div>
-
-                                <div>
-
-                                    <div style="font-weight:700;">佐藤 翼 (トレーナー)</div>
-
-                                    <div style="color:var(--text-secondary);">OHS動作分析・怪我予防リハ</div>
-
-                                </div>
-
-                            </div>
-
-                            <div style="display:flex; align-items:center; gap:10px;">
-
-                                <div class="composer-avatar" style="background:linear-gradient(45deg, var(--accent-orange), #ff5722);">鈴木</div>
-
-                                <div>
-
-                                    <div style="font-weight:700;">鈴木 翔 (スプリントコーチ)</div>
-
-                                    <div style="color:var(--text-secondary);">ジュニア運動機能・重心制御</div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="widget">
-
-                        <h3>💬 専門家個別相談（予約）</h3>
-
-                        <p style="font-size:12px; color:var(--text-secondary); line-height:1.5; margin-bottom:15px;">
-
-                            AI判定とコミュニティ解説だけでは解決しない痛みや、専門的なリハビリメニューの作成は、オンラインの個別指導枠をご予約ください。
-
-                        </p>
-
-                        <button class="challenge-btn" style="background:var(--accent-purple);" onclick="switchTab('lab'); alert('測定ラボに切り替えます。測定完了レポート下部の「個別予約」ボタンから担当メンターと予約を実行してください。');">
-
-                            📅 個別相談（予約枠）を開く
-
-                        </button>
-
-                    </div>
-
-
-
-                    <!-- Side Ad: Sports Insurance -->
-
-                    <div class="widget ad-widget" style="border-color: rgba(57, 255, 20, 0.15);">
-
-                        <div class="ad-badge" style="background:var(--accent-green); color:#000;">協賛: ACTIVE PROTECT</div>
-
-                        <div class="ad-body">
-
-                            <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300');"></div>
-
-                            <div class="ad-title">アクティブプロテクト・スポーツ傷害保険</div>
-
-                            <div class="ad-desc">ランニングやフィットネス中のもしものケガに備える。1日わずか50円から加入できる、アライメントチェックメンバー限定優待プラン。</div>
-
-                            <button class="ad-btn" style="background:var(--accent-green); color:#000;" onclick="alert('損害保険のご案内ページへ移行します！')">見積もりシミュレートを開く</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-        </div>
-
-
-
-        <!-- 3. MEASUREMENT LAB TAB (IFRAME & ADS) -->
-
-        <div id="labPanel" class="tab-panel">
-
-            <div class="lab-grid">
-
-                
-
-                <!-- Left Main Section -->
-
-                <div class="lab-main-section">
-
-                    <!-- Embedded Measurement App Iframe -->
-
-                    <div class="iframe-container">
-
-                        <iframe id="measurementIframe" src="./mock_app.html" allow="camera;gyroscope;accelerometer"></iframe>
-
-                    </div>
-
-                    
-
-                    <!-- Posture Report & SNS Share Card (Displays after measurement) -->
-
-                    <div id="postureReportCard" class="widget posture-report-card" style="display: none; margin-top: 20px;">
-
-                        <div class="report-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:15px; margin-bottom:15px;">
-
-                            <h3 style="margin:0;">📊 姿勢アライメント診断レポート</h3>
-
-                            <span id="reportGrade" class="report-grade-badge">A</span>
-
-                        </div>
-
-                        <div class="report-body">
-
-                            <div class="report-grid-metrics" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:15px; margin-bottom:20px;">
-
-                                <div class="metric-item" style="background:var(--bg-glass); border:1px solid var(--border-color); border-radius:10px; padding:12px; text-align:center;">
-
-                                    <div style="font-size:10px; color:var(--text-secondary); margin-bottom:5px;">左右荷重バランス</div>
-
-                                    <div id="reportWbVal" style="font-size:14px; font-weight:700; color:var(--text-primary);">L 50.2% : R 49.8%</div>
-
-                                </div>
-
-                                <div class="metric-item" style="background:var(--bg-glass); border:1px solid var(--border-color); border-radius:10px; padding:12px; text-align:center;">
-
-                                    <div style="font-size:10px; color:var(--text-secondary); margin-bottom:5px;">骨盤傾斜角度</div>
-
-                                    <div id="reportTiltVal" style="font-size:14px; font-weight:700; color:var(--text-primary);">0° (正常)</div>
-
-                                </div>
-
-                                <div class="metric-item" style="background:var(--bg-glass); border:1px solid var(--border-color); border-radius:10px; padding:12px; text-align:center;">
-
-                                    <div style="font-size:10px; color:var(--text-secondary); margin-bottom:5px;">体幹重心動揺エリア</div>
-
-                                    <div id="reportSwayVal" style="font-size:14px; font-weight:700; color:var(--text-primary);">正常範囲 (480px²)</div>
-
-                                </div>
-
-                            </div>
-
-                            
-
-                            <div class="sns-share-section" style="border-top:1px solid var(--border-color); padding-top:15px;">
-
-                                <h4 style="font-size:12px; color:var(--text-primary); margin-bottom:12px; font-weight:700;">📢 測定結果をSNSやコミュニティでシェアしよう！</h4>
-
-                                <div class="sns-btn-group" style="display:flex; flex-wrap:wrap; gap:10px;">
-
-                                    <button class="sns-btn x-btn" id="shareXBtn">
-
-                                        <svg style="width:12px; height:12px; fill:currentColor; vertical-align:middle; margin-right:4px;" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-
-                                        Xでポスト
-
-                                    </button>
-
-                                    <button class="sns-btn line-btn" id="shareLineBtn">🟢 LINEで送る</button>
-
-                                    <button class="sns-btn copy-btn" id="copyReportBtn">📋 結果をコピー</button>
-
-                                    <button class="sns-btn community-share-btn" id="shareInternalBtn">💬 コミュへ添付して相談</button>
-
-                                    <button class="sns-btn premium-btn" id="premiumReportBtn" style="background:var(--accent-orange); color:#000;">📥 改善指導PDFレポート (プレミアム限定)</button>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- Dynamic Ad Sidebar -->
-
-                <div class="lab-meta-panel">
-
-                    
-
-                    <div class="dynamic-ad-container" id="adWidgetContainer" style="max-height: 540px; overflow-y: auto;">
-
-                        <div class="ad-headline">
-
-                            <span></span> スポンサー企業協賛広告枠
-
-                        </div>
-
-                        
-
-                        <div id="dynamicAdSpace">
-
-                            <!-- Ad 1: Health/Furniture -->
-
-                            <div class="ad-matched-box" style="margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom:15px;">
-
-                                <span class="matched-pill tilt" style="background:rgba(255,145,0,0.08); border-color:var(--accent-orange); color:var(--accent-orange);">骨盤ケア協賛: StyleKeep</span>
-
-                                <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
-
-                                <div class="ad-title" style="font-size:12px;">StyleKeep 骨盤サポート高反発クッション</div>
-
-                                <div class="ad-desc" style="font-size:11px; line-height:1.4;">アライメントの崩れによる腰部・背中への座姿勢負担を軽減する特許取得サポートクッション。</div>
-
-                                <div class="ad-product-price" style="font-size:13px;">特別価格: ¥5,440</div>
-
-                            </div>
-
-                            
-
-                            <!-- Ad 2: Orthotics/Apparel -->
-
-                            <div class="ad-matched-box" style="margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom:15px;">
-
-                                <span class="matched-pill sway" style="background:rgba(0,191,255,0.08); border-color:var(--accent-blue); color:var(--accent-blue);">インソール協賛: OrthoFit</span>
-
-                                <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
-
-                                <div class="ad-title" style="font-size:12px;">OrthoFit プレミアム・カスタムインソール</div>
-
-                                <div class="ad-desc" style="font-size:11px; line-height:1.4;">左右荷重バランスを足元から補正し、ランニング時の関節ブレを抑制するカスタムインソール。</div>
-
-                                <div class="ad-product-price" style="font-size:13px;">特別価格: ¥9,600</div>
-
-                            </div>
-
-
-
-                            <!-- Ad 3: Sports Apparel -->
-
-                            <div class="ad-matched-box">
-
-                                <span class="matched-pill" style="background:rgba(138,43,226,0.08); border-color:var(--accent-purple); color:var(--accent-purple);">リカバリー協賛: UNDER ARMOUR</span>
-
-                                <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
-
-                                <div class="ad-title" style="font-size:12px;">UA Recovery 段階着圧リカバリータイツ</div>
-
-                                <div class="ad-desc" style="font-size:11px; line-height:1.4;">運動後のアライメント維持と筋肉疲労の回復を促進する特殊着圧コンプレッション。</div>
-
-                                <div class="ad-product-price" style="font-size:13px;">販売価格: ¥7,800</div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="widget">
-
-                        <h3>📏 スケール・マット校正</h3>
-
-                        <p style="font-size:11px; color:var(--text-secondary); line-height:1.5;">
-
-                            手持ち測定時のジャイロ補正、または測定ラボの「📏 マット校正(45cm)」を使用すると、1pxあたりのセンチメートル倍率が正確にロックされ、診断と連動広告の精度が向上します。
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-        </div>
-
-
-
-    </div>
-
-
-
-    <!-- Subscription Plan Modal (Popup) -->
-
-    <div id="subscriptionModal" class="modal-overlay" style="display: none;">
-
-        <div class="modal-card">
-
-            <div class="modal-close-btn" id="closeSubModalBtn">&times;</div>
-
-            <div class="modal-header">
-
-                <h2>👑 CORE CONNECT PREMIUM</h2>
-
-                <p>AI測定無制限 ＆ 専門家オンライン指導で、最速の姿勢改善をサポート</p>
-
-            </div>
-
-            <div class="modal-body">
-
-                <div class="pricing-grid">
-
-                    <!-- Plan 1: Free -->
-
-                    <div class="pricing-card">
-
-                        <h3>ライト (Free)</h3>
-
-                        <div class="price">¥0 <span class="price-period">/ 月</span></div>
-
-                        <ul class="plan-features">
-
-                            <li>最新記事の閲覧</li>
-
-                            <li>簡易測定 (月1回のみ)</li>
-
-                            <li>タイムライン閲覧のみ</li>
-
-                        </ul>
-
-                        <button class="plan-btn disabled" disabled>現在のプラン</button>
-
-                    </div>
-
-                    
-
-                    <!-- Plan 2: Standard (Recommended) -->
-
-                    <div class="pricing-card recommended">
-
-                        <div class="rec-badge">RECOMMENDED</div>
-
-                        <h3>スタンダード</h3>
-
-                        <div class="price">¥980 <span class="price-period">/ 月</span></div>
-
-                        <ul class="plan-features">
-
-                            <li><strong>AI動作アライメント測定し放題</strong></li>
-
-                            <li><strong>専門家 (理学療法士) Q&A相談</strong></li>
-
-                            <li>協賛ブランド1,000円分クーポン</li>
-
-                            <li>姿勢改善データ履歴追跡</li>
-
-                        </ul>
-
-                        <button class="plan-btn active-btn" id="subStandardBtn">30日間無料でお試し</button>
-
-                    </div>
-
-                    
-
-                    <!-- Plan 3: Premium -->
-
-                    <div class="pricing-card">
-
-                        <h3>プレミアム</h3>
-
-                        <div class="price">¥1,980 <span class="price-period">/ 月</span></div>
-
-                        <ul class="plan-features">
-
-                            <li>スタンダードの全機能</li>
-
-                            <li>優先アドバイス返信保証</li>
-
-                            <li>個別ビデオ相談 (月1回15分)</li>
-
-                            <li>プレミアム限定レッスン動画</li>
-
-                        </ul>
-
-                        <button class="plan-btn" id="subPremiumBtn">プランを選択</button>
-
-                    </div>
-
-                </div>
-
-                <p class="modal-footer-note">※ スタンダードプランは登録後30日間は無料でお試しいただけます。いつでも解約可能です。</p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- Scripts -->
-
-    <script src="portal.js"></script>
-
-</body>
-
-</html>
-
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CORE CONNECT - 統合スポーツ・健康・美容プラットフォーム</title>
+
+    <link rel="stylesheet" href="portal.css">
+
+<style>
+        .load-more-btn:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-color: var(--accent-blue) !important;
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .theme-health .load-more-btn:hover {
+            border-color: var(--accent-teal) !important;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+        }
+        .theme-beauty .load-more-btn:hover {
+            border-color: var(--accent-pink) !important;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.2);
+        }
+        .load-more-btn:active {
+            transform: translateY(0);
+        }
+        </style>
+</head>
+
+<body class="theme-sports">
+
+
+
+    <!-- Header & Navigation -->
+
+    <header>
+
+        <div class="logo">
+
+            CORE CONNECT <span class="logo-badge" id="portalLogoBadge">Sports Portal</span>
+
+        </div>
+
+        <nav class="nav-tabs">
+
+            <button class="tab-btn active" data-tab="sports">🏃 スポーツ</button>
+
+            <button class="tab-btn" data-tab="health">🏥 健康チェック</button>
+
+            <button class="tab-btn" data-tab="beauty">✨ 美容骨格</button>
+
+            <button class="tab-btn" data-tab="community">💬 コミュニティ</button>
+
+            <button class="tab-btn" data-tab="lab">🧪 測定ラボ</button>
+            <a href="experts.html" class="admin-link-btn" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; border: 1px solid rgba(255,255,255,0.1); margin-left: 10px; font-size: 12px; height: 36px; padding: 0 12px; border-radius: 8px; color: var(--text-secondary); cursor: pointer; transition: all 0.3s ease; vertical-align: middle;">👥 専門家紹介</a>
+            <a href="admin.html" class="admin-link-btn" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; border: 1px dashed rgba(255,255,255,0.15); margin-left: 10px; font-size: 12px; height: 36px; padding: 0 12px; border-radius: 8px; color: var(--text-secondary); cursor: pointer; transition: all 0.3s ease; vertical-align: middle;">⚙️ 管理画面</a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- Main Container -->
+
+    <div class="portal-container">
+
+
+
+        <!-- 1. SPORTS PORTAL TAB -->
+
+        <div id="sportsPanel" class="tab-panel active">
+
+            <div class="portal-grid">
+
+                
+
+                <!-- Left Feed: Articles -->
+
+                <div class="feed-section">
+
+                    <div class="feed-header">
+
+                        <h2>📰 最新トレーニング＆バイオメカニクスナレッジ</h2>
+
+                        <p>スポーツアライメントと怪我予防の科学に基づいた最新コンテンツ</p>
+
+                    </div>
+
+
+
+                    <!-- Horizontal Corporate Sponsor Banner Ad -->
+
+                    <div class="sponsor-banner-horizontal" onclick="alert('協賛スポンサー：ASICS バイオメカニクスシューズ特設ページへ移行します！')">
+
+                        <div class="sponsor-badge">SPONSORED AD</div>
+
+                        <div class="sponsor-banner-content">
+
+                            <div class="sponsor-logo-box">
+
+                                <span style="color:var(--accent-blue); font-weight:900;">ASICS</span> | Science of Motion
+
+                            </div>
+
+                            <div class="sponsor-banner-text">
+
+                                <h4 class="sponsor-headline">【足元アライメントを科学する】最新メタスピードシリーズ発売開始</h4>
+
+                                <p class="sponsor-subline">荷重バランスの左右差を安定させ、推進力へと変換する独自の底面プレート構造。CORE CONNECTメンバー限定10%OFFクーポン配布中。</p>
+
+                            </div>
+
+                            <button class="sponsor-banner-btn">詳細はこちら</button>
+
+                        </div>
+
+                    </div>
+
+                    
+
+                                        <!-- Sports Category Filter Sub-tab Bar -->
+                    <div class="sports-subtabs">
+                        <button class="subtab-btn active" data-sport="all">全て</button>
+                        <button class="subtab-btn" data-sport="soccer">サッカー</button>
+                        <button class="subtab-btn" data-sport="baseball">野球</button>
+                        <button class="subtab-btn" data-sport="volleyball">バレー</button>
+                        <button class="subtab-btn" data-sport="tennis">テニス</button>
+                        <button class="subtab-btn" data-sport="track">陸上</button>
+                    </div>
+                    <div class="article-list" id="sportsList"></div>
+                    <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
+                        <button id="sportsLoadMore" class="load-more-btn" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-primary); padding: 12px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px); display: none;">もっと見る 📸</button>
+                    </div>>
+
+                </div>
+
+
+
+                <!-- Right Sidebar Widgets -->
+
+                <div class="side-widgets">
+
+                    <!-- Widget: Quick Lab -->
+
+                    <div class="widget">
+
+                        <h3>🧪 クイック測定センター</h3>
+
+                        <div class="mb-20" style="font-size:12px; color:var(--text-secondary); line-height: 1.5;">
+
+                            AI骨格追跡を利用して、静的姿勢・動的動作アライメントをわずか10秒で測定・評価します。
+
+                        </div>
+
+                        <button class="btn-quick-start" onclick="switchTab('lab')">
+
+                            <span class="rec-badge"></span> 測定ラボを起動する
+
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- Widget: Sponsored Challenge -->
+
+                    <div class="widget challenge-widget">
+
+                        <h3>🏆 スポンサー協賛チャレンジ</h3>
+
+                        <div class="challenge-card">
+
+                            <div class="ad-badge">協賛: OrthoFit</div>
+
+                            <div class="challenge-banner" style="background-image: url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=300');">
+
+                                <span class="challenge-brand">インソール</span>
+
+                            </div>
+
+                            <div class="challenge-title">14日間・左右荷重バランス改善チャレンジ</div>
+
+                            <div class="challenge-progress">
+
+                                <div class="progress-bar">
+
+                                    <div class="progress-fill"></div>
+
+                                </div>
+
+                                <div style="display:flex; justify-content:space-between; margin-top:2px;">
+
+                                    <span>現在 8日目達成 / 14日</span>
+
+                                    <span>参加者: 1,248人</span>
+
+                                </div>
+
+                            </div>
+
+                            <button class="challenge-btn" onclick="alert('チャレンジ登録完了！毎日測定ラボで測定して50/50の均等アライメントを目指しましょう！達成するとOrthoFit製品の限定クーポンを贈呈。')">チャレンジに参加中</button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Side Ad: Beverage Brand -->
+
+                    <div class="widget ad-widget" style="border-color: rgba(0, 191, 255, 0.15);">
+
+                        <div class="ad-badge" style="background:var(--accent-teal); color:#000;">協賛: RECOVER WATER</div>
+
+                        <div class="ad-body">
+
+                            <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&q=80&w=300');"></div>
+
+                            <div class="ad-title">リカバーウォーター・イオンアクティブ</div>
+
+                            <div class="ad-desc">アライメント測定後の発汗で失われた電解質をスマートに補給。低浸透圧・ノンカロリー設計で運動後の回復をサポートします。</div>
+
+                            <button class="ad-btn" style="background:var(--accent-teal); color:#000;" onclick="alert('公式ストア商品ページに移行します！')">今すぐお試しサンプル請求</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- 2. HEALTH PORTAL TAB -->
+
+        <div id="healthPanel" class="tab-panel">
+
+            <div class="portal-grid">
+
+                
+
+                <!-- Left Feed: Articles -->
+
+                <div class="feed-section">
+
+                    <div class="feed-header">
+
+                        <h2>📰 最新ヘルスケア＆予防医学ナレッジ</h2>
+
+                        <p>健康寿命の延伸、生活習慣病予防、アライメントの健康影響に関する最新情報</p>
+
+                    </div>
+
+
+
+                    <!-- Horizontal Sponsor Ad: Health -->
+
+                    <div class="sponsor-banner-horizontal" onclick="alert('協賛スポンサー：サントリー ウェルネス特設ページへ移行します！')">
+
+                        <div class="sponsor-badge">SPONSORED AD</div>
+
+                        <div class="sponsor-banner-content">
+
+                            <div class="sponsor-logo-box">
+
+                                <span style="color:var(--accent-blue); font-weight:900;">SUNTORY</span> | Wellness
+
+                            </div>
+
+                            <div class="sponsor-banner-text">
+
+                                <h4 class="sponsor-headline">【科学が証明する若々しさ】セサミンEXでアクティブな関節・血流ケア</h4>
+
+                                <p class="sponsor-subline">40代以降の運動機能維持に。体幹ブレを抑え、歩行アライメントを内側から円滑にサポートします。CORE CONNECT限定特別モニター募集中。</p>
+
+                            </div>
+
+                            <button class="sponsor-banner-btn">詳細はこちら</button>
+
+                        </div>
+
+                    </div>
+
+                    
+
+                                        <!-- Health Category Filter Sub-tab Bar -->
+                    <div class="sports-subtabs">
+                        <button class="subtab-btn active" data-sport="all">全て</button>
+                        <button class="subtab-btn" data-sport="stress">ストレス</button>
+                        <button class="subtab-btn" data-sport="sleep">睡眠</button>
+                        <button class="subtab-btn" data-sport="nutrition">食事・栄養</button>
+                        <button class="subtab-btn" data-sport="pain">肩こり・腰痛</button>
+                        <button class="subtab-btn" data-sport="check">自律神経</button>
+                    </div>
+                    <div class="article-list" id="healthList"></div>
+                    <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
+                        <button id="healthLoadMore" class="load-more-btn" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-primary); padding: 12px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px); display: none;">もっと見る 📸</button>
+                    </div>>
+
+                </div>
+
+
+
+                <!-- Right Sidebar Widgets -->
+
+                <div class="side-widgets">
+
+                    <!-- Widget: Health Advice -->
+
+                    <div class="widget">
+
+                        <h3>🏥 パーソナル健康指導</h3>
+
+                        <div class="mb-20" style="font-size:12px; color:var(--text-secondary); line-height: 1.5;">
+
+                            測定された姿勢・動揺データから、高血圧やメタボ予防、腰痛防止に適した個別ストレッチ・食事法をAIが推薦します。
+
+                        </div>
+
+                        <button class="btn-quick-start" onclick="switchTab('lab')">
+
+                            <span class="rec-badge"></span> 健康状態チェックへ
+
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- Widget: Sponsored Challenge -->
+
+                    <div class="widget challenge-widget" style="border-color: rgba(16, 185, 129, 0.3); background: linear-gradient(180deg, var(--bg-card) 0%, rgba(16, 185, 129, 0.03) 100%);">
+
+                        <h3>🏆 健康増進協賛チャレンジ</h3>
+
+                        <div class="challenge-card">
+
+                            <div class="ad-badge" style="background:var(--accent-blue); color:#000;">協賛: TANITA</div>
+
+                            <div class="challenge-banner" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300');">
+
+                                <span class="challenge-brand">体組成計</span>
+
+                            </div>
+
+                            <div class="challenge-title">毎日測定・体幹バランス＆基礎代謝キープチャレンジ</div>
+
+                            <button class="challenge-btn" style="background:linear-gradient(135deg, var(--accent-blue) 0%, #10b981 100%);" onclick="alert('健康チャレンジに参加しました！体組成データとアライメントデータを連動させて健康ポイントを獲得しましょう。')">チャレンジに参加する</button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Side Ad: Health Drink -->
+
+                    <div class="widget ad-widget" style="border-color: rgba(52, 211, 153, 0.15);">
+
+                        <div class="ad-badge" style="background:var(--accent-blue); color:#000;">協賛: 明治 VAAM</div>
+
+                        <div class="ad-body">
+
+                            <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300');"></div>
+
+                            <div class="ad-title">ヴァームスマートフィットウォーター</div>
+
+                            <div class="ad-desc">カラダを動かすことで脂肪の燃焼を高める独自のアミノ酸（ARF）配合。アライメントチェック運動時の水分補給に最適です。</div>
+
+                            <button class="ad-btn" style="background:var(--accent-blue); color:#000;" onclick="alert('明治VAAM 特設ECページへ移行します！')">特別割引で購入する</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- 3. BEAUTY PORTAL TAB -->
+
+        <div id="beautyPanel" class="tab-panel">
+
+            <div class="portal-grid">
+
+                
+
+                <!-- Left Feed: Articles -->
+
+                <div class="feed-section">
+
+                    <div class="feed-header">
+
+                        <h2>📰 最新エステ・美容骨格＆姿勢ボディメイク</h2>
+
+                        <p>美姿勢キープ、骨格スタイル診断、スタイルアップのためのアライメント科学</p>
+
+                    </div>
+
+
+
+                    <!-- Horizontal Sponsor Ad: Beauty -->
+
+                    <div class="sponsor-banner-horizontal" style="border-color: rgba(255, 117, 143, 0.25); box-shadow: 0 0 15px rgba(255, 117, 143, 0.08);" onclick="alert('協賛スポンサー：資生堂 エリクシール特別キャンペーンページへ移行します！')">
+
+                        <div class="sponsor-badge" style="background:linear-gradient(45deg, var(--accent-blue), var(--accent-purple)); color:#fff;">SPONSORED AD</div>
+
+                        <div class="sponsor-banner-content">
+
+                            <div class="sponsor-logo-box">
+
+                                <span style="color:var(--accent-blue); font-weight:900;">資生堂</span> | ELIXIR
+
+                            </div>
+
+                            <div class="sponsor-banner-text">
+
+                                <h4 class="sponsor-headline">【骨格から美しさを整える】姿勢アライメントと美しき表情・ハリ肌ケア</h4>
+
+                                <p class="sponsor-subline">猫背や首の前傾はデコルテ・顔の巡りを阻害し、くすみやハリ低下の原因に。美姿勢アライメントから理想のエイジングケアを提案。</p>
+
+                            </div>
+
+                            <button class="sponsor-banner-btn" style="background:var(--accent-blue); color:#fff;">詳細はこちら</button>
+
+                        </div>
+
+                    </div>
+
+                    
+
+                                        <!-- Beauty Category Filter Sub-tab Bar -->
+                    <div class="sports-subtabs">
+                        <button class="subtab-btn active" data-sport="all">全て</button>
+                        <button class="subtab-btn" data-sport="makeup">メイク</button>
+                        <button class="subtab-btn" data-sport="cosmetics">スキンケア</button>
+                        <button class="subtab-btn" data-sport="hairstyle">髪型</button>
+                        <button class="subtab-btn" data-sport="styling">骨格診断</button>
+                        <button class="subtab-btn" data-sport="bodymake">ボディメイク</button>
+                    </div>
+                    <div class="article-list" id="beautyList"></div>
+                    <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
+                        <button id="beautyLoadMore" class="load-more-btn" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-primary); padding: 12px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px); display: none;">もっと見る 📸</button>
+                    </div>>
+
+                </div>
+
+
+
+                <!-- Right Sidebar Widgets -->
+
+                <div class="side-widgets">
+
+                    <!-- Widget: Beauty Profile -->
+
+                    <div class="widget">
+
+                        <h3>✨ 美ボディデザイン</h3>
+
+                        <div class="mb-20" style="font-size:12px; color:var(--text-secondary); line-height: 1.5;">
+
+                            AI骨格アライメントデータから、あなたの骨格スタイルに最も似合うアパレルシルエットや骨盤引締めヨガを提案。
+
+                        </div>
+
+                        <button class="btn-quick-start" style="background:linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);" onclick="switchTab('lab')">
+
+                            <span class="rec-badge"></span> 骨格・美脚測定へ
+
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- Widget: Sponsored Challenge -->
+
+                    <div class="widget challenge-widget" style="border-color: rgba(255, 117, 143, 0.3); background: linear-gradient(180deg, var(--bg-card) 0%, rgba(255, 117, 143, 0.03) 100%);">
+
+                        <h3>🏆 美骨格協賛チャレンジ</h3>
+
+                        <div class="challenge-card">
+
+                            <div class="ad-badge" style="background:var(--accent-blue); color:#000;">協賛: SlimWalk</div>
+
+                            <div class="challenge-banner" style="background-image: url('https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&q=80&w=300');">
+
+                                <span class="challenge-brand">レッグケア</span>
+
+                            </div>
+
+                            <div class="challenge-title">14日間・骨盤ケア＆美脚ラインキープチャレンジ</div>
+
+                            <button class="challenge-btn" style="background:linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);" onclick="alert('美骨格チャレンジにエントリーしました！毎日骨格測定で美アライメントを追跡しましょう！')">チャレンジに参加する</button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Side Ad: Beauty Wear -->
+
+                    <div class="widget ad-widget" style="border-color: rgba(255, 117, 143, 0.15);">
+
+                        <div class="ad-badge" style="background:var(--accent-blue); color:#000;">協賛: SlimWalk</div>
+
+                        <div class="ad-body">
+
+                            <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=300');"></div>
+
+                            <div class="ad-title">スリムウォーク 骨盤をきっちり支えるタイツ</div>
+
+                            <div class="ad-desc">Wの骨盤引き締め設計と段階圧力で、骨盤をきっちり支えて美脚ラインをサポート。おやすみ時のアライメント補正に。</div>
+
+                            <button class="ad-btn" style="background:var(--accent-blue); color:#000;" onclick="alert('スリムウォーク公式ショップページへ移行します！')">CORE CONNECT限定クーポンで購入</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- 4. COMMUNITY TAB -->
+
+        <div id="communityPanel" class="tab-panel">
+
+            <div class="community-grid">
+
+                
+
+                <!-- Left Section: Timeline & Input -->
+
+                <div class="feed-section">
+
+                    
+
+                    <!-- Composer -->
+
+                    <div class="post-composer">
+
+                        <div class="composer-header">
+
+                            <div class="composer-avatar">ゲ</div>
+
+                            <textarea id="postInput" class="composer-textarea" placeholder="測定した結果の感想や身体の悩みを共有しよう！最新の測定データを添付してトレーナーや仲間に相談できます..."></textarea>
+
+                        </div>
+
+                        <div class="composer-footer">
+
+                            <div class="composer-attachments">
+
+                                <button class="attach-btn" id="attachSessionBtn">
+
+                                    📊 最新の測定データを添付する
+
+                                </button>
+
+                            </div>
+
+                            <button class="composer-submit" id="postSubmitBtn">相談・共有を投稿</button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Horizontal Sponsor Ad: Smartwatch -->
+
+                    <div class="sponsor-banner-horizontal" style="border-color: rgba(138, 43, 226, 0.25); box-shadow: 0 0 15px rgba(138, 43, 226, 0.08); margin-bottom: 20px;" onclick="alert('協賛スポンサー：GARMIN 心拍アクティビティメーター特設ページへ移行します！')">
+
+                        <div class="sponsor-badge" style="background:linear-gradient(45deg, var(--accent-purple), var(--accent-pink)); color:#fff;">SPONSORED AD</div>
+
+                        <div class="sponsor-banner-content">
+
+                            <div class="sponsor-logo-box">
+
+                                <span style="color:var(--accent-purple); font-weight:900;">GARMIN</span> | Active Vitals
+
+                            </div>
+
+                            <div class="sponsor-banner-text">
+
+                                <h4 class="sponsor-headline">【心拍＆ブレ測定連動】GARMIN アスリートGPSスマートウォッチ登場</h4>
+
+                                <p class="sponsor-subline">ポータルのアライメント測定値と同期可能。リアルタイム心拍ゾーン分析と歩行バランスデータを自動トラッキングし、ランニングフォームを改善。</p>
+
+                            </div>
+
+                            <button class="sponsor-banner-btn" style="background:var(--accent-purple); color:#fff;">詳細はこちら</button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="feed-header">
+
+                        <h2>💬 タイムライン（測定共有・Q&A）</h2>
+
+                    </div>
+
+
+
+                    <!-- Timeline Posts Container -->
+
+                    <div id="timelineContainer"></div>
+
+                </div>
+
+
+
+                <!-- Right Section: Sidebar -->
+
+                <div class="side-widgets">
+
+                    <div class="widget">
+                        <h3>👩‍⚕️ コミュニティの専門家</h3>
+                        <div class="flex-column" id="sidebar-experts-list" style="gap:15px; font-size:12px;">
+                            <!-- Dynamically loaded from portal.js -->
+                        </div>
+                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div style="display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:10px;">
+
+                                <div class="composer-avatar" style="background:linear-gradient(45deg, var(--accent-orange), #ff5722);">佐藤</div>
+
+                                <div>
+
+                                    <div style="font-weight:700;">佐藤 翼 (トレーナー)</div>
+
+                                    <div style="color:var(--text-secondary);">OHS動作分析・怪我予防リハ</div>
+
+                                </div>
+
+                            </div>
+
+                            <div style="display:flex; align-items:center; gap:10px;">
+
+                                <div class="composer-avatar" style="background:linear-gradient(45deg, var(--accent-orange), #ff5722);">鈴木</div>
+
+                                <div>
+
+                                    <div style="font-weight:700;">鈴木 翔 (スプリントコーチ)</div>
+
+                                    <div style="color:var(--text-secondary);">ジュニア運動機能・重心制御</div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="widget">
+
+                        <h3>💬 専門家個別相談（予約）</h3>
+
+                        <p style="font-size:12px; color:var(--text-secondary); line-height:1.5; margin-bottom:15px;">
+
+                            AI判定とコミュニティ解説だけでは解決しない痛みや、専門的なリハビリメニューの作成は、オンラインの個別指導枠をご予約ください。
+
+                        </p>
+
+                        <button class="challenge-btn" style="background:var(--accent-purple);" onclick="switchTab('lab'); alert('測定ラボに切り替えます。測定完了レポート下部の「個別予約」ボタンから担当メンターと予約を実行してください。');">
+
+                            📅 個別相談（予約枠）を開く
+
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- Side Ad: Sports Insurance -->
+
+                    <div class="widget ad-widget" style="border-color: rgba(57, 255, 20, 0.15);">
+
+                        <div class="ad-badge" style="background:var(--accent-green); color:#000;">協賛: ACTIVE PROTECT</div>
+
+                        <div class="ad-body">
+
+                            <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300');"></div>
+
+                            <div class="ad-title">アクティブプロテクト・スポーツ傷害保険</div>
+
+                            <div class="ad-desc">ランニングやフィットネス中のもしものケガに備える。1日わずか50円から加入できる、アライメントチェックメンバー限定優待プラン。</div>
+
+                            <button class="ad-btn" style="background:var(--accent-green); color:#000;" onclick="alert('損害保険のご案内ページへ移行します！')">見積もりシミュレートを開く</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- 3. MEASUREMENT LAB TAB (IFRAME & ADS) -->
+
+        <div id="labPanel" class="tab-panel">
+
+            <div class="lab-grid">
+
+                
+
+                <!-- Left Main Section -->
+
+                <div class="lab-main-section">
+
+                    <!-- Embedded Measurement App Iframe -->
+
+                    <div class="iframe-container">
+
+                        <iframe id="measurementIframe" src="./mock_app.html" allow="camera;gyroscope;accelerometer"></iframe>
+
+                    </div>
+
+                    
+
+                    <!-- Posture Report & SNS Share Card (Displays after measurement) -->
+
+                    <div id="postureReportCard" class="widget posture-report-card" style="display: none; margin-top: 20px;">
+
+                        <div class="report-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:15px; margin-bottom:15px;">
+
+                            <h3 style="margin:0;">📊 姿勢アライメント診断レポート</h3>
+
+                            <span id="reportGrade" class="report-grade-badge">A</span>
+
+                        </div>
+
+                        <div class="report-body">
+
+                            <div class="report-grid-metrics" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:15px; margin-bottom:20px;">
+
+                                <div class="metric-item" style="background:var(--bg-glass); border:1px solid var(--border-color); border-radius:10px; padding:12px; text-align:center;">
+
+                                    <div style="font-size:10px; color:var(--text-secondary); margin-bottom:5px;">左右荷重バランス</div>
+
+                                    <div id="reportWbVal" style="font-size:14px; font-weight:700; color:var(--text-primary);">L 50.2% : R 49.8%</div>
+
+                                </div>
+
+                                <div class="metric-item" style="background:var(--bg-glass); border:1px solid var(--border-color); border-radius:10px; padding:12px; text-align:center;">
+
+                                    <div style="font-size:10px; color:var(--text-secondary); margin-bottom:5px;">骨盤傾斜角度</div>
+
+                                    <div id="reportTiltVal" style="font-size:14px; font-weight:700; color:var(--text-primary);">0° (正常)</div>
+
+                                </div>
+
+                                <div class="metric-item" style="background:var(--bg-glass); border:1px solid var(--border-color); border-radius:10px; padding:12px; text-align:center;">
+
+                                    <div style="font-size:10px; color:var(--text-secondary); margin-bottom:5px;">体幹重心動揺エリア</div>
+
+                                    <div id="reportSwayVal" style="font-size:14px; font-weight:700; color:var(--text-primary);">正常範囲 (480px²)</div>
+
+                                </div>
+
+                            </div>
+
+                            
+
+                            <div class="sns-share-section" style="border-top:1px solid var(--border-color); padding-top:15px;">
+
+                                <h4 style="font-size:12px; color:var(--text-primary); margin-bottom:12px; font-weight:700;">📢 測定結果をSNSやコミュニティでシェアしよう！</h4>
+
+                                <div class="sns-btn-group" style="display:flex; flex-wrap:wrap; gap:10px;">
+
+                                    <button class="sns-btn x-btn" id="shareXBtn">
+
+                                        <svg style="width:12px; height:12px; fill:currentColor; vertical-align:middle; margin-right:4px;" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+
+                                        Xでポスト
+
+                                    </button>
+
+                                    <button class="sns-btn line-btn" id="shareLineBtn">🟢 LINEで送る</button>
+
+                                    <button class="sns-btn copy-btn" id="copyReportBtn">📋 結果をコピー</button>
+
+                                    <button class="sns-btn community-share-btn" id="shareInternalBtn">💬 コミュへ添付して相談</button>
+
+                                    <button class="sns-btn premium-btn" id="premiumReportBtn" style="background:var(--accent-orange); color:#000;">📥 改善指導PDFレポート (プレミアム限定)</button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Dynamic Ad Sidebar -->
+
+                <div class="lab-meta-panel">
+
+                    
+
+                    <div class="dynamic-ad-container" id="adWidgetContainer" style="max-height: 540px; overflow-y: auto;">
+
+                        <div class="ad-headline">
+
+                            <span></span> スポンサー企業協賛広告枠
+
+                        </div>
+
+                        
+
+                        <div id="dynamicAdSpace">
+
+                            <!-- Ad 1: Health/Furniture -->
+
+                            <div class="ad-matched-box" style="margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom:15px;">
+
+                                <span class="matched-pill tilt" style="background:rgba(255,145,0,0.08); border-color:var(--accent-orange); color:var(--accent-orange);">骨盤ケア協賛: StyleKeep</span>
+
+                                <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
+
+                                <div class="ad-title" style="font-size:12px;">StyleKeep 骨盤サポート高反発クッション</div>
+
+                                <div class="ad-desc" style="font-size:11px; line-height:1.4;">アライメントの崩れによる腰部・背中への座姿勢負担を軽減する特許取得サポートクッション。</div>
+
+                                <div class="ad-product-price" style="font-size:13px;">特別価格: ¥5,440</div>
+
+                            </div>
+
+                            
+
+                            <!-- Ad 2: Orthotics/Apparel -->
+
+                            <div class="ad-matched-box" style="margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom:15px;">
+
+                                <span class="matched-pill sway" style="background:rgba(0,191,255,0.08); border-color:var(--accent-blue); color:var(--accent-blue);">インソール協賛: OrthoFit</span>
+
+                                <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
+
+                                <div class="ad-title" style="font-size:12px;">OrthoFit プレミアム・カスタムインソール</div>
+
+                                <div class="ad-desc" style="font-size:11px; line-height:1.4;">左右荷重バランスを足元から補正し、ランニング時の関節ブレを抑制するカスタムインソール。</div>
+
+                                <div class="ad-product-price" style="font-size:13px;">特別価格: ¥9,600</div>
+
+                            </div>
+
+
+
+                            <!-- Ad 3: Sports Apparel -->
+
+                            <div class="ad-matched-box">
+
+                                <span class="matched-pill" style="background:rgba(138,43,226,0.08); border-color:var(--accent-purple); color:var(--accent-purple);">リカバリー協賛: UNDER ARMOUR</span>
+
+                                <div class="ad-img-box" style="background-image: url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&q=80&w=400'); height: 80px;"></div>
+
+                                <div class="ad-title" style="font-size:12px;">UA Recovery 段階着圧リカバリータイツ</div>
+
+                                <div class="ad-desc" style="font-size:11px; line-height:1.4;">運動後のアライメント維持と筋肉疲労の回復を促進する特殊着圧コンプレッション。</div>
+
+                                <div class="ad-product-price" style="font-size:13px;">販売価格: ¥7,800</div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="widget">
+
+                        <h3>📏 スケール・マット校正</h3>
+
+                        <p style="font-size:11px; color:var(--text-secondary); line-height:1.5;">
+
+                            手持ち測定時のジャイロ補正、または測定ラボの「📏 マット校正(45cm)」を使用すると、1pxあたりのセンチメートル倍率が正確にロックされ、診断と連動広告の精度が向上します。
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <!-- Subscription Plan Modal (Popup) -->
+
+    <div id="subscriptionModal" class="modal-overlay" style="display: none;">
+
+        <div class="modal-card">
+
+            <div class="modal-close-btn" id="closeSubModalBtn">&times;</div>
+
+            <div class="modal-header">
+
+                <h2>👑 CORE CONNECT PREMIUM</h2>
+
+                <p>AI測定無制限 ＆ 専門家オンライン指導で、最速の姿勢改善をサポート</p>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="pricing-grid">
+
+                    <!-- Plan 1: Free -->
+
+                    <div class="pricing-card">
+
+                        <h3>ライト (Free)</h3>
+
+                        <div class="price">¥0 <span class="price-period">/ 月</span></div>
+
+                        <ul class="plan-features">
+
+                            <li>最新記事の閲覧</li>
+
+                            <li>簡易測定 (月1回のみ)</li>
+
+                            <li>タイムライン閲覧のみ</li>
+
+                        </ul>
+
+                        <button class="plan-btn disabled" disabled>現在のプラン</button>
+
+                    </div>
+
+                    
+
+                    <!-- Plan 2: Standard (Recommended) -->
+
+                    <div class="pricing-card recommended">
+
+                        <div class="rec-badge">RECOMMENDED</div>
+
+                        <h3>スタンダード</h3>
+
+                        <div class="price">¥980 <span class="price-period">/ 月</span></div>
+
+                        <ul class="plan-features">
+
+                            <li><strong>AI動作アライメント測定し放題</strong></li>
+
+                            <li><strong>専門家 (理学療法士) Q&A相談</strong></li>
+
+                            <li>協賛ブランド1,000円分クーポン</li>
+
+                            <li>姿勢改善データ履歴追跡</li>
+
+                        </ul>
+
+                        <button class="plan-btn active-btn" id="subStandardBtn">30日間無料でお試し</button>
+
+                    </div>
+
+                    
+
+                    <!-- Plan 3: Premium -->
+
+                    <div class="pricing-card">
+
+                        <h3>プレミアム</h3>
+
+                        <div class="price">¥1,980 <span class="price-period">/ 月</span></div>
+
+                        <ul class="plan-features">
+
+                            <li>スタンダードの全機能</li>
+
+                            <li>優先アドバイス返信保証</li>
+
+                            <li>個別ビデオ相談 (月1回15分)</li>
+
+                            <li>プレミアム限定レッスン動画</li>
+
+                        </ul>
+
+                        <button class="plan-btn" id="subPremiumBtn">プランを選択</button>
+
+                    </div>
+
+                </div>
+
+                <p class="modal-footer-note">※ スタンダードプランは登録後30日間は無料でお試しいただけます。いつでも解約可能です。</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Scripts -->
+
+    <script src="portal.js"></script>
+
+</body>
+
+</html>
+

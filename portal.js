@@ -2625,6 +2625,25 @@ async function initDatabase() {
     setupLoadMoreListeners();
 }
 
+window.handleArticleAction = function(hook, event) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+    if (!hook || !hook.trim()) return;
+    const cleanHook = hook.trim();
+    if (cleanHook.startsWith('http://') || cleanHook.startsWith('https://') || cleanHook.endsWith('.html') || cleanHook.startsWith('./') || cleanHook.startsWith('/') || cleanHook.startsWith('file:///')) {
+        window.open(cleanHook, '_blank');
+    } else {
+        try {
+            const fn = new Function(cleanHook);
+            fn();
+        } catch (e) {
+            console.error("Failed to execute button action:", e, cleanHook);
+        }
+    }
+};
+
 function renderFeed(vertical) {
     const listContainer = document.getElementById(vertical + 'List');
     const loadMoreBtn = document.getElementById(vertical + 'LoadMore');
@@ -2734,7 +2753,7 @@ function renderFeed(vertical) {
                             <span>${art.time || ''}</span>
                             <span>${art.author || ''}</span>
                         </div>
-                        <button class="btn-hook" onclick="${art.btn_hook || ''}">
+                        <button class="btn-hook" onclick="handleArticleAction(\`${art.btn_hook || ''}\`, event)">
                             ${art.btn_text || '📸 測定を開始する'} <span>▶</span>
                         </button>
                     </div>

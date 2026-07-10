@@ -2753,7 +2753,7 @@ function getAllArticlesForCategory(category) {
     for (let i = 1; i <= currentDayNum; i++) {
         const dKey = 'day' + i;
         if (articlesDb[dKey] && articlesDb[dKey][category]) {
-            list = list.concat(articlesDb[dKey][category]);
+            list = articlesDb[dKey][category].concat(list);
         }
     }
     return list;

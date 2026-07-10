@@ -9,7 +9,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 股関節可動域を測定する",
-                "btn_hook": "launchMeasurement('dyn_flex_fwd')"
+                "btn_hook": "launchMeasurement('dyn_flex_fwd')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "baseball",
@@ -19,7 +21,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 左右接地荷重を測定する",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "tennis",
@@ -29,7 +33,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 スイングアライメントを測定",
-                "btn_hook": "launchMeasurement('dyn_overhead')"
+                "btn_hook": "launchMeasurement('dyn_overhead')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "basketball",
@@ -39,7 +45,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 シュートアライメントを測定",
-                "btn_hook": "launchMeasurement('dyn_flex_fwd')"
+                "btn_hook": "launchMeasurement('dyn_flex_fwd')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "volleyball",
@@ -49,7 +57,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 構えアライメントを測定する",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "soccer baseball track",
@@ -59,7 +69,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 左右荷重バランスを測定する",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             }
         ],
         "health": [
@@ -71,7 +83,9 @@
                 "time": "⏱️ 所要時間: 30秒スキャン",
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 自律神経ストレス測定を起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sleep",
@@ -81,7 +95,9 @@
                 "time": "⏱️ 所要時間: 1分",
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 安静時心拍・HRVを測定",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "nutrition",
@@ -91,7 +107,9 @@
                 "time": "⏱️ 所要時間: 30秒スキャン",
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 血管血流巡りチェックを起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "pain",
@@ -101,7 +119,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 肩ラインアライメント測定",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "check",
@@ -111,7 +131,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 バランス動揺性をAI測定する",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sleep stress",
@@ -121,7 +143,9 @@
                 "time": "⏱️ 所要時間: 30秒固定",
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 自律神経ストレス測定を起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             }
         ],
         "beauty": [
@@ -133,7 +157,9 @@
                 "time": "⏱️ 所要時間: 2分",
                 "author": "✍️ メイクアップインストラクター",
                 "btn_text": "📸 顔アライメント診断を起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "cosmetics",
@@ -143,7 +169,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 お肌の血色＆骨格診断を起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "hairstyle",
@@ -153,7 +181,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 似合う髪型アライメントを測定",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "styling",
@@ -163,7 +193,9 @@
                 "time": "⏱️ 所要時間: 2分",
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 リップ血色スキャンを起動する",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "bodymake",
@@ -173,7 +205,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ 姿勢・カイロプラクティックガイド",
                 "btn_text": "📸 骨盤アライメント測定を起動",
-                "btn_hook": "launchMeasurement('dyn_flex_fwd')"
+                "btn_hook": "launchMeasurement('dyn_flex_fwd')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "makeup bodymake",
@@ -183,7 +217,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 顔アライメント診断を起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             }
         ]
     },
@@ -197,7 +233,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 側面アライメントを測定する",
-                "btn_hook": "launchMeasurement('l_side')"
+                "btn_hook": "launchMeasurement('l_side')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "baseball",
@@ -207,7 +245,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 スイング荷重バランスを測定",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "tennis",
@@ -217,7 +257,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 接地安定アライメントを測定",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "basketball",
@@ -227,7 +269,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 動作姿勢アライメントを測定",
-                "btn_hook": "launchMeasurement('dyn_flex_fwd')"
+                "btn_hook": "launchMeasurement('dyn_flex_fwd')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "volleyball",
@@ -237,7 +281,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 着地バランスアライメント測定",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "soccer baseball",
@@ -247,7 +293,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 動作アライメントを測定する",
-                "btn_hook": "launchMeasurement('dyn_flex_fwd')"
+                "btn_hook": "launchMeasurement('dyn_flex_fwd')",
+                "detail_p": "",
+                "check_list": []
             }
         ],
         "health": [
@@ -259,7 +307,9 @@
                 "time": "⏱️ 所要時間: 30秒スキャン",
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 ストレス血流スキャンを起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sleep",
@@ -269,7 +319,9 @@
                 "time": "⏱️ 所要時間: 30秒固定",
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 自律神経チェックを起動する",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "nutrition",
@@ -279,7 +331,9 @@
                 "time": "⏱️ 所要時間: 2分",
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 血流巡りセルフスキャンを起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "pain",
@@ -289,7 +343,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 骨盤傾きアライメントを測定",
-                "btn_hook": "launchMeasurement('l_side')"
+                "btn_hook": "launchMeasurement('l_side')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "check",
@@ -299,7 +355,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 立ち上がり筋力をAI測定する",
-                "btn_hook": "launchMeasurement('dyn_flex_fwd')"
+                "btn_hook": "launchMeasurement('dyn_flex_fwd')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "stress check",
@@ -309,7 +367,9 @@
                 "time": "⏱️ 所要時間: 30秒固定",
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 静的バイタルスキャンを起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             }
         ],
         "beauty": [
@@ -321,7 +381,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ メイクアップインストラクター",
                 "btn_text": "📸 顔立ち比率スキャンを起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "cosmetics",
@@ -331,7 +393,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 メイク連動コスメ提案を起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "hairstyle",
@@ -341,7 +405,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 輪郭アライメント髪型判定",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "styling",
@@ -351,7 +417,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 肌血流診断を起動する",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "bodymake",
@@ -361,7 +429,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 下半身アライメントを測定する",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "makeup hairstyle",
@@ -371,7 +441,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 AI顔アライメント測定を起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             }
         ]
     },
@@ -385,7 +457,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 ステップアライメントを測定",
-                "btn_hook": "launchMeasurement('dyn_overhead')"
+                "btn_hook": "launchMeasurement('dyn_overhead')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "baseball",
@@ -395,7 +469,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 重心アライメントを測定する",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "tennis",
@@ -405,7 +481,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 肩ラインアライメントを測定",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "basketball",
@@ -415,7 +493,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 ジャンプ姿勢を測定する",
-                "btn_hook": "launchMeasurement('dyn_overhead')"
+                "btn_hook": "launchMeasurement('dyn_overhead')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "volleyball",
@@ -425,7 +505,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 トスアライメントを測定する",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "soccer volleyball",
@@ -435,7 +517,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 左右荷重バランスを測定する",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             }
         ],
         "health": [
@@ -447,7 +531,9 @@
                 "time": "⏱️ 所要時間: 30秒固定",
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 自律神経脈拍スキャンを起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sleep",
@@ -457,7 +543,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 首・側面アライメント測定",
-                "btn_hook": "launchMeasurement('l_side')"
+                "btn_hook": "launchMeasurement('l_side')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "nutrition",
@@ -467,7 +555,9 @@
                 "time": "⏱️ 所要時間: 30秒スキャン",
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 自律神経血流スキャンを起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "pain",
@@ -477,7 +567,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 動作アライメントを測定する",
-                "btn_hook": "launchMeasurement('dyn_flex_fwd')"
+                "btn_hook": "launchMeasurement('dyn_flex_fwd')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "check",
@@ -487,7 +579,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 左右荷重アライメント測定",
-                "btn_hook": "launchMeasurement('front')"
+                "btn_hook": "launchMeasurement('front')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sleep pain",
@@ -497,7 +591,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 側面アライメントを測定する",
-                "btn_hook": "launchMeasurement('l_side')"
+                "btn_hook": "launchMeasurement('l_side')",
+                "detail_p": "",
+                "check_list": []
             }
         ],
         "beauty": [
@@ -509,7 +605,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ メイクアップインストラクター",
                 "btn_text": "📸 顔輪郭アライメント診断起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "cosmetics",
@@ -519,7 +617,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 左右眉毛アライメント診断",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "hairstyle",
@@ -529,7 +629,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 輪郭ヘアアライメントを測定",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "styling",
@@ -539,7 +641,9 @@
                 "time": "⏱️ 所要時間: 3分",
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 肌コンディション測定を起動",
-                "btn_hook": "launchMeasurement('face_rppg')"
+                "btn_hook": "launchMeasurement('face_rppg')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "bodymake",
@@ -549,7 +653,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ 姿勢・カイロプラクティックガイド",
                 "btn_text": "📸 側面姿勢アライメント測定",
-                "btn_hook": "launchMeasurement('l_side')"
+                "btn_hook": "launchMeasurement('l_side')",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "makeup bodymake",
@@ -559,7 +665,9 @@
                 "time": "⏱️ 所要時間: 4分",
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 側面姿勢アライメント測定",
-                "btn_hook": "launchMeasurement('l_side')"
+                "btn_hook": "launchMeasurement('l_side')",
+                "detail_p": "",
+                "check_list": []
             }
         ]
     },
@@ -574,7 +682,9 @@
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 サーブアライメントを測定する",
                 "btn_hook": "launchMeasurement('dyn_flex_fwd')",
-                "img_id": "photo-1595435934249-5df7ed86e1c0"
+                "img_id": "photo-1595435934249-5df7ed86e1c0",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "basketball",
@@ -585,7 +695,9 @@
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 ジャンプアライメントを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1546519638-68e109498ffc"
+                "img_id": "photo-1546519638-68e109498ffc",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "track",
@@ -596,7 +708,9 @@
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 スプリントアライメントを測定する",
                 "btn_hook": "launchMeasurement('l_side')",
-                "img_id": "photo-1476480862126-209bfaa8edc8"
+                "img_id": "photo-1476480862126-209bfaa8edc8",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "soccer",
@@ -607,7 +721,9 @@
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 体幹アライメントを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1551958219-acbc608c6377"
+                "img_id": "photo-1551958219-acbc608c6377",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "soccer baseball check",
@@ -618,7 +734,9 @@
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 噛み込み圧アライメントを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1516738901171-8eb4fc13bd20"
+                "img_id": "photo-1516738901171-8eb4fc13bd20",
+                "detail_p": "",
+                "check_list": []
             }
         ],
         "health": [
@@ -631,7 +749,9 @@
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 血流循環アライメントを測定する",
                 "btn_hook": "launchMeasurement('face_rppg')",
-                "img_id": "photo-1490645935967-10de6ba17061"
+                "img_id": "photo-1490645935967-10de6ba17061",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sleep check",
@@ -642,7 +762,9 @@
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 睡眠アライメントをチェックする",
                 "btn_hook": "launchMeasurement('l_side')",
-                "img_id": "photo-1506126613408-eca07ce68773"
+                "img_id": "photo-1506126613408-eca07ce68773",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "check",
@@ -653,7 +775,9 @@
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 呼吸アライメントを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1505751172876-fa1923c5c528"
+                "img_id": "photo-1505751172876-fa1923c5c528",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "stress",
@@ -664,7 +788,9 @@
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 自律神経ストレス測定",
                 "btn_hook": "launchMeasurement('face_rppg')",
-                "img_id": "photo-1544367567-0f2fcb009e0b"
+                "img_id": "photo-1544367567-0f2fcb009e0b",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "check",
@@ -675,7 +801,9 @@
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 荷重アライメントを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1505751172876-fa1923c5c528"
+                "img_id": "photo-1505751172876-fa1923c5c528",
+                "detail_p": "",
+                "check_list": []
             }
         ],
         "beauty": [
@@ -688,7 +816,9 @@
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 側面アライメントを測定する",
                 "btn_hook": "launchMeasurement('l_side')",
-                "img_id": "photo-1518310383802-640c2de311b2"
+                "img_id": "photo-1518310383802-640c2de311b2",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "makeup",
@@ -699,7 +829,9 @@
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 顔骨格アライメントを測定する",
                 "btn_hook": "launchMeasurement('face_rppg')",
-                "img_id": "photo-1522335789203-aabd1fc54bc9"
+                "img_id": "photo-1522335789203-aabd1fc54bc9",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "bodymake",
@@ -710,7 +842,9 @@
                 "author": "✍️ 美容カイロプラクター",
                 "btn_text": "📸 デコルテアライメントを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1518310383802-640c2de311b2"
+                "img_id": "photo-1518310383802-640c2de311b2",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "cosmetics",
@@ -721,7 +855,9 @@
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 肌ストレス・血流を測定する",
                 "btn_hook": "launchMeasurement('face_rppg')",
-                "img_id": "photo-1596462502278-27bfdc403348"
+                "img_id": "photo-1596462502278-27bfdc403348",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "bodymake",
@@ -732,7 +868,9 @@
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 美脚アライメントを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1515886657613-9f3515b0c78f"
+                "img_id": "photo-1515886657613-9f3515b0c78f",
+                "detail_p": "",
+                "check_list": []
             }
         ]
     },
@@ -747,7 +885,9 @@
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 送球アライメントを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1516738901171-8eb4fc13bd20"
+                "img_id": "photo-1516738901171-8eb4fc13bd20",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "volleyball",
@@ -758,7 +898,9 @@
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 トスアライメントを測定する",
                 "btn_hook": "launchMeasurement('dyn_flex_fwd')",
-                "img_id": "photo-1612872087720-bb876e2e67d1"
+                "img_id": "photo-1612872087720-bb876e2e67d1",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "track",
@@ -769,7 +911,9 @@
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 接地荷重アライメントを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1476480862126-209bfaa8edc8"
+                "img_id": "photo-1476480862126-209bfaa8edc8",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "tennis",
@@ -780,7 +924,9 @@
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 膝アライメントを測定する",
                 "btn_hook": "launchMeasurement('dyn_flex_fwd')",
-                "img_id": "photo-1595435934249-5df7ed86e1c0"
+                "img_id": "photo-1595435934249-5df7ed86e1c0",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "swim check",
@@ -791,7 +937,9 @@
                 "author": "✍️ スポーツ動作研究員",
                 "btn_text": "📸 ストリームラインを測定する",
                 "btn_hook": "launchMeasurement('l_side')",
-                "img_id": "photo-1518310383802-640c2de311b2"
+                "img_id": "photo-1518310383802-640c2de311b2",
+                "detail_p": "",
+                "check_list": []
             }
         ],
         "health": [
@@ -804,7 +952,9 @@
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 自律神経ストレス測定",
                 "btn_hook": "launchMeasurement('face_rppg')",
-                "img_id": "photo-1544367567-0f2fcb009e0b"
+                "img_id": "photo-1544367567-0f2fcb009e0b",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "stress",
@@ -815,7 +965,9 @@
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 ストレートネック測定",
                 "btn_hook": "launchMeasurement('l_side')",
-                "img_id": "photo-1544367567-0f2fcb009e0b"
+                "img_id": "photo-1544367567-0f2fcb009e0b",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "check",
@@ -826,7 +978,9 @@
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 骨盤バランスを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1505751172876-fa1923c5c528"
+                "img_id": "photo-1505751172876-fa1923c5c528",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "check stress",
@@ -837,7 +991,9 @@
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 末梢血流を測定する",
                 "btn_hook": "launchMeasurement('face_rppg')",
-                "img_id": "photo-1505751172876-fa1923c5c528"
+                "img_id": "photo-1505751172876-fa1923c5c528",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "nutrition check",
@@ -848,7 +1004,9 @@
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 姿勢アライメントを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1490645935967-10de6ba17061"
+                "img_id": "photo-1490645935967-10de6ba17061",
+                "detail_p": "",
+                "check_list": []
             }
         ],
         "beauty": [
@@ -861,7 +1019,9 @@
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 舌アライメントをチェックする",
                 "btn_hook": "launchMeasurement('face_rppg')",
-                "img_id": "photo-1522335789203-aabd1fc54bc9"
+                "img_id": "photo-1522335789203-aabd1fc54bc9",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "hairstyle",
@@ -872,7 +1032,9 @@
                 "author": "✍️ 骨格アライメントスタイリスト",
                 "btn_text": "📸 顔タイプ骨格を測定する",
                 "btn_hook": "launchMeasurement('face_rppg')",
-                "img_id": "photo-1562322140-8baeececf3df"
+                "img_id": "photo-1562322140-8baeececf3df",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "styling",
@@ -883,7 +1045,9 @@
                 "author": "✍️ 骨格アライメントスタイリスト",
                 "btn_text": "📸 骨格比率アライメントを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1596462502278-27bfdc403348"
+                "img_id": "photo-1596462502278-27bfdc403348",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "bodymake",
@@ -894,7 +1058,9 @@
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 重心アライメントを測定する",
                 "btn_hook": "launchMeasurement('l_side')",
-                "img_id": "photo-1515886657613-9f3515b0c78f"
+                "img_id": "photo-1515886657613-9f3515b0c78f",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "makeup styling",
@@ -905,7 +1071,9 @@
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 咀嚼アライメントを測定する",
                 "btn_hook": "launchMeasurement('face_rppg')",
-                "img_id": "photo-1522335789203-aabd1fc54bc9"
+                "img_id": "photo-1522335789203-aabd1fc54bc9",
+                "detail_p": "",
+                "check_list": []
             }
         ]
     },
@@ -921,7 +1089,13 @@
                 "author": "✍️ 出所: 米国スポーツ物理療法学会",
                 "btn_text": "詳細を見る",
                 "btn_hook": "https://www.jstage.jst.go.jp/article/cjpt/2009/0/2009_0_E3PD1090/_article/-char/ja/",
-                "img_id": "photo-1517649763962-0c623066013b"
+                "img_id": "photo-1517649763962-0c623066013b",
+                "detail_p": "## 膝のニーイン（Knee Valgus）とは？\n走っているときや着地した瞬間に、膝関節が足先よりも内側に折れ曲がってしまうアライメントの崩れを「ニーイン」と呼びます。これはランナーによく見られる障害の最大の原因の一つです。\n\n### 主な原因とメカニズム\n1. **大臀筋・中臀筋 of 筋力低下**: お尻の筋肉（外転・外旋筋）が弱いと、接地荷重を支えきれず太ももが内側にねじれてしまいます。\n2. **足関節（足首）の硬さ**: 足首が硬いと、しゃがみ込む際に膝を内側に入れて代償しようとします。\n\n## 専門家（大山史郎）からのアドバイス\nランニング中やスクワットを行う際は、常に「膝の向きをつま先（人差し指）の方向と揃える」ことを意識してください。\n\n### 自宅でできる簡単リハビリ・トレーニング\n* **ヒップリフト**：仰向けに寝て膝を立て、お尻をゆっくり持ち上げます（15回×3セット）。\n* **チューブ・サイドウォーク**：ゴムバンドを膝上に巻き、腰を落とした姿勢で横歩きをします。お尻の横（中臀筋）を意識しましょう。",
+                "check_list": [
+                    "ランニングやスクワット時に膝の内側や前面に違和感がある",
+                    "片脚で立ったときにフラつきやすく、膝が内側にブレる",
+                    "履いている靴の底の内側ばかりが偏ってすり減る"
+                ]
             },
             {
                 "sport": "sports",
@@ -932,7 +1106,9 @@
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 OHS動作をAIで測定する",
                 "btn_hook": "launchMeasurement('dyn_overhead')",
-                "img_id": "photo-1571019614242-c5c5dee9f50b"
+                "img_id": "photo-1571019614242-c5c5dee9f50b",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sports",
@@ -943,7 +1119,9 @@
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 側面アライメントを測定する",
                 "btn_hook": "launchMeasurement('l_side')",
-                "img_id": "photo-1476480862126-209bfaa8edc8"
+                "img_id": "photo-1476480862126-209bfaa8edc8",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sports",
@@ -954,7 +1132,9 @@
                 "author": "✍️ コーチ 鈴木",
                 "btn_text": "📸 左右荷重バランスを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1535131749006-b7f58c99034b"
+                "img_id": "photo-1535131749006-b7f58c99034b",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sports",
@@ -965,7 +1145,9 @@
                 "author": "✍️ 出所: 生体力学会誌",
                 "btn_text": "詳細を見る",
                 "btn_hook": "https://www.jstage.jst.go.jp/article/chiba/87/4/87_149/_article/-char/ja/",
-                "img_id": "photo-1506126613408-eca07ce68773"
+                "img_id": "photo-1506126613408-eca07ce68773",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sports",
@@ -976,7 +1158,9 @@
                 "author": "✍️ コーチ 鈴木",
                 "btn_text": "📸 投球アライメントを測定する",
                 "btn_hook": "launchMeasurement('dyn_overhead')",
-                "img_id": "photo-1516738901171-8eb4fc13bd20"
+                "img_id": "photo-1516738901171-8eb4fc13bd20",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sports",
@@ -987,7 +1171,9 @@
                 "author": "✍️ アスレティックトレーナー",
                 "btn_text": "📸 左右荷重バランスを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1476480862126-209bfaa8edc8"
+                "img_id": "photo-1476480862126-209bfaa8edc8",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sports",
@@ -998,7 +1184,9 @@
                 "author": "✍️ 出所: 米国足の外科学会誌",
                 "btn_text": "詳細を見る",
                 "btn_hook": "https://www.jstage.jst.go.jp/article/cjpt/2012/0/2012_48152/_article/-char/ja/",
-                "img_id": "photo-1542291026-7eec264c27ff"
+                "img_id": "photo-1542291026-7eec264c27ff",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sports",
@@ -1009,7 +1197,9 @@
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 体幹動作をAIで測定する",
                 "btn_hook": "launchMeasurement('dyn_flex_fwd')",
-                "img_id": "photo-1571019614242-c5c5dee9f50b"
+                "img_id": "photo-1571019614242-c5c5dee9f50b",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "soccer baseball check",
@@ -1020,7 +1210,9 @@
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 噛み込み重心を測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1516738901171-8eb4fc13bd20"
+                "img_id": "photo-1516738901171-8eb4fc13bd20",
+                "detail_p": "",
+                "check_list": []
             }
         ],
         "health": [
@@ -1033,7 +1225,13 @@
                 "author": "✍️ 出所: 厚生労働省広報",
                 "btn_text": "詳細を見る",
                 "btn_hook": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/kenkou/undou/index.html",
-                "img_id": "photo-1516062423079-7ca13cdc7f5a"
+                "img_id": "photo-1516062423079-7ca13cdc7f5a",
+                "detail_p": "## 高齢者の転倒リスクと骨折の現状\n加齢に伴う身体機能（バランス能力、筋力、視覚、自己受容感覚）の低下により、高齢者の転倒事故は年々増加しています。特に大腿骨頭壊死や寝たきりにつながる「大腿骨近位部骨折」は、生命予後にも関わる重大な問題です。\n\n### 厚生労働省が推奨する「身体バランスチェック」の重要性\n日常生活の中で自身の重心がどれほどブレているか、片脚での立位バランスがどれくらい維持できるかを客観的に評価することが、予防の第一歩となります。\n\n## 専門家（久保肇）からのアドバイス\n転倒は「環境の調整（段差解消や整理整頓）」と「身体機能の維持」の双方からアプローチすることが極めて有効です。\n\n### 今すぐできる転倒予防アクション\n* **片脚立ちトレーニング**：手すりや壁に手を添えた状態で、左右の足を交互に1分間ずつ上げます（1日3回）。\n* **足首ストレッチ**：つま先を上げる運動を繰り返し、つまづきを防止します。",
+                "check_list": [
+                    "ここ1年の間に、自宅内やつまずきやすい場所で実際に転んだことがある",
+                    "手すりや壁に掴まらずにズボンを片脚で履くのが難しい",
+                    "平らな道やじゅうたんの端などで、引っかかったりつまずいたりする"
+                ]
             },
             {
                 "sport": "health",
@@ -1044,7 +1242,9 @@
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 動作チェックをAIで測定する",
                 "btn_hook": "launchMeasurement('dyn_flex_fwd')",
-                "img_id": "photo-1576091160550-2173dba999ef"
+                "img_id": "photo-1576091160550-2173dba999ef",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "health",
@@ -1055,7 +1255,9 @@
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 骨盤傾きアライメントを測定する",
                 "btn_hook": "launchMeasurement('l_side')",
-                "img_id": "photo-1506126613408-eca07ce68773"
+                "img_id": "photo-1506126613408-eca07ce68773",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "health",
@@ -1066,7 +1268,9 @@
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "詳細を見る",
                 "btn_hook": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/kenkou/undou/index.html",
-                "img_id": "photo-1516062423079-7ca13cdc7f5a"
+                "img_id": "photo-1516062423079-7ca13cdc7f5a",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "health",
@@ -1077,7 +1281,9 @@
                 "author": "✍️ ビューティボディメイクアドバイザー",
                 "btn_text": "📸 側面アライメントを測定する",
                 "btn_hook": "launchMeasurement('l_side')",
-                "img_id": "photo-1576091160550-2173dba999ef"
+                "img_id": "photo-1576091160550-2173dba999ef",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "health",
@@ -1088,7 +1294,9 @@
                 "author": "✍️ 出所: 国際骨粗鬆症財団",
                 "btn_text": "詳細を見る",
                 "btn_hook": "http://www.josteo.com/ja/guideline/index.html",
-                "img_id": "photo-1506126613408-eca07ce68773"
+                "img_id": "photo-1506126613408-eca07ce68773",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "health",
@@ -1099,7 +1307,9 @@
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 側面アライメントを測定する",
                 "btn_hook": "launchMeasurement('l_side')",
-                "img_id": "photo-1506126613408-eca07ce68773"
+                "img_id": "photo-1506126613408-eca07ce68773",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "health",
@@ -1110,7 +1320,9 @@
                 "author": "✍️ 出所: 英国スポーツ医学雑誌",
                 "btn_text": "詳細を見る",
                 "btn_hook": "https://www.jstage.jst.go.jp/article/jjsh/43/1/43_10/_article/-char/ja/",
-                "img_id": "photo-1516062423079-7ca13cdc7f5a"
+                "img_id": "photo-1516062423079-7ca13cdc7f5a",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "health",
@@ -1121,7 +1333,9 @@
                 "author": "✍️ 理学療法士 / 大山 史郎",
                 "btn_text": "📸 左右荷重バランスを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1576091160550-2173dba999ef"
+                "img_id": "photo-1576091160550-2173dba999ef",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "sleep check",
@@ -1132,7 +1346,9 @@
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "📸 呼吸ストレスを測定する",
                 "btn_hook": "launchMeasurement('face_rppg')",
-                "img_id": "photo-1506126613408-eca07ce68773"
+                "img_id": "photo-1506126613408-eca07ce68773",
+                "detail_p": "",
+                "check_list": []
             }
         ],
         "beauty": [
@@ -1145,7 +1361,13 @@
                 "author": "✍️ 医師 / 久保 肇",
                 "btn_text": "詳細を見る",
                 "btn_hook": "https://www.jstage.jst.go.jp/article/jscss/29/4/29_163/_article/-char/ja/",
-                "img_id": "photo-1522335789203-aabd1fc54bc9"
+                "img_id": "photo-1522335789203-aabd1fc54bc9",
+                "detail_p": "## 骨格アライメントが美肌とプロポーションに与える影響\n猫背や巻き肩、骨盤の歪みは、単に姿勢が悪く見えるだけでなく、全身のリンパ液や血液の循環を著しく阻害します。首回りや鎖骨周辺の骨格アライメントが崩れると、顔面の老廃物が排出されにくくなり、肌のくすみ、たるみ、二重あごの原因となります。\n\n### トップモデルが実践するアライメントケア\n鎖骨を左右一直線に開き、胸椎を伸展させて頸椎を正しい位置に配置することで、デコルテが美しく整うだけでなく、お顔のターンオーバーが活性化します。\n\n## 専門家（大山史郎）からのアドバイス\n美しい肌とボディラインの秘訣は、土台となる骨盤と背骨のバランスにあります。\n\n### 自宅でできる美姿勢メイク\n* **肩甲骨はがしストレッチ**：両手を肩に当て、肘で大きな円を描くように前後10回ずつ回します。\n* **キャット＆カウ**：四つん這いになり、息を吸いながら背中を反らし、吐きながら丸めます（5回往復）。",
+                "check_list": [
+                    "スマホやPCを長時間見ており、ふと気づくと顎が前に出て猫背になっている",
+                    "鏡を見ると、左右の肩の高さや鎖骨のラインが非対称になっている",
+                    "朝起きたときに顔がむくみやすく、肌のトーンが暗く感じられる"
+                ]
             },
             {
                 "sport": "beauty",
@@ -1156,7 +1378,9 @@
                 "author": "✍️ 骨格アライメントスタイリスト",
                 "btn_text": "📸 骨格タイプと美脚アライメント測定",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1512290923902-8a9f81dc236c"
+                "img_id": "photo-1512290923902-8a9f81dc236c",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "beauty",
@@ -1167,7 +1391,9 @@
                 "author": "✍️ 美容カイロプラクター",
                 "btn_text": "📸 歩行・骨盤アライメントを測定する",
                 "btn_hook": "launchMeasurement('l_side')",
-                "img_id": "photo-1515886657613-9f3515b0c78f"
+                "img_id": "photo-1515886657613-9f3515b0c78f",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "beauty",
@@ -1178,7 +1404,9 @@
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "詳細を見る",
                 "btn_hook": "http://kokuhoken.net/jstmj/general/",
-                "img_id": "photo-1522335789203-aabd1fc54bc9"
+                "img_id": "photo-1522335789203-aabd1fc54bc9",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "beauty",
@@ -1189,7 +1417,9 @@
                 "author": "✍️ 美容カイロプラクター",
                 "btn_text": "📸 側面アライメントを測定する",
                 "btn_hook": "launchMeasurement('l_side')",
-                "img_id": "photo-1512290923902-8a9f81dc236c"
+                "img_id": "photo-1512290923902-8a9f81dc236c",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "beauty",
@@ -1200,7 +1430,9 @@
                 "author": "✍️ 骨格アライメントスタイリスト",
                 "btn_text": "📸 左右荷重バランスを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1515886657613-9f3515b0c78f"
+                "img_id": "photo-1515886657613-9f3515b0c78f",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "beauty",
@@ -1211,7 +1443,9 @@
                 "author": "✍️ 出所: 美容皮膚科学会誌",
                 "btn_text": "詳細を見る",
                 "btn_hook": "https://www.jstage.jst.go.jp/article/cjpt/2007/0/2007_A0923/_article/-char/ja/",
-                "img_id": "photo-1485230895905-ec40ba36b9bc"
+                "img_id": "photo-1485230895905-ec40ba36b9bc",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "beauty",
@@ -1222,7 +1456,9 @@
                 "author": "✍️ 美容カイロプラクター",
                 "btn_text": "📸 動作チェックをAIで測定する",
                 "btn_hook": "launchMeasurement('dyn_flex_fwd')",
-                "img_id": "photo-1512290923902-8a9f81dc236c"
+                "img_id": "photo-1512290923902-8a9f81dc236c",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "beauty",
@@ -1233,7 +1469,9 @@
                 "author": "✍️ 骨格アライメントスタイリスト",
                 "btn_text": "📸 左右荷重バランスを測定する",
                 "btn_hook": "launchMeasurement('front')",
-                "img_id": "photo-1515886657613-9f3515b0c78f"
+                "img_id": "photo-1515886657613-9f3515b0c78f",
+                "detail_p": "",
+                "check_list": []
             },
             {
                 "sport": "makeup styling",
@@ -1244,11 +1482,21 @@
                 "author": "✍️ 歯科医師 / 井出 徹",
                 "btn_text": "📸 顔骨格アライメントを測定する",
                 "btn_hook": "launchMeasurement('face_rppg')",
-                "img_id": "photo-1522335789203-aabd1fc54bc9"
+                "img_id": "photo-1522335789203-aabd1fc54bc9",
+                "detail_p": "",
+                "check_list": []
             }
         ]
     },
     "experts": [
+        {
+            "id": "new_expert_1783482507803",
+            "name": "大山 史郎",
+            "field": "医療分野",
+            "title": "理学療法士 / 心身健康科学修士 / 健康経営アドバイザー",
+            "profile": "広島大学医学部卒業後、理学療法士として整形外科領域臨床に従事。臨床業務を行いながら心身相関について大学院で修士を取得。脊柱を中心とした動作改善、予防的ケアの普及を目指し講演活動、企業の健康経営サポートを展開。",
+            "img_id": "images/IMG_0987.PNG"
+        },
         {
             "id": "kubo",
             "name": "久保 肇",
@@ -1264,14 +1512,6 @@
             "title": "歯科医師 / 姿勢デンタルアドバイザー",
             "profile": "姿勢のゆがみが噛み合わせ、食いしばり、口腔内全般に影響を与えるとの考えを基に、全身のアライメント効果の研究に携わる歯科医師。姿勢分析システムCONNECT AIうぃ活用し重心補正インソール、睡眠時の姿勢改善枕の処方を積極的に行い、統合的な全身バランス改善に取り組む。",
             "img_id": "images/IMG_E1701.JPG"
-        },
-        {
-            "id": "new_expert_1783482507803",
-            "name": "大山 史郎",
-            "field": "医療分野",
-            "title": "理学療法士 / 心身健康科学修士 / 健康経営アドバイザー",
-            "profile": "広島大学医学部卒業後、理学療法士として整形外科領域臨床に従事。臨床業務を行いながら心身相関について大学院で修士を取得。脊柱を中心とした動作改善、予防的ケアの普及を目指し講演活動、企業の健康経営サポートを展開。",
-            "img_id": "images/IMG_0987.PNG"
         }
     ]
 }

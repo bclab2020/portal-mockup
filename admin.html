@@ -1594,10 +1594,7 @@
                         </div>
                         <div class="form-group-full">
                             <label>簡易セルフチェック項目（1行に1項目ずつ改行区切りで入力）</label>
-                            <textarea style="height:80px;" placeholder="例:
-階段の上り下りで膝が痛む
-片脚立ちするとフラつく" oninput="updateCheckListField(${index}, this.value)">${(art.check_list || []).join('
-')}</textarea>
+                            <textarea style="height:80px;" placeholder="例:&#13;&#10;階段の上り下りで膝が痛む&#13;&#10;片脚立ちするとフラつく" oninput="updateCheckListField(${index}, this.value)">${(art.check_list || []).join('\n')}</textarea>
                         </div>
                     </div>
 

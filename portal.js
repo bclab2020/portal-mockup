@@ -2589,6 +2589,7 @@ function renderFeed(vertical) {
         return;
     }
     visibleList.forEach(art => {
+        const articleIndex = list.indexOf(art);
         // Build image URL
         let imgUrl = "";
         if (art.img_id && art.img_id.trim()) {
@@ -2633,6 +2634,10 @@ function renderFeed(vertical) {
         } else if (vertical === 'beauty') {
             badgeStyle = "background: var(--accent-pink); color: #fff; font-weight: 700;";
         }
+        let detailLinkHtml = '';
+        if (art.detail_p) {
+            detailLinkHtml = `<a href="#" class="read-detail-link" style="color: var(--accent-orange); text-decoration: none; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;" onclick="openArticleDetail('${vertical}', ${articleIndex}, event)">📖 詳しく読む</a>`;
+        }
         const cardHtml = `
             <div class="article-card" data-sport="${art.sport || ''}">
                 <div class="article-image" style="background-image: url('${imgUrl}');">
@@ -2649,7 +2654,7 @@ function renderFeed(vertical) {
                             <span>${art.author || ''}</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 15px;">
-                            ${art.detail_p ? `<a href="#" class="read-detail-link" style="color: var(--accent-orange); text-decoration: none; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;" onclick="openArticleDetail('${vertical}', ${index}, event)">📖 詳しく読む</a>` : ''}
+                            ${detailLinkHtml}
                             <button class="btn-hook" onclick="handleArticleAction(\`${art.btn_hook || ''}\`, event)">
                                 ${art.btn_text || '📸 測定を開始する'} <span>▶</span>
                             </button>

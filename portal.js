@@ -2856,7 +2856,7 @@ window.openArticleDetail = function(category, index, event) {
             ${checkListHtml}
             
             <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
-                <button class="btn-hook" style="padding: 10px 20px; font-size: 14px; border-radius: 20px;" onclick="closeArticleDetail(); handleArticleAction(\\`${art.btn_hook || ''}\\`, event)">
+                <button class="btn-hook" style="padding: 10px 20px; font-size: 14px; border-radius: 20px;" onclick="closeArticleDetail(); handleArticleActionForModal('${category}', ${index}, event)">
                     ${art.btn_text || '測定を開始する'} <span></span>
                 </button>
             </div>

@@ -910,9 +910,18 @@
 
         </div>
 
-        <div class="nav-actions">
-
-            <a href="index.html" class="btn btn-secondary">◀ ポータル画面に戻る</a>
+        <div class="nav-actions" style="display: flex; align-items: center; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 6px; margin-right: 5px;">
+                <label style="font-size: 11px; color: var(--text-secondary); font-weight: 700;">公開日数:</label>
+                <select id="currentDaySelector" onchange="updateCurrentDay(this.value)" style="padding: 8px 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: #fff; font-size: 11px; font-weight: 700; cursor: pointer; outline: none;">
+                    <option value="day1">Day 1 (48記事)</option>
+                    <option value="day2">Day 2 (66記事)</option>
+                    <option value="day3">Day 3 (84記事)</option>
+                    <option value="day4">Day 4 (99記事)</option>
+                    <option value="day5">Day 5 (114記事 - 全記事)</option>
+                </select>
+            </div>
+            <a href="index.html" class="btn btn-secondary">◀ ◀ ポータル画面に戻る</a>
 
             <button class="btn btn-secondary" onclick="exportDatabase()">💾 JSONダウンロード</button>
 
@@ -1131,9 +1140,13 @@
                 .then(data => {
 
                     articlesDb = data;
-
-                    showToast("articles_db.json をサーバーから読み込みました", "📂");
-
+                    showToast("articles_db.json をサーバーから読み込みました", "📁");
+                    
+                    const daySelector = document.getElementById('currentDaySelector');
+                    if (daySelector && articlesDb.current_day) {
+                        daySelector.value = articlesDb.current_day;
+                    }
+                    
                     renderDrafts();
 
                 })
@@ -1212,6 +1225,13 @@
 
             renderDrafts();
 
+        }
+
+        function updateCurrentDay(val) {
+            if (articlesDb) {
+                articlesDb.current_day = val;
+                showToast("ポータルの公開日数を " + val + " に変更しました（本番更新すると適用されます）", "📅");
+            }
         }
 
         function switchCategory(cat) {

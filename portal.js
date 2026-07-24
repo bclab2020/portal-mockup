@@ -2877,3 +2877,11 @@ window.closeArticleDetail = function() {
         modal.style.display = 'none';
     }, 300);
 };
+
+window.handleArticleActionForModal = function(category, index, event) {
+    const articles = getAllArticlesForCategory(category);
+    const art = articles[index];
+    if (art && art.btn_hook) {
+        handleArticleAction(art.btn_hook, event);
+    }
+};

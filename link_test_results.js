@@ -1,5 +1,5 @@
 window.LINK_TEST_RESULTS = {
-    "last_run": "2026-07-24 14:58:40",
+    "last_run": "2026-07-24 15:22:38",
     "has_errors": false,
     "results": {
         "https://www.jstage.jst.go.jp/article/rika/29/4/29_29-4-507/_article/-char/ja/": {
@@ -112,7 +112,7 @@ window.LINK_TEST_RESULTS = {
             "context_match": true,
             "message": "Context Match Success (Matched keywords: 健康, スポーツ, 文部科学)"
         },
-        "https://www.nature.com/articles/s41586-024-07500-w": {
+        "https://www.nature.com/articles/s41586-023-06877-w": {
             "title": "Nature掲載：身体活動がもたらすマルチオミクス変化と筋肉アライメントの生物学的意義",
             "badge": "科学誌（Nature）",
             "day": "day6",

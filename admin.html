@@ -916,13 +916,7 @@
             <div style="display: flex; align-items: center; gap: 6px; margin-right: 5px;">
                 <label style="font-size: 11px; color: var(--text-secondary); font-weight: 700;">公開日数:</label>
                 <select id="currentDaySelector" onchange="updateCurrentDay(this.value)" style="padding: 8px 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: #fff; font-size: 11px; font-weight: 700; cursor: pointer; outline: none;">
-                    <option value="day1">Day 1 (48記事)</option>
-                    <option value="day2">Day 2 (66記事)</option>
-                    <option value="day3">Day 3 (84記事)</option>
-                    <option value="day4">Day 4 (99記事)</option>
-                    <option value="day5">Day 5 (114記事)</option>
-                    <option value="day6">Day 6 (120記事)</option>
-                    <option value="day7">Day 7 (124記事 - 全記事)</option>
+                    <option value="baseline">読み込み中...</option>
                 </select>
             </div>
             <a href="index.html" class="btn btn-secondary">◀ ◀ ポータル画面に戻る</a>
@@ -964,20 +958,6 @@
                     <div class="tabs-group" id="dayTabs">
 
                         <button class="tab-btn active" data-day="baseline" onclick="switchDay('baseline')">ベースライン (初期表示)</button>
-
-                        <button class="tab-btn" data-day="day1" onclick="switchDay('day1')">Day 1</button>
-
-                        <button class="tab-btn" data-day="day2" onclick="switchDay('day2')">Day 2</button>
-
-                        <button class="tab-btn" data-day="day3" onclick="switchDay('day3')">Day 3</button>
-
-                        <button class="tab-btn" data-day="day4" onclick="switchDay('day4')">Day 4</button>
-
-                        <button class="tab-btn" data-day="day5" onclick="switchDay('day5')">Day 5</button>
-
-                        <button class="tab-btn" data-day="day6" onclick="switchDay('day6')">Day 6</button>
-
-                        <button class="tab-btn" data-day="day7" onclick="switchDay('day7')">Day 7</button>
 
                     </div>
 
@@ -1152,10 +1132,7 @@
                     articlesDb = data;
                     showToast("articles_db.json をサーバーから読み込みました", "📁");
                     
-                    const daySelector = document.getElementById('currentDaySelector');
-                    if (daySelector && articlesDb.current_day) {
-                        daySelector.value = articlesDb.current_day;
-                    }
+                    updateDayTabsAndSelector();
                     
                     renderDrafts();
 
@@ -1189,6 +1166,8 @@
 
                     };
 
+                    updateDayTabsAndSelector();
+
                     renderDrafts();
 
                 });
@@ -1211,6 +1190,8 @@
 
                     showToast("ローカルの articles_db.json を読み込みました", "📂");
 
+                    updateDayTabsAndSelector();
+
                     renderDrafts();
 
                 } catch (err) {
@@ -1223,6 +1204,47 @@
 
             reader.readAsText(file);
 
+        }
+
+        function updateDayTabsAndSelector() {
+            const dayTabs = document.getElementById('dayTabs');
+            const daySelector = document.getElementById('currentDaySelector');
+            if (!dayTabs || !daySelector) return;
+            
+            const days = Object.keys(articlesDb)
+                .filter(key => key.startsWith('day') && key !== 'current_day')
+                .map(key => parseInt(key.replace('day', '')))
+                .filter(num => !isNaN(num))
+                .sort((a, b) => a - b);
+                
+            let tabsHtml = `<button class="tab-btn active" data-day="baseline" onclick="switchDay('baseline')">ベースライン (初期表示)</button>`;
+            days.forEach(num => {
+                tabsHtml += `\n<button class="tab-btn" data-day="day${num}" onclick="switchDay('day${num}')">Day ${num}</button>`;
+            });
+            dayTabs.innerHTML = tabsHtml;
+            
+            let selectorHtml = '';
+            let cumulativeCount = 0;
+            const baselineData = articlesDb["baseline"] || {};
+            Object.keys(baselineData).forEach(cat => {
+                if (Array.isArray(baselineData[cat])) cumulativeCount += baselineData[cat].length;
+            });
+            
+            days.forEach(num => {
+                const dayKey = `day${num}`;
+                const dayData = articlesDb[dayKey] || {};
+                Object.keys(dayData).forEach(cat => {
+                    if (Array.isArray(dayData[cat])) cumulativeCount += dayData[cat].length;
+                });
+                
+                const label = num === days[days.length - 1] ? `Day ${num} (${cumulativeCount}記事 - 全記事)` : `Day ${num} (${cumulativeCount}記事)`;
+                selectorHtml += `\n<option value="${dayKey}">${label}</option>`;
+            });
+            daySelector.innerHTML = selectorHtml;
+            
+            if (articlesDb.current_day) {
+                daySelector.value = articlesDb.current_day;
+            }
         }
 
         function switchDay(day) {

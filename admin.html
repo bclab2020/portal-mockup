@@ -2807,9 +2807,15 @@
                 });
 
                 if (!getDbResp.ok) {
-
-                    throw new Error("データベースファイルの取得に失敗しました。リポジトリ設定をご確認ください。");
-
+                    let errMsg = `データベースファイルの取得に失敗しました (HTTP Status: ${getDbResp.status})`;
+                    if (getDbResp.status === 401) {
+                        errMsg += "。GitHubトークンが間違っているか、有効期限が切れています。";
+                    } else if (getDbResp.status === 404) {
+                        errMsg += "。アカウント名(所有者)またはリポジトリ名が間違っています。";
+                    } else if (getDbResp.status === 403) {
+                        errMsg += "。トークンの権限（repoスコープ）が設定されていないか、アクセスが拒否されています。";
+                    }
+                    throw new Error(errMsg);
                 }
 
                 const dbData = await getDbResp.json();

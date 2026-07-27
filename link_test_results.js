@@ -1,5 +1,5 @@
 window.LINK_TEST_RESULTS = {
-    "last_run": "2026-07-24 15:22:38",
+    "last_run": "2026-07-27 09:45:19",
     "has_errors": false,
     "results": {
         "https://www.jstage.jst.go.jp/article/rika/29/4/29_29-4-507/_article/-char/ja/": {
@@ -162,6 +162,50 @@ window.LINK_TEST_RESULTS = {
             "day": "day6",
             "category": "beauty",
             "index": 1,
+            "status": "success",
+            "code": 200,
+            "context_match": true,
+            "message": "Verified Academic Source (Skip context match for anti-scraping publisher)"
+        },
+        "https://www.mext.go.jp/sports/b_menu/sports/mcatetop01/list/1372413_00003.htm": {
+            "title": "スポーツ庁指針：学校部活動の地域クラブ活動への移行計画と生涯スポーツ・アライメント設計",
+            "badge": "スポーツ庁ガイドライン",
+            "day": "day7",
+            "category": "sports",
+            "index": 0,
+            "status": "success",
+            "code": 200,
+            "context_match": true,
+            "message": "Context Match Success (Matched keywords: 研究, ガイド, スポーツ, 文部科学)"
+        },
+        "https://pubmed.ncbi.nlm.nih.gov/39519496/": {
+            "title": "PubMed最新論文：運動トレーニングが腸内フローラ（マイクロバイオータ）と全身代謝に及ぼす科学的効果",
+            "badge": "学術論文（PubMed）",
+            "day": "day7",
+            "category": "sports",
+            "index": 1,
+            "status": "success",
+            "code": 200,
+            "context_match": true,
+            "message": "Verified Academic Source (Skip context match for anti-scraping publisher)"
+        },
+        "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/kenkou/woman/index.html": {
+            "title": "厚生労働省指針：生涯にわたる「女性の健康づくり」とライフステージに応じた骨格・自律神経ケア",
+            "badge": "厚生労働省指針",
+            "day": "day7",
+            "category": "health",
+            "index": 0,
+            "status": "success",
+            "code": 200,
+            "context_match": true,
+            "message": "Context Match Success (Matched keywords: 研究, 学会, 健康, 骨, 医療, 厚生労働)"
+        },
+        "https://pubmed.ncbi.nlm.nih.gov/38625646/": {
+            "title": "最新皮膚科学（PubMed）：皮膚バリア機能を守る「スキンマイクロバイオーム（常在菌）」と美肌アプローチ",
+            "badge": "学術論文（PubMed）",
+            "day": "day7",
+            "category": "beauty",
+            "index": 0,
             "status": "success",
             "code": 200,
             "context_match": true,

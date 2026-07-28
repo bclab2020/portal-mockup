@@ -1482,27 +1482,7 @@
 
                 `;
 
-                if (articlesDb.experts) {
 
-                    articlesDb.experts.forEach(exp => {
-
-                        if (exp.name) {
-
-                            const fieldPrefix = exp.field ? `✍️ ${exp.field} / ` : '✍️ ';
-
-                            const optionValue = `${fieldPrefix}${exp.name}`;
-
-                            authorOptionsHtml += `
-
-                                <option value="${optionValue}" ${art.author === optionValue ? 'selected' : ''}>${exp.name} (${exp.field || '専門家'})</option>
-
-                            `;
-
-                        }
-
-                    });
-
-                }
 
                 if (art.author && !authorOptionsHtml.includes(`value="${art.author}"`)) {
 

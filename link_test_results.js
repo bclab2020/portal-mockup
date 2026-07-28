@@ -1,5 +1,5 @@
 window.LINK_TEST_RESULTS = {
-    "last_run": "2026-07-28 14:12:07",
+    "last_run": "2026-07-28 14:19:23",
     "has_errors": false,
     "results": {
         "https://www.jstage.jst.go.jp/article/rika/29/4/29_29-4-507/_article/-char/ja/": {
@@ -107,10 +107,10 @@ window.LINK_TEST_RESULTS = {
             "day": "day6",
             "category": "sports",
             "index": 0,
-            "status": "warning",
+            "status": "success",
             "code": 200,
-            "context_match": false,
-            "message": "Context Match Error: Failed to retrieve or parse page text (<urlopen error _ssl.c:1011: The handshake operation timed out>)"
+            "context_match": true,
+            "message": "Context Match Success (Matched keywords: 健康, スポーツ, 文部科学)"
         },
         "https://www.nature.com/articles/s41586-023-06877-w": {
             "title": "Nature掲載：身体活動がもたらすマルチオミクス変化と筋肉アライメントの生物学的意義",

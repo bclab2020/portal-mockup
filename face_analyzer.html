@@ -644,6 +644,12 @@
                     <span>FACE ENGAGED: WAITING DETECT</span>
                 </div>
                 
+                <!-- Environmental and Motion Status Warnings -->
+                <div class="hud-overlay" id="hudWarningOverlay" style="display: none; position: absolute; top: 55px; left: 15px; right: 15px; padding: 8px 12px; background: rgba(255, 82, 82, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 8px; color: #fff; font-size: 11px; font-weight: 700; align-items: center; gap: 8px; z-index: 10; box-shadow: 0 4px 15px rgba(255, 82, 82, 0.25); border-left: 3px solid #fff; transition: all 0.3s ease;">
+                    <span id="hudWarningIcon">⚠️</span>
+                    <span id="hudWarningText">手ブレを検知しました。カメラを固定してください。</span>
+                </div>
+                
                 <!-- HUD Top-Right: Heart rate status -->
                 <div class="hud-overlay hud-top-right">
                     <div class="hud-pulse" id="hudPulseCircle"></div>
@@ -1637,9 +1643,75 @@
         // ==========================================================================
         let smoothedVal = 0; // State variable for exponential smoothing
 
+        let prevCX = 0;
+        let prevCY = 0;
+        let shakeCounter = 0;
+        let isShakeWarning = false;
+        let isLightWarning = false;
+        let lightWarningMessage = "";
+
+        function updateMeasurementAlerts() {
+            const warningOverlay = document.getElementById('hudWarningOverlay');
+            const warningText = document.getElementById('hudWarningText');
+            const countdownLabel = document.querySelector('.countdown-label');
+            if (!warningOverlay || !warningText) return;
+            
+            let message = "";
+            let isWarning = false;
+            
+            if (isSimulatedCamera) {
+                isLightWarning = false;
+                isShakeWarning = false;
+            }
+            
+            if (isLightWarning) {
+                message = lightWarningMessage;
+                isWarning = true;
+            } else if (isShakeWarning) {
+                message = "📱 手ブレ検知: スマートフォンを固定してください";
+                isWarning = true;
+            }
+            
+            if (isWarning) {
+                if (!isScanning) {
+                    warningText.innerText = message;
+                    warningOverlay.style.display = 'flex';
+                } else if (countdownLabel) {
+                    countdownLabel.innerHTML = `<span style="color:#ff5252; font-weight:700;">⚠️ ${message.replace(/💡 |☀️ |📱 /, '')}</span>`;
+                }
+            } else {
+                warningOverlay.style.display = 'none';
+                if (isScanning && countdownLabel) {
+                    countdownLabel.innerHTML = '脈波・血流スキャン中...動かないでください';
+                }
+            }
+        }
+
         function processrPPGFrame(landmarks, videoFrame) {
+            // Motion Tracking for Hand Shake Warning
+            const foreheadPt = landmarks[10];
+            const vW = videoFrame.width || 640;
+            const vH = videoFrame.height || 480;
+            if (foreheadPt) {
+                const cX = foreheadPt.x * vW;
+                const cY = foreheadPt.y * vH;
+                if (prevCX !== 0 && prevCY !== 0) {
+                    const dx = cX - prevCX;
+                    const dy = cY - prevCY;
+                    const movement = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (movement > 3.5) {
+                        shakeCounter = Math.min(shakeCounter + 5, 25);
+                    } else {
+                        shakeCounter = Math.max(shakeCounter - 1, 0);
+                    }
+                }
+                prevCX = cX;
+                prevCY = cY;
+                isShakeWarning = (shakeCounter > 12);
+            }
+
             // Forehead ROI bounding box calculation
-            // Center forehead landmarks: 9, 107, 336, 109, 338, 10
             const lIdxs = [109, 108, 10, 338, 337, 67, 297, 9];
             let minX = 1.0, maxX = 0.0, minY = 1.0, maxY = 0.0;
 
@@ -1650,11 +1722,6 @@
                 if (pt.y < minY) minY = pt.y;
                 if (pt.y > maxY) maxY = pt.y;
             });
-
-            // Convert to canvas/frame absolute pixel values
-            // Video raw dimensions: videoFrame.width, videoFrame.height
-            const vW = videoFrame.width || 640;
-            const vH = videoFrame.height || 480;
 
             const roiX = Math.floor(minX * vW);
             const roiY = Math.floor(minY * vH);
@@ -1668,8 +1735,6 @@
             ctx.lineWidth = 1;
             ctx.strokeRect((1 - maxX) * canvas.width, minY * canvas.height, roiW * (canvas.width/vW), roiH * (canvas.height/vH));
 
-            // Extract pixels and compute spatial average of Green channel
-            // Using offscreen temporary canvas to extract ImageData
             const offscreen = document.createElement('canvas');
             offscreen.width = roiW;
             offscreen.height = roiH;
@@ -1679,23 +1744,42 @@
                 const imgData = oCtx.getImageData(0, 0, roiW, roiH);
                 const pixels = imgData.data;
 
+                let sumR = 0;
                 let sumG = 0;
                 let count = 0;
                 for (let i = 0; i < pixels.length; i += 4) {
-                    // R = i, G = i+1, B = i+2, A = i+3
+                    sumR += pixels[i];
                     sumG += pixels[i + 1];
                     count++;
                 }
 
                 if (count > 0) {
+                    const avgR = sumR / count;
                     const avgG = sumG / count;
-                    pushrPPGValue(avgG);
+                    
+                    // Brightness warning evaluation
+                    if (avgG < 50) {
+                        isLightWarning = true;
+                        lightWarningMessage = "💡 暗すぎます: もっと明るい場所に移動してください";
+                    } else if (avgG > 240) {
+                        isLightWarning = true;
+                        lightWarningMessage = "☀️ 明るすぎます: 強い直射光を避けてください";
+                    } else {
+                        isLightWarning = false;
+                        lightWarningMessage = "";
+                    }
+
+                    // Chrominance division based common-mode cancellation (removes light flicker and motion artifacts)
+                    const pulseSignal = (avgG / (avgR || 1.0)) * 100;
+                    pushrPPGValue(pulseSignal);
                 }
             } catch (e) {
                 console.warn("ImageData extract failed (cross-origin):", e);
-                // Fallback to simulated pulse wave if browser security blocks pixel access
                 processSimulatedrPPG();
             }
+
+            // Update real-time warning overlays
+            updateMeasurementAlerts();
         }
 
         function pushrPPGValue(val) {
@@ -1826,6 +1910,15 @@
             countdownNumber.innerText = count;
 
             const timer = setInterval(() => {
+                if (!isSimulatedCamera && (isLightWarning || isShakeWarning)) {
+                    countdownNumber.style.color = '#ff5252';
+                    countdownNumber.style.textShadow = '0 0 10px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 82, 82, 0.8)';
+                    return;
+                }
+                
+                countdownNumber.style.color = 'var(--accent-teal)';
+                countdownNumber.style.textShadow = '0 0 10px rgba(0, 0, 0, 0.9), 0 0 30px rgba(100, 255, 218, 0.7)';
+
                 count--;
                 if (count > 0) {
                     countdownNumber.innerText = count;

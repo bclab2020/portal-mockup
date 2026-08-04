@@ -745,11 +745,11 @@
                 
                 <div class="results-grid">
                     <div class="metric-badge">
-                        <span class="metric-label" id="labelFaceType">判定された顔の骨格型</span>
+                        <span class="metric-label" id="labelFaceType">判定された顎骨格タイプ</span>
                         <span class="metric-val highlight" id="resFaceType">未検出</span>
                     </div>
                     <div class="metric-badge">
-                        <span class="metric-label" id="labelSymmetry">顔の左右対称性（Symmetry）</span>
+                        <span class="metric-label" id="labelSymmetry">顔面アライメント対称性</span>
                         <span class="metric-val highlight" id="resSymmetry">-- %</span>
                     </div>
                     <div class="metric-badge">
@@ -834,22 +834,22 @@
                     </details>
                 </div>
 
-                <!-- Interactive makeup advice steps -->
-                <div class="makeup-guide-card" id="makeupGuideCard">
+                <!-- Interactive wellness advice steps -->
+                <div class="makeup-guide-card" id="makeupGuideCard" style="border-left:4px solid var(--accent-teal); padding-left:12px; margin-top:15px;">
                     <div style="font-size:12px; font-weight:700; color:var(--text-primary); margin-bottom:10px; border-top:1px solid rgba(255,255,255,0.06); padding-top:10px;">
-                        💄 <span id="guideTitle">メイクアップアドバイス</span>
+                        🩺 <span id="guideTitle">自律神経セルフケアアドバイス (久保医師監修)</span>
                     </div>
                     
                     <div id="guideStepsContainer">
                         <!-- Dynamic Steps -->
                     </div>
 
-                    <!-- Recommended cosmetics -->
-                    <div class="cosmetics-title" id="cosmeticsTitle">
-                        🧴 おすすめの連動化粧品 (協賛スポンサー提供)
+                    <!-- Recommended exercises -->
+                    <div class="cosmetics-title" id="cosmeticsTitle" style="color:var(--accent-teal); font-weight:700; margin-top:15px; margin-bottom:8px; font-size:12px;">
+                        🧘 推奨セルフエクササイズ
                     </div>
-                    <div class="cosmetic-list" id="cosmeticListContainer">
-                        <!-- Dynamic cosmetic cards -->
+                    <div class="cosmetic-list" id="cosmeticListContainer" style="display:flex; flex-direction:column; gap:8px;">
+                        <!-- Dynamic exercises -->
                     </div>
                 </div>
 
@@ -2066,17 +2066,10 @@
 
         // Helper to update face shape image and historical figures (Targeting Japanese beauty models)
         function updateFaceVisualMatch() {
-            if (!faceVisualMatchCard) return;
-            
-            const urlParams = new URLSearchParams(window.location.search);
-            const vertical = urlParams.get('vertical') || 'beauty';
-            const isHealthMode = (vertical === 'health' || vertical === 'sports');
-
-            if (isHealthMode) {
+            if (faceVisualMatchCard) {
                 faceVisualMatchCard.style.display = 'none';
-                return;
             }
-            faceVisualMatchCard.style.display = 'block';
+            return;
             
             const ageSeg = userAgeSegmentSelect.value; // '20', '30', or '40'
             let imgUrl = '';

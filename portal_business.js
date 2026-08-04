@@ -181,6 +181,7 @@ function renderLatestHrvRemedies() {
                     <div style="position:absolute; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow: 0 0 8px #fff;"></div>
                 </div>
                 <div id="breathingText" style="font-size:10px; font-weight:700; color:var(--text-primary); margin-top:10px; height:15px; letter-spacing:0.5px;">準備中...</div>
+                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 4px 15px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
             </div>
             <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(255,82,82,0.02); border:1px solid rgba(255,82,82,0.08); padding:8px; border-radius:6px;">
                 <strong>【姿勢・方向】</strong>背筋を伸ばし椅子に深く座り、息を吐きながら上体を右へゆっくりねじります。左手で背もたれを掴み、右手は椅子の座面後方を支えます。<br>
@@ -198,10 +199,10 @@ function renderLatestHrvRemedies() {
                             <path d='M0,0 L6,3 L0,6 Z' fill='#ff5252'/>
                         </marker>
                     </defs>
-                    <path d='M 120 120 Q 180 135 235 103' fill='none' stroke='#ff5252' stroke-width='2.5' marker-end='url(#portal-arrow-red)' stroke-dasharray='4 2'/>
-                    <circle cx="120" cy="120" r="4.5" fill="#ff5252" stroke="#050c1c" stroke-width="1.5"/>
-                    <text x="80" y="115" fill="#ff5252" font-size="8.5" font-weight="700" font-family="sans-serif">START (正面)</text>
-                    <text x="210" y="92" fill="#ff5252" font-size="8.5" font-weight="700" font-family="sans-serif">END (最大ねじり)</text>
+                    <path d='M 200 120 Q 150 135 112 112' fill='none' stroke='#ff5252' stroke-width='2.5' marker-end='url(#portal-arrow-red)' stroke-dasharray='4 2'/>
+                    <circle cx="200" cy="120" r="4.5" fill="#ff5252" stroke="#050c1c" stroke-width="1.5"/>
+                    <text x="185" y="138" fill="#ff5252" font-size="8.5" font-weight="700" font-family="sans-serif">START (正面)</text>
+                    <text x="70" y="98" fill="#ff5252" font-size="8.5" font-weight="700" font-family="sans-serif">END (ねじる)</text>
                 </svg>
                 <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-red); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-red); font-family:monospace;'>SPINE ROTATION: 35°</div>
             </div>
@@ -223,6 +224,7 @@ function renderLatestHrvRemedies() {
                     <div style="position:absolute; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow: 0 0 8px #fff;"></div>
                 </div>
                 <div id="breathingText" style="font-size:10px; font-weight:700; color:var(--text-primary); margin-top:10px; height:15px; letter-spacing:0.5px;">準備中...</div>
+                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 4px 15px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
             </div>
             <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(0,191,255,0.02); border:1px solid rgba(0,191,255,0.08); padding:8px; border-radius:6px;">
                 <strong>【姿勢・方向】</strong>右腕を左方向に真っ直ぐ伸ばし、左腕で右肘を抱え込むように胸に引き寄せます。肩甲骨が外側に広がるのを意識します。<br>
@@ -399,69 +401,111 @@ function renderGrid(container, articles) {
 
 // 5. Shared Breathing Balloon Animation Loop for B2B portal sidebar
 let breathingTimer = null;
+let breathingActive = false;
+let breathingType = "36";
+
 function initBreathingGuide(type) {
+    breathingType = type;
+    breathingActive = false;
     if (breathingTimer) clearInterval(breathingTimer);
     
     const balloon = document.getElementById('breathingBalloon');
     const txt = document.getElementById('breathingText');
+    const btn = document.getElementById('breathingControlBtn');
     if (!balloon || !txt) return;
     
-    let seconds = 0;
-    const runCycle = () => {
-        if (!document.getElementById('breathingBalloon')) {
-            clearInterval(breathingTimer);
-            return;
-        }
-        
-        if (type === "478") {
-            const subSec = seconds % 19;
-            if (subSec < 4) {
-                // Inhale (4s)
-                balloon.style.width = '90px';
-                balloon.style.height = '90px';
-                balloon.style.transition = 'all 4s ease-in-out';
-                balloon.style.background = 'radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%)';
-                balloon.style.boxShadow = '0 0 20px var(--accent-red)';
-                txt.innerHTML = `<span style="color:#ff5252; font-weight:700;">吸い込む (Inhale)... ${4 - subSec}秒</span>`;
-            } else if (subSec < 11) {
-                // Hold (7s)
-                balloon.style.width = '90px';
-                balloon.style.height = '90px';
-                balloon.style.transition = 'all 0.5s ease';
-                balloon.style.boxShadow = subSec % 2 === 0 ? '0 0 35px #ff5252' : '0 0 20px #ff5252';
-                txt.innerHTML = `<span style="color:#ff9100; font-weight:700;">止める (Hold)... ${11 - subSec}秒</span>`;
-            } else {
-                // Exhale (8s)
-                balloon.style.width = '30px';
-                balloon.style.height = '30px';
-                balloon.style.transition = 'all 8s ease-in-out';
-                balloon.style.background = 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
-                balloon.style.boxShadow = '0 0 20px var(--accent-teal)';
-                txt.innerHTML = `<span style="color:#64ffda; font-weight:700;">ゆっくり吐く (Exhale)... ${19 - subSec}秒</span>`;
-            }
-        } else {
-            const subSec = seconds % 9;
-            if (subSec < 3) {
-                // Inhale (3s)
-                balloon.style.width = '90px';
-                balloon.style.height = '90px';
-                balloon.style.transition = 'all 3s ease-in-out';
-                balloon.style.background = 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
-                balloon.style.boxShadow = '0 0 20px var(--accent-teal)';
-                txt.innerHTML = `<span style="color:#64ffda; font-weight:700;">吸い込む (Inhale)... ${3 - subSec}秒</span>`;
-            } else {
-                // Exhale (6s)
-                balloon.style.width = '30px';
-                balloon.style.height = '30px';
-                balloon.style.transition = 'all 6s ease-in-out';
-                balloon.style.background = 'radial-gradient(circle, var(--accent-blue) 0%, rgba(0,191,255,0.4) 70%, transparent 100%)';
-                balloon.style.boxShadow = '0 0 20px var(--accent-blue)';
-                txt.innerHTML = `<span style="color:#00bfff; font-weight:700;">ゆっくり吐く (Exhale)... ${9 - subSec}秒</span>`;
-            }
-        }
-        seconds++;
-    };
+    balloon.style.width = '30px';
+    balloon.style.height = '30px';
+    balloon.style.transition = 'all 0.5s ease';
+    balloon.style.background = type === "478" ? 'radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%)' : 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
+    balloon.style.boxShadow = type === "478" ? '0 0 15px var(--accent-red)' : '0 0 15px var(--accent-teal)';
+    txt.innerHTML = `<span style="color:var(--text-secondary);">一時停止中</span>`;
     
-    runCycle();
-    breathingTimer = setInterval(runCycle, 1000);
+    if (btn) {
+        btn.innerText = "▶ ガイドを開始する";
+        btn.style.borderColor = type === "478" ? "var(--accent-red)" : "var(--accent-teal)";
+        btn.style.color = type === "478" ? "var(--accent-red)" : "var(--accent-teal)";
+        btn.style.background = type === "478" ? "rgba(255,82,82,0.06)" : "rgba(100,255,218,0.06)";
+    }
 }
+
+window.toggleBreathingGuide = function() {
+    const btn = document.getElementById('breathingControlBtn');
+    const txt = document.getElementById('breathingText');
+    const balloon = document.getElementById('breathingBalloon');
+    if (!btn || !txt || !balloon) return;
+    
+    breathingActive = !breathingActive;
+    
+    if (!breathingActive) {
+        if (breathingTimer) clearInterval(breathingTimer);
+        balloon.style.width = '30px';
+        balloon.style.height = '30px';
+        balloon.style.transition = 'all 0.5s ease';
+        balloon.style.boxShadow = breathingType === "478" ? '0 0 15px var(--accent-red)' : '0 0 15px var(--accent-teal)';
+        txt.innerHTML = `<span style="color:var(--text-secondary);">一時停止中</span>`;
+        btn.innerText = "▶ ガイドを開始する";
+        btn.style.borderColor = breathingType === "478" ? "var(--accent-red)" : "var(--accent-teal)";
+        btn.style.color = breathingType === "478" ? "var(--accent-red)" : "var(--accent-teal)";
+        btn.style.background = breathingType === "478" ? "rgba(255,82,82,0.06)" : "rgba(100,255,218,0.06)";
+    } else {
+        btn.innerText = "⏸ ガイドを一時停止";
+        btn.style.borderColor = "var(--text-primary)";
+        btn.style.color = "var(--text-primary)";
+        btn.style.background = "rgba(255,255,255,0.08)";
+        
+        let seconds = 0;
+        const runCycle = () => {
+            if (!document.getElementById('breathingBalloon')) {
+                clearInterval(breathingTimer);
+                return;
+            }
+            
+            if (breathingType === "478") {
+                const subSec = seconds % 19;
+                if (subSec < 4) {
+                    balloon.style.width = '90px';
+                    balloon.style.height = '90px';
+                    balloon.style.transition = 'all 4s ease-in-out';
+                    balloon.style.background = 'radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%)';
+                    balloon.style.boxShadow = '0 0 20px var(--accent-red)';
+                    txt.innerHTML = `<span style="color:#ff5252; font-weight:700;">吸い込む (Inhale)... ${4 - subSec}秒</span>`;
+                } else if (subSec < 11) {
+                    balloon.style.width = '90px';
+                    balloon.style.height = '90px';
+                    balloon.style.transition = 'all 0.5s ease';
+                    balloon.style.boxShadow = subSec % 2 === 0 ? '0 0 35px #ff5252' : '0 0 20px #ff5252';
+                    txt.innerHTML = `<span style="color:#ff9100; font-weight:700;">止める (Hold)... ${11 - subSec}秒</span>`;
+                } else {
+                    balloon.style.width = '30px';
+                    balloon.style.height = '30px';
+                    balloon.style.transition = 'all 8s ease-in-out';
+                    balloon.style.background = 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
+                    balloon.style.boxShadow = '0 0 20px var(--accent-teal)';
+                    txt.innerHTML = `<span style="color:#64ffda; font-weight:700;">ゆっくり吐く (Exhale)... ${19 - subSec}秒</span>`;
+                }
+            } else {
+                const subSec = seconds % 9;
+                if (subSec < 3) {
+                    balloon.style.width = '90px';
+                    balloon.style.height = '90px';
+                    balloon.style.transition = 'all 3s ease-in-out';
+                    balloon.style.background = 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
+                    balloon.style.boxShadow = '0 0 20px var(--accent-teal)';
+                    txt.innerHTML = `<span style="color:#64ffda; font-weight:700;">吸い込む (Inhale)... ${3 - subSec}秒</span>`;
+                } else {
+                    balloon.style.width = '30px';
+                    balloon.style.height = '30px';
+                    balloon.style.transition = 'all 6s ease-in-out';
+                    balloon.style.background = 'radial-gradient(circle, var(--accent-blue) 0%, rgba(0,191,255,0.4) 70%, transparent 100%)';
+                    balloon.style.boxShadow = '0 0 20px var(--accent-blue)';
+                    txt.innerHTML = `<span style="color:#00bfff; font-weight:700;">ゆっくり吐く (Exhale)... ${9 - subSec}秒</span>`;
+                }
+            }
+            seconds++;
+        };
+        
+        runCycle();
+        breathingTimer = setInterval(runCycle, 1000);
+    }
+};

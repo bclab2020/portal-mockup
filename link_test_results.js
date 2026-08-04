@@ -1,5 +1,5 @@
 window.LINK_TEST_RESULTS = {
-    "last_run": "2026-08-03 13:58:37",
+    "last_run": "2026-08-04 12:56:31",
     "has_errors": false,
     "results": {
         "https://www.jstage.jst.go.jp/article/rika/29/4/29_29-4-507/_article/-char/ja/": {

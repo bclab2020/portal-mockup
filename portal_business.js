@@ -22,6 +22,7 @@ function checkB2BSession() {
         
         // Render Dashboard components
         renderHrvTrendChart();
+        renderLatestHrvRemedies();
         loadB2BArticles();
     } else {
         // Logged out
@@ -75,7 +76,7 @@ function renderHrvTrendChart() {
     
     if (history.length === 0) {
         chartContainer.innerHTML = `
-            <div class="empty-chart-state">
+            <div class="empty-chart-state" style="color:var(--text-secondary); text-align:center; padding:30px; font-size:12px;">
                 自律神経の測定データがありません。<br>カメラ起動ボタンからスキャンを開始しましょう！
             </div>
         `;
@@ -100,13 +101,79 @@ function renderHrvTrendChart() {
         }
         
         const pointHtml = `
-            <div class="trend-point">
-                <div class="trend-bar" data-val="${item.hrv} ms (HR:${item.hr})" style="height:${ptHeight}px; background:${barColor};"></div>
-                <div class="trend-date">${item.date}</div>
+            <div class="trend-point" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; position:relative;">
+                <div class="trend-bar" data-val="${item.hrv} ms (HR:${item.hr})" style="height:${ptHeight}px; background:${barColor}; width:15px; border-radius:3px; cursor:pointer;" title="HRV: ${item.hrv}ms, Stress: ${item.stress}"></div>
+                <div class="trend-date" style="font-size:8px; color:var(--text-secondary); margin-top:5px;">${item.date.split(' ')[0]}</div>
             </div>
         `;
         chartContainer.insertAdjacentHTML('beforeend', pointHtml);
     });
+}
+
+// 2.5 Render Latest HRV Status & Desk Remedies on Dashboard
+function renderLatestHrvRemedies() {
+    const remedyContainer = document.getElementById('remedyCardContainer');
+    if (!remedyContainer) return;
+    
+    const history = JSON.parse(localStorage.getItem('b2b_hrv_history') || '[]');
+    if (history.length === 0) {
+        remedyContainer.innerHTML = `
+            <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+                本日の自律神経測定データがまだありません。カメラ起動ボタンから30秒間のストレススキャンを実行してください。
+            </div>
+        `;
+        return;
+    }
+    
+    const latest = history[history.length - 1];
+    
+    let badgeColor = 'var(--accent-teal)';
+    let remedyText = '';
+    let statusText = latest.stress || '通常';
+    
+    if (statusText === '良好' || latest.hrv >= 50) {
+        badgeColor = 'var(--accent-teal)';
+        remedyText = `
+            <span style="color:var(--accent-teal); font-weight:700;">🧘 良好なコンディションです</span><br>
+            自律神経バランスは非常に良好に安定しています。この状態をキープするため、PC作業中は以下のデスクケアを行ってください：
+            <ul style="padding-left:15px; margin:8px 0 0 0; display:flex; flex-direction:column; gap:4px; font-size:11px;">
+                <li>👀 <strong>10秒まばたき眼筋ストレッチ</strong> (目を閉じたまま上下左右に眼球を動かします)</li>
+                <li>👂 <strong>耳介マッサージ</strong> (両耳をつまんで上下左右に引っ張り、血流を促します)</li>
+            </ul>
+        `;
+    } else if (statusText === '高' || latest.hrv < 30) {
+        badgeColor = 'var(--accent-red)';
+        remedyText = `
+            <span style="color:var(--accent-red); font-weight:700;">⚠️ 自律神経ストレス過多の兆候</span><br>
+            HRV数値が低下しており、交感神経が優位な緊張状態です。デスクで即座にできる以下のリセットケアを行ってください：
+            <ul style="padding-left:15px; margin:8px 0 0 0; display:flex; flex-direction:column; gap:4px; font-size:11px;">
+                <li>🧘 <strong>30秒・椅子ひねりストレッチ</strong> (背もたれを持って上体をゆっくりねじり、背骨の緊張をほぐします)</li>
+                <li>👃 <strong>4-7-8 呼吸リフレッシュ</strong> (4秒吸って7秒止め、8秒かけて細く長く吐き出します)</li>
+            </ul>
+        `;
+    } else {
+        badgeColor = 'var(--accent-orange)';
+        remedyText = `
+            <span style="color:var(--accent-orange); font-weight:700;">🚶 平均的な自律神経バランスです</span><br>
+            ストレスレベルは標準範囲内ですが、PC作業の連続により疲労が蓄積しやすくなっています。以下のリフレッシュを行ってください：
+            <ul style="padding-left:15px; margin:8px 0 0 0; display:flex; flex-direction:column; gap:4px; font-size:11px;">
+                <li>肩こり <strong>肩甲骨引き寄せロール</strong> (両肩をすくめてストンと落とし、肘を曲げて後ろに引きます)</li>
+                <li>👀 <strong>遠近ピント合わせ法</strong> (近くの指先と3m先の壁を交互に3秒ずつ見つめ、眼筋をほぐします)</li>
+            </ul>
+        `;
+    }
+    
+    remedyContainer.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 8px;">
+            <div style="font-size:11px; color:var(--text-secondary);">${latest.date} 測定</div>
+            <div style="font-size:11px; font-weight:700; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); padding:3px 8px; border-radius:12px; color:var(--text-primary);">
+                HRV: <span style="color:${badgeColor}; font-weight:700;">${latest.hrv} ms</span> | 心拍: <span>${latest.hr} bpm</span>
+            </div>
+        </div>
+        <div style="font-size:12px; color:var(--text-secondary); line-height:1.6;">
+            ${remedyText}
+        </div>
+    `;
 }
 
 // 3. Tab Management
@@ -173,13 +240,13 @@ function loadB2BArticles() {
             
             // Filter articles for B2B Wellness Categories
             const stressArticles = allArticles.filter(art => {
-                const text = (art.title + art.description + art.tag).toLowerCase();
+                const text = (art.title + (art.p || '') + (art.tag || '')).toLowerCase();
                 const keywords = ['自律神経', 'ストレス', '睡眠', '心拍', '疲労', '脈波', 'hrv', '心臓', '呼吸'];
                 return keywords.some(k => text.includes(k)) && !text.includes('メイク') && !text.includes('化粧');
             });
             
             const postureArticles = allArticles.filter(art => {
-                const text = (art.title + art.description + art.tag).toLowerCase();
+                const text = (art.title + (art.p || '') + (art.tag || '')).toLowerCase();
                 const keywords = ['アライメント', '姿勢', '首', '肩', '背中', '骨格', '咬筋', '関節', '歩行', '歩き方', '運動', '筋力', '腰'];
                 return keywords.some(k => text.includes(k)) && !text.includes('メイク') && !text.includes('アイシャドウ');
             });
@@ -221,7 +288,7 @@ function renderGrid(container, articles) {
                         <span style="font-size:10px; color:var(--text-secondary);">${art.author || '✍️ 医療顧問監修'}</span>
                     </div>
                     <div class="item-title" style="font-size:13px; font-weight:700; color:var(--text-primary); margin-bottom:6px; line-height:1.4;">${art.title}</div>
-                    <div class="item-desc" style="font-size:11px; color:var(--text-secondary); line-height:1.5;">${art.description}</div>
+                    <div class="item-desc" style="font-size:11px; color:var(--text-secondary); line-height:1.5;">${art.p || ''}</div>
                 </div>
                 
                 ${art.external_link ? `

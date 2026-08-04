@@ -91,7 +91,8 @@
     *   ログイン・セッション管理、測定データの履歴保持、および `articles_db.json` からB2Bに適した「健康・姿勢・ストレス」関連記事の自動抽出フィルタリングロジック。
 *   5.  **日本人モデルによるホログラフィック・アライメントストレッチガイド [NEW]**
     *   **高精度AI写真の生成**: `generate_image` を用い、デスクで実践できる日本人の首こり・体幹・肩こりのストレッチ画像（`stretch_neck_jp.jpg`, `stretch_twist_jp.jpg`, `stretch_shoulder_jp.jpg`）を生成・実装。
-    *   **ホログラフィック・グリッド演出**: 画像に半透明の測定グリッドライン、および `ALIGNMENT: OK` といったHUD情報をCSS/SVGでオーバーレイ配置し、測定姿勢が補正されたかのようなハイテクで安心感を与えるビジュアル体験を創出。
+    *   **ホログラフィック・グリッド＆矢印演出**: 画像に半透明の測定グリッド、ねじり・引っ張り方向を示す直感的な**SVG製ホログラフィック矢印アニメーション**、および `ALIGNMENT: OK` といったHUD情報をオーバーレイ配置。
+    *   **詳細ステップ＆呼吸法ガイド**: ユーザーがストレッチ方法を間違えないよう、**「姿勢・方向」**・**「秒数（左右各15秒）」**・**「呼吸法（吸う4秒・吐く8秒）」**の臨床ガイド情報を各提案カードに完全併記。
 *   **[articles_db.json](file:///C:/Users/ke/Desktop/portal-mockup/articles_db.json)** : 専門家監修の高品質な記事データ（3日分・計45記事分）を格納したデータベース。
 *   **[daily_publisher.py](file:///C:/Users/ke/Desktop/portal-mockup/daily_publisher.py)** : 実行されるたびに本日の追加分を `index.html` に自動挿入し、自動的に `git commit & push` を実行してデプロイするコアスクリプト。
 *   **[setup_daily_task.ps1](file:///C:/Users/ke/Desktop/portal-mockup/setup_daily_task.ps1)** : Windows の「タスクスケジューラ」に上記パブリッシャーを毎日午前9:00に自動実行するように登録するPowerShellスクリプト。

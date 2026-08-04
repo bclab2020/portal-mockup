@@ -947,12 +947,12 @@
         let ppgBuffer = []; // Display buffer for plotting
         const bufferSize = 180; // 6 seconds at 30 fps
 
-        // Landmark data caches
         let currentLandmarks = null;
         let currentFaceType = "未検出";
         let currentSymmetry = 0;
         let calculatedBPM = 0;
         let calculatedStress = "分析中";
+        let calculatedHRV = 38;
 
         // Simulation parameters when camera is not available or for offline testing
         let simulatedPulseWavePhase = 0;
@@ -2037,10 +2037,8 @@
                 currentSymmetry = Math.floor(Math.random() * 8) + 90;
             }
 
-            // 2. Calculate Heart Rate, HRV & Stress
             calculatedBPM = Math.floor(Math.random() * 8) + 69;
-            
-            let calculatedHRV = 38; 
+            calculatedHRV = 38; 
             const stressRoll = Math.random();
             if (stressRoll < 0.33) {
                 calculatedStress = "低 (Relaxed / リラックス)";

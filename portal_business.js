@@ -171,6 +171,15 @@ function renderLatestHrvRemedies() {
                 <li>🧘 <strong>30秒・椅子ひねりストレッチ</strong> (背もたれを持って上体をゆっくりねじり、背骨の緊張をほぐします)</li>
                 <li>👃 <strong>4-7-8 呼吸リフレッシュ</strong> (4秒吸って7秒止め、8秒かけて細く長く吐き出します)</li>
             </ul>
+            <!-- Breathing Balloon Widget -->
+            <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; margin-top:10px; background:rgba(255,82,82,0.02); border:1px dashed rgba(255,82,82,0.15); border-radius:8px; text-align:center;">
+                <div style="font-size:9px; color:var(--accent-red); font-weight:700; margin-bottom:10px; letter-spacing:0.5px;">🧘 呼吸ガイド（バルーンの伸縮と同調してください）</div>
+                <div style="width:100px; height:100px; display:flex; align-items:center; justify-content:center; position:relative;">
+                    <div id="breathingBalloon" style="width:30px; height:30px; border-radius:50%; background:radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%); box-shadow: 0 0 20px var(--accent-red); transition: all 1.5s ease-in-out;"></div>
+                    <div style="position:absolute; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow: 0 0 8px #fff;"></div>
+                </div>
+                <div id="breathingText" style="font-size:10px; font-weight:700; color:var(--text-primary); margin-top:10px; height:15px; letter-spacing:0.5px;">準備中...</div>
+            </div>
             <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(255,82,82,0.02); border:1px solid rgba(255,82,82,0.08); padding:8px; border-radius:6px;">
                 <strong>【姿勢・方向】</strong>背筋を伸ばし椅子に深く座り、息を吐きながら上体を右へゆっくりねじります。左手で背もたれを掴み、右手は椅子の座面後方を支えます。<br>
                 <strong>【秒数】</strong>痛気持ちいいところでキープし、<strong>左右それぞれ15秒間（計30秒）</strong>行います。<br>
@@ -202,6 +211,15 @@ function renderLatestHrvRemedies() {
                 <li>肩こり <strong>肩甲骨引き寄せロール</strong> (両肩をすくめてストンと落とし、肘を曲げて後ろに引きます)</li>
                 <li>👀 <strong>遠近ピント合わせ法</strong> (近くの指先と3m先の壁を交互に3秒ずつ見つめ、眼筋をほぐします)</li>
             </ul>
+            <!-- Breathing Balloon Widget -->
+            <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; margin-top:10px; background:rgba(100,255,218,0.02); border:1px dashed rgba(100,255,218,0.15); border-radius:8px; text-align:center;">
+                <div style="font-size:9px; color:var(--accent-teal); font-weight:700; margin-bottom:10px; letter-spacing:0.5px;">🧘 呼吸ガイド（バルーンの伸縮と同調してください）</div>
+                <div style="width:100px; height:100px; display:flex; align-items:center; justify-content:center; position:relative;">
+                    <div id="breathingBalloon" style="width:30px; height:30px; border-radius:50%; background:radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%); box-shadow: 0 0 20px var(--accent-teal); transition: all 1.5s ease-in-out;"></div>
+                    <div style="position:absolute; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow: 0 0 8px #fff;"></div>
+                </div>
+                <div id="breathingText" style="font-size:10px; font-weight:700; color:var(--text-primary); margin-top:10px; height:15px; letter-spacing:0.5px;">準備中...</div>
+            </div>
             <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(0,191,255,0.02); border:1px solid rgba(0,191,255,0.08); padding:8px; border-radius:6px;">
                 <strong>【姿勢・方向】</strong>右腕を左方向に真っ直ぐ伸ばし、左腕で右肘を抱え込むように胸に引き寄せます。肩甲骨が外側に広がるのを意識します。<br>
                 <strong>【秒数】</strong>肩の奥が心地よく伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br>
@@ -237,6 +255,11 @@ function renderLatestHrvRemedies() {
             ${remedyText}
         </div>
     `;
+    
+    // Initialize breathing guide animation in sidebar if balloon element exists
+    if (document.getElementById('breathingBalloon')) {
+        initBreathingGuide(statusText === '高' || latest.hrv < 30 ? "478" : "36");
+    }
 }
 
 // 3. Tab Management
@@ -296,7 +319,9 @@ function loadB2BArticles() {
                 if (dayNum <= maxDayNum) {
                     const categories = db[day];
                     Object.keys(categories).forEach(cat => {
-                        allArticles = allArticles.concat(categories[cat]);
+                        if (cat === 'health') {
+                            allArticles = allArticles.concat(categories[cat]);
+                        }
                     });
                 }
             });
@@ -363,4 +388,74 @@ function renderGrid(container, articles) {
         `;
         container.insertAdjacentHTML('beforeend', itemHtml);
     });
+}
+
+
+// 5. Shared Breathing Balloon Animation Loop for B2B portal sidebar
+let breathingTimer = null;
+function initBreathingGuide(type) {
+    if (breathingTimer) clearInterval(breathingTimer);
+    
+    const balloon = document.getElementById('breathingBalloon');
+    const txt = document.getElementById('breathingText');
+    if (!balloon || !txt) return;
+    
+    let seconds = 0;
+    const runCycle = () => {
+        if (!document.getElementById('breathingBalloon')) {
+            clearInterval(breathingTimer);
+            return;
+        }
+        
+        if (type === "478") {
+            const subSec = seconds % 19;
+            if (subSec < 4) {
+                // Inhale (4s)
+                balloon.style.width = '90px';
+                balloon.style.height = '90px';
+                balloon.style.transition = 'all 4s ease-in-out';
+                balloon.style.background = 'radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%)';
+                balloon.style.boxShadow = '0 0 20px var(--accent-red)';
+                txt.innerHTML = `<span style="color:#ff5252; font-weight:700;">吸い込む (Inhale)... ${4 - subSec}秒</span>`;
+            } else if (subSec < 11) {
+                // Hold (7s)
+                balloon.style.width = '90px';
+                balloon.style.height = '90px';
+                balloon.style.transition = 'all 0.5s ease';
+                balloon.style.boxShadow = subSec % 2 === 0 ? '0 0 35px #ff5252' : '0 0 20px #ff5252';
+                txt.innerHTML = `<span style="color:#ff9100; font-weight:700;">止める (Hold)... ${11 - subSec}秒</span>`;
+            } else {
+                // Exhale (8s)
+                balloon.style.width = '30px';
+                balloon.style.height = '30px';
+                balloon.style.transition = 'all 8s ease-in-out';
+                balloon.style.background = 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
+                balloon.style.boxShadow = '0 0 20px var(--accent-teal)';
+                txt.innerHTML = `<span style="color:#64ffda; font-weight:700;">ゆっくり吐く (Exhale)... ${19 - subSec}秒</span>`;
+            }
+        } else {
+            const subSec = seconds % 9;
+            if (subSec < 3) {
+                // Inhale (3s)
+                balloon.style.width = '90px';
+                balloon.style.height = '90px';
+                balloon.style.transition = 'all 3s ease-in-out';
+                balloon.style.background = 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
+                balloon.style.boxShadow = '0 0 20px var(--accent-teal)';
+                txt.innerHTML = `<span style="color:#64ffda; font-weight:700;">吸い込む (Inhale)... ${3 - subSec}秒</span>`;
+            } else {
+                // Exhale (6s)
+                balloon.style.width = '30px';
+                balloon.style.height = '30px';
+                balloon.style.transition = 'all 6s ease-in-out';
+                balloon.style.background = 'radial-gradient(circle, var(--accent-blue) 0%, rgba(0,191,255,0.4) 70%, transparent 100%)';
+                balloon.style.boxShadow = '0 0 20px var(--accent-blue)';
+                txt.innerHTML = `<span style="color:#00bfff; font-weight:700;">ゆっくり吐く (Exhale)... ${9 - subSec}秒</span>`;
+            }
+        }
+        seconds++;
+    };
+    
+    runCycle();
+    breathingTimer = setInterval(runCycle, 1000);
 }

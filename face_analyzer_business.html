@@ -738,17 +738,15 @@
 
             <!-- Diagnostics results report -->
             <div class="glass-card">
-                <div class="panel-title pink">📊 AI 顔分析＆脈拍測定レポート</div>
+                <div class="panel-title" style="color:var(--accent-teal);">📊 自律神経＆脈拍測定レポート</div>
                 
                 <div class="results-grid">
-                    <div class="metric-badge">
-                        <span class="metric-label" id="labelFaceType">判定された顎骨格タイプ</span>
-                        <span class="metric-val highlight" id="resFaceType">未検出</span>
+                    <!-- Hidden Face Analysis badges to maintain JS script stability -->
+                    <div style="display: none !important;">
+                        <span id="resFaceType"></span>
+                        <span id="resSymmetry"></span>
                     </div>
-                    <div class="metric-badge">
-                        <span class="metric-label" id="labelSymmetry">顔面アライメント対称性</span>
-                        <span class="metric-val highlight" id="resSymmetry">-- %</span>
-                    </div>
+
                     <div class="metric-badge">
                         <span class="metric-label">測定心拍数 (rPPG HR)</span>
                         <span class="metric-val pink" id="resHeartRate">-- bpm</span>

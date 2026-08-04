@@ -156,8 +156,10 @@ function renderLatestHrvRemedies() {
                             <path d='M0,0 L6,3 L0,6 Z' fill='#64ffda'/>
                         </marker>
                     </defs>
-                    <path d='M 120 40 Q 140 50 150 80' fill='none' stroke='#64ffda' stroke-width='2.5' marker-end='url(#portal-arrow-teal)' stroke-dasharray='4 2'/>
-                    <text x='130' y='35' fill='#64ffda' font-size='9' font-weight='700' font-family='sans-serif'>傾ける方向 (TILT)</text>
+                    <path d='M 120 45 Q 140 52 148 76' fill='none' stroke='#64ffda' stroke-width='2.5' marker-end='url(#portal-arrow-teal)' stroke-dasharray='4 2'/>
+                    <circle cx="120" cy="45" r="4.5" fill="#64ffda" stroke="#050c1c" stroke-width="1.5"/>
+                    <text x="80" y="42" fill="#64ffda" font-size="8.5" font-weight="700" font-family="sans-serif">START (正面)</text>
+                    <text x="155" y="85" fill="#64ffda" font-size="8.5" font-weight="700" font-family="sans-serif">END (傾けてキープ)</text>
                 </svg>
                 <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-teal); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-teal); font-family:monospace;'>LEFT SHOULDER: LOCK DOWN</div>
             </div>
@@ -196,8 +198,10 @@ function renderLatestHrvRemedies() {
                             <path d='M0,0 L6,3 L0,6 Z' fill='#ff5252'/>
                         </marker>
                     </defs>
-                    <path d='M 120 120 Q 180 135 240 100' fill='none' stroke='#ff5252' stroke-width='2.5' marker-end='url(#portal-arrow-red)' stroke-dasharray='4 2'/>
-                    <text x='125' y='145' fill='#ff5252' font-size='9' font-weight='700' font-family='sans-serif'>ねじる方向 (ROTATION)</text>
+                    <path d='M 120 120 Q 180 135 235 103' fill='none' stroke='#ff5252' stroke-width='2.5' marker-end='url(#portal-arrow-red)' stroke-dasharray='4 2'/>
+                    <circle cx="120" cy="120" r="4.5" fill="#ff5252" stroke="#050c1c" stroke-width="1.5"/>
+                    <text x="80" y="115" fill="#ff5252" font-size="8.5" font-weight="700" font-family="sans-serif">START (正面)</text>
+                    <text x="210" y="92" fill="#ff5252" font-size="8.5" font-weight="700" font-family="sans-serif">END (最大ねじり)</text>
                 </svg>
                 <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-red); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-red); font-family:monospace;'>SPINE ROTATION: 35°</div>
             </div>
@@ -236,8 +240,10 @@ function renderLatestHrvRemedies() {
                             <path d='M0,0 L6,3 L0,6 Z' fill='#00bfff'/>
                         </marker>
                     </defs>
-                    <path d='M 180 80 L 100 80' fill='none' stroke='#00bfff' stroke-width='2.5' marker-end='url(#portal-arrow-blue)' stroke-dasharray='4 2'/>
-                    <text x='110' y='70' fill='#00bfff' font-size='9' font-weight='700' font-family='sans-serif'>引き寄せる (PULL)</text>
+                    <path d='M 180 80 L 106 80' fill='none' stroke='#00bfff' stroke-width='2.5' marker-end='url(#portal-arrow-blue)' stroke-dasharray='4 2'/>
+                    <circle cx="180" cy="80" r="4.5" fill="#00bfff" stroke="#050c1c" stroke-width="1.5"/>
+                    <text x="185" y="92" fill="#00bfff" font-size="8.5" font-weight="700" font-family="sans-serif">START (開始姿勢)</text>
+                    <text x="80" y="70" fill="#00bfff" font-size="8.5" font-weight="700" font-family="sans-serif">END (胸に引き寄せる)</text>
                 </svg>
                 <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-blue); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-blue); font-family:monospace;'>SCAPULA RETRACTION: ENGAGED</div>
             </div>

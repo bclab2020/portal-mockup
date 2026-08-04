@@ -102,6 +102,7 @@
 *   9.  **左右の余白を活かした2カラム分割・ワイドレスポンシブレイアウト [NEW]**
     *   **空白エリアの有効活用**: 測定完了時、空きスペースとなる左カラム（カメラ下部）の `#leftSideAdviceContainer` へセルフケア処方箋カード（`#makeupGuideCard`）をJavaScript DOM操作で動的移設。
     *   **横並びレイアウト（Side-by-side）**: 縦長スクロールを回避するため、ストレッチの「テキスト説明カード」と「SVG矢印付き日本人画像」を `display: flex` で左右50%ずつの横並びにレイアウト。
+    *   **矢印の視覚的ガイド強化（開始点・終了点）**: 動きの方向だけでなく、**どこから動作を開始しどこでキープすべきか**が一目で伝わるよう、矢印の根元に開始点のドットと `START (正面)` ラベル、先端に `END (最大キープ姿勢)` ターゲットラベルをSVGで動的に合成描画。
     *   **モバイルレスポンシブ**: スマートフォンなどの縦画面時は、メディアクエリ（`max-width: 768px`）により自動的に縦1カラムへフォールバックする設計。
 *   **[articles_db.json](file:///C:/Users/ke/Desktop/portal-mockup/articles_db.json)** : 専門家監修の高品質な記事データ（3日分・計45記事分）を格納したデータベース。
 *   **[daily_publisher.py](file:///C:/Users/ke/Desktop/portal-mockup/daily_publisher.py)** : 実行されるたびに本日の追加分を `index.html` に自動挿入し、自動的に `git commit & push` を実行してデプロイするコアスクリプト。

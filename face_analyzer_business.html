@@ -2285,6 +2285,11 @@
                             `).join('');
                             relatedArticlesSection.style.display = 'block';
                         }
+                        
+                        // Smoothly scroll the advice card into view
+                        setTimeout(() => {
+                            makeupGuideCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }, 300);
                     })
                     .catch(err => console.error("Failed to load related articles in scanner:", err));
             }

@@ -2176,8 +2176,30 @@
                 ];
                 healthDesks = [
                     "👀 <strong>10秒まばたき眼筋ストレッチ</strong> (眼精疲労と交感神経の興奮を和らげます。)",
-                    "👂 <strong>耳介マッサージ＆首ストレッチ</strong> (両耳を引っ張って回し、頭部への血流を促します。)",
-                    "<div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-teal); box-shadow: 0 0 15px rgba(100, 255, 218, 0.25);'><img src='stretch_neck_jp.jpg' style='width:100%; display:block;'><div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(100,255,218,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(100,255,218,0.08) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div><div style='position:absolute; top:10px; right:10px; background:rgba(100,255,218,0.85); color:#050c1c; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-teal);'>ALIGN ALIGNMENT: OK</div></div>"
+                    "👂 <strong>耳介マッサージ</strong> (両耳を軽く引っ張って回し、頭部への血流を促します。)",
+                    `<div style="font-size:12px; font-weight:700; color:var(--accent-teal); margin-top:12px; margin-bottom:8px;">🧘 首・肩・頚椎アライメントストレッチ</div>
+                     <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-bottom:10px; background:rgba(100,255,218,0.02); border:1px solid rgba(100,255,218,0.08); padding:8px; border-radius:6px;">
+                        <strong>【姿勢・方向】</strong>背筋を伸ばし、右手を頭の左側に添え、頭をゆっくり右斜め前（45度方向）に傾けます。左肩が上がらないよう、意識して固定します。<br>
+                        <strong>【秒数】</strong>首の左後ろが心地よく伸びる強さで、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br>
+                        <strong>【呼吸法】</strong>息を細く長く吐き出しながら、首の力を抜き、頭の重みを利用してじんわりとストレッチします。
+                     </div>`,
+                    `<div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-teal); box-shadow: 0 0 15px rgba(100, 255, 218, 0.25);'>
+                        <img src='stretch_neck_jp.jpg' style='width:100%; display:block;'>
+                        <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(100,255,218,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(100,255,218,0.08) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
+                        <div style='position:absolute; top:10px; right:10px; background:rgba(100,255,218,0.85); color:#050c1c; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-teal);'>ALIGN ALIGNMENT: OK</div>
+                        <!-- Holographic Overlay SVG -->
+                        <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
+                            <defs>
+                                <marker id='arrow-teal' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
+                                    <path d='M0,0 L6,3 L0,6 Z' fill='#64ffda'/>
+                                </marker>
+                            </defs>
+                            <!-- Curved neck tilt arrow -->
+                            <path d='M 120 40 Q 140 50 150 80' fill='none' stroke='#64ffda' stroke-width='2.5' marker-end='url(#arrow-teal)' stroke-dasharray='4 2'/>
+                            <text x='130' y='35' fill='#64ffda' font-size='9' font-weight='700' font-family='sans-serif'>傾ける方向 (TILT)</text>
+                        </svg>
+                        <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-teal); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-teal); font-family:monospace;'>LEFT SHOULDER: LOCK DOWN</div>
+                     </div>`
                 ];
             } else if (calculatedStress.includes("高") || calculatedStress.includes("Stressed")) {
                 healthTitle = `🩺 久保医師監修：自律神経ストレスケア処箋【要注意】(HRV: ${calculatedHRV} ms)`;
@@ -2191,8 +2213,29 @@
                     "🚶 <strong>ストレートネックアライメントリセット</strong> (タオルを首の後に当て、頭を後ろに倒して頚椎のカーブを回復させるストレッチ)"
                 ];
                 healthDesks = [
-                    "🧘 <strong>30秒・椅子ひねりストレッチ</strong> (背もたれを持って上体をゆっくりねじり、背骨周りの自律神経を刺激し緊張を強制解除します。)",
-                    "<div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-red); box-shadow: 0 0 15px rgba(255, 82, 82, 0.25);'><img src='stretch_twist_jp.jpg' style='width:100%; display:block;'><div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(255,82,82,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,82,82,0.08) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div><div style='position:absolute; top:10px; right:10px; background:rgba(255,82,82,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-red);'>ALIGN ALIGNMENT: OK</div></div>",
+                    `<div style="font-size:12px; font-weight:700; color:var(--accent-red); margin-bottom:8px;">🧘 30秒・椅子ひねりストレッチ（自律神経調律）</div>
+                     <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-bottom:10px; background:rgba(255,82,82,0.02); border:1px solid rgba(255,82,82,0.08); padding:8px; border-radius:6px;">
+                        <strong>【姿勢・方向】</strong>背筋をまっすぐ伸ばして椅子に深く腰掛け、息をゆっくり吐きながら上体を右へねじります。左手で背もたれ（または右肘掛け）を掴み、右手は椅子の座面後方を支えて上体を固定します。<br>
+                        <strong>【秒数】</strong>痛気持ちいいところでストップし、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br>
+                        <strong>【呼吸法】</strong>息を止めずに、<strong>吸う4秒・吐く8秒</strong>の深い呼吸を繰り返します。ねじる時に息を吐き出すと効果的です。
+                     </div>`,
+                    `<div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-red); box-shadow: 0 0 15px rgba(255, 82, 82, 0.25);'>
+                        <img src='stretch_twist_jp.jpg' style='width:100%; display:block;'>
+                        <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(255,82,82,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,82,82,0.08) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
+                        <div style='position:absolute; top:10px; right:10px; background:rgba(255,82,82,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-red);'>ALIGN ALIGNMENT: OK</div>
+                        <!-- Holographic Overlay SVG -->
+                        <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
+                            <defs>
+                                <marker id='arrow-red' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
+                                    <path d='M0,0 L6,3 L0,6 Z' fill='#ff5252'/>
+                                </marker>
+                            </defs>
+                            <!-- Curved twist arrow -->
+                            <path d='M 120 120 Q 180 135 240 100' fill='none' stroke='#ff5252' stroke-width='2.5' marker-end='url(#arrow-red)' stroke-dasharray='4 2'/>
+                            <text x='125' y='145' fill='#ff5252' font-size='9' font-weight='700' font-family='sans-serif'>ねじる方向 (ROTATION)</text>
+                        </svg>
+                        <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-red); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-red); font-family:monospace;'>SPINE ROTATION: 35°</div>
+                     </div>`,
                     "💆 <strong>側頭筋のマッサージ</strong> (歯の喰いしばりによる頭のハリをほぐします。)"
                 ];
             } else {
@@ -2207,8 +2250,29 @@
                     "🧘 <strong>リラックス腹式呼吸法</strong> (3秒吸って6秒で吐き出す、基本的な自律神経調律法)"
                 ];
                 healthDesks = [
-                    "肩こり <strong>肩甲骨引き寄せロール</strong> (肩甲骨同士を強く引き寄せ、胸を開きます。)",
-                    "<div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-blue); box-shadow: 0 0 15px rgba(0, 191, 255, 0.25);'><img src='stretch_shoulder_jp.jpg' style='width:100%; display:block;'><div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,191,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,255,0.08) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div><div style='position:absolute; top:10px; right:10px; background:rgba(0,191,255,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-blue);'>ALIGN ALIGNMENT: OK</div></div>",
+                    `<div style="font-size:12px; font-weight:700; color:var(--accent-blue); margin-bottom:8px;">🧘 肩・肩甲骨拡張ストレッチ</div>
+                     <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-bottom:10px; background:rgba(0,191,255,0.02); border:1px solid rgba(0,191,255,0.08); padding:8px; border-radius:6px;">
+                        <strong>【姿勢・方向】</strong>右腕を左方向に真っ直ぐ伸ばし、左腕で右肘を抱え込むように胸に強く引き寄せます。肩甲骨が外側にしっかりと広がる感覚を意識します。<br>
+                        <strong>【秒数】</strong>肩の奥（三角筋後部）が心地よく伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br>
+                        <strong>【呼吸法】</strong>肩をすくめたり息を止めたりせず、深く穏やかな胸式呼吸を繰り返します。
+                     </div>`,
+                    `<div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-blue); box-shadow: 0 0 15px rgba(0, 191, 255, 0.25);'>
+                        <img src='stretch_shoulder_jp.jpg' style='width:100%; display:block;'>
+                        <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,191,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,255,0.08) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
+                        <div style='position:absolute; top:10px; right:10px; background:rgba(0,191,255,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-blue);'>ALIGN ALIGNMENT: OK</div>
+                        <!-- Holographic Overlay SVG -->
+                        <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
+                            <defs>
+                                <marker id='arrow-blue' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
+                                    <path d='M0,0 L6,3 L0,6 Z' fill='#00bfff'/>
+                                </marker>
+                            </defs>
+                            <!-- Horizontal pull arrow -->
+                            <path d='M 180 80 L 100 80' fill='none' stroke='#00bfff' stroke-width='2.5' marker-end='url(#arrow-blue)' stroke-dasharray='4 2'/>
+                            <text x='110' y='70' fill='#00bfff' font-size='9' font-weight='700' font-family='sans-serif'>引き寄せる (PULL)</text>
+                        </svg>
+                        <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-blue); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-blue); font-family:monospace;'>SCAPULA RETRACTION: ENGAGED</div>
+                     </div>`,
                     "👀 <strong>遠近ピント合わせ法</strong> (近くの指先と遠くの壁を交互に見つめ、眼筋をほぐして脳疲労を緩和します。)"
                 ];
             }

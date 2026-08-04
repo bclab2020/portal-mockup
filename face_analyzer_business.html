@@ -679,21 +679,6 @@
             </div>
             <!-- Standalone camera activation controls -->
             <div class="glass-card" style="padding: 15px 20px;">
-                <!-- Privacy protection notice banner -->
-                <div style="background:rgba(100,255,218,0.06); border:1.5px solid rgba(100,255,218,0.25); padding:12px; border-radius:8px; font-size:11px; color:var(--accent-teal); line-height:1.5; margin-bottom:15px;">
-                    <div style="font-weight:700; font-size:12px; margin-bottom:4px; display:flex; align-items:center; gap:6px;">
-                        <span>🔒 プライバシー徹底保護宣言 (管理者非公開)</span>
-                    </div>
-                    <div>
-                        本診断での<strong>カメラ映像や顔写真はブラウザのメモリ内でのみ処理</strong>され、サーバーへの保存や企業管理者への共有は一切されません。管理者には、部署ごとの集計・匿名化されたストレス統計のみが共有されます。
-                    </div>
-                    <div style="margin-top:8px;">
-                        <button type="button" class="btn btn-secondary" onclick="openAdminPreviewModal()" style="padding:4px 10px; font-size:10px; border-radius:4px; width:auto; border:1px solid var(--accent-teal); color:var(--accent-teal); background:transparent;">
-                            🔍 会社側に共有される「集計ダッシュボード画面」のサンプルを見る
-                        </button>
-                    </div>
-                </div>
-                
                 <div style="display:flex; gap:15px; justify-content:center;">
                     <button class="btn btn-primary" id="startCamBtn" style="max-width:250px;">📷 カメラ起動</button>
                     <button class="btn btn-secondary" id="startScanBtn" style="max-width:250px;" disabled>✨ 顔診断＆血流スキャン開始</button>
@@ -713,6 +698,21 @@
                     <div style="font-size:11px; color:var(--accent-teal); font-weight:700; letter-spacing:0.5px;">MEDICAL ADVISOR</div>
                     <div style="font-size:14px; font-weight:700; color:var(--text-primary);">顧問・医学監修：久保 肇 医師（医学博士）</div>
                     <div style="font-size:11px; color:var(--text-secondary); line-height:1.4; margin-top:2px;">京都大学医学部卒、元京都大学助教授、文科省学術調査官を歴任。本測定器の非接触HRV自律神経・脈波解析アルゴリズムを医学的見地から指導。</div>
+                </div>
+            </div>
+
+            <!-- Privacy protection notice banner -->
+            <div style="background:rgba(100,255,218,0.06); border:1.5px solid rgba(100,255,218,0.25); padding:12px; border-radius:8px; font-size:11px; color:var(--accent-teal); line-height:1.5; margin-bottom:15px;">
+                <div style="font-weight:700; font-size:12px; margin-bottom:4px; display:flex; align-items:center; gap:6px;">
+                    <span>🔒 プライバシー徹底保護宣言 (管理者非公開)</span>
+                </div>
+                <div>
+                    本診断での<strong>カメラ映像や顔写真はブラウザのメモリ内でのみ処理</strong>され、サーバーへの保存や企業管理者への共有は一切されません。管理者には、部署ごとの集計・匿名化されたストレス統計のみが共有されます。
+                </div>
+                <div style="margin-top:8px;">
+                    <button type="button" class="btn btn-secondary" onclick="openAdminPreviewModal()" style="padding:4px 10px; font-size:10px; border-radius:4px; width:auto; border:1px solid var(--accent-teal); color:var(--accent-teal); background:transparent; cursor:pointer;">
+                        🔍 会社側に共有される「集計ダッシュボード画面」のサンプルを見る
+                    </button>
                 </div>
             </div>
             

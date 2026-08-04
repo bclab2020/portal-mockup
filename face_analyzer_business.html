@@ -770,10 +770,11 @@
                         <span class="metric-label">自律神経ストレス判定</span>
                         <span class="metric-val pink" id="resStress">--</span>
                     </div>
-                    <div class="metric-badge" style="grid-column: span 2; background: linear-gradient(135deg, rgba(100,255,218,0.05) 0%, rgba(100,255,218,0) 100%); border-color: rgba(100,255,218,0.25);">
-                        <span class="metric-label" style="color:var(--accent-teal); font-weight:700;">HRV心拍変動指標 (RMSSD)</span>
-                        <span class="metric-val highlight" style="color:var(--accent-teal);" id="resHrv">-- ms</span>
-                    </div>
+                </div>
+
+                <!-- Placeholder notice before scan -->
+                <div id="remedyPlaceholder" style="margin-top: 15px; padding: 12px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px; font-size: 11px; color: var(--text-secondary); line-height: 1.5; text-align: center;">
+                    💡 カメラ起動後、30秒間のスキャン（測定）を行うと、ここに自律神経の評価と久保医師監修の「アライメント改善ストレッチ（日本人モデル図解付き）」が自動的に出力されます。
                 </div>
 
                 <!-- Face Type Visualization & Celeb match (Only visible if face detected) -->
@@ -2128,6 +2129,9 @@
         function renderMakeupAdvice() {
             makeupGuideCard.classList.add('active');
             makeupGuideCard.style.display = 'block';
+            
+            const remedyPlaceholder = document.getElementById('remedyPlaceholder');
+            if (remedyPlaceholder) remedyPlaceholder.style.display = 'none';
             
             const stepsContainer = document.getElementById('guideStepsContainer');
             const exerciseContainer = document.getElementById('cosmeticListContainer');

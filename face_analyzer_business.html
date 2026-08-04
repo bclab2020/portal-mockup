@@ -2151,11 +2151,12 @@
                     "🚶 <strong>肩甲骨内転・胸郭拡張ストレッチ</strong> (胸を開き、浅くなりがちな呼吸を深く改善する姿勢調整法)"
                 ];
                 healthDesks = [
-                    "👀 <strong>10秒まばたき眼筋ストレッチ</strong> (目を閉じたままゆっくり眼球を上下左右に動かし、眼精疲労と交感神経の興奮を和らげます。)",
-                    "👂 <strong>耳介マッサージ</strong> (両耳を軽くつまんで上下左右に優しく引っ張り、ぐるぐると5回回します。頭部への血流が良くなり視界がクリアになります。)"
+                    "👀 <strong>10秒まばたき眼筋ストレッチ</strong> (眼精疲労と交感神経の興奮を和らげます。)",
+                    "👂 <strong>耳介マッサージ＆首ストレッチ</strong> (両耳を引っ張って回し、頭部への血流を促します。)",
+                    "<div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-teal); box-shadow: 0 0 15px rgba(100, 255, 218, 0.25);'><img src='stretch_neck_jp.jpg' style='width:100%; display:block;'><div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(100,255,218,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(100,255,218,0.08) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div><div style='position:absolute; top:10px; right:10px; background:rgba(100,255,218,0.85); color:#050c1c; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-teal);'>ALIGN ALIGNMENT: OK</div></div>"
                 ];
             } else if (calculatedStress.includes("高") || calculatedStress.includes("Stressed")) {
-                healthTitle = `🩺 久保医師監修：自律神経ストレスケア処方箋【要注意】(HRV: ${calculatedHRV} ms)`;
+                healthTitle = `🩺 久保医師監修：自律神経ストレスケア処箋【要注意】(HRV: ${calculatedHRV} ms)`;
                 healthSteps = [
                     "4-7-8呼吸法の実践: 4秒かけて鼻から吸い、7秒息を止め、8秒かけて口から細く長く吐き出します。これを5回連続で行い、副交感神経を刺激して即座にストレスを軽減します。",
                     "スマホ首（頚椎アライメント）の補正: 首が前方に傾くと頚椎を通る自律神経が圧迫され、不安感や交感神経の過緊張を招きます。顎を軽く引き、背筋を伸ばする意識を持ちましょう。",
@@ -2166,8 +2167,9 @@
                     "🚶 <strong>ストレートネックアライメントリセット</strong> (タオルを首の後に当て、頭を後ろに倒して頚椎のカーブを回復させるストレッチ)"
                 ];
                 healthDesks = [
-                    "🧘 <strong>30秒・椅子ひねりストレッチ</strong> (椅子に深く座り、左手で背もたれを掴んで上体を左へゆっくりねじります。背骨周りの自律神経を刺激し、緊張を強制解除します。)",
-                    "💆 <strong>こめかみ・側頭筋のツボ圧迫</strong> (歯の喰いしばり等による側頭部のハリを、手のひらで円を描くように優しくマッサージして緩和します。)"
+                    "🧘 <strong>30秒・椅子ひねりストレッチ</strong> (背もたれを持って上体をゆっくりねじり、背骨周りの自律神経を刺激し緊張を強制解除します。)",
+                    "<div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-red); box-shadow: 0 0 15px rgba(255, 82, 82, 0.25);'><img src='stretch_twist_jp.jpg' style='width:100%; display:block;'><div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(255,82,82,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,82,82,0.08) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div><div style='position:absolute; top:10px; right:10px; background:rgba(255,82,82,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-red);'>ALIGN ALIGNMENT: OK</div></div>",
+                    "💆 <strong>側頭筋のマッサージ</strong> (歯の喰いしばりによる頭のハリをほぐします。)"
                 ];
             } else {
                 healthTitle = `🩺 久保医師監修：自律神経機能【通常】(HRV: ${calculatedHRV} ms)`;
@@ -2181,8 +2183,9 @@
                     "🧘 <strong>リラックス腹式呼吸法</strong> (3秒吸って6秒で吐き出す、基本的な自律神経調律法)"
                 ];
                 healthDesks = [
-                    "肩こり <strong>肩甲骨引き寄せロール</strong> (両肩をすくめるようにして耳に近づけ、ストンと落とします。その後、肘を曲げて後ろに回し、肩甲骨同士を強く引き寄せます。)",
-                    "👀 <strong>遠近ピント合わせ法</strong> (指先を顔の前に立て、指先と3m以上遠くの壁を交互に3秒ずつ見つめ、毛様体筋をほぐして脳疲労を緩和します。)"
+                    "肩こり <strong>肩甲骨引き寄せロール</strong> (肩甲骨同士を強く引き寄せ、胸を開きます。)",
+                    "<div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-blue); box-shadow: 0 0 15px rgba(0, 191, 255, 0.25);'><img src='stretch_shoulder_jp.jpg' style='width:100%; display:block;'><div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,191,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,255,0.08) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div><div style='position:absolute; top:10px; right:10px; background:rgba(0,191,255,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-blue);'>ALIGN ALIGNMENT: OK</div></div>",
+                    "👀 <strong>遠近ピント合わせ法</strong> (近くの指先と遠くの壁を交互に見つめ、眼筋をほぐして脳疲労を緩和します。)"
                 ];
             }
 

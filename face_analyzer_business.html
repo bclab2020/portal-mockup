@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Expires" content="0">
     <title>CORE CONNECT for Business - AI自律神経ストレススキャン & 姿勢アライメント</title>
     
     <!-- Google Fonts -->
@@ -2171,7 +2174,15 @@
                     "深部体温のコントロール: 良質な自律神経コンディションを永続するため、就寝90分前に40℃の入浴を行い、入眠時のスムーズな体温低下を促しましょう。"
                 ];
                 healthExercises = [
-                    "🧘 <strong>マインドフルネス呼吸セッション</strong> (副交感神経の働きを微調整する5分間のセルフ瞑想呼吸法)",
+                    `🧘 <strong>リラックス腹式呼吸セッション (3秒吸う・6秒吐く)</strong>
+                     <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:15px; margin-top:10px; background:rgba(100,255,218,0.02); border:1px dashed rgba(100,255,218,0.15); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
+                        <div style="font-size:10px; color:var(--accent-teal); font-weight:700; margin-bottom:12px; letter-spacing:0.5px;">🧘 呼吸ガイド（バルーンの伸縮と同調してください）</div>
+                        <div style="width:120px; height:120px; display:flex; align-items:center; justify-content:center; position:relative;">
+                            <div id="breathingBalloon" style="width:40px; height:40px; border-radius:50%; background:radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%); box-shadow: 0 0 25px var(--accent-teal); transition: all 1.5s ease-in-out;"></div>
+                            <div style="position:absolute; width:15px; height:15px; border-radius:50%; background:#fff; box-shadow: 0 0 10px #fff;"></div>
+                        </div>
+                        <div id="breathingText" style="font-size:11px; font-weight:700; color:var(--text-primary); margin-top:12px; height:15px; letter-spacing:0.5px;">準備中...</div>
+                     </div>`,
                     "🚶 <strong>肩甲骨内転・胸郭拡張ストレッチ</strong> (胸を開き、浅くなりがちな呼吸を深く改善する姿勢調整法)"
                 ];
                 healthDesks = [
@@ -2209,7 +2220,15 @@
                     "温熱ネックケア: 首の後ろ（大椎付近）を40℃程度に温めることで、首肩の血流を即座に促し、高ぶった神経系をリセットします。"
                 ];
                 healthExercises = [
-                    "🧘 <strong>4-7-8 自律神経緊急リセット呼吸法</strong> (不安や焦燥感を抑え、脈拍を安定させる深呼吸)",
+                    `🧘 <strong>4-7-8 自律神経緊急リセット呼吸法</strong> (副交感神経を強力に刺激する深呼吸)
+                     <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:15px; margin-top:10px; background:rgba(255,82,82,0.02); border:1px dashed rgba(255,82,82,0.15); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
+                        <div style="font-size:10px; color:var(--accent-red); font-weight:700; margin-bottom:12px; letter-spacing:0.5px;">🧘 呼吸ガイド（バルーンの伸縮と同調してください）</div>
+                        <div style="width:120px; height:120px; display:flex; align-items:center; justify-content:center; position:relative;">
+                            <div id="breathingBalloon" style="width:40px; height:40px; border-radius:50%; background:radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%); box-shadow: 0 0 25px var(--accent-red); transition: all 1.5s ease-in-out;"></div>
+                            <div style="position:absolute; width:15px; height:15px; border-radius:50%; background:#fff; box-shadow: 0 0 10px #fff;"></div>
+                        </div>
+                        <div id="breathingText" style="font-size:11px; font-weight:700; color:var(--text-primary); margin-top:12px; height:15px; letter-spacing:0.5px;">準備中...</div>
+                     </div>`,
                     "🚶 <strong>ストレートネックアライメントリセット</strong> (タオルを首の後に当て、頭を後ろに倒して頚椎のカーブを回復させるストレッチ)"
                 ];
                 healthDesks = [
@@ -2247,7 +2266,15 @@
                 ];
                 healthExercises = [
                     "🚶 <strong>胸鎖乳突筋・首肩アライメントストレッチ</strong> (首肩の筋緊張をほぐし、頭痛やだるさを予防)",
-                    "🧘 <strong>リラックス腹式呼吸法</strong> (3秒吸って6秒で吐き出す、基本的な自律神経調律法)"
+                    `🧘 <strong>リラックス腹式呼吸セッション (3秒吸う・6秒吐く)</strong>
+                     <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:15px; margin-top:10px; background:rgba(100,255,218,0.02); border:1px dashed rgba(100,255,218,0.15); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
+                        <div style="font-size:10px; color:var(--accent-teal); font-weight:700; margin-bottom:12px; letter-spacing:0.5px;">🧘 呼吸ガイド（バルーンの伸縮と同調してください）</div>
+                        <div style="width:120px; height:120px; display:flex; align-items:center; justify-content:center; position:relative;">
+                            <div id="breathingBalloon" style="width:40px; height:40px; border-radius:50%; background:radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%); box-shadow: 0 0 25px var(--accent-teal); transition: all 1.5s ease-in-out;"></div>
+                            <div style="position:absolute; width:15px; height:15px; border-radius:50%; background:#fff; box-shadow: 0 0 10px #fff;"></div>
+                        </div>
+                        <div id="breathingText" style="font-size:11px; font-weight:700; color:var(--text-primary); margin-top:12px; height:15px; letter-spacing:0.5px;">準備中...</div>
+                     </div>`
                 ];
                 healthDesks = [
                     `<div style="font-size:12px; font-weight:700; color:var(--accent-blue); margin-bottom:8px;">🧘 肩・肩甲骨拡張ストレッチ</div>
@@ -2316,7 +2343,9 @@
                         dayKeys.forEach(day => {
                             const categories = db[day];
                             Object.keys(categories).forEach(cat => {
-                                allArticles = allArticles.concat(categories[cat]);
+                                if (cat === 'health') {
+                                    allArticles = allArticles.concat(categories[cat]);
+                                }
                             });
                         });
                         
@@ -2352,6 +2381,9 @@
                             relatedArticlesSection.style.display = 'block';
                         }
                         
+                        // Initialize breathing guide animation
+                        initBreathingGuide(calculatedStress.includes("高") || calculatedStress.includes("Stressed") ? "478" : "36");
+
                         // Smoothly scroll the advice card into view
                         setTimeout(() => {
                             makeupGuideCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -2455,6 +2487,77 @@
             });
         }
     
+        let breathingTimer = null;
+        function initBreathingGuide(type) {
+            if (breathingTimer) clearInterval(breathingTimer);
+            
+            const balloon = document.getElementById('breathingBalloon');
+            const txt = document.getElementById('breathingText');
+            if (!balloon || !txt) return;
+            
+            let seconds = 0;
+            const runCycle = () => {
+                if (!document.getElementById('breathingBalloon')) {
+                    clearInterval(breathingTimer);
+                    return;
+                }
+                
+                if (type === "478") {
+                    // 4-7-8 Breathing (19s cycle)
+                    const subSec = seconds % 19;
+                    if (subSec < 4) {
+                        // Inhale (4s)
+                        balloon.style.width = '110px';
+                        balloon.style.height = '110px';
+                        balloon.style.transition = 'all 4s ease-in-out';
+                        balloon.style.background = 'radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%)';
+                        balloon.style.boxShadow = '0 0 25px var(--accent-red)';
+                        txt.innerHTML = `<span style="color:#ff5252; font-weight:700;">吸い込む (Inhale)... ${4 - subSec}秒</span>`;
+                    } else if (subSec < 11) {
+                        // Hold (7s)
+                        balloon.style.width = '110px';
+                        balloon.style.height = '110px';
+                        balloon.style.transition = 'all 0.5s ease';
+                        // Pulse glow
+                        balloon.style.boxShadow = subSec % 2 === 0 ? '0 0 45px #ff5252' : '0 0 25px #ff5252';
+                        txt.innerHTML = `<span style="color:#ff9100; font-weight:700;">止める (Hold)... ${11 - subSec}秒</span>`;
+                    } else {
+                        // Exhale (8s)
+                        balloon.style.width = '40px';
+                        balloon.style.height = '40px';
+                        balloon.style.transition = 'all 8s ease-in-out';
+                        balloon.style.background = 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
+                        balloon.style.boxShadow = '0 0 25px var(--accent-teal)';
+                        txt.innerHTML = `<span style="color:#64ffda; font-weight:700;">ゆっくり吐く (Exhale)... ${19 - subSec}秒</span>`;
+                    }
+                } else {
+                    // 3-6 Breathing (9s cycle)
+                    const subSec = seconds % 9;
+                    if (subSec < 3) {
+                        // Inhale (3s)
+                        balloon.style.width = '110px';
+                        balloon.style.height = '110px';
+                        balloon.style.transition = 'all 3s ease-in-out';
+                        balloon.style.background = 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
+                        balloon.style.boxShadow = '0 0 25px var(--accent-teal)';
+                        txt.innerHTML = `<span style="color:#64ffda; font-weight:700;">吸い込む (Inhale)... ${3 - subSec}秒</span>`;
+                    } else {
+                        // Exhale (6s)
+                        balloon.style.width = '40px';
+                        balloon.style.height = '40px';
+                        balloon.style.transition = 'all 6s ease-in-out';
+                        balloon.style.background = 'radial-gradient(circle, var(--accent-blue) 0%, rgba(0,191,255,0.4) 70%, transparent 100%)';
+                        balloon.style.boxShadow = '0 0 25px var(--accent-blue)';
+                        txt.innerHTML = `<span style="color:#00bfff; font-weight:700;">ゆっくり吐く (Exhale)... ${9 - subSec}秒</span>`;
+                    }
+                }
+                seconds++;
+            };
+            
+            runCycle();
+            breathingTimer = setInterval(runCycle, 1000);
+        }
+
         // Admin Dashboard Preview Modal togglers
         window.openAdminPreviewModal = function() {
             const modal = document.getElementById('adminPreviewModal');

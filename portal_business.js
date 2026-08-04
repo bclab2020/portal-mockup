@@ -140,7 +140,27 @@ function renderLatestHrvRemedies() {
                 <li>👀 <strong>10秒まばたき眼筋ストレッチ</strong> (目を閉じたまま上下左右に眼球を動かします)</li>
                 <li>👂 <strong>耳介マッサージ</strong> (両耳をつまんで上下左右に引っ張り、血流を促します)</li>
             </ul>
-            <div style="position:relative; margin-top:10px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-teal); box-shadow: 0 0 12px rgba(100, 255, 218, 0.2);"><img src='stretch_neck_jp.jpg' style='width:100%; display:block;'><div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(100,255,218,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(100,255,218,0.06) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div><div style='position:absolute; top:10px; right:10px; background:rgba(100,255,218,0.85); color:#050c1c; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-teal);'>ALIGNMENT: OK</div></div>
+            <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(100,255,218,0.02); border:1px solid rgba(100,255,218,0.08); padding:8px; border-radius:6px;">
+                <strong>【姿勢・方向】</strong>背筋を伸ばし、右手を頭の左側に添え、頭をゆっくり右斜め前（45度方向）に傾けます。左肩が上がらないよう、意識して固定します。<br>
+                <strong>【秒数】</strong>首の左後ろが心地よく伸びる強さで、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br>
+                <strong>【呼吸法】</strong>息を細く長く吐き出しながら、頭の重みを利用してじんわりとストレッチします。
+            </div>
+            <div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-teal); box-shadow: 0 0 12px rgba(100, 255, 218, 0.2);'>
+                <img src='stretch_neck_jp.jpg' style='width:100%; display:block;'>
+                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(100,255,218,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(100,255,218,0.06) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
+                <div style='position:absolute; top:10px; right:10px; background:rgba(100,255,218,0.85); color:#050c1c; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-teal);'>ALIGNMENT: OK</div>
+                <!-- Holographic Overlay SVG -->
+                <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
+                    <defs>
+                        <marker id='portal-arrow-teal' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
+                            <path d='M0,0 L6,3 L0,6 Z' fill='#64ffda'/>
+                        </marker>
+                    </defs>
+                    <path d='M 120 40 Q 140 50 150 80' fill='none' stroke='#64ffda' stroke-width='2.5' marker-end='url(#portal-arrow-teal)' stroke-dasharray='4 2'/>
+                    <text x='130' y='35' fill='#64ffda' font-size='9' font-weight='700' font-family='sans-serif'>傾ける方向 (TILT)</text>
+                </svg>
+                <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-teal); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-teal); font-family:monospace;'>LEFT SHOULDER: LOCK DOWN</div>
+            </div>
         `;
     } else if (statusText === '高' || latest.hrv < 30) {
         badgeColor = 'var(--accent-red)';
@@ -151,7 +171,27 @@ function renderLatestHrvRemedies() {
                 <li>🧘 <strong>30秒・椅子ひねりストレッチ</strong> (背もたれを持って上体をゆっくりねじり、背骨の緊張をほぐします)</li>
                 <li>👃 <strong>4-7-8 呼吸リフレッシュ</strong> (4秒吸って7秒止め、8秒かけて細く長く吐き出します)</li>
             </ul>
-            <div style="position:relative; margin-top:10px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-red); box-shadow: 0 0 12px rgba(255, 82, 82, 0.2);"><img src='stretch_twist_jp.jpg' style='width:100%; display:block;'><div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(255,82,82,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,82,82,0.06) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div><div style='position:absolute; top:10px; right:10px; background:rgba(255,82,82,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-red);'>ALIGNMENT: OK</div></div>
+            <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(255,82,82,0.02); border:1px solid rgba(255,82,82,0.08); padding:8px; border-radius:6px;">
+                <strong>【姿勢・方向】</strong>背筋を伸ばし椅子に深く座り、息を吐きながら上体を右へゆっくりねじります。左手で背もたれを掴み、右手は椅子の座面後方を支えます。<br>
+                <strong>【秒数】</strong>痛気持ちいいところでキープし、<strong>左右それぞれ15秒間（計30秒）</strong>行います。<br>
+                <strong>【呼吸法】</strong><strong>吸う4秒・吐く8秒</strong>の腹式呼吸をゆっくり繰り返します。
+            </div>
+            <div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-red); box-shadow: 0 0 12px rgba(255, 82, 82, 0.2);'>
+                <img src='stretch_twist_jp.jpg' style='width:100%; display:block;'>
+                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(255,82,82,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,82,82,0.06) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
+                <div style='position:absolute; top:10px; right:10px; background:rgba(255,82,82,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-red);'>ALIGNMENT: OK</div>
+                <!-- Holographic Overlay SVG -->
+                <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
+                    <defs>
+                        <marker id='portal-arrow-red' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
+                            <path d='M0,0 L6,3 L0,6 Z' fill='#ff5252'/>
+                        </marker>
+                    </defs>
+                    <path d='M 120 120 Q 180 135 240 100' fill='none' stroke='#ff5252' stroke-width='2.5' marker-end='url(#portal-arrow-red)' stroke-dasharray='4 2'/>
+                    <text x='125' y='145' fill='#ff5252' font-size='9' font-weight='700' font-family='sans-serif'>ねじる方向 (ROTATION)</text>
+                </svg>
+                <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-red); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-red); font-family:monospace;'>SPINE ROTATION: 35°</div>
+            </div>
         `;
     } else {
         badgeColor = 'var(--accent-orange)';
@@ -162,7 +202,27 @@ function renderLatestHrvRemedies() {
                 <li>肩こり <strong>肩甲骨引き寄せロール</strong> (両肩をすくめてストンと落とし、肘を曲げて後ろに引きます)</li>
                 <li>👀 <strong>遠近ピント合わせ法</strong> (近くの指先と3m先の壁を交互に3秒ずつ見つめ、眼筋をほぐします)</li>
             </ul>
-            <div style="position:relative; margin-top:10px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-blue); box-shadow: 0 0 12px rgba(0, 191, 255, 0.2);"><img src='stretch_shoulder_jp.jpg' style='width:100%; display:block;'><div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,191,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,255,0.06) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div><div style='position:absolute; top:10px; right:10px; background:rgba(0,191,255,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-blue);'>ALIGNMENT: OK</div></div>
+            <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(0,191,255,0.02); border:1px solid rgba(0,191,255,0.08); padding:8px; border-radius:6px;">
+                <strong>【姿勢・方向】</strong>右腕を左方向に真っ直ぐ伸ばし、左腕で右肘を抱え込むように胸に引き寄せます。肩甲骨が外側に広がるのを意識します。<br>
+                <strong>【秒数】</strong>肩の奥が心地よく伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br>
+                <strong>【呼吸法】</strong>肩をすくめず、深く穏やかな呼吸を繰り返します。
+            </div>
+            <div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-blue); box-shadow: 0 0 12px rgba(0, 191, 255, 0.2);'>
+                <img src='stretch_shoulder_jp.jpg' style='width:100%; display:block;'>
+                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,191,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,255,0.06) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
+                <div style='position:absolute; top:10px; right:10px; background:rgba(0,191,255,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-blue);'>ALIGNMENT: OK</div>
+                <!-- Holographic Overlay SVG -->
+                <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
+                    <defs>
+                        <marker id='portal-arrow-blue' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
+                            <path d='M0,0 L6,3 L0,6 Z' fill='#00bfff'/>
+                        </marker>
+                    </defs>
+                    <path d='M 180 80 L 100 80' fill='none' stroke='#00bfff' stroke-width='2.5' marker-end='url(#portal-arrow-blue)' stroke-dasharray='4 2'/>
+                    <text x='110' y='70' fill='#00bfff' font-size='9' font-weight='700' font-family='sans-serif'>引き寄せる (PULL)</text>
+                </svg>
+                <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-blue); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-blue); font-family:monospace;'>SCAPULA RETRACTION: ENGAGED</div>
+            </div>
         `;
     }
     

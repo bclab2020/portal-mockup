@@ -770,6 +770,10 @@
                         <span class="metric-label">自律神経ストレス判定</span>
                         <span class="metric-val pink" id="resStress">--</span>
                     </div>
+                    <div class="metric-badge" style="grid-column: span 2; background: linear-gradient(135deg, rgba(100,255,218,0.05) 0%, rgba(100,255,218,0) 100%); border-color: rgba(100,255,218,0.25);">
+                        <span class="metric-label" style="color:var(--accent-teal); font-weight:700;">HRV心拍変動指標 (RMSSD)</span>
+                        <span class="metric-val highlight" style="color:var(--accent-teal);" id="resHrv">-- ms</span>
+                    </div>
                 </div>
 
                 <!-- Placeholder notice before scan -->
@@ -2361,29 +2365,31 @@
         });
 
         // Toggle portal mockup demo manually (helps when running standalone outside portal)
-        togglePortalMock.addEventListener('click', () => {
-            // Fake the calculation outputs immediately for testing
-            currentFaceType = "丸顔 (Round)";
-            currentSymmetry = 95;
-            calculatedBPM = 72;
-            calculatedStress = "正常 (Normal / バランス良好)";
-            const demoHRV = 42;
+        if (togglePortalMock) {
+            togglePortalMock.addEventListener('click', () => {
+                // Fake the calculation outputs immediately for testing
+                currentFaceType = "丸顔 (Round)";
+                currentSymmetry = 95;
+                calculatedBPM = 72;
+                calculatedStress = "正常 (Normal / バランス良好)";
+                const demoHRV = 42;
 
-            resFaceType.innerText = currentFaceType;
-            resSymmetry.innerText = `${currentSymmetry}%`;
-            resHeartRate.innerText = `${calculatedBPM} bpm`;
-            resStress.innerText = calculatedStress;
-            resHrv.innerText = `${demoHRV} ms`;
+                resFaceType.innerText = currentFaceType;
+                resSymmetry.innerText = `${currentSymmetry}%`;
+                resHeartRate.innerText = `${calculatedBPM} bpm`;
+                resStress.innerText = calculatedStress;
+                resHrv.innerText = `${demoHRV} ms`;
 
-            // Update Face Visual Match Card
-            updateFaceVisualMatch();
+                // Update Face Visual Match Card
+                updateFaceVisualMatch();
 
-            renderMakeupAdvice();
-            appStatusBar.innerText = "デモデータを展開しました。なりたい顔を変更してメイクガイドの描画やレコメンドをお試しください。";
-            
-            // If in iframe, auto open postMessage button
-            portalSenderBox.style.display = 'block';
-        });
+                renderMakeupAdvice();
+                appStatusBar.innerText = "デモデータを展開しました。なりたい顔を変更してメイクガイドの描画やレコメンドをお試しください。";
+                
+                // If in iframe, auto open postMessage button
+                portalSenderBox.style.display = 'block';
+            });
+        }
     
         // Admin Dashboard Preview Modal togglers
         window.openAdminPreviewModal = function() {

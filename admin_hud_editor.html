@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORE CONNECT - HUDアライメント・エディタ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #050811;
+            --bg-card: rgba(13, 20, 38, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #8c9cb2;
+            --accent-blue: #00bfff;
+            --accent-red: #ff5252;
+            --accent-teal: #64ffda;
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(0, 191, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 82, 82, 0.04) 0%, transparent 40%);
+        }
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(5, 8, 17, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo-section h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 30%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo-section p { font-size: 11px; color: var(--text-secondary); }
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            gap: 30px;
+            flex-grow: 1;
+        }
+        .editor-workspace {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: var(--card-shadow);
+        }
+        .control-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .canvas-container {
+            position: relative;
+            width: 660px;
+            height: 440px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: #000;
+            user-select: none;
+        }
+        .canvas-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+        .drag-pin {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            cursor: move;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        #pin-start { background-color: #ffc107; box-shadow: 0 0 8px #ffc107; }
+        #pin-control { background-color: #e040fb; box-shadow: 0 0 8px #e040fb; }
+        #pin-end { background-color: #00e5ff; box-shadow: 0 0 8px #00e5ff; }
+        
+        .panel-title { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 10px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        label { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+        select, input {
+            width: 100%;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 13px;
+        }
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .slider-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .slider-control {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .slider-control span { font-size: 10px; color: var(--text-secondary); }
+        .btn-group { display: flex; gap: 15px; margin-top: 10px; }
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #0080ff 100%);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 191, 255, 0.4);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.12); }
+        
+        .coordinates-badge {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 11px;
+            color: var(--accent-teal);
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-section">
+            <h1>CORE CONNECT</h1>
+            <p>アライメントHUDビジュアルエディタ</p>
+        </div>
+        <div class="nav-actions">
+            <a href="admin.html" class="btn btn-secondary">◀ 管理画面へ戻る</a>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="editor-workspace">
+            <div class="canvas-container" id="canvasContainer">
+                <img id="exerciseImg" src="stretch_twist_jp.jpg">
+                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
+                <div id="hologramBadge" style='position:absolute; top:10px; right:10px; background:rgba(255,82,82,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-red);'>ALIGN ALIGNMENT: OK</div>
+                
+                <svg id="guideSVG" style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
+                    <defs>
+                        <marker id='arrow-marker' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
+                            <path d='M0,0 L6,3 L0,6 Z' fill='#ff5252' id="arrowMarkerPath"/>
+                        </marker>
+                    </defs>
+                    <path id="guidePath" d='M 400 240 Q 300 270 224 224' fill='none' stroke='#ff5252' stroke-width='4' marker-end='url(#arrow-marker)' stroke-dasharray='6 4'/>
+                    <text id="startText" x="385" y="278" fill="#ff5252" font-size="12" font-weight="700">START (正面)</text>
+                    <text id="endText" x="140" y="196" fill="#ff5252" font-size="12" font-weight="700">END (ねじる)</text>
+                </svg>
+
+                <!-- Draggable Handles -->
+                <div class="drag-pin" id="pin-start" style="left: 400px; top: 240px;" title="開始点 (START)"></div>
+                <div class="drag-pin" id="pin-control" style="left: 300px; top: 270px;" title="曲線コントロール点 (CURVE)"></div>
+                <div class="drag-pin" id="pin-end" style="left: 224px; top: 224px;" title="終了点 (END)"></div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <div class="panel-title">HUDアライメント設定</div>
+            
+            <div class="form-group">
+                <label>編集するエクササイズ</label>
+                <select id="exerciseSelect" onchange="changeExercise()">
+                    <option value="twist">椅子ひねり（要注意・高ストレス）</option>
+                    <option value="shoulder">肩甲骨拡張（通常・肩こり）</option>
+                    <option value="neck">首の傾げ（良好・首こり）</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>ラベル設定</label>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="startLabelInput" placeholder="STARTラベル" value="START (正面)">
+                    <input type="text" id="endLabelInput" placeholder="ENDラベル" value="END (ねじる)">
+                </div>
+            </div>
+
+            <div class="panel-title" style="margin-top: 15px;">座標パラメータ (リアルタイム連動)</div>
+            <div class="slider-group">
+                <div class="slider-control">
+                    <span>開始点 X (START X)</span>
+                    <input type="range" id="startX" min="0" max="660" value="400">
+                </div>
+                <div class="slider-control">
+                    <span>開始点 Y (START Y)</span>
+                    <input type="range" id="startY" min="0" max="440" value="240">
+                </div>
+                <div class="slider-control">
+                    <span>カーブ調整 X (CONTROL X)</span>
+                    <input type="range" id="controlX" min="0" max="660" value="300">
+                </div>
+                <div class="slider-control">
+                    <span>カーブ調整 Y (CONTROL Y)</span>
+                    <input type="range" id="controlY" min="0" max="440" value="270">
+                </div>
+                <div class="slider-control">
+                    <span>終了点 X (END X)</span>
+                    <input type="range" id="endX" min="0" max="660" value="224">
+                </div>
+                <div class="slider-control">
+                    <span>終了点 Y (END Y)</span>
+                    <input type="range" id="endY" min="0" max="440" value="224">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>生成されたSVGパスコード</label>
+                <div class="coordinates-badge" id="svgCodeOutput"></div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="saveCoordinates()">確定して反映する</button>
+                <button class="btn btn-secondary" onclick="exportConfig()">JSON出力</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const exercises = {
+            twist: {
+                img: "stretch_twist_jp.jpg",
+                color: "#ff5252",
+                startX: 400, startY: 240,
+                controlX: 300, controlY: 270,
+                endX: 224, endY: 224,
+                startLabel: "START (正面)",
+                endLabel: "END (ねじる)"
+            },
+            shoulder: {
+                img: "stretch_shoulder_jp.jpg",
+                color: "#00bfff",
+                startX: 200, startY: 160,
+                controlX: 314, controlY: 160, // Straight line fallback
+                endX: 428, endY: 160,
+                startLabel: "START (胸元)",
+                endLabel: "END (指先を伸ばす)"
+            },
+            neck: {
+                img: "stretch_neck_jp.jpg",
+                color: "#64ffda",
+                startX: 240, startY: 90,
+                controlX: 280, controlY: 104,
+                endX: 296, endY: 152,
+                startLabel: "START (正面)",
+                endLabel: "END (傾けてキープ)"
+            }
+        };
+
+        let currentKey = "twist";
+        const container = document.getElementById('canvasContainer');
+        const pins = {
+            start: document.getElementById('pin-start'),
+            control: document.getElementById('pin-control'),
+            end: document.getElementById('pin-end')
+        };
+        const pathEl = document.getElementById('guidePath');
+        const arrowEl = document.getElementById('arrowMarkerPath');
+        const startText = document.getElementById('startText');
+        const endText = document.getElementById('endText');
+        const hologramBadge = document.getElementById('hologramBadge');
+
+        // Draggable Logic
+        let activePin = null;
+
+        Object.keys(pins).forEach(key => {
+            const pin = pins[key];
+            pin.addEventListener('mousedown', e => {
+                activePin = key;
+                pin.style.transform = "translate(-50%, -50%) scale(1.3)";
+            });
+        });
+
+        document.addEventListener('mousemove', e => {
+            if (!activePin) return;
+            const rect = container.getBoundingClientRect();
+            let x = Math.round(e.clientX - rect.left);
+            let y = Math.round(e.clientY - rect.top);
+            
+            // Boundary constraints
+            x = Math.max(0, Math.min(660, x));
+            y = Math.max(0, Math.min(440, y));
+
+            // Update UI element & Sliders
+            pins[activePin].style.left = `${x}px`;
+            pins[activePin].style.top = `${y}px`;
+
+            if (activePin === 'start') {
+                document.getElementById('startX').value = x;
+                document.getElementById('startY').value = y;
+            } else if (activePin === 'control') {
+                document.getElementById('controlX').value = x;
+                document.getElementById('controlY').value = y;
+            } else if (activePin === 'end') {
+                document.getElementById('endX').value = x;
+                document.getElementById('endY').value = y;
+            }
+
+            updateSVG();
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (activePin) {
+                pins[activePin].style.transform = "translate(-50%, -50%) scale(1)";
+                activePin = null;
+            }
+        });
+
+        // Touch support
+        Object.keys(pins).forEach(key => {
+            const pin = pins[key];
+            pin.addEventListener('touchstart', e => {
+                activePin = key;
+            }, {passive: true});
+        });
+
+        document.addEventListener('touchmove', e => {
+            if (!activePin) return;
+            const touch = e.touches[0];
+            const rect = container.getBoundingClientRect();
+            let x = Math.round(touch.clientX - rect.left);
+            let y = Math.round(touch.clientY - rect.top);
+            x = Math.max(0, Math.min(660, x));
+            y = Math.max(0, Math.min(440, y));
+            pins[activePin].style.left = `${x}px`;
+            pins[activePin].style.top = `${y}px`;
+            if (activePin === 'start') {
+                document.getElementById('startX').value = x;
+                document.getElementById('startY').value = y;
+            } else if (activePin === 'control') {
+                document.getElementById('controlX').value = x;
+                document.getElementById('controlY').value = y;
+            } else if (activePin === 'end') {
+                document.getElementById('endX').value = x;
+                document.getElementById('endY').value = y;
+            }
+            updateSVG();
+        });
+
+        document.addEventListener('touchend', () => { activePin = null; });
+
+        // Connect Sliders to updating SVG
+        const sliders = ['startX', 'startY', 'controlX', 'controlY', 'endX', 'endY'];
+        sliders.forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                const x = document.getElementById(id).value;
+                const pinKey = id.startsWith('start') ? 'start' : (id.startsWith('control') ? 'control' : 'end');
+                const axis = id.endsWith('X') ? 'left' : 'top';
+                pins[pinKey].style[axis] = `${x}px`;
+                updateSVG();
+            });
+        });
+
+        // Connect label inputs
+        document.getElementById('startLabelInput').addEventListener('input', e => {
+            startText.textContent = e.target.value;
+            updateSVG();
+        });
+        document.getElementById('endLabelInput').addEventListener('input', e => {
+            endText.textContent = e.target.value;
+            updateSVG();
+        });
+
+        function changeExercise() {
+            currentKey = document.getElementById('exerciseSelect').value;
+            const ex = exercises[currentKey];
+
+            document.getElementById('exerciseImg').src = ex.img;
+            
+            // Set Color HUD
+            pathEl.setAttribute('stroke', ex.color);
+            arrowEl.setAttribute('fill', ex.color);
+            startText.setAttribute('fill', ex.color);
+            endText.setAttribute('fill', ex.color);
+            hologramBadge.style.borderColor = ex.color;
+            hologramBadge.style.background = hexToRgba(ex.color, 0.85);
+
+            // Set coordinates
+            document.getElementById('startX').value = ex.startX;
+            document.getElementById('startY').value = ex.startY;
+            document.getElementById('controlX').value = ex.controlX;
+            document.getElementById('controlY').value = ex.controlY;
+            document.getElementById('endX').value = ex.endX;
+            document.getElementById('endY').value = ex.endY;
+
+            pins.start.style.left = `${ex.startX}px`;
+            pins.start.style.top = `${ex.startY}px`;
+            pins.control.style.left = `${ex.controlX}px`;
+            pins.control.style.top = `${ex.controlY}px`;
+            pins.end.style.left = `${ex.endX}px`;
+            pins.end.style.top = `${ex.endY}px`;
+
+            document.getElementById('startLabelInput').value = ex.startLabel;
+            document.getElementById('endLabelInput').value = ex.endLabel;
+            startText.textContent = ex.startLabel;
+            endText.textContent = ex.endLabel;
+
+            updateSVG();
+        }
+
+        function updateSVG() {
+            const sx = document.getElementById('startX').value;
+            const sy = document.getElementById('startY').value;
+            const cx = document.getElementById('controlX').value;
+            const cy = document.getElementById('controlY').value;
+            const ex = document.getElementById('endX').value;
+            const ey = document.getElementById('endY').value;
+
+            // Update SVG elements
+            pathEl.setAttribute('d', `M ${sx} ${sy} Q ${cx} ${cy} ${ex} ${ey}`);
+            
+            // Positions labels relative to start and end points
+            startText.setAttribute('x', parseInt(sx) - 15);
+            startText.setAttribute('y', parseInt(sy) + 38);
+            endText.setAttribute('x', parseInt(ex) - 24);
+            endText.setAttribute('y', parseInt(ey) - 28);
+
+            // Generate Output Markup
+            // Convert coordinate scaling by dividing by 2 for the 330x220 container
+            const rx1 = Math.round(sx/2), ry1 = Math.round(sy/2);
+            const rx2 = Math.round(cx/2), ry2 = Math.round(cy/2);
+            const rx3 = Math.round(ex/2), ry3 = Math.round(ey/2);
+
+            const startLabel = document.getElementById('startLabelInput').value;
+            const endLabel = document.getElementById('endLabelInput').value;
+
+            const code = `<svg>
+  <path d="M ${rx1} ${ry1} Q ${rx2} ${ry2} ${rx3} ${ry3}" fill="none" stroke="${exercises[currentKey].color}" stroke-width="2.5" marker-end="url(#arrow)" stroke-dasharray="4 2"/>
+  <circle cx="${rx1}" cy="${ry1}" r="4.5" fill="${exercises[currentKey].color}" stroke="#050c1c" stroke-width="1.5"/>
+  <text x="${rx1 - 20}" y="${ry1 + 18}" fill="${exercises[currentKey].color}">${startLabel}</text>
+  <text x="${rx3 - 25}" y="${ry3 - 14}" fill="${exercises[currentKey].color}">${endLabel}</text>
+</svg>`;
+            document.getElementById('svgCodeOutput').textContent = code;
+        }
+
+        function hexToRgba(hex, alpha) {
+            if (hex.startsWith('#')) hex = hex.slice(1);
+            let r, g, b;
+            if (hex.length === 3) {
+                r = parseInt(hex[0]+hex[0], 16);
+                g = parseInt(hex[1]+hex[1], 16);
+                b = parseInt(hex[2]+hex[2], 16);
+            } else {
+                r = parseInt(hex.slice(0, 2), 16);
+                g = parseInt(hex.slice(2, 4), 16);
+                b = parseInt(hex.slice(4, 6), 16);
+            }
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        function saveCoordinates() {
+            // Save to localStorage so it persists locally
+            const sx = document.getElementById('startX').value;
+            const sy = document.getElementById('startY').value;
+            const cx = document.getElementById('controlX').value;
+            const cy = document.getElementById('controlY').value;
+            const ex = document.getElementById('endX').value;
+            const ey = document.getElementById('endY').value;
+            const startLabel = document.getElementById('startLabelInput').value;
+            const endLabel = document.getElementById('endLabelInput').value;
+
+            const key = `hud_${currentKey}`;
+            localStorage.setItem(key, JSON.stringify({
+                sx: Math.round(sx/2), sy: Math.round(sy/2),
+                cx: Math.round(cx/2), cy: Math.round(cy/2),
+                ex: Math.round(ex/2), ey: Math.round(ey/2),
+                startLabel, endLabel
+            }));
+
+            alert("座標パラメータを確定し、ブラウザのローカルストレージへ一時保存しました！\n（デプロイ用のJSON出力も可能です）");
+        }
+
+        function exportConfig() {
+            const sx = document.getElementById('startX').value;
+            const sy = document.getElementById('startY').value;
+            const cx = document.getElementById('controlX').value;
+            const cy = document.getElementById('controlY').value;
+            const ex = document.getElementById('endX').value;
+            const ey = document.getElementById('endY').value;
+            const startLabel = document.getElementById('startLabelInput').value;
+            const endLabel = document.getElementById('endLabelInput').value;
+
+            const config = {
+                exercise_id: currentKey,
+                start: [Math.round(sx/2), Math.round(sy/2)],
+                control: [Math.round(cx/2), Math.round(cy/2)],
+                end: [Math.round(ex/2), Math.round(ey/2)],
+                labels: { start: startLabel, end: endLabel }
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(config, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `hud_config_${currentKey}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        // Init
+        updateSVG();
+    </script>
+</body>
+</html>

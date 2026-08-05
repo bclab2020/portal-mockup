@@ -2466,14 +2466,21 @@
                             circle.setAttribute('cy', config.sy);
                         }
                         const texts = path.parentNode.querySelectorAll('text');
+                        
+                        // Load offsets if saved, else use defaults
+                        const sxo = config.sxo !== undefined ? config.sxo : (key === 'twist' ? -15 : (key === 'shoulder' ? -40 : -45));
+                        const syo = config.syo !== undefined ? config.syo : (key === 'twist' ? 18 : (key === 'shoulder' ? -4 : -5));
+                        const exo = config.exo !== undefined ? config.exo : (key === 'twist' ? -24 : (key === 'shoulder' ? 10 : 10));
+                        const eyo = config.eyo !== undefined ? config.eyo : (key === 'twist' ? -10 : (key === 'shoulder' ? -4 : -4));
+
                         if (texts[0]) {
-                            texts[0].setAttribute('x', config.sx - 15);
-                            texts[0].setAttribute('y', config.sy + 18);
+                            texts[0].setAttribute('x', config.sx + sxo);
+                            texts[0].setAttribute('y', config.sy + syo);
                             if (config.startLabel) texts[0].textContent = config.startLabel;
                         }
                         if (texts[1]) {
-                            texts[1].setAttribute('x', config.ex - 25);
-                            texts[1].setAttribute('y', config.ey - 10);
+                            texts[1].setAttribute('x', config.ex + exo);
+                            texts[1].setAttribute('y', config.ey + eyo);
                             if (config.endLabel) texts[1].textContent = config.endLabel;
                         }
                     });

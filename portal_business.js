@@ -182,6 +182,7 @@ function renderLatestHrvRemedies() {
                 </div>
                 <div id="breathingText" style="font-size:10px; font-weight:700; color:var(--text-primary); margin-top:10px; height:15px; letter-spacing:0.5px;">準備中...</div>
                 <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 4px 15px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
+                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 4px 15px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
             </div>
             <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(255,82,82,0.02); border:1px solid rgba(255,82,82,0.08); padding:8px; border-radius:6px;">
                 <strong>【姿勢・方向】</strong>背筋を伸ばし椅子に深く座り、息を吐きながら上体を右へゆっくりねじります。左手で背もたれを掴み、右手は椅子の座面後方を支えます。<br>
@@ -224,6 +225,7 @@ function renderLatestHrvRemedies() {
                     <div style="position:absolute; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow: 0 0 8px #fff;"></div>
                 </div>
                 <div id="breathingText" style="font-size:10px; font-weight:700; color:var(--text-primary); margin-top:10px; height:15px; letter-spacing:0.5px;">準備中...</div>
+                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 4px 15px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
                 <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 4px 15px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
             </div>
             <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(0,191,255,0.02); border:1px solid rgba(0,191,255,0.08); padding:8px; border-radius:6px;">

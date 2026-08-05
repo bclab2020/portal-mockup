@@ -573,11 +573,11 @@ const symptomExercises = {
         svgId: "arrow-red",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
-                <marker id="portal-arrow-red" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                <marker id="portal-arrow-red" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
                     <path d="M0,0 L0,6 L6,3 Z" fill="#ff5252"/>
                 </marker>
             </defs>
-            <path d="M 200 120 Q 150 135 112 112" fill="none" stroke="#ff5252" stroke-width="2.5" marker-end="url(#portal-arrow-red)" stroke-dasharray="4 2"/>
+            <path d="M 200 120 Q 150 135 112 112" fill="none" stroke="#ff5252" stroke-width="2.5" marker-start="url(#portal-arrow-red)" marker-end="url(#portal-arrow-red)" stroke-dasharray="4 2"/>
             <circle cx="200" cy="120" r="4.5" fill="#ff5252" stroke="#050c1c" stroke-width="1.5"/>
             <text x="185" y="138" fill="#ff5252" font-size="10" font-weight="700" font-family="monospace">START (正面)</text>
             <text x="88" y="102" fill="#ff5252" font-size="10" font-weight="700" font-family="monospace">END (ねじる)</text>
@@ -591,11 +591,11 @@ const symptomExercises = {
         svgId: "arrow-blue",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
-                <marker id="portal-arrow-blue" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                <marker id="portal-arrow-blue" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
                     <path d="M0,0 L0,6 L6,3 Z" fill="#00bfff"/>
                 </marker>
             </defs>
-            <path d="M 100 80 Q 157 80 214 80" fill="none" stroke="#00bfff" stroke-width="2.5" marker-end="url(#portal-arrow-blue)" stroke-dasharray="4 2"/>
+            <path d="M 100 80 Q 157 80 214 80" fill="none" stroke="#00bfff" stroke-width="2.5" marker-start="url(#portal-arrow-blue)" marker-end="url(#portal-arrow-blue)" stroke-dasharray="4 2"/>
             <circle cx="100" cy="80" r="4.5" fill="#00bfff" stroke="#050c1c" stroke-width="1.5"/>
             <text x="80" y="76" fill="#00bfff" font-size="10" font-weight="700" font-family="monospace">START (胸元)</text>
             <text x="224" y="76" fill="#00bfff" font-size="10" font-weight="700" font-family="monospace">END (指先を伸ばす)</text>
@@ -609,11 +609,11 @@ const symptomExercises = {
         svgId: "arrow-teal",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
-                <marker id="portal-arrow-teal" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                <marker id="portal-arrow-teal" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
                     <path d="M0,0 L0,6 L6,3 Z" fill="#64ffda"/>
                 </marker>
             </defs>
-            <path d="M 120 45 Q 140 52 148 76" fill="none" stroke="#64ffda" stroke-width="2.5" marker-end="url(#portal-arrow-teal)" stroke-dasharray="4 2"/>
+            <path d="M 120 45 Q 140 52 148 76" fill="none" stroke="#64ffda" stroke-width="2.5" marker-start="url(#portal-arrow-teal)" marker-end="url(#portal-arrow-teal)" stroke-dasharray="4 2"/>
             <circle cx="120" cy="45" r="4.5" fill="#64ffda" stroke="#050c1c" stroke-width="1.5"/>
             <text x="98" y="40" fill="#64ffda" font-size="10" font-weight="700" font-family="monospace">START (正面)</text>
             <text x="158" y="72" fill="#64ffda" font-size="10" font-weight="700" font-family="monospace">END (傾けてキープ)</text>
@@ -627,11 +627,11 @@ const symptomExercises = {
         svgId: "arrow-pink",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
-                <marker id="portal-arrow-pink" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                <marker id="portal-arrow-pink" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
                     <path d="M0,0 L0,6 L6,3 Z" fill="#ff44dd"/>
                 </marker>
             </defs>
-            <path d="M 125 50 Q 165 60 205 50" fill="none" stroke="#ff44dd" stroke-width="2.5" marker-end="url(#portal-arrow-pink)" stroke-dasharray="4 2"/>
+            <path d="M 125 50 Q 165 60 205 50" fill="none" stroke="#ff44dd" stroke-width="2.5" marker-start="url(#portal-arrow-pink)" marker-end="url(#portal-arrow-pink)" stroke-dasharray="4 2"/>
             <circle cx="125" cy="50" r="4.5" fill="#ff44dd" stroke="#050c1c" stroke-width="1.5"/>
             <text x="110" y="42" fill="#ff44dd" font-size="10" font-weight="700" font-family="monospace">START (組む)</text>
             <text x="210" y="42" fill="#ff44dd" font-size="10" font-weight="700" font-family="monospace">END (開く)</text>
@@ -645,11 +645,11 @@ const symptomExercises = {
         svgId: "arrow-orange",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
-                <marker id="portal-arrow-orange" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                <marker id="portal-arrow-orange" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
                     <path d="M0,0 L0,6 L6,3 Z" fill="#ffaa00"/>
                 </marker>
             </defs>
-            <path d="M 110 90 Q 160 90 210 90" fill="none" stroke="#ffaa00" stroke-width="2.5" marker-end="url(#portal-arrow-orange)" stroke-dasharray="4 2"/>
+            <path d="M 110 90 Q 160 90 210 90" fill="none" stroke="#ffaa00" stroke-width="2.5" marker-start="url(#portal-arrow-orange)" marker-end="url(#portal-arrow-orange)" stroke-dasharray="4 2"/>
             <circle cx="110" cy="90" r="4.5" fill="#ffaa00" stroke="#050c1c" stroke-width="1.5"/>
             <text x="90" y="85" fill="#ffaa00" font-size="10" font-weight="700" font-family="monospace">START (手首)</text>
             <text x="215" y="85" fill="#ffaa00" font-size="10" font-weight="700" font-family="monospace">END (引く)</text>
@@ -663,11 +663,11 @@ const symptomExercises = {
         svgId: "arrow-cyan",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
-                <marker id="portal-arrow-cyan" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                <marker id="portal-arrow-cyan" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
                     <path d="M0,0 L0,6 L6,3 Z" fill="#00e5ff"/>
                 </marker>
             </defs>
-            <path d="M 100 150 Q 150 170 200 190" fill="none" stroke="#00e5ff" stroke-width="2.5" marker-end="url(#portal-arrow-cyan)" stroke-dasharray="4 2"/>
+            <path d="M 100 150 Q 150 170 200 190" fill="none" stroke="#00e5ff" stroke-width="2.5" marker-start="url(#portal-arrow-cyan)" marker-end="url(#portal-arrow-cyan)" stroke-dasharray="4 2"/>
             <circle cx="100" cy="150" r="4.5" fill="#00e5ff" stroke="#050c1c" stroke-width="1.5"/>
             <text x="78" y="145" fill="#00e5ff" font-size="10" font-weight="700" font-family="monospace">START (股関節)</text>
             <text x="205" y="185" fill="#00e5ff" font-size="10" font-weight="700" font-family="monospace">END (伸ばす)</text>

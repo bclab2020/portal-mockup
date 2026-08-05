@@ -568,7 +568,7 @@ const symptomExercises = {
     twist: {
         title: "🧘 30秒・椅子ひねりストレッチ（自律神経・腰痛ケア）",
         desc: "<strong>【姿勢・方向】</strong>背筋をまっすぐ伸ばして椅子に深く腰掛け、上体を右へねじります。左手で背もたれを掴み、右手は椅子の座面後方を支えて固定します。<br><strong>【秒数】</strong>痛気持ちいいところでキープし、<strong>左右それぞれ15秒間（計30秒）</strong>行います。<br><strong>【呼吸法】</strong>ねじりながら息をゆっくり吐き出します。",
-        img: "stretch_twist_jp.jpg",
+        img: "stretch_twist_jp.jpg?v=1.0.1",
         color: "#ff5252",
         svgId: "arrow-red",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
@@ -586,7 +586,7 @@ const symptomExercises = {
     shoulder: {
         title: "🧘 肩・肩甲骨拡張ストレッチ（肩こり解消）",
         desc: "<strong>【姿勢・方向】</strong>右腕を左方向に真っ直ぐ伸ばし、左腕で右肘を抱え込むように胸に強く引き寄せます。肩甲骨が外側にしっかりと広がる感覚を意識します。<br><strong>【秒数】</strong>肩の奥が伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br><strong>【呼吸法】</strong>深く穏やかな胸式呼吸を繰り返します。",
-        img: "stretch_shoulder_jp.jpg",
+        img: "stretch_shoulder_jp.jpg?v=1.0.1",
         color: "#00bfff",
         svgId: "arrow-blue",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
@@ -604,7 +604,7 @@ const symptomExercises = {
     neck: {
         title: "🧘 首・肩・頚椎アライメントストレッチ（首こり・頭痛）",
         desc: "<strong>【姿勢・方向】</strong>背筋を伸ばし、右手を頭の左側に添え、頭をゆっくり右斜め前（45度方向）に傾けます。左肩が上がらないよう、意識して固定します。<br><strong>【秒数】</strong>首の左後ろが伸びる強さで、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br><strong>【呼吸法】</strong>息を細く長く吐き出しながら、じんわりと伸ばします。",
-        img: "stretch_neck_jp.jpg",
+        img: "stretch_neck_jp.jpg?v=1.0.1",
         color: "#64ffda",
         svgId: "arrow-teal",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
@@ -622,7 +622,7 @@ const symptomExercises = {
     chest: {
         title: "🧘 大胸筋チェストオープナー（巻き肩・猫背リセット）",
         desc: "<strong>【姿勢・方向】</strong>頭の後ろで両手を組み、息を吸いながら肘を大きく後ろに引きます。胸を天井に向けてしっかりと開きます。<br><strong>【秒数】</strong>胸の前の筋肉が心地よく広がる位置で、<strong>15秒間キープを2回</strong>行います。<br><strong>【呼吸法】</strong>胸いっぱいに息を吸い込み、吐きながらさらに深く開きます。",
-        img: "stretch_chest_jp.jpg",
+        img: "stretch_chest_jp.jpg?v=1.0.1",
         color: "#ff44dd",
         svgId: "arrow-pink",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
@@ -640,7 +640,7 @@ const symptomExercises = {
     wrist: {
         title: "🧘 手首・前腕ストレッチ（タイピング疲労軽減）",
         desc: "<strong>【姿勢・方向】</strong>腕を前に真っ直ぐ伸ばし、手のひらを前に向けます。反対の手で指先を手前に引き、前腕の内側を伸ばします。<br><strong>【秒数】</strong>手首から前腕が伸びる位置で、<strong>左右それぞれ15秒間</strong>キープします。<br><strong>【呼吸法】</strong>息を止めずに、リラックスして細く長い呼吸を続けます。",
-        img: "stretch_wrist_jp.jpg",
+        img: "stretch_wrist_jp.jpg?v=1.0.1",
         color: "#ffaa00",
         svgId: "arrow-orange",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
@@ -658,7 +658,7 @@ const symptomExercises = {
     hamstring: {
         title: "🧘 ハムストリングス伸ばし（足のむくみ・腰痛解消）",
         desc: "<strong>【姿勢・方向】</strong>片方の足を前に伸ばしてかかとを床につけます。背すじを伸ばしたまま、上体をゆっくり前に倒して太ももの裏を伸ばします。<br><strong>【秒数】</strong>もも裏が伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br><strong>【呼吸法】</strong>息を吐きながら上体を倒すと、効果的にストレッチできます。",
-        img: "stretch_hamstring_jp.jpg",
+        img: "stretch_hamstring_jp.jpg?v=1.0.1",
         color: "#00e5ff",
         svgId: "arrow-cyan",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">

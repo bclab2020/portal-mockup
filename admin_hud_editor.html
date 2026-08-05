@@ -238,6 +238,34 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label>STARTラベル位置オフセット (横 / 縦)</label>
+                <div class="slider-group">
+                    <div class="slider-control">
+                        <span>横オフセット (X)</span>
+                        <input type="range" id="startXOffset" min="-100" max="100" value="-15">
+                    </div>
+                    <div class="slider-control">
+                        <span>縦オフセット (Y)</span>
+                        <input type="range" id="startYOffset" min="-100" max="100" value="18">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>ENDラベル位置オフセット (横 / 縦)</label>
+                <div class="slider-group">
+                    <div class="slider-control">
+                        <span>横オフセット (X)</span>
+                        <input type="range" id="endXOffset" min="-100" max="100" value="-24">
+                    </div>
+                    <div class="slider-control">
+                        <span>縦オフセット (Y)</span>
+                        <input type="range" id="endYOffset" min="-100" max="100" value="-10">
+                    </div>
+                </div>
+            </div>
+
             <div class="panel-title" style="margin-top: 15px;">座標パラメータ (リアルタイム連動)</div>
             <div class="slider-group">
                 <div class="slider-control">
@@ -286,6 +314,8 @@
                 startX: 400, startY: 240,
                 controlX: 300, controlY: 270,
                 endX: 224, endY: 224,
+                startXOffset: -15, startYOffset: 18,
+                endXOffset: -24, endYOffset: -10,
                 startLabel: "START (正面)",
                 endLabel: "END (ねじる)"
             },
@@ -293,8 +323,10 @@
                 img: "stretch_shoulder_jp.jpg",
                 color: "#00bfff",
                 startX: 200, startY: 160,
-                controlX: 314, controlY: 160, // Straight line fallback
+                controlX: 314, controlY: 160,
                 endX: 428, endY: 160,
+                startXOffset: -40, startYOffset: -4,
+                endXOffset: 10, endYOffset: -4,
                 startLabel: "START (胸元)",
                 endLabel: "END (指先を伸ばす)"
             },
@@ -304,6 +336,8 @@
                 startX: 240, startY: 90,
                 controlX: 280, controlY: 104,
                 endX: 296, endY: 152,
+                startXOffset: -45, startYOffset: -5,
+                endXOffset: 10, endYOffset: -4,
                 startLabel: "START (正面)",
                 endLabel: "END (傾けてキープ)"
             }
@@ -412,6 +446,12 @@
                 updateSVG();
             });
         });
+        const offsetSliders = ['startXOffset', 'startYOffset', 'endXOffset', 'endYOffset'];
+        offsetSliders.forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                updateSVG();
+            });
+        });
 
         // Connect label inputs
         document.getElementById('startLabelInput').addEventListener('input', e => {
@@ -452,6 +492,11 @@
             pins.end.style.left = `${ex.endX}px`;
             pins.end.style.top = `${ex.endY}px`;
 
+            document.getElementById('startXOffset').value = ex.startXOffset;
+            document.getElementById('startYOffset').value = ex.startYOffset;
+            document.getElementById('endXOffset').value = ex.endXOffset;
+            document.getElementById('endYOffset').value = ex.endYOffset;
+
             document.getElementById('startLabelInput').value = ex.startLabel;
             document.getElementById('endLabelInput').value = ex.endLabel;
             startText.textContent = ex.startLabel;
@@ -471,11 +516,16 @@
             // Update SVG elements
             pathEl.setAttribute('d', `M ${sx} ${sy} Q ${cx} ${cy} ${ex} ${ey}`);
             
+            const sxo = document.getElementById('startXOffset').value;
+            const syo = document.getElementById('startYOffset').value;
+            const exo = document.getElementById('endXOffset').value;
+            const eyo = document.getElementById('endYOffset').value;
+
             // Positions labels relative to start and end points
-            startText.setAttribute('x', parseInt(sx) - 15);
-            startText.setAttribute('y', parseInt(sy) + 38);
-            endText.setAttribute('x', parseInt(ex) - 24);
-            endText.setAttribute('y', parseInt(ey) - 28);
+            startText.setAttribute('x', parseInt(sx) + parseInt(sxo) * 2);
+            startText.setAttribute('y', parseInt(sy) + parseInt(syo) * 2);
+            endText.setAttribute('x', parseInt(ex) + parseInt(exo) * 2);
+            endText.setAttribute('y', parseInt(ey) + parseInt(eyo) * 2);
 
             // Generate Output Markup
             // Convert coordinate scaling by dividing by 2 for the 330x220 container
@@ -489,8 +539,8 @@
             const code = `<svg>
   <path d="M ${rx1} ${ry1} Q ${rx2} ${ry2} ${rx3} ${ry3}" fill="none" stroke="${exercises[currentKey].color}" stroke-width="2.5" marker-end="url(#arrow)" stroke-dasharray="4 2"/>
   <circle cx="${rx1}" cy="${ry1}" r="4.5" fill="${exercises[currentKey].color}" stroke="#050c1c" stroke-width="1.5"/>
-  <text x="${rx1 - 20}" y="${ry1 + 18}" fill="${exercises[currentKey].color}">${startLabel}</text>
-  <text x="${rx3 - 25}" y="${ry3 - 14}" fill="${exercises[currentKey].color}">${endLabel}</text>
+  <text x="${rx1 + parseInt(sxo)}" y="${ry1 + parseInt(syo)}" fill="${exercises[currentKey].color}">${startLabel}</text>
+  <text x="${rx3 + parseInt(exo)}" y="${ry3 + parseInt(eyo)}" fill="${exercises[currentKey].color}">${endLabel}</text>
 </svg>`;
             document.getElementById('svgCodeOutput').textContent = code;
         }
@@ -522,10 +572,17 @@
             const endLabel = document.getElementById('endLabelInput').value;
 
             const key = `hud_${currentKey}`;
+            const sxo = document.getElementById('startXOffset').value;
+            const syo = document.getElementById('startYOffset').value;
+            const exo = document.getElementById('endXOffset').value;
+            const eyo = document.getElementById('endYOffset').value;
+
             localStorage.setItem(key, JSON.stringify({
                 sx: Math.round(sx/2), sy: Math.round(sy/2),
                 cx: Math.round(cx/2), cy: Math.round(cy/2),
                 ex: Math.round(ex/2), ey: Math.round(ey/2),
+                sxo: parseInt(sxo), syo: parseInt(syo),
+                exo: parseInt(exo), eyo: parseInt(eyo),
                 startLabel, endLabel
             }));
 
@@ -574,6 +631,10 @@
                         ex.controlY = config.cy * 2;
                         ex.endX = config.ex * 2;
                         ex.endY = config.ey * 2;
+                        if (config.sxo !== undefined) ex.startXOffset = config.sxo;
+                        if (config.syo !== undefined) ex.startYOffset = config.syo;
+                        if (config.exo !== undefined) ex.endXOffset = config.exo;
+                        if (config.eyo !== undefined) ex.endYOffset = config.eyo;
                         if (config.startLabel) ex.startLabel = config.startLabel;
                         if (config.endLabel) ex.endLabel = config.endLabel;
                     }

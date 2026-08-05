@@ -270,6 +270,7 @@ function renderLatestHrvRemedies() {
     if (document.getElementById('breathingBalloon')) {
         initBreathingGuide(statusText === '高' || latest.hrv < 30 ? "478" : "36");
     }
+    applyCustomHUDCoordinates();
 }
 
 // 3. Tab Management
@@ -511,3 +512,46 @@ window.toggleBreathingGuide = function() {
         breathingTimer = setInterval(runCycle, 1000);
     }
 };
+
+
+function applyCustomHUDCoordinates() {
+    const keys = ['twist', 'shoulder', 'neck'];
+    keys.forEach(key => {
+        const stored = localStorage.getItem(`hud_${key}`);
+        if (!stored) return;
+        try {
+            const config = JSON.parse(stored);
+            let pathSelector;
+            if (key === 'twist') {
+                pathSelector = 'path[marker-end="url(#arrow-red)"], path[marker-end="url(#portal-arrow-red)"]';
+            } else if (key === 'shoulder') {
+                pathSelector = 'path[marker-end="url(#arrow-blue)"], path[marker-end="url(#portal-arrow-blue)"]';
+            } else if (key === 'neck') {
+                pathSelector = 'path[marker-end="url(#arrow-teal)"], path[marker-end="url(#portal-arrow-teal)"]';
+            }
+            
+            const paths = document.querySelectorAll(pathSelector);
+            paths.forEach(path => {
+                path.setAttribute('d', `M ${config.sx} ${config.sy} Q ${config.cx} ${config.cy} ${config.ex} ${config.ey}`);
+                const circle = path.parentNode.querySelector('circle');
+                if (circle) {
+                    circle.setAttribute('cx', config.sx);
+                    circle.setAttribute('cy', config.sy);
+                }
+                const texts = path.parentNode.querySelectorAll('text');
+                if (texts[0]) {
+                    texts[0].setAttribute('x', config.sx - 15);
+                    texts[0].setAttribute('y', config.sy + 18);
+                    if (config.startLabel) texts[0].textContent = config.startLabel;
+                }
+                if (texts[1]) {
+                    texts[1].setAttribute('x', config.ex - 25);
+                    texts[1].setAttribute('y', config.ey - 10);
+                    if (config.endLabel) texts[1].textContent = config.endLabel;
+                }
+            });
+        } catch (e) {
+            console.error("Failed to apply custom HUD coordinate override:", key, e);
+        }
+    });
+}

@@ -562,3 +562,181 @@ function applyCustomHUDCoordinates() {
         }
     });
 }
+
+
+const symptomExercises = {
+    twist: {
+        title: "🧘 30秒・椅子ひねりストレッチ（自律神経・腰痛ケア）",
+        desc: "<strong>【姿勢・方向】</strong>背筋をまっすぐ伸ばして椅子に深く腰掛け、上体を右へねじります。左手で背もたれを掴み、右手は椅子の座面後方を支えて固定します。<br><strong>【秒数】</strong>痛気持ちいいところでキープし、<strong>左右それぞれ15秒間（計30秒）</strong>行います。<br><strong>【呼吸法】</strong>ねじりながら息をゆっくり吐き出します。",
+        img: "stretch_twist_jp.jpg",
+        color: "#ff5252",
+        svgId: "arrow-red",
+        defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
+            <defs>
+                <marker id="portal-arrow-red" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#ff5252"/>
+                </marker>
+            </defs>
+            <path d="M 200 120 Q 150 135 112 112" fill="none" stroke="#ff5252" stroke-width="2.5" marker-end="url(#portal-arrow-red)" stroke-dasharray="4 2"/>
+            <circle cx="200" cy="120" r="4.5" fill="#ff5252" stroke="#050c1c" stroke-width="1.5"/>
+            <text x="185" y="138" fill="#ff5252" font-size="10" font-weight="700" font-family="monospace">START (正面)</text>
+            <text x="88" y="102" fill="#ff5252" font-size="10" font-weight="700" font-family="monospace">END (ねじる)</text>
+        </svg>`
+    },
+    shoulder: {
+        title: "🧘 肩・肩甲骨拡張ストレッチ（肩こり解消）",
+        desc: "<strong>【姿勢・方向】</strong>右腕を左方向に真っ直ぐ伸ばし、左腕で右肘を抱え込むように胸に強く引き寄せます。肩甲骨が外側にしっかりと広がる感覚を意識します。<br><strong>【秒数】</strong>肩の奥が伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br><strong>【呼吸法】</strong>深く穏やかな胸式呼吸を繰り返します。",
+        img: "stretch_shoulder_jp.jpg",
+        color: "#00bfff",
+        svgId: "arrow-blue",
+        defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
+            <defs>
+                <marker id="portal-arrow-blue" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#00bfff"/>
+                </marker>
+            </defs>
+            <path d="M 100 80 Q 157 80 214 80" fill="none" stroke="#00bfff" stroke-width="2.5" marker-end="url(#portal-arrow-blue)" stroke-dasharray="4 2"/>
+            <circle cx="100" cy="80" r="4.5" fill="#00bfff" stroke="#050c1c" stroke-width="1.5"/>
+            <text x="80" y="76" fill="#00bfff" font-size="10" font-weight="700" font-family="monospace">START (胸元)</text>
+            <text x="224" y="76" fill="#00bfff" font-size="10" font-weight="700" font-family="monospace">END (指先を伸ばす)</text>
+        </svg>`
+    },
+    neck: {
+        title: "🧘 首・肩・頚椎アライメントストレッチ（首こり・頭痛）",
+        desc: "<strong>【姿勢・方向】</strong>背筋を伸ばし、右手を頭の左側に添え、頭をゆっくり右斜め前（45度方向）に傾けます。左肩が上がらないよう、意識して固定します。<br><strong>【秒数】</strong>首の左後ろが伸びる強さで、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br><strong>【呼吸法】</strong>息を細く長く吐き出しながら、じんわりと伸ばします。",
+        img: "stretch_neck_jp.jpg",
+        color: "#64ffda",
+        svgId: "arrow-teal",
+        defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
+            <defs>
+                <marker id="portal-arrow-teal" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#64ffda"/>
+                </marker>
+            </defs>
+            <path d="M 120 45 Q 140 52 148 76" fill="none" stroke="#64ffda" stroke-width="2.5" marker-end="url(#portal-arrow-teal)" stroke-dasharray="4 2"/>
+            <circle cx="120" cy="45" r="4.5" fill="#64ffda" stroke="#050c1c" stroke-width="1.5"/>
+            <text x="98" y="40" fill="#64ffda" font-size="10" font-weight="700" font-family="monospace">START (正面)</text>
+            <text x="158" y="72" fill="#64ffda" font-size="10" font-weight="700" font-family="monospace">END (傾けてキープ)</text>
+        </svg>`
+    },
+    chest: {
+        title: "🧘 大胸筋チェストオープナー（巻き肩・猫背リセット）",
+        desc: "<strong>【姿勢・方向】</strong>頭の後ろで両手を組み、息を吸いながら肘を大きく後ろに引きます。胸を天井に向けてしっかりと開きます。<br><strong>【秒数】</strong>胸の前の筋肉が心地よく広がる位置で、<strong>15秒間キープを2回</strong>行います。<br><strong>【呼吸法】</strong>胸いっぱいに息を吸い込み、吐きながらさらに深く開きます。",
+        img: "stretch_chest_jp.jpg",
+        color: "#ff44dd",
+        svgId: "arrow-pink",
+        defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
+            <defs>
+                <marker id="portal-arrow-pink" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#ff44dd"/>
+                </marker>
+            </defs>
+            <path d="M 125 50 Q 165 60 205 50" fill="none" stroke="#ff44dd" stroke-width="2.5" marker-end="url(#portal-arrow-pink)" stroke-dasharray="4 2"/>
+            <circle cx="125" cy="50" r="4.5" fill="#ff44dd" stroke="#050c1c" stroke-width="1.5"/>
+            <text x="110" y="42" fill="#ff44dd" font-size="10" font-weight="700" font-family="monospace">START (組む)</text>
+            <text x="210" y="42" fill="#ff44dd" font-size="10" font-weight="700" font-family="monospace">END (開く)</text>
+        </svg>`
+    },
+    wrist: {
+        title: "🧘 手首・前腕ストレッチ（タイピング疲労軽減）",
+        desc: "<strong>【姿勢・方向】</strong>腕を前に真っ直ぐ伸ばし、手のひらを前に向けます。反対の手で指先を手前に引き、前腕の内側を伸ばします。<br><strong>【秒数】</strong>手首から前腕が伸びる位置で、<strong>左右それぞれ15秒間</strong>キープします。<br><strong>【呼吸法】</strong>息を止めずに、リラックスして細く長い呼吸を続けます。",
+        img: "stretch_wrist_jp.jpg",
+        color: "#ffaa00",
+        svgId: "arrow-orange",
+        defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
+            <defs>
+                <marker id="portal-arrow-orange" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#ffaa00"/>
+                </marker>
+            </defs>
+            <path d="M 110 90 Q 160 90 210 90" fill="none" stroke="#ffaa00" stroke-width="2.5" marker-end="url(#portal-arrow-orange)" stroke-dasharray="4 2"/>
+            <circle cx="110" cy="90" r="4.5" fill="#ffaa00" stroke="#050c1c" stroke-width="1.5"/>
+            <text x="90" y="85" fill="#ffaa00" font-size="10" font-weight="700" font-family="monospace">START (手首)</text>
+            <text x="215" y="85" fill="#ffaa00" font-size="10" font-weight="700" font-family="monospace">END (引く)</text>
+        </svg>`
+    },
+    hamstring: {
+        title: "🧘 ハムストリングス伸ばし（足のむくみ・腰痛解消）",
+        desc: "<strong>【姿勢・方向】</strong>片方の足を前に伸ばしてかかとを床につけます。背すじを伸ばしたまま、上体をゆっくり前に倒して太ももの裏を伸ばします。<br><strong>【秒数】</strong>もも裏が伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br><strong>【呼吸法】</strong>息を吐きながら上体を倒すと、効果的にストレッチできます。",
+        img: "stretch_hamstring_jp.jpg",
+        color: "#00e5ff",
+        svgId: "arrow-cyan",
+        defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
+            <defs>
+                <marker id="portal-arrow-cyan" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#00e5ff"/>
+                </marker>
+            </defs>
+            <path d="M 100 150 Q 150 170 200 190" fill="none" stroke="#00e5ff" stroke-width="2.5" marker-end="url(#portal-arrow-cyan)" stroke-dasharray="4 2"/>
+            <circle cx="100" cy="150" r="4.5" fill="#00e5ff" stroke="#050c1c" stroke-width="1.5"/>
+            <text x="78" y="145" fill="#00e5ff" font-size="10" font-weight="700" font-family="monospace">START (股関節)</text>
+            <text x="205" y="185" fill="#00e5ff" font-size="10" font-weight="700" font-family="monospace">END (伸ばす)</text>
+        </svg>`
+    }
+};
+
+function switchSymptom(key) {
+    const activeExerciseCard = document.getElementById('activeExerciseCard');
+    if (!activeExerciseCard) return;
+    
+    document.querySelectorAll('.symptom-tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.id === `btn-symptom-${key}`) {
+            btn.classList.add('active');
+        }
+    });
+
+    const ex = symptomExercises[key];
+    if (!ex) return;
+
+    activeExerciseCard.style.opacity = 0;
+    
+    setTimeout(() => {
+        activeExerciseCard.innerHTML = `
+            <div style="font-size:12px; font-weight:700; color:${ex.color}; margin-bottom:8px;">${ex.title}</div>
+            <div class="exercise-flex-layout" style="display:flex; gap:15px; align-items:stretch; margin-top:8px;">
+                <div style="flex:1; font-size:11px; color:var(--text-secondary); line-height:1.6; background:${ex.color}05; border:1px solid ${ex.color}15; padding:12px; border-radius:8px; display:flex; flex-direction:column; justify-content:center;">
+                    ${ex.desc}
+                </div>
+                <div style="flex:1; position:relative; border-radius:8px; overflow:hidden; border:1px solid ${ex.color}; box-shadow: 0 0 15px ${ex.color}40; min-height:220px;">
+                    <img src="${ex.img}" style="width:100%; height:100%; object-fit:cover; display:block;">
+                    ${ex.defaultSVG}
+                </div>
+            </div>
+        `;
+        activeExerciseCard.style.opacity = 1;
+        applyCustomHUDCoordinates();
+    }, 150);
+}
+
+
+// Inject symptom tabs stylesheet dynamically
+(function() {
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .symptom-tab-btn {
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        .symptom-tab-btn:hover {
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+            border-color: rgba(255,255,255,0.15);
+        }
+        .symptom-tab-btn.active {
+            background: linear-gradient(45deg, rgba(100,255,218,0.15), rgba(0,191,255,0.15));
+            color: var(--accent-teal);
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 10px rgba(100,255,218,0.15);
+        }
+    `;
+    document.head.appendChild(style);
+})();

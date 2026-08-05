@@ -559,8 +559,32 @@
             downloadAnchor.remove();
         }
 
+        // Load custom overrides from localStorage on page load
+        const overrideKeys = ['twist', 'shoulder', 'neck'];
+        overrideKeys.forEach(key => {
+            const stored = localStorage.getItem(`hud_${key}`);
+            if (stored) {
+                try {
+                    const config = JSON.parse(stored);
+                    const ex = exercises[key];
+                    if (ex && config) {
+                        ex.startX = config.sx * 2;
+                        ex.startY = config.sy * 2;
+                        ex.controlX = config.cx * 2;
+                        ex.controlY = config.cy * 2;
+                        ex.endX = config.ex * 2;
+                        ex.endY = config.ey * 2;
+                        if (config.startLabel) ex.startLabel = config.startLabel;
+                        if (config.endLabel) ex.endLabel = config.endLabel;
+                    }
+                } catch (e) {
+                    console.error("Failed to load local config on editor init:", key, e);
+                }
+            }
+        });
+
         // Init
-        updateSVG();
+        changeExercise();
     </script>
 </body>
 </html>

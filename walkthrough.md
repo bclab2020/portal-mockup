@@ -111,6 +111,10 @@
     *   **モバイルレスポンシブ**: スマートフォンなどの縦画面時は、メディアクエリ（`max-width: 768px`）により自動的に縦1カラムへフォールバックする設計。
 *   10. **エクササイズビジュアルガイドの方向ルールの永続化 [NEW]**
     *   **ルール化**: 今後の機能拡張時にAIエージェントが同じ描画ロジックを逸脱しないよう、本プロジェクトのカスタム設計原則を記述した [exercise_rules.md](file:///C:/Users/ke/Desktop/portal-mockup/.agents/rules/exercise_rules.md) を作成・保存。
+*   11. **管理画面統合型 HUDアライメント座標エディタの開発＆連携 [NEW]**
+    *   **ドラッグ＆ドロップ座標エディタ**: 管理画面から視覚的にストレッチガイドの矢印を微調整できる [admin_hud_editor.html](file:///C:/Users/ke/Desktop/portal-mockup/admin_hud_editor.html) を開発。開始点・中継点・終了点のアンカーピンをマウス/タッチ操作で直接ドラッグして、2次ベジェ曲線の矢印パスをリアルタイムに再描画・調整可能。
+    *   **管理画面への統合**: 管理画面 [admin.html](file:///C:/Users/ke/Desktop/portal-mockup/admin.html) のヘッダーアクション部分に `✨ HUD矢印エディタ` ボタンを配置し、ワンクリックで起動できるように連携。
+    *   **リアルタイム反映ロジック**: 確定した座標データを `localStorage` に保存し、測定結果画面 [face_analyzer_business.html](file:///C:/Users/ke/Desktop/portal-mockup/face_analyzer_business.html) およびダッシュボード [portal_business.js](file:///C:/Users/ke/Desktop/portal-mockup/portal_business.js) が起動時に動的読み込みしてSVGオーバーレイを書き換える「ライブ連携機能」を開発・実装。
 *   **[articles_db.json](file:///C:/Users/ke/Desktop/portal-mockup/articles_db.json)** : 専門家監修の高品質な記事データ（3日分・計45記事分）を格納したデータベース。
 *   **[daily_publisher.py](file:///C:/Users/ke/Desktop/portal-mockup/daily_publisher.py)** : 実行されるたびに本日の追加分を `index.html` に自動挿入し、自動的に `git commit & push` を実行してデプロイするコアスクリプト。
 *   **[setup_daily_task.ps1](file:///C:/Users/ke/Desktop/portal-mockup/setup_daily_task.ps1)** : Windows の「タスクスケジューラ」に上記パブリッシャーを毎日午前9:00に自動実行するように登録するPowerShellスクリプト。

@@ -609,7 +609,7 @@
             const endLabel = document.getElementById('endLabelInput').value;
 
             const code = `<svg>
-  <path d="M ${rx1} ${ry1} Q ${rx2} ${ry2} ${rx3} ${ry3}" fill="none" stroke="${exercises[currentKey].color}" stroke-width="2.5" marker-end="url(#arrow)" stroke-dasharray="4 2"/>
+  <path d="M ${rx1} ${ry1} Q ${rx2} ${ry2} ${rx3} ${ry3}" fill="none" stroke="${exercises[currentKey].color}" stroke-width="2.5" marker-start="url(#arrow)" marker-end="url(#arrow)" stroke-dasharray="4 2"/>
   <circle cx="${rx1}" cy="${ry1}" r="4.5" fill="${exercises[currentKey].color}" stroke="#050c1c" stroke-width="1.5"/>
   <text x="${rx1 + parseInt(sxo)}" y="${ry1 + parseInt(syo)}" fill="${exercises[currentKey].color}">${startLabel}</text>
   <text x="${rx3 + parseInt(exo)}" y="${ry3 + parseInt(eyo)}" fill="${exercises[currentKey].color}">${endLabel}</text>

@@ -227,6 +227,12 @@
                     <option value="twist">椅子ひねり（要注意・高ストレス）</option>
                     <option value="shoulder">肩甲骨拡張（通常・肩こり）</option>
                     <option value="neck">首の傾げ（良好・首こり）</option>
+                    <option value="chest">チェストオープナー（猫背・巻き肩）</option>
+                    <option value="wrist">手首・前腕ストレッチ（腕の疲労）</option>
+                    <option value="hamstring">ハムストリングス伸ばし（足のむくみ）</option>
+                    <option value="catcow">キャット＆カウ（背骨ほぐし）</option>
+                    <option value="shrug">肩すくめ＆脱力（首肩の緊張）</option>
+                    <option value="eyes">眼球ストレッチ（眼精疲労）</option>
                 </select>
             </div>
 
@@ -340,6 +346,72 @@
                 endXOffset: 10, endYOffset: -4,
                 startLabel: "START (正面)",
                 endLabel: "END (傾けてキープ)"
+            },
+            chest: {
+                img: "stretch_chest_jp.jpg",
+                color: "#ff44dd",
+                startX: 250, startY: 100,
+                controlX: 330, controlY: 120,
+                endX: 410, endY: 100,
+                startXOffset: -30, startYOffset: -15,
+                endXOffset: 10, endYOffset: -15,
+                startLabel: "START (組む)",
+                endLabel: "END (開く)"
+            },
+            wrist: {
+                img: "stretch_wrist_jp.jpg",
+                color: "#ffaa00",
+                startX: 220, startY: 180,
+                controlX: 320, controlY: 180,
+                endX: 420, endY: 180,
+                startXOffset: -40, startYOffset: -10,
+                endXOffset: 10, endYOffset: -10,
+                startLabel: "START (手首)",
+                endLabel: "END (引く)"
+            },
+            hamstring: {
+                img: "stretch_hamstring_jp.jpg",
+                color: "#00e5ff",
+                startX: 200, startY: 300,
+                controlX: 300, controlY: 340,
+                endX: 400, endY: 380,
+                startXOffset: -45, startYOffset: -10,
+                endXOffset: 10, endYOffset: -10,
+                startLabel: "START (股関節)",
+                endLabel: "END (伸ばす)"
+            },
+            catcow: {
+                img: "stretch_catcow_jp.jpg",
+                color: "#76ff03",
+                startX: 330, startY: 100,
+                controlX: 280, controlY: 190,
+                endX: 330, endY: 280,
+                startXOffset: 15, startYOffset: 0,
+                endXOffset: 15, endYOffset: 0,
+                startLabel: "START (背中上)",
+                endLabel: "END (骨盤後傾)"
+            },
+            shrug: {
+                img: "stretch_shrug_jp.jpg",
+                color: "#ffeb3b",
+                startX: 330, startY: 200,
+                controlX: 330, controlY: 150,
+                endX: 330, endY: 100,
+                startXOffset: 15, startYOffset: 0,
+                endXOffset: 15, endYOffset: 0,
+                startLabel: "START (脱力)",
+                endLabel: "END (すくめる)"
+            },
+            eyes: {
+                img: "stretch_eyes_jp.jpg",
+                color: "#e040fb",
+                startX: 300, startY: 150,
+                controlX: 330, controlY: 110,
+                endX: 360, endY: 150,
+                startXOffset: -30, startYOffset: -15,
+                endXOffset: 10, endYOffset: -15,
+                startLabel: "START (遠く)",
+                endLabel: "END (閉じる)"
             }
         };
 
@@ -617,7 +689,7 @@
         }
 
         // Load custom overrides from localStorage on page load
-        const overrideKeys = ['twist', 'shoulder', 'neck'];
+        const overrideKeys = ['twist', 'shoulder', 'neck', 'chest', 'wrist', 'hamstring', 'catcow', 'shrug', 'eyes'];
         overrideKeys.forEach(key => {
             const stored = localStorage.getItem(`hud_${key}`);
             if (stored) {

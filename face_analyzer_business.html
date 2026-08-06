@@ -1034,7 +1034,7 @@
             }
 
             const urlParams = new URLSearchParams(window.location.search);
-            const vertical = urlParams.get('vertical') || 'beauty';
+            const vertical = urlParams.get('vertical') || 'health';
             const isHealthMode = (vertical === 'health' || vertical === 'sports');
             
             if (isHealthMode) {
@@ -2114,7 +2114,7 @@
             renderMakeupAdvice();
             
             const urlParams = new URLSearchParams(window.location.search);
-            const vertical = urlParams.get('vertical') || 'beauty';
+            const vertical = urlParams.get('vertical') || 'health';
             if (vertical === 'health' || vertical === 'sports') {
                 appStatusBar.innerText = "診断完了！分析レポートと生活習慣改善アドバイスを確認してください。";
             } else {
@@ -2277,7 +2277,7 @@
             }
 
             const urlParams = new URLSearchParams(window.location.search);
-            const vertical = urlParams.get('vertical') || 'beauty';
+            const vertical = urlParams.get('vertical') || 'health';
 
             if (vertical === 'health' || vertical === 'sports') {
                 guideTitle.innerText = healthTitle;

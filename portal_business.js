@@ -733,6 +733,11 @@ function switchSymptom(key) {
     const activeExerciseCard = document.getElementById('activeExerciseCard');
     if (!activeExerciseCard) return;
     
+    // Stop any running eye game session when switching tabs
+    if (typeof resetEyeTrackingSession === 'function') {
+        resetEyeTrackingSession();
+    }
+
     document.querySelectorAll('.symptom-tab-btn').forEach(btn => {
         btn.classList.remove('active');
         if (btn.id === `btn-symptom-${key}`) {
@@ -746,6 +751,50 @@ function switchSymptom(key) {
     activeExerciseCard.style.opacity = 0;
     
     setTimeout(() => {
+        const isEyeGame = (key === 'eyes');
+        let rightColumnHtml = '';
+        
+        if (isEyeGame) {
+            rightColumnHtml = `
+                <div class="eye-tracker-game-container" style="position:relative; width:100%; height:100%; min-height:220px; background:#050c1c; display:flex; flex-direction:column; align-items:center; justify-content:center; box-sizing:border-box; padding:10px;">
+                    <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(100,255,218,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(100,255,218,0.04) 1px, transparent 1px); background-size:15px 15px; pointer-events:none; z-index:1;"></div>
+                    <div id="eyeTargetBall" style="position:absolute; top:50%; left:50%; width:16px; height:16px; margin-left:-8px; margin-top:-8px; border-radius:50%; background:radial-gradient(circle, #64ffda 0%, rgba(100,255,218,0.6) 60%, transparent 100%); box-shadow: 0 0 15px #64ffda; z-index:5; transform: translate(0, 0); transition: transform 0.05s linear, width 0.2s, height 0.2s, margin-left 0.2s, margin-top 0.2s; display:none;"></div>
+                    
+                    <div id="eyeGameStatus" style="z-index:2; text-align:center; padding:10px;">
+                        <div style="font-size:13px; font-weight:800; color:var(--accent-teal); margin-bottom:8px;">👀 眼筋ストレッチ・ガイド</div>
+                        <div style="font-size:10px; color:var(--text-secondary); max-width:240px; line-height:1.5; margin-bottom:12px;">
+                            画面中央からスタートするグリーンの光を、頭を動かさずに目だけで追ってください。
+                        </div>
+                        <button id="startEyeGameBtn" onclick="startEyeTrackingSession()" style="padding:6px 20px; font-size:11px; font-weight:700; color:#050c1c; background:var(--accent-teal); border:none; border-radius:20px; cursor:pointer; box-shadow: 0 0 10px rgba(100,255,218,0.3); transition:all 0.2s; font-family:inherit;">
+                            ▶ セッションを開始する
+                        </button>
+                    </div>
+                    
+                    <div id="eyeGameInstruct" style="position:absolute; top:12px; left:12px; right:12px; z-index:2; font-size:10px; font-weight:700; color:var(--text-primary); background:rgba(5,12,28,0.85); border:1px solid rgba(100,255,218,0.2); padding:6px 10px; border-radius:6px; text-align:center; display:none;">
+                        準備中...
+                    </div>
+                    
+                    <div id="eyeGameTimer" style="position:absolute; bottom:12px; right:12px; z-index:2; font-size:10px; font-weight:700; font-family:monospace; color:var(--accent-teal); background:rgba(5,12,28,0.8); padding:3px 6px; border-radius:4px; border:1px solid rgba(100,255,218,0.15); display:none;">
+                        30.0s
+                    </div>
+                    
+                    <div id="eyeGameDone" style="z-index:2; text-align:center; display:none; padding:10px;">
+                        <div style="font-size:24px; margin-bottom:8px;">🎉</div>
+                        <div style="font-size:12px; font-weight:700; color:var(--accent-teal); margin-bottom:6px;">眼筋リフレッシュ完了！</div>
+                        <div style="font-size:10px; color:var(--text-secondary); margin-bottom:12px;">目の周りのピント調整筋の緊張がほぐれました。</div>
+                        <button onclick="resetEyeTrackingSession()" style="padding:4px 15px; font-size:10px; font-weight:700; color:var(--text-secondary); background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:15px; cursor:pointer; font-family:inherit;">
+                            もう一度行う
+                        </button>
+                    </div>
+                </div>
+            `;
+        } else {
+            rightColumnHtml = `
+                <img src="${ex.img}" style="width:100%; height:100%; object-fit:cover; display:block;">
+                ${ex.defaultSVG}
+            `;
+        }
+
         activeExerciseCard.innerHTML = `
             <div style="font-size:12px; font-weight:700; color:${ex.color}; margin-bottom:8px;">${ex.title}</div>
             <div class="exercise-flex-layout" style="display:flex; gap:15px; align-items:stretch; margin-top:8px;">
@@ -753,13 +802,14 @@ function switchSymptom(key) {
                     ${ex.desc}
                 </div>
                 <div style="flex:1; position:relative; border-radius:8px; overflow:hidden; border:1px solid ${ex.color}; box-shadow: 0 0 15px ${ex.color}40; min-height:220px;">
-                    <img src="${ex.img}" style="width:100%; height:100%; object-fit:cover; display:block;">
-                    ${ex.defaultSVG}
+                    ${rightColumnHtml}
                 </div>
             </div>
         `;
         activeExerciseCard.style.opacity = 1;
-        applyCustomHUDCoordinates();
+        if (!isEyeGame) {
+            applyCustomHUDCoordinates();
+        }
     }, 150);
 }
 
@@ -794,3 +844,121 @@ function switchSymptom(key) {
     `;
     document.head.appendChild(style);
 })();
+
+
+// ----------------------------------------------------
+// Eye Tracking Game Gamification Engine for Portal
+// ----------------------------------------------------
+let eyeGameActive = false;
+let eyeGameTimerId = null;
+let eyeGameStartTime = 0;
+let eyeGameDuration = 30000;
+
+function startEyeTrackingSession() {
+    if (eyeGameActive) return;
+    eyeGameActive = true;
+    
+    const statusDiv = document.getElementById('eyeGameStatus');
+    const instructDiv = document.getElementById('eyeGameInstruct');
+    const timerDiv = document.getElementById('eyeGameTimer');
+    const ball = document.getElementById('eyeTargetBall');
+    const doneDiv = document.getElementById('eyeGameDone');
+    
+    if (statusDiv) statusDiv.style.display = 'none';
+    if (doneDiv) doneDiv.style.display = 'none';
+    if (instructDiv) instructDiv.style.display = 'block';
+    if (timerDiv) timerDiv.style.display = 'block';
+    if (ball) ball.style.display = 'block';
+    
+    eyeGameStartTime = performance.now();
+    
+    function drawFrame(now) {
+        if (!eyeGameActive) return;
+        const elapsed = now - eyeGameStartTime;
+        const pct = elapsed / eyeGameDuration;
+        
+        if (pct >= 1.0) {
+            endEyeTrackingSession();
+            return;
+        }
+        
+        if (timerDiv) {
+            timerDiv.textContent = ((eyeGameDuration - elapsed) / 1000).toFixed(1) + 's';
+        }
+        
+        let x = 0;
+        let y = 0;
+        let scale = 1.0;
+        let instruct = "";
+        
+        const phase = Math.floor(pct * 4);
+        if (phase === 0) {
+            const subPct = (pct * 4) % 1.0;
+            y = Math.sin(subPct * Math.PI * 2) * 60;
+            instruct = "【上下ストレッチ】頭を動かさず、緑の光を上下に追ってください";
+        } else if (phase === 1) {
+            const subPct = (pct * 4) % 1.0;
+            x = Math.sin(subPct * Math.PI * 2) * 90;
+            instruct = "【左右ストレッチ】ボールの左右の水平な動きを目だけで追います";
+        } else if (phase === 2) {
+            const subPct = (pct * 4) % 1.0;
+            const angle = subPct * Math.PI * 2;
+            x = Math.cos(angle) * 80;
+            y = Math.sin(angle) * 50;
+            instruct = "【眼球円ローリング】大きく滑らかに円を描くように目を回します";
+        } else {
+            const subPct = (pct * 4) % 1.0;
+            scale = 1.0 + Math.sin(subPct * Math.PI * 3) * 0.7;
+            const angle = subPct * Math.PI * 2;
+            x = Math.sin(angle * 2) * 30;
+            instruct = "【遠近フォーカス】ボールのサイズ（遠近）変化に合わせてピントを合わせます";
+        }
+        
+        if (instructDiv) instructDiv.innerHTML = `🧘 ${instruct}`;
+        if (ball) {
+            ball.style.transform = `translate(${x}px, ${y}px)`;
+            const baseSize = 16;
+            const currentSize = Math.max(8, baseSize * scale);
+            ball.style.width = `${currentSize}px`;
+            ball.style.height = `${currentSize}px`;
+            ball.style.marginLeft = `-${currentSize/2}px`;
+            ball.style.marginTop = `-${currentSize/2}px`;
+        }
+        
+        eyeGameTimerId = requestAnimationFrame(drawFrame);
+    }
+    
+    eyeGameTimerId = requestAnimationFrame(drawFrame);
+}
+
+function endEyeTrackingSession() {
+    eyeGameActive = false;
+    cancelAnimationFrame(eyeGameTimerId);
+    
+    const instructDiv = document.getElementById('eyeGameInstruct');
+    const timerDiv = document.getElementById('eyeGameTimer');
+    const ball = document.getElementById('eyeTargetBall');
+    const doneDiv = document.getElementById('eyeGameDone');
+    
+    if (instructDiv) instructDiv.style.display = 'none';
+    if (timerDiv) timerDiv.style.display = 'none';
+    if (ball) ball.style.display = 'none';
+    if (doneDiv) doneDiv.style.display = 'block';
+}
+
+function resetEyeTrackingSession() {
+    eyeGameActive = false;
+    cancelAnimationFrame(eyeGameTimerId);
+    
+    const statusDiv = document.getElementById('eyeGameStatus');
+    const instructDiv = document.getElementById('eyeGameInstruct');
+    const timerDiv = document.getElementById('eyeGameTimer');
+    const ball = document.getElementById('eyeTargetBall');
+    const doneDiv = document.getElementById('eyeGameDone');
+    
+    if (statusDiv) statusDiv.style.display = 'block';
+    if (instructDiv) instructDiv.style.display = 'none';
+    if (timerDiv) timerDiv.style.display = 'none';
+    if (ball) ball.style.display = 'none';
+    if (doneDiv) doneDiv.style.display = 'none';
+}

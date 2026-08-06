@@ -2337,22 +2337,93 @@
                         </div>
                     `;
 
+                    const breathingHtml = healthExercises[0];
                     leftSideContainer.innerHTML = `
-                        <div class="glass-card" style="border: 1px solid rgba(100, 255, 218, 0.25); background: rgba(10, 20, 42, 0.45); padding: 20px; border-radius: 12px; box-shadow: 0 0 25px rgba(100, 255, 218, 0.05); margin-top: 15px;">
-                            <div style="font-size:13px; font-weight:800; color:var(--accent-teal); border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:10px; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
-                                🧘 <span style="background:linear-gradient(45deg, var(--accent-teal), var(--accent-blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800;">推奨セルフリフレッシュ（自律神経調整 ＆ 骨格アライメント改善）</span>
-                            </div>
+                        <div style="display:flex; flex-direction:column; gap:20px; margin-top:15px; width:100%;">
                             
-                            <div class="exercises-split-layout" style="display:flex; gap:20px; align-items:stretch;">
-                                <div style="flex:1; background:rgba(255,255,255,0.01); border:1px solid rgba(255,255,255,0.04); padding:15px; border-radius:8px; display:flex; flex-direction:column; justify-content:center; box-sizing:border-box;">
-                                    ${breathingOrEyeHtml}
+                            <!-- 1段目: 呼吸アプローチ -->
+                            <div class="glass-card" style="border: 1px solid rgba(100, 255, 218, 0.25); background: rgba(10, 20, 42, 0.45); padding: 25px; border-radius: 12px; box-shadow: 0 0 25px rgba(100, 255, 218, 0.05); width:100%; box-sizing:border-box;">
+                                <div style="font-size:15px; font-weight:800; color:var(--accent-teal); border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:10px; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
+                                    🧘 <span style="background:linear-gradient(45deg, var(--accent-teal), var(--accent-blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800;">1. 自律神経調整・呼吸アプローチ (深呼吸セッション)</span>
                                 </div>
-                                <div style="flex:1.3; background:rgba(255,255,255,0.01); border:1px solid rgba(255,255,255,0.04); padding:15px; border-radius:8px; box-sizing:border-box;">
-                                    ${stretchesSelectorHtml}
+                                <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:25px; background:rgba(100,255,218,0.02); border:1px dashed rgba(100,255,218,0.15); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
+                                    <div style="font-size:12px; color:var(--accent-teal); font-weight:700; margin-bottom:15px; letter-spacing:0.5px;">🧘 呼吸ガイド（バルーンの伸縮と同調してください）</div>
+                                    <div style="width:160px; height:160px; display:flex; align-items:center; justify-content:center; position:relative;">
+                                        <div id="breathingBalloon" style="width:50px; height:50px; border-radius:50%; background:radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%); box-shadow: 0 0 35px var(--accent-teal); transition: all 1.5s ease-in-out;"></div>
+                                        <div style="position:absolute; width:20px; height:20px; border-radius:50%; background:#fff; box-shadow: 0 0 12px #fff;"></div>
+                                    </div>
+                                    <div id="breathingText" style="font-size:14px; font-weight:700; color:var(--text-primary); margin-top:15px; height:20px; letter-spacing:0.5px;">準備中...</div>
+                                    <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 15px; padding: 8px 30px; font-size: 12px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
+                                </div>
+                            </div>
+
+                            <!-- 2段目: 眼球運動（常時表示、大きく） -->
+                            <div class="glass-card" style="border: 1px solid rgba(100, 255, 218, 0.25); background: rgba(10, 20, 42, 0.45); padding: 25px; border-radius: 12px; box-shadow: 0 0 25px rgba(100, 255, 218, 0.05); width:100%; box-sizing:border-box;">
+                                <div style="font-size:15px; font-weight:800; color:var(--accent-blue); border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:10px; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
+                                    👀 <span style="background:linear-gradient(45deg, var(--accent-blue), var(--accent-teal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800;">2. 眼精疲労緩和・眼球運動トレーニングゲーム</span>
+                                </div>
+                                <div class="eye-tracker-game-container" style="display:flex; flex-direction:column; align-items:center; padding:15px; background:rgba(0,191,255,0.02); border:1px dashed rgba(0,191,255,0.15); border-radius:8px; width:100%; box-sizing:border-box;">
+                                    <div style="font-size:12px; color:var(--accent-blue); font-weight:700; margin-bottom:12px; text-align:center;">頭を動かさず、グリーンの追従ターゲットを目で追いかけてください</div>
+                                    <div style="position:relative; width:100%; max-width:640px; height:280px; background:#050c1c; border:1px solid rgba(0,191,255,0.2); border-radius:8px; overflow:hidden; box-shadow: inset 0 0 20px rgba(0,191,255,0.2);">
+                                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,191,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,255,0.05) 1px, transparent 1px); background-size:20px 20px; pointer-events:none;"></div>
+                                        <canvas id="eyeGameCanvas" width="640" height="280" style="width:100%; height:100%; display:block;"></canvas>
+                                        <div id="eyeGameHudText" style="position:absolute; top:12px; left:12px; font-family:monospace; font-size:11px; color:#64ffda; font-weight:700; text-shadow: 0 0 5px #64ffda;">TARGET TRACKER: STANDBY</div>
+                                        <div id="eyeGameTimerText" style="position:absolute; top:12px; right:12px; font-family:monospace; font-size:11px; color:#ffaa00; font-weight:700; text-shadow: 0 0 5px #ffaa00;">TIME: --s</div>
+                                    </div>
+                                    <button id="eyeGameBtn" onclick="toggleEyeGame()" style="margin-top:15px; padding:8px 30px; font-size:12px; font-weight:700; border-radius:20px; border:1px solid var(--accent-blue); color:var(--accent-blue); background:rgba(0,191,255,0.06); cursor:pointer; transition:all 0.2s;">▶ セッションを開始する</button>
+                                </div>
+                            </div>
+
+                            <!-- 3段目: 骨格アライメント改善ストレッチ（大きく、眼精疲労は削除） -->
+                            <div class="glass-card" style="border: 1px solid rgba(100, 255, 218, 0.25); background: rgba(10, 20, 42, 0.45); padding: 25px; border-radius: 12px; box-shadow: 0 0 25px rgba(100, 255, 218, 0.05); width:100%; box-sizing:border-box;">
+                                <div style="font-size:15px; font-weight:800; color:var(--accent-teal); border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:10px; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
+                                    🧘 <span style="background:linear-gradient(45deg, var(--accent-teal), var(--accent-blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800;">3. 肩甲骨・頚椎骨格アライメント改善ストレッチ</span>
+                                </div>
+                                <div class="symptom-selector-widget">
+                                    <div style="font-size:12px; font-weight:700; color:var(--text-primary); margin-bottom:12px; display:flex; align-items:center; gap:6px;">
+                                        🧘 <span style="background:linear-gradient(45deg, var(--accent-teal), var(--accent-blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800; font-size:12px;">お悩み部位から選ぶデスクストレッチ（アライメントガイド）</span>
+                                    </div>
+                                    
+                                    <div class="symptom-tabs-container" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;">
+                                        <button class="symptom-tab-btn" onclick="switchSymptom('twist')" id="btn-symptom-twist">腰痛・背骨</button>
+                                        <button class="symptom-tab-btn" onclick="switchSymptom('shoulder')" id="btn-symptom-shoulder">肩こり・猫背</button>
+                                        <button class="symptom-tab-btn" onclick="switchSymptom('neck')" id="btn-symptom-neck">首こり・頭痛</button>
+                                        <button class="symptom-tab-btn" onclick="switchSymptom('chest')" id="btn-symptom-chest">巻き肩・姿勢</button>
+                                        <button class="symptom-tab-btn" onclick="switchSymptom('wrist')" id="btn-symptom-wrist">手首・前腕</button>
+                                        <button class="symptom-tab-btn" onclick="switchSymptom('hamstring')" id="btn-symptom-hamstring">足のだるさ</button>
+                                        <button class="symptom-tab-btn" onclick="switchSymptom('catcow')" id="btn-symptom-catcow">背骨ほぐし</button>
+                                        <button class="symptom-tab-btn" onclick="switchSymptom('shrug')" id="btn-symptom-shrug">肩すくめ</button>
+                                    </div>
+                                    
+                                    <div id="activeExerciseCard" style="transition: opacity 0.2s ease; width: 100%;"></div>
                                 </div>
                             </div>
                         </div>
                     `;
+                    // Redraw canvas to initial grid on load
+                    setTimeout(() => {
+                        const canvas = document.getElementById('eyeGameCanvas');
+                        if (canvas) {
+                            const ctx = canvas.getContext('2d');
+                            ctx.fillStyle = '#050c1c';
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                            ctx.strokeStyle = 'rgba(0, 191, 255, 0.08)';
+                            ctx.lineWidth = 1;
+                            const gridSize = 25;
+                            for (let x = 0; x < canvas.width; x += gridSize) {
+                                ctx.beginPath();
+                                ctx.moveTo(x, 0);
+                                ctx.lineTo(x, canvas.height);
+                                ctx.stroke();
+                            }
+                            for (let y = 0; y < canvas.height; y += gridSize) {
+                                ctx.beginPath();
+                                ctx.moveTo(0, y);
+                                ctx.lineTo(canvas.width, y);
+                                ctx.stroke();
+                            }
+                        }
+                    }, 50);
                     
                     // Initialize default tab stretch
                     switchSymptom(defaultSymptomKey);
@@ -2669,10 +2740,10 @@
                 activeExerciseCard.innerHTML = `
                     <div style="font-size:12px; font-weight:700; color:${ex.color}; margin-bottom:8px;">${ex.title}</div>
                     <div class="exercise-flex-layout" style="display:flex; gap:15px; align-items:stretch; margin-top:8px;">
-                        <div style="flex:1; font-size:11px; color:var(--text-secondary); line-height:1.6; background:${ex.color}05; border:1px solid ${ex.color}15; padding:12px; border-radius:8px; display:flex; flex-direction:column; justify-content:center;">
+                        <div style="flex:1; font-size:11.5px; color:var(--text-secondary); line-height:1.7; background:${ex.color}05; border:1px solid ${ex.color}15; padding:15px; border-radius:8px; display:flex; flex-direction:column; justify-content:center;">
                             ${ex.desc}
                         </div>
-                        <div style="flex:1; position:relative; border-radius:8px; overflow:hidden; border:1px solid ${ex.color}; box-shadow: 0 0 15px ${ex.color}40; min-height:220px;">
+                        <div style="flex:1.2; position:relative; border-radius:8px; overflow:hidden; border:1px solid ${ex.color}; box-shadow: 0 0 15px ${ex.color}40; min-height:280px;">
                             <img src="${ex.img}" style="width:100%; height:100%; object-fit:cover; display:block;">
                             ${ex.defaultSVG}
                         </div>
@@ -2684,21 +2755,19 @@
         }
 
         function applyCustomHUDCoordinates() {
-            const keys = ['twist', 'shoulder', 'neck'];
+            const keys = ['twist', 'shoulder', 'neck', 'chest', 'wrist', 'hamstring', 'catcow', 'shrug'];
             keys.forEach(key => {
                 const stored = localStorage.getItem(`hud_${key}`);
                 if (!stored) return;
                 try {
                     const config = JSON.parse(stored);
-                    let pathSelector;
-                    if (key === 'twist') {
-                        pathSelector = 'path[marker-end="url(#arrow-red)"], path[marker-end="url(#portal-arrow-red)"]';
-                    } else if (key === 'shoulder') {
-                        pathSelector = 'path[marker-end="url(#arrow-blue)"], path[marker-end="url(#portal-arrow-blue)"]';
-                    } else if (key === 'neck') {
-                        pathSelector = 'path[marker-end="url(#arrow-teal)"], path[marker-end="url(#portal-arrow-teal)"]';
-                    }
+                    const ex = symptomExercises[key];
+                    if (!ex) return;
                     
+                    const svgId = ex.svgId;
+                    if (!svgId) return;
+                    
+                    const pathSelector = `path[marker-end="url(#${svgId})"], path[marker-end="url(#portal-${svgId})"]`;
                     const paths = document.querySelectorAll(pathSelector);
                     paths.forEach(path => {
                         path.setAttribute('d', `M ${config.sx} ${config.sy} Q ${config.cx} ${config.cy} ${config.ex} ${config.ey}`);
@@ -2710,10 +2779,10 @@
                         const texts = path.parentNode.querySelectorAll('text');
                         
                         // Load offsets if saved, else use defaults
-                        const sxo = config.sxo !== undefined ? config.sxo : (key === 'twist' ? -15 : (key === 'shoulder' ? -40 : -45));
-                        const syo = config.syo !== undefined ? config.syo : (key === 'twist' ? 18 : (key === 'shoulder' ? -4 : -5));
-                        const exo = config.exo !== undefined ? config.exo : (key === 'twist' ? -24 : (key === 'shoulder' ? 10 : 10));
-                        const eyo = config.eyo !== undefined ? config.eyo : (key === 'twist' ? -10 : (key === 'shoulder' ? -4 : -4));
+                        const sxo = config.sxo !== undefined ? config.sxo : -30;
+                        const syo = config.syo !== undefined ? config.syo : 10;
+                        const exo = config.exo !== undefined ? config.exo : 10;
+                        const eyo = config.eyo !== undefined ? config.eyo : -5;
 
                         if (texts[0]) {
                             texts[0].setAttribute('x', config.sx + sxo);
@@ -2729,7 +2798,189 @@
                 } catch (e) {
                     console.error("Failed to apply custom HUD coordinate override:", key, e);
                 }
-            });
+            }
+    // ----------------------------------------------------
+    // Canvas-based Eye Tracking Game Engine (Tier 2)
+    // ----------------------------------------------------
+    let eyeGameActive = false;
+    let eyeGameTimerId = null;
+    let eyeGameStartTime = 0;
+    const eyeGameDuration = 30000; // 30s
+    
+    function toggleEyeGame() {
+        if (eyeGameActive) {
+            stopEyeGame();
+        } else {
+            startEyeGame();
+        }
+    }
+    
+    function startEyeGame() {
+        if (eyeGameActive) return;
+        eyeGameActive = true;
+        
+        const canvas = document.getElementById('eyeGameCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const btn = document.getElementById('eyeGameBtn');
+        const hud = document.getElementById('eyeGameHudText');
+        const timer = document.getElementById('eyeGameTimerText');
+        
+        if (btn) {
+            btn.textContent = "■ セッションを停止する";
+            btn.style.borderColor = "var(--accent-red)";
+            btn.style.color = "var(--accent-red)";
+            btn.style.background = "rgba(255,82,82,0.06)";
+        }
+        
+        eyeGameStartTime = performance.now();
+        
+        function tick(now) {
+            if (!eyeGameActive) return;
+            const elapsed = now - eyeGameStartTime;
+            const pct = elapsed / eyeGameDuration;
+            
+            if (pct >= 1.0) {
+                stopEyeGame(true);
+                return;
+            }
+            
+            const remaining = Math.max(0, (eyeGameDuration - elapsed) / 1000).toFixed(1);
+            if (timer) timer.textContent = `TIME: ${remaining}s`;
+            
+            // Clear and draw grid
+            ctx.fillStyle = '#050c1c';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = 'rgba(0, 191, 255, 0.08)';
+            ctx.lineWidth = 1;
+            const gridSize = 25;
+            for (let x = 0; x < canvas.width; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = 0; y < canvas.height; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+            
+            // Calculate target position
+            const cX = canvas.width / 2;
+            const cY = canvas.height / 2;
+            let targetX = cX;
+            let targetY = cY;
+            let targetRadius = 14;
+            let phaseText = "";
+            
+            const phase = Math.floor(pct * 4);
+            if (phase === 0) {
+                const subPct = (pct * 4) % 1.0;
+                targetY = cY + Math.sin(subPct * Math.PI * 2) * (canvas.height * 0.35);
+                phaseText = "【上下ストレッチ】頭を動かさず、光を上下に追ってください";
+            } else if (phase === 1) {
+                const subPct = (pct * 4) % 1.0;
+                targetX = cX + Math.sin(subPct * Math.PI * 2) * (canvas.width * 0.4);
+                phaseText = "【左右ストレッチ】ボールの左右の水平な動きを目だけで追います";
+            } else if (phase === 2) {
+                const subPct = (pct * 4) % 1.0;
+                const angle = subPct * Math.PI * 2;
+                targetX = cX + Math.cos(angle) * (canvas.width * 0.35);
+                targetY = cY + Math.sin(angle) * (canvas.height * 0.3);
+                phaseText = "【眼球円ローリング】大きく滑らかに円を描くように目を回します";
+            } else {
+                const subPct = (pct * 4) % 1.0;
+                const scale = 1.0 + Math.sin(subPct * Math.PI * 3) * 0.6;
+                targetRadius = Math.max(6, 14 * scale);
+                const angle = subPct * Math.PI * 2;
+                targetX = cX + Math.sin(angle * 2) * 50;
+                phaseText = "【遠近フォーカス】ボールのサイズ変化に合わせてピントを合わせます";
+            }
+            
+            if (hud) hud.textContent = `TARGET TRACKER: ${phaseText}`;
+            
+            // Draw Target Ball with radial glow
+            const radGlow = ctx.createRadialGradient(targetX, targetY, 2, targetX, targetY, targetRadius * 2);
+            radGlow.addColorStop(0, '#ffffff');
+            radGlow.addColorStop(0.2, '#64ffda');
+            radGlow.addColorStop(0.6, 'rgba(100, 255, 218, 0.4)');
+            radGlow.addColorStop(1, 'transparent');
+            
+            ctx.fillStyle = radGlow;
+            ctx.beginPath();
+            ctx.arc(targetX, targetY, targetRadius * 2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(targetX, targetY, 4, 0, Math.PI * 2);
+            ctx.fill();
+            
+            eyeGameTimerId = requestAnimationFrame(tick);
+        }
+        
+        eyeGameTimerId = requestAnimationFrame(tick);
+    }
+    
+    function stopEyeGame(completed = false) {
+        eyeGameActive = false;
+        cancelAnimationFrame(eyeGameTimerId);
+        
+        const canvas = document.getElementById('eyeGameCanvas');
+        const btn = document.getElementById('eyeGameBtn');
+        const hud = document.getElementById('eyeGameHudText');
+        const timer = document.getElementById('eyeGameTimerText');
+        
+        if (btn) {
+            btn.textContent = completed ? "もう一度行う" : "▶ セッションを開始する";
+            btn.style.borderColor = "var(--accent-blue)";
+            btn.style.color = "var(--accent-blue)";
+            btn.style.background = "rgba(0,191,255,0.06)";
+        }
+        
+        if (hud) {
+            hud.textContent = completed ? "🏆 眼筋トレーニング完了！" : "TARGET TRACKER: STANDBY";
+        }
+        if (timer) {
+            timer.textContent = completed ? "TIME: COMPLETE" : "TIME: --s";
+        }
+        
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#050c1c';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = 'rgba(0, 191, 255, 0.08)';
+            ctx.lineWidth = 1;
+            const gridSize = 25;
+            for (let x = 0; x < canvas.width; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = 0; y < canvas.height; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+            
+            if (completed) {
+                ctx.fillStyle = 'rgba(100, 255, 218, 0.85)';
+                ctx.font = 'bold 16px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('🎉 眼筋ストレッチ・トレーニング完了！', canvas.width / 2, canvas.height / 2);
+                ctx.fillStyle = 'rgba(255,255,255,0.7)';
+                ctx.font = '12px sans-serif';
+                ctx.fillText('目の緊張がほぐれました。こまめに休憩を挟みましょう。', canvas.width / 2, canvas.height / 2 + 25);
+            }
+        }
+    }
+);
         }
 
                 // Redraw tips dynamically when user changes their age segment

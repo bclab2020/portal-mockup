@@ -2549,7 +2549,7 @@
             },
             chest: {
                 title: "🧘 大胸筋チェストオープナー（巻き肩・猫背リセット）",
-                desc: "<strong>【姿勢・方向】</strong>頭の後ろで両手を組み、息を吸いながら肘を大きく後ろに引きます。胸を天井に向けてしっかりと開きます。<br><strong>【秒数】</strong>胸の前の筋肉が心地よく広がる位置で.,<strong>15秒間キープを2回</strong>行います。<br><strong>【呼吸法】</strong>胸いっぱいに息を吸い込み、吐きながらさらに深く開きます。",
+                desc: "<strong>【姿勢・方向】</strong>頭の後ろで両手を組み、息を吸いながら肘を大きく後ろに引きます。胸を天井に向けてしっかりと開きます。<br><strong>【秒数】</strong>胸の前の筋肉が心地よく広がる位置で、<strong>15秒間キープを2回</strong>行います。<br><strong>【呼吸法】</strong>胸いっぱいに息を吸い込み、吐きながらさらに深く開きます。",
                 img: "stretch_chest_jp.jpg?v=1.0.1",
                 color: "#ff44dd",
                 svgId: "arrow-pink",
@@ -2599,6 +2599,60 @@
                     <circle cx="100" cy="150" r="4.5" fill="#00e5ff" stroke="#050c1c" stroke-width="1.5"/>
                     <text x="78" y="145" fill="#00e5ff" font-size="10" font-weight="700" font-family="monospace">START (股関節)</text>
                     <text x="205" y="185" fill="#00e5ff" font-size="10" font-weight="700" font-family="monospace">END (伸ばす)</text>
+                </svg>`
+            },
+            catcow: {
+                title: "🧘 キャット＆カウ（背骨・背中の柔軟性向上）",
+                desc: "<strong>【姿勢・方向】</strong>椅子に座ったまま両手で膝を掴みます。息を吐きながら背中を丸め、おへそを覗き込みます。次に息を吸いながら胸を前に押し出し、背骨を反らせます。<br><strong>【秒数】</strong>丸める・反らすを交互に<strong>各5秒間、3回往復（計30秒）</strong>行います。<br><strong>【呼吸法】</strong>呼吸と動作を深く連動させます。",
+                img: "stretch_catcow_jp.jpg?v=1.0.1",
+                color: "#76ff03",
+                svgId: "arrow-lime",
+                defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
+                    <defs>
+                        <marker id="arrow-lime" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
+                            <path d="M0,0 L0,6 L6,3 Z" fill="#76ff03"/>
+                        </marker>
+                    </defs>
+                    <path d="M 165 50 Q 140 95 165 140" fill="none" stroke="#76ff03" stroke-width="2.5" marker-start="url(#arrow-lime)" marker-end="url(#arrow-lime)" stroke-dasharray="4 2"/>
+                    <circle cx="165" cy="50" r="4.5" fill="#76ff03" stroke="#050c1c" stroke-width="1.5"/>
+                    <text x="175" y="55" fill="#76ff03" font-size="10" font-weight="700" font-family="monospace">START (背中上)</text>
+                    <text x="175" y="145" fill="#76ff03" font-size="10" font-weight="700" font-family="monospace">END (骨盤後傾)</text>
+                </svg>`
+            },
+            shrug: {
+                title: "🧘 肩すくめ＆脱力リフレッシュ（肩・首まわりのコリ解消）",
+                desc: "<strong>【姿勢・方向】</strong>背筋を伸ばし、両肩を耳に近づけるように限界まで高く引き上げ、首回りにギュッと力を入れます。その後、一キーに肩の力を抜いてストンと落とします。<br><strong>【秒数】</strong>力を入れる(5秒)→抜く(10秒)を<strong>2〜3回反復</strong>します。<br><strong>【呼吸法】</strong>肩を上げる時に吸い、落とす時に一気に「はぁー」と吐き出します。",
+                img: "stretch_shrug_jp.jpg?v=1.0.2",
+                color: "#ffeb3b",
+                svgId: "arrow-yellow",
+                defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
+                    <defs>
+                        <marker id="arrow-yellow" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
+                            <path d="M0,0 L0,6 L6,3 Z" fill="#ffeb3b"/>
+                        </marker>
+                    </defs>
+                    <path d="M 165 100 Q 165 75 165 50" fill="none" stroke="#ffeb3b" stroke-width="2.5" marker-start="url(#arrow-yellow)" marker-end="url(#arrow-yellow)" stroke-dasharray="4 2"/>
+                    <circle cx="165" cy="100" r="4.5" fill="#ffeb3b" stroke="#050c1c" stroke-width="1.5"/>
+                    <text x="175" y="105" fill="#ffeb3b" font-size="10" font-weight="700" font-family="monospace">START (脱力)</text>
+                    <text x="175" y="55" fill="#ffeb3b" font-size="10" font-weight="700" font-family="monospace">END (すくめる)</text>
+                </svg>`
+            },
+            eyes: {
+                title: "🧘 眼球ストレッチ＆遠近ピント調整（眼精疲労軽減）",
+                desc: "<strong>【姿勢・方向】</strong>顔を正面に向けたまま、目を大きく開けて眼球を上下左右、円を描くようにぐるぐると回します。その後、近くの指先と遠くの景色を交互に見つめます。<br><strong>【秒数】</strong>眼球ローリング左右各3周、遠近ピント調整を<strong>15秒間（計30秒）</strong>行います。<br><strong>【呼吸法】</strong>呼吸を止めずに穏やかに繰り返します。",
+                img: "stretch_eyes_jp.jpg?v=1.0.1",
+                color: "#e040fb",
+                svgId: "arrow-magenta",
+                defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
+                    <defs>
+                        <marker id="arrow-magenta" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
+                            <path d="M0,0 L0,6 L6,3 Z" fill="#e040fb"/>
+                        </marker>
+                    </defs>
+                    <path d="M 150 75 Q 165 55 180 75" fill="none" stroke="#e040fb" stroke-width="2.5" marker-start="url(#arrow-magenta)" marker-end="url(#arrow-magenta)" stroke-dasharray="4 2"/>
+                    <circle cx="150" cy="75" r="4.5" fill="#e040fb" stroke="#050c1c" stroke-width="1.5"/>
+                    <text x="120" y="70" fill="#e040fb" font-size="10" font-weight="700" font-family="monospace">START (遠く)</text>
+                    <text x="185" y="70" fill="#e040fb" font-size="10" font-weight="700" font-family="monospace">END (閉じる)</text>
                 </svg>`
             }
         };

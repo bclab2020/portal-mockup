@@ -693,7 +693,7 @@ const symptomExercises = {
     },
     shrug: {
         title: "🧘 肩すくめ＆脱力リフレッシュ（肩・首まわりのコリ解消）",
-        desc: "<strong>【姿勢・方向】</strong>背筋を伸ばし、両肩を耳に近づけるように限界まで高く引き上げ、首回りにギュッと力を入れます。その後、一気に肩の力を抜いてストンと落とします。<br><strong>【秒数】</strong>力を入れる(5秒)→抜く(10秒)を<strong>2〜3回反復</strong>します。<br><strong>【呼吸法】</strong>肩を上げる時に吸い、落とす時に一気に「はぁー」と吐き出します。",
+        desc: "<strong>【姿勢・方向】</strong>背筋を伸ばし、両肩を耳に近づけるように限界まで高く引き上げ、首回りにギュッと力を入れます。その後、一キーに肩の力を抜いてストンと落とします。<br><strong>【秒数】</strong>力を入れる(5秒)→抜く(10秒)を<strong>2〜3回反復</strong>します。<br><strong>【呼吸法】</strong>肩を上げる時に吸い、落とす時に一気に「はぁー」と吐き出します。",
         img: "stretch_shrug_jp.jpg?v=1.0.2",
         color: "#ffeb3b",
         svgId: "arrow-yellow",
@@ -703,7 +703,7 @@ const symptomExercises = {
                     <path d="M0,0 L0,6 L6,3 Z" fill="#ffeb3b"/>
                 </marker>
             </defs>
-            <path d="M 165 100 Q 165 75 165 50" fill="none" stroke="#ffeb3b" stroke-width="2.5" marker-start="url(#portal-arrow-yellow)" marker-end="url(#portal-arrow-yellow)" stroke-dasharray="4 2"/>
+            <path d="M 165 100 Q 165 75 165 50" fill="none" stroke="#portal-arrow-yellow" stroke-width="2.5" marker-start="url(#portal-arrow-yellow)" marker-end="url(#portal-arrow-yellow)" stroke-dasharray="4 2"/>
             <circle cx="165" cy="100" r="4.5" fill="#ffeb3b" stroke="#050c1c" stroke-width="1.5"/>
             <text x="175" y="105" fill="#ffeb3b" font-size="10" font-weight="700" font-family="monospace">START (脱力)</text>
             <text x="175" y="55" fill="#ffeb3b" font-size="10" font-weight="700" font-family="monospace">END (すくめる)</text>
@@ -711,7 +711,7 @@ const symptomExercises = {
     },
     eyes: {
         title: "🧘 眼球ストレッチ＆遠近ピント調整（眼精疲労軽減）",
-        desc: "<strong>【姿勢・方向】</strong>顔を正面に向けたまま、目を大きく開けて眼球を上下左右、円を描くようにぐるぐると回します。その後、近くの指先と遠くの景色を交互に見つめます。<br><strong>【秒数】</strong>眼球ローリング左右各3周、遠近ピント調整を<strong>15秒間（計30秒）</strong>行います。<br><strong>【呼吸法】</strong>呼吸を止めずに穏やかに繰り返します。",
+        desc: "<strong>【姿勢・方向】</strong>顔を正面に向けたまま、目を大きく開けて眼球を上下左右,円を描くようにぐるぐると回します。その後、近くの指先と遠くの景色を交互に見つめます。<br><strong>【秒数】</strong>眼球ローリング左右各3周、遠近ピント調整を<strong>15秒間（計30秒）</strong>行います。<br><strong>【呼吸法】</strong>呼吸を止めずに穏やかに繰り返します。",
         img: "stretch_eyes_jp.jpg?v=1.0.1",
         color: "#e040fb",
         svgId: "arrow-magenta",
@@ -721,7 +721,7 @@ const symptomExercises = {
                     <path d="M0,0 L0,6 L6,3 Z" fill="#e040fb"/>
                 </marker>
             </defs>
-            <path d="M 150 75 Q 165 55 180 75" fill="none" stroke="#e040fb" stroke-width="2.5" marker-start="url(#portal-arrow-magenta)" marker-end="url(#portal-arrow-magenta)" stroke-dasharray="4 2"/>
+            <path d="M 150 75 Q 165 55 180 75" fill="none" stroke="#portal-arrow-magenta" stroke-width="2.5" marker-start="url(#portal-arrow-magenta)" marker-end="url(#portal-arrow-magenta)" stroke-dasharray="4 2"/>
             <circle cx="150" cy="75" r="4.5" fill="#e040fb" stroke="#050c1c" stroke-width="1.5"/>
             <text x="120" y="70" fill="#e040fb" font-size="10" font-weight="700" font-family="monospace">START (遠く)</text>
             <text x="185" y="70" fill="#e040fb" font-size="10" font-weight="700" font-family="monospace">END (閉じる)</text>

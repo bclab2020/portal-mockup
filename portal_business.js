@@ -515,21 +515,19 @@ window.toggleBreathingGuide = function() {
 
 
 function applyCustomHUDCoordinates() {
-    const keys = ['twist', 'shoulder', 'neck'];
+    const keys = ['twist', 'shoulder', 'neck', 'chest', 'wrist', 'hamstring', 'catcow', 'shrug'];
     keys.forEach(key => {
         const stored = localStorage.getItem(`hud_${key}`);
         if (!stored) return;
         try {
             const config = JSON.parse(stored);
-            let pathSelector;
-            if (key === 'twist') {
-                pathSelector = 'path[marker-end="url(#arrow-red)"], path[marker-end="url(#portal-arrow-red)"]';
-            } else if (key === 'shoulder') {
-                pathSelector = 'path[marker-end="url(#arrow-blue)"], path[marker-end="url(#portal-arrow-blue)"]';
-            } else if (key === 'neck') {
-                pathSelector = 'path[marker-end="url(#arrow-teal)"], path[marker-end="url(#portal-arrow-teal)"]';
-            }
+            const ex = symptomExercises[key];
+            if (!ex) return;
             
+            const svgId = ex.svgId;
+            if (!svgId) return;
+            
+            const pathSelector = `path[marker-end="url(#${svgId})"], path[marker-end="url(#portal-${svgId})"]`;
             const paths = document.querySelectorAll(pathSelector);
             paths.forEach(path => {
                 path.setAttribute('d', `M ${config.sx} ${config.sy} Q ${config.cx} ${config.cy} ${config.ex} ${config.ey}`);
@@ -541,10 +539,10 @@ function applyCustomHUDCoordinates() {
                 const texts = path.parentNode.querySelectorAll('text');
                 
                 // Load offsets if saved, else use defaults
-                const sxo = config.sxo !== undefined ? config.sxo : (key === 'twist' ? -15 : (key === 'shoulder' ? -40 : -45));
-                const syo = config.syo !== undefined ? config.syo : (key === 'twist' ? 18 : (key === 'shoulder' ? -4 : -5));
-                const exo = config.exo !== undefined ? config.exo : (key === 'twist' ? -24 : (key === 'shoulder' ? 10 : 10));
-                const eyo = config.eyo !== undefined ? config.eyo : (key === 'twist' ? -10 : (key === 'shoulder' ? -4 : -4));
+                const sxo = config.sxo !== undefined ? config.sxo : -30;
+                const syo = config.syo !== undefined ? config.syo : 10;
+                const exo = config.exo !== undefined ? config.exo : 10;
+                const eyo = config.eyo !== undefined ? config.eyo : -5;
 
                 if (texts[0]) {
                     texts[0].setAttribute('x', config.sx + sxo);

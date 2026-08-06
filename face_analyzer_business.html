@@ -639,7 +639,14 @@
             border-color: var(--accent-teal);
             box-shadow: 0 0 10px rgba(100,255,218,0.15);
         }
-</style>
+
+        @media (max-width: 768px) {
+            .exercises-split-layout {
+                flex-direction: column !important;
+            }
+        }
+    
+    </style>
 </head>
 <body>
 
@@ -660,7 +667,7 @@
         <!-- Left Side: WebCam Viewport -->
         <div class="workspace-panel">
             
-            <div class="camera-viewport">
+            <div class="camera-viewport" id="cameraCard">
                 <!-- Video tag (hidden, used as MediaPipe source) -->
                 <video id="webcamVideo" autoplay playsinline muted></video>
                 
@@ -710,7 +717,7 @@
                 </div>
             </div>
             <!-- Standalone camera activation controls -->
-            <div class="glass-card" style="padding: 15px 20px;">
+            <div class="glass-card" id="cameraControlsCard" style="padding: 15px 20px;">
                 <div style="display:flex; gap:15px; justify-content:center;">
                     <button class="btn btn-primary" id="startCamBtn" style="max-width:250px;">📷 カメラ起動</button>
                     <button class="btn btn-secondary" id="startScanBtn" style="max-width:250px;" disabled>✨ 顔診断＆血流スキャン開始</button>
@@ -2215,42 +2222,11 @@
                         </div>
                         <div id="breathingText" style="font-size:11px; font-weight:700; color:var(--text-primary); margin-top:12px; height:15px; letter-spacing:0.5px;">準備中...</div>
                         <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 12px; padding: 5px 18px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
-                        <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 12px; padding: 5px 18px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
-                     </div>`,
-                    "🚶 <strong>肩甲骨内転・胸郭拡張ストレッチ</strong> (胸を開き、浅くなりがちな呼吸を深く改善する姿勢調整法)"
+                     </div>`
                 ];
                 healthDesks = [
                     "👀 <strong>10秒まばたき眼筋ストレッチ</strong> (眼精疲労と交感神経の興奮を和らげます。)",
-                    "👂 <strong>耳介マッサージ</strong> (両耳を軽く引っ張って回し、頭部への血流を促します。)",
-                    `<div style="font-size:12px; font-weight:700; color:var(--accent-teal); margin-top:12px; margin-bottom:8px;">🧘 首・肩・頚椎アライメントストレッチ</div>
-                     <div class="exercise-flex-layout" style="display:flex; gap:15px; align-items:stretch; margin-top:8px;">
-                         <!-- Text Card (50%) -->
-                         <div style="flex:1; font-size:11px; color:var(--text-secondary); line-height:1.6; background:rgba(100,255,218,0.02); border:1px solid rgba(100,255,218,0.08); padding:12px; border-radius:8px; display:flex; flex-direction:column; justify-content:center;">
-                            <strong>【姿勢・方向】</strong>背筋を伸ばし、右手を頭の左側に添え、頭をゆっくり右斜め前（45度方向）に傾けます。左肩が上がらないよう、意識して固定します。<br>
-                            <strong>【秒数】</strong>首の左後ろが心地よく伸びる強さで、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br>
-                            <strong>【呼吸法】</strong>息を細く長く吐き出しながら、首の力を抜き、頭の重みを利用してじんわりとストレッチします。
-                         </div>
-                         <!-- Image Card (50%) -->
-                         <div style="flex:1; position:relative; border-radius:8px; overflow:hidden; border:1px solid var(--accent-teal); box-shadow: 0 0 15px rgba(100, 255, 218, 0.25); min-height:220px;">
-                            <img src='stretch_neck_jp.jpg' style='width:100%; height:100%; object-fit:cover; display:block;'>
-                            <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(100,255,218,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(100,255,218,0.08) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
-                            <div style='position:absolute; top:10px; right:10px; background:rgba(100,255,218,0.85); color:#050c1c; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-teal);'>ALIGN ALIGNMENT: OK</div>
-                            <!-- Holographic Overlay SVG -->
-                            <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
-                                <defs>
-                                    <marker id='arrow-teal' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
-                                        <path d='M0,0 L6,3 L0,6 Z' fill='#64ffda'/>
-                                    </marker>
-                                </defs>
-                                <!-- Curved neck tilt arrow with START/END markers -->
-                                <path d='M 120 45 Q 140 52 148 76' fill='none' stroke='#64ffda' stroke-width='2.5' marker-end='url(#arrow-teal)' stroke-dasharray='4 2'/>
-                                <circle cx="120" cy="45" r="4.5" fill="#64ffda" stroke="#050c1c" stroke-width="1.5"/>
-                                <text x="80" y="42" fill="#64ffda" font-size="8.5" font-weight="700" font-family="sans-serif">START (正面)</text>
-                                <text x="155" y="85" fill="#64ffda" font-size="8.5" font-weight="700" font-family="sans-serif">END (傾けてキープ)</text>
-                            </svg>
-                            <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-teal); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-teal); font-family:monospace;'>LEFT SHOULDER: LOCK DOWN</div>
-                         </div>
-                     </div>`
+                    "👂 <strong>耳介マッサージ</strong> (両耳を軽く引っ張って回し、頭部への血流を促します。)"
                 ];
             } else if (calculatedStress.includes("高") || calculatedStress.includes("Stressed")) {
                 healthTitle = `🩺 久保医師監修：自律神経ストレスケア処箋【要注意】(HRV: ${calculatedHRV} ms)`;
@@ -2269,52 +2245,21 @@
                         </div>
                         <div id="breathingText" style="font-size:11px; font-weight:700; color:var(--text-primary); margin-top:12px; height:15px; letter-spacing:0.5px;">準備中...</div>
                         <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 12px; padding: 5px 18px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
-                        <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 12px; padding: 5px 18px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
-                     </div>`,
-                    "🚶 <strong>ストレートネックアライメントリセット</strong> (タオルを首の後に当て、頭を後ろに倒して頚椎のカーブを回復させるストレッチ)"
+                     </div>`
                 ];
                 healthDesks = [
-                    `<div style="font-size:12px; font-weight:700; color:var(--accent-red); margin-bottom:8px;">🧘 30秒・椅子ひねりストレッチ（自律神経調律）</div>
-                     <div class="exercise-flex-layout" style="display:flex; gap:15px; align-items:stretch; margin-top:8px;">
-                         <!-- Text Card (50%) -->
-                         <div style="flex:1; font-size:11px; color:var(--text-secondary); line-height:1.6; background:rgba(255,82,82,0.02); border:1px solid rgba(255,82,82,0.08); padding:12px; border-radius:8px; display:flex; flex-direction:column; justify-content:center;">
-                            <strong>【姿勢・方向】</strong>背筋をまっすぐ伸ばして椅子に深く腰掛け、息をゆっくり吐きながら上体を右へねじります。左手で背もたれ（または右肘掛け）を掴み、右手は椅子の座面後方を支えて上体を固定します。<br>
-                            <strong>【秒数】</strong>痛気持ちいいところでストップし、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br>
-                            <strong>【呼吸法】</strong>息を止めずに、<strong>吸う4秒・吐く8秒</strong>の深い呼吸を繰り返します。ねじる時に息を吐き出すと効果的です。
-                         </div>
-                         <!-- Image Card (50%) -->
-                         <div style="flex:1; position:relative; border-radius:8px; overflow:hidden; border:1px solid var(--accent-red); box-shadow: 0 0 15px rgba(255, 82, 82, 0.25); min-height:220px;">
-                            <img src='stretch_twist_jp.jpg' style='width:100%; height:100%; object-fit:cover; display:block;'>
-                            <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(255,82,82,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,82,82,0.08) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
-                            <div style='position:absolute; top:10px; right:10px; background:rgba(255,82,82,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-red);'>ALIGN ALIGNMENT: OK</div>
-                            <!-- Holographic Overlay SVG -->
-                            <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
-                                <defs>
-                                    <marker id='arrow-red' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
-                                        <path d='M0,0 L6,3 L0,6 Z' fill='#ff5252'/>
-                                    </marker>
-                                </defs>
-                                <!-- Curved twist arrow (Reversed: Pointing Left/Backrest) -->
-                                <path d='M 200 120 Q 150 135 112 112' fill='none' stroke='#ff5252' stroke-width='2.5' marker-end='url(#arrow-red)' stroke-dasharray='4 2'/>
-                                <circle cx="200" cy="120" r="4.5" fill="#ff5252" stroke="#050c1c" stroke-width="1.5"/>
-                                <text x="185" y="138" fill="#ff5252" font-size="8.5" font-weight="700" font-family="sans-serif">START (正面)</text>
-                                <text x="70" y="98" fill="#ff5252" font-size="8.5" font-weight="700" font-family="sans-serif">END (ねじる)</text>
-                            </svg>
-                            <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-red); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-red); font-family:monospace;'>SPINE ROTATION: 35°</div>
-                         </div>
-                     </div>`,
-                    "💆 <strong>側頭筋のマッサージ</strong> (歯の喰いしばりによる頭のハリをほぐします。)"
+                    "👀 <strong>10秒まばたき眼筋ストレッチ</strong> (眼精疲労と交感神経の興奮を和らげます。)",
+                    "👂 <strong>耳介マッサージ</strong> (両耳を軽く引っ張って回し、頭部への血流を促します。)"
                 ];
             } else {
-                healthTitle = `🩺 久保医師監修：自律神経機能【通常】(HRV: ${calculatedHRV} ms)`;
+                healthTitle = `🩺 久保医師監修：自律神経ストレスケア処箋【通常】(HRV: ${calculatedHRV} ms)`;
                 healthSteps = [
-                    "定期的なリフレッシュ: 平均的な範囲ですが、PC作業が1時間以上続く場合は立ち上がり、自律神経の血流低下をリセットしてください。",
-                    "こまめな水分補給: 脱水症状は自律神経の乱れに直結します。冷水ではなく常温の水を1時間にコップ1杯程度飲む習慣をつけましょう。",
-                    "首こり解消の意識: 首こりは自律神経の敵です。耳の真下に指を当て、首の横の筋肉（胸鎖乳突筋）を優しくほぐすことで血流を促進します。"
+                    "呼吸コントロールによる調整: 自律神経バランスは概ね安定していますが、PC作業による軽度の緊張がみられます。呼吸ガイドに合わせた3分間のリラックス呼吸を行いましょう。",
+                    "肩・肩甲骨のアライメント調整: デスクワーク中は両肩がすくんで内側に入りやすくなります。肘を引いて肩甲骨を寄せるストレッチを取り入れ、大胸筋を広げてください。",
+                    "こまめな水分補給と深呼吸: 60分に1回コップ1杯の水を飲み、息をしっかりと吐き出す深呼吸を3回繰り返して緊張の連続を遮断します。"
                 ];
                 healthExercises = [
-                    "🚶 <strong>胸鎖乳突筋・首肩アライメントストレッチ</strong> (首肩の筋緊張をほぐし、頭痛やだるさを予防)",
-                    `🧘 <strong>リラックス腹式呼吸セッション (3秒吸う・6秒吐く)</strong>
+                    `🧘 <strong>4-7-8 自律神経調整呼吸法 (リフレッシュ)</strong>
                      <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:15px; margin-top:10px; background:rgba(100,255,218,0.02); border:1px dashed rgba(100,255,218,0.15); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
                         <div style="font-size:10px; color:var(--accent-teal); font-weight:700; margin-bottom:12px; letter-spacing:0.5px;">🧘 呼吸ガイド（バルーンの伸縮と同調してください）</div>
                         <div style="width:120px; height:120px; display:flex; align-items:center; justify-content:center; position:relative;">
@@ -2323,159 +2268,216 @@
                         </div>
                         <div id="breathingText" style="font-size:11px; font-weight:700; color:var(--text-primary); margin-top:12px; height:15px; letter-spacing:0.5px;">準備中...</div>
                         <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 12px; padding: 5px 18px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
-                        <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 12px; padding: 5px 18px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
                      </div>`
                 ];
                 healthDesks = [
-                    `<div style="font-size:12px; font-weight:700; color:var(--accent-blue); margin-bottom:8px;">🧘 肩・肩甲骨拡張ストレッチ</div>
-                     <div class="exercise-flex-layout" style="display:flex; gap:15px; align-items:stretch; margin-top:8px;">
-                         <!-- Text Card (50%) -->
-                         <div style="flex:1; font-size:11px; color:var(--text-secondary); line-height:1.6; background:rgba(0,191,255,0.02); border:1px solid rgba(0,191,255,0.08); padding:12px; border-radius:8px; display:flex; flex-direction:column; justify-content:center;">
-                            <strong>【姿勢・方向】</strong>右腕を左方向に真っ直ぐ伸ばし、左腕で右肘を抱え込むように胸に強く引き寄せます。肩甲骨が外側にしっかりと広がる感覚を意識します。<br>
-                            <strong>【秒数】</strong>肩の奥（三角筋後部）が心地よく伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br>
-                            <strong>【呼吸法】</strong>肩をすくめたり息を止めたりせず、深く穏やかな胸式呼吸を繰り返します。
-                         </div>
-                         <!-- Image Card (50%) -->
-                         <div style="flex:1; position:relative; border-radius:8px; overflow:hidden; border:1px solid var(--accent-blue); box-shadow: 0 0 15px rgba(0, 191, 255, 0.25); min-height:220px;">
-                            <img src='stretch_shoulder_jp.jpg' style='width:100%; height:100%; object-fit:cover; display:block;'>
-                            <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,191,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,255,0.08) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
-                            <div style='position:absolute; top:10px; right:10px; background:rgba(0,191,255,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-blue);'>ALIGN ALIGNMENT: OK</div>
-                            <!-- Holographic Overlay SVG -->
-                            <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
-                                <defs>
-                                    <marker id='arrow-blue' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
-                                        <path d='M0,0 L6,3 L0,6 Z' fill='#00bfff'/>
-                                    </marker>
-                                </defs>
-                                <!-- Horizontal pull arrow (Corrected: Pointing Right towards Fingertips) -->
-                                <path d='M 100 80 L 214 80' fill='none' stroke='#00bfff' stroke-width='2.5' marker-end='url(#arrow-blue)' stroke-dasharray='4 2'/>
-                                <circle cx="100" cy="80" r="4.5" fill="#00bfff" stroke="#050c1c" stroke-width="1.5"/>
-                                <text x="75" y="92" fill="#00bfff" font-size="8.5" font-weight="700" font-family="sans-serif">START (胸元)</text>
-                                <text x="200" y="70" fill="#00bfff" font-size="8.5" font-weight="700" font-family="sans-serif">END (指先を伸ばす)</text>
-                            </svg>
-                            <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-blue); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-blue); font-family:monospace;'>SCAPULA RETRACTION: ENGAGED</div>
-                         </div>
-                     </div>`,
-                    "👀 <strong>遠近ピント合わせ法</strong> (近くの指先と遠くの壁を交互に見つめ、眼筋をほぐして脳疲労を緩和します。)"
+                    "👀 <strong>10秒まばたき眼筋ストレッチ</strong> (眼精疲労と交感神経の興奮を和らげます。)",
+                    "👂 <strong>耳介マッサージ</strong> (両耳を軽く引っ張って回し、頭部への血流を促します。)"
                 ];
             }
 
-            guideTitle.innerHTML = healthTitle;
-            
-            stepsContainer.innerHTML = healthSteps.map((step, idx) => `
-                <div style="display:flex; gap:8px; align-items:flex-start; margin-bottom:6px;">
-                    <div style="width:16px; height:16px; border-radius:50%; background:rgba(100,255,218,0.15); color:var(--accent-teal); font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">${idx+1}</div>
-                    <div style="color:var(--text-secondary);">${step}</div>
-                </div>
-            `).join('');
+            const urlParams = new URLSearchParams(window.location.search);
+            const vertical = urlParams.get('vertical') || 'beauty';
 
-            exerciseContainer.innerHTML = healthExercises.map(ex => `
-                <div style="padding: 8px 12px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:6px; margin-bottom:5px; color:var(--text-primary);">
-                    ${ex}
-                </div>
-            `).join('');
-            
-            if (deskRefreshContainer) {
-                let simpleList = healthDesks.map(dk => `
-                    <div style="padding: 8px 12px; background:rgba(0,191,255,0.02); border:1px solid rgba(0,191,255,0.08); border-radius:6px; margin-bottom:5px; color:var(--text-primary);">
-                        ${dk}
+            if (vertical === 'health' || vertical === 'sports') {
+                guideTitle.innerText = healthTitle;
+                
+                // Hide exercise categories in the narrow right column
+                const cosmeticsTitle = document.getElementById('cosmeticsTitle');
+                if (cosmeticsTitle) cosmeticsTitle.style.display = 'none';
+                if (exerciseContainer) exerciseContainer.innerHTML = '';
+                
+                stepsContainer.innerHTML = healthSteps.map((step, idx) => `
+                    <div style="display:flex; gap:10px; margin-bottom:8px; align-items:flex-start;">
+                        <div style="width:16px; height:16px; border-radius:50%; background:var(--accent-teal); color:#050c1c; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">${idx+1}</div>
+                        <div style="color:var(--text-secondary);">${step}</div>
+                    </div>
+                `).join('');
+
+                if (deskRefreshContainer) {
+                    deskRefreshContainer.innerHTML = healthDesks.map(dk => `
+                        <div style="padding: 8px 12px; background:rgba(0,191,255,0.02); border:1px solid rgba(0,191,255,0.08); border-radius:6px; margin-bottom:5px; color:var(--text-primary);">
+                            ${dk}
+                        </div>
+                    `).join('');
+                }
+
+                // Render into the Left Column (余白エリア - leftSideAdviceContainer)
+                const leftSideContainer = document.getElementById('leftSideAdviceContainer');
+                if (leftSideContainer) {
+                    leftSideContainer.style.display = 'block';
+                    
+                    let defaultSymptomKey = "shoulder";
+                    if (calculatedStress.includes("高") || calculatedStress.includes("Stressed")) {
+                        defaultSymptomKey = "twist";
+                    } else if (calculatedStress.includes("低") || calculatedStress.includes("Relaxed")) {
+                        defaultSymptomKey = "neck";
+                    }
+
+                    const breathingOrEyeHtml = healthExercises[0];
+                    const stretchesSelectorHtml = `
+                        <div class="symptom-selector-widget">
+                            <div style="font-size:12px; font-weight:700; color:var(--text-primary); margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+                                🧘 <span style="background:linear-gradient(45deg, var(--accent-teal), var(--accent-blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800; font-size:12px;">お悩み部位から選ぶデスクストレッチ</span>
+                            </div>
+                            
+                            <div class="symptom-tabs-container" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
+                                <button class="symptom-tab-btn" onclick="switchSymptom('twist')" id="btn-symptom-twist">腰痛・背骨</button>
+                                <button class="symptom-tab-btn" onclick="switchSymptom('shoulder')" id="btn-symptom-shoulder">肩こり・猫背</button>
+                                <button class="symptom-tab-btn" onclick="switchSymptom('neck')" id="btn-symptom-neck">首こり・頭痛</button>
+                                <button class="symptom-tab-btn" onclick="switchSymptom('chest')" id="btn-symptom-chest">巻き肩・姿勢</button>
+                                <button class="symptom-tab-btn" onclick="switchSymptom('wrist')" id="btn-symptom-wrist">手首・前腕</button>
+                                <button class="symptom-tab-btn" onclick="switchSymptom('hamstring')" id="btn-symptom-hamstring">足のだるさ</button>
+                                <button class="symptom-tab-btn" onclick="switchSymptom('catcow')" id="btn-symptom-catcow">背骨ほぐし</button>
+                                <button class="symptom-tab-btn" onclick="switchSymptom('shrug')" id="btn-symptom-shrug">肩すくめ</button>
+                                <button class="symptom-tab-btn" onclick="switchSymptom('eyes')" id="btn-symptom-eyes">眼精疲労</button>
+                            </div>
+                            
+                            <div id="activeExerciseCard" style="transition: opacity 0.2s ease;"></div>
+                        </div>
+                    `;
+
+                    leftSideContainer.innerHTML = `
+                        <div class="glass-card" style="border: 1px solid rgba(100, 255, 218, 0.25); background: rgba(10, 20, 42, 0.45); padding: 20px; border-radius: 12px; box-shadow: 0 0 25px rgba(100, 255, 218, 0.05); margin-top: 15px;">
+                            <div style="font-size:13px; font-weight:800; color:var(--accent-teal); border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:10px; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
+                                🧘 <span style="background:linear-gradient(45deg, var(--accent-teal), var(--accent-blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800;">推奨セルフリフレッシュ（自律神経調整 ＆ 骨格アライメント改善）</span>
+                            </div>
+                            
+                            <div class="exercises-split-layout" style="display:flex; gap:20px; align-items:stretch;">
+                                <div style="flex:1; background:rgba(255,255,255,0.01); border:1px solid rgba(255,255,255,0.04); padding:15px; border-radius:8px; display:flex; flex-direction:column; justify-content:center; box-sizing:border-box;">
+                                    ${breathingOrEyeHtml}
+                                </div>
+                                <div style="flex:1.3; background:rgba(255,255,255,0.01); border:1px solid rgba(255,255,255,0.04); padding:15px; border-radius:8px; box-sizing:border-box;">
+                                    ${stretchesSelectorHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Initialize default tab stretch
+                    switchSymptom(defaultSymptomKey);
+                }
+
+                // Hide the camera viewport and activation controls to make space
+                const cameraCard = document.getElementById('cameraCard');
+                if (cameraCard) cameraCard.style.display = 'none';
+                
+                const cameraControlsCard = document.getElementById('cameraControlsCard');
+                if (cameraControlsCard) cameraControlsCard.style.display = 'none';
+
+            } else {
+                // Renders beauty makeup advice
+                guideTitle.innerText = "💄 AIパーソナルカラー ＆ 骨格メイク分析アドバイス";
+                
+                const cosmeticsTitle = document.getElementById('cosmeticsTitle');
+                if (cosmeticsTitle) {
+                    cosmeticsTitle.style.display = 'block';
+                    cosmeticsTitle.innerText = "💄 あなたの骨格・パーソナルカラー別メイク推奨アイテム";
+                }
+                
+                let makeupSteps = [];
+                let recommendedCosmetics = [];
+
+                if (currentFaceType.includes("丸顔")) {
+                    makeupSteps = [
+                        "シェーディングの選定: 額の両端からこめかみ、顎先にかけて「3の字」を描くようにダークトーンをぼかし、輪郭をシャープに引き締めます。",
+                        "ハイライトの位置: 額の中央、鼻筋（Tゾーン）、目頭の下、顎の先端にのせ、縦の立体感を強調します。",
+                        "眉メイクの方向性: 眉山をやや高めに設定し、上昇ラインを作ることで、お顔全体のシャープな印象を補強します。"
+                    ];
+                    recommendedCosmetics = [
+                        "🎨 <strong>IPSA デザイニング フェイスカラーパレット</strong> (透け感のある陰影と血色感で、丸顔を引き締めるチーク・シェーディングセット)",
+                        "✨ <strong>ルナソル シアーライトグロス (EX06)</strong> (縦ラインを美しく見せる、シアーな発色のリップグロス)"
+                    ];
+                } else if (currentFaceType.includes("面長")) {
+                    makeupSteps = [
+                        "シェーディングの選定: おでこの生え際と顎先に水平に薄くのせることで、縦幅の印象を視覚的に短縮します。",
+                        "チークの入れ方: 頬骨の高い位置から耳の横に向けて、横長に楕円形にぼかすことで、横幅を広げて見せます。",
+                        "アイブロウ: 眉山を作らずに、平行で太めのストレート眉に仕上げることで、お顔の上部を引き締めます。"
+                    ];
+                    recommendedCosmetics = [
+                        "🎨 <strong>THREE シマリング グロー デュオ (01)</strong> (頬に自然なツヤを出しつつ、横の広がりを美しく際立たせる万配ハイライト＆チークカラー)",
+                        "✨ <strong>ADDICTION ザ アイシャドウ (022)</strong> (陰影を抑えた上品なベージュで、優しい目元を作るシングルシャドウ)"
+                    ];
+                } else if (currentFaceType.includes("ベース")) {
+                    makeupSteps = [
+                        "シェーディングの選定: エラ部分に斜め下向きにダークトーンを薄くぼかし、輪郭に丸みを持たせます。",
+                        "チークの位置: 黒目の下あたりから小鼻の横に向けて丸くふんわりとのせ、直線的な骨格印象をカバーします。",
+                        "リップライン: リップライナーで上唇の山をなだらかに丸く縁取ることで、柔らかいフェミニンな雰囲気を演出します。"
+                    ];
+                    recommendedCosmetics = [
+                        "🎨 <strong>カネボウ ヴァリアンブラッシュチーク</strong> (エラの影を消し去る、グラデーションカラーのパウダーチーク)",
+                        "✨ <strong>シャネル ルージュ ココ フラッシュ (90)</strong> (優しいローズカラーで、親しみやすさを与える高発色リップスティック)"
+                    ];
+                } else {
+                    makeupSteps = [
+                        "シェーディングの選定: 額の両サイドと、シャープな顎先の下部にのせ、逆三角形のシャープすぎる印象をカバーします。",
+                        "ハイライト: 頬の低い部分（チークの下）に丸くハイライトを広げ、ふっくらとした健康的な頬を演出します。",
+                        "チークの入れ方: 頬の中央から外側に向けて丸く円を描くようにぼかします。"
+                    ];
+                    recommendedCosmetics = [
+                        "🎨 <strong>コスメデコルテ パウダー ブラッシュ</strong> (シャープな顎周りをカバーし、ふんわり立体感を与えるピンク系チーク)",
+                        "✨ <strong>SUQQU モイスチャー リッチ リップスティック (04)</strong> (艶やかな質感で、お顔の重心を下げるニュアンスカラーリップ)"
+                    ];
+                }
+
+                stepsContainer.innerHTML = makeupSteps.map((step, idx) => `
+                    <div style="display:flex; gap:10px; margin-bottom:8px; align-items:flex-start;">
+                        <div style="width:16px; height:16px; border-radius:50%; background:var(--accent-pink); color:#fff; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">${idx+1}</div>
+                        <div style="color:var(--text-secondary);">${step}</div>
+                    </div>
+                `).join('');
+
+                exerciseContainer.innerHTML = recommendedCosmetics.map(item => `
+                    <div style="padding: 8px 12px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:6px; margin-bottom:5px; color:var(--text-primary);">
+                        ${item}
                     </div>
                 `).join('');
                 
-                let widgetHtml = `
-                    ${simpleList}
-                    <div class="symptom-selector-widget" style="margin-top:15px; border-top:1px solid rgba(255,255,255,0.06); padding-top:15px;">
-                        <div style="font-size:12px; font-weight:700; color:var(--text-primary); margin-bottom:10px; display:flex; align-items:center; gap:6px;">
-                            🧘 <span style="background:linear-gradient(45deg, var(--accent-teal), var(--accent-blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800; font-size:12px;">お悩み部位から選ぶデスクストレッチ</span>
-                        </div>
-                        
-                        <div class="symptom-tabs-container" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
-                            <button class="symptom-tab-btn" onclick="switchSymptom('twist')" id="btn-symptom-twist">腰痛・背骨</button>
-                            <button class="symptom-tab-btn" onclick="switchSymptom('shoulder')" id="btn-symptom-shoulder">肩こり・猫背</button>
-                            <button class="symptom-tab-btn" onclick="switchSymptom('neck')" id="btn-symptom-neck">首こり・頭痛</button>
-                            <button class="symptom-tab-btn" onclick="switchSymptom('chest')" id="btn-symptom-chest">巻き肩・姿勢</button>
-                            <button class="symptom-tab-btn" onclick="switchSymptom('wrist')" id="btn-symptom-wrist">手首・前腕</button>
-                            <button class="symptom-tab-btn" onclick="switchSymptom('hamstring')" id="btn-symptom-hamstring">足のだるさ</button>
-                            <button class="symptom-tab-btn" onclick="switchSymptom('catcow')" id="btn-symptom-catcow">背骨ほぐし</button>
-                            <button class="symptom-tab-btn" onclick="switchSymptom('shrug')" id="btn-symptom-shrug">肩すくめ</button>
-                            <button class="symptom-tab-btn" onclick="switchSymptom('eyes')" id="btn-symptom-eyes">眼精疲労</button>
-                        </div>
-                        
-                        <div id="activeExerciseCard" style="transition: opacity 0.2s ease;"></div>
-                    </div>
-                `;
-                deskRefreshContainer.innerHTML = widgetHtml;
-                // Initialize default tab stretch
-                switchSymptom(defaultSymptomKey);
+                if (deskRefreshContainer) {
+                    deskRefreshContainer.innerHTML = `<div style="font-size:10px; color:var(--text-secondary);">メイクアップと骨格補正によるパーソナルカラー分析の結果は上記です。</div>`;
+                }
+
+                // Hide left-side advice container in beauty mode
+                const leftSideContainer = document.getElementById('leftSideAdviceContainer');
+                if (leftSideContainer) leftSideContainer.style.display = 'none';
+                
+                // Keep camera view visible in beauty mode (so they can see their face mapping/makeup guides)
+                const cameraCard = document.getElementById('cameraCard');
+                if (cameraCard) cameraCard.style.display = 'block';
+                
+                const cameraControlsCard = document.getElementById('cameraControlsCard');
+                if (cameraControlsCard) cameraControlsCard.style.display = 'block';
             }
 
             // Dynamically load B2B related articles in scanner results
             const relatedArticlesSection = document.getElementById('relatedArticlesSection');
             const relatedArticlesContainer = document.getElementById('relatedArticlesContainer');
-            
-            if (relatedArticlesSection && relatedArticlesContainer) {
-                fetch('articles_db.json')
+
+            if (vertical === 'health' || vertical === 'sports') {
+                relatedArticlesSection.style.display = 'block';
+                const tag = (vertical === 'health') ? '自律神経' : 'スポーツ';
+                
+                // Fetch articles matching tag from local storage DB
+                fetch('b2b_articles_db.json')
                     .then(res => res.json())
                     .then(db => {
-                        const currentDay = db.current_day || 'day1';
-                        let allArticles = [];
-                        
-                        // Gather articles up to currentDay
-                        const dayKeys = Object.keys(db).filter(k => k.startsWith('day') || k === 'baseline');
-                        dayKeys.forEach(day => {
-                            const categories = db[day];
-                            Object.keys(categories).forEach(cat => {
-                                if (cat === 'health') {
-                                    allArticles = allArticles.concat(categories[cat]);
-                                }
-                            });
-                        });
-                        
-                        // Filter by keywords depending on stress
-                        let filterKeywords = [];
-                        if (calculatedStress.includes("高") || calculatedStress.includes("Stressed")) {
-                            filterKeywords = ['ストレス', '自律神経', '睡眠', '呼吸'];
-                        } else {
-                            filterKeywords = ['姿勢', 'アライメント', '肩', '首', '歩行'];
-                        }
-                        
-                        const filtered = allArticles.filter(art => {
-                            const text = (art.title + (art.p || '') + (art.tag || '')).toLowerCase();
-                            return filterKeywords.some(k => text.includes(k)) && !text.includes('メイク') && !text.includes('化粧');
-                        }).slice(0, 2); // Show top 2 related articles
-                        
-                        if (filtered.length > 0) {
-                            relatedArticlesContainer.innerHTML = filtered.map(art => `
-                                <div class="glass-card" style="padding:12px; font-size:11px; background:rgba(255,255,255,0.01); border:1px solid rgba(255,255,255,0.04); display:flex; flex-direction:column; gap:5px;">
-                                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                                        <span class="category-badge" style="background:rgba(100,255,218,0.06); color:var(--accent-teal); padding:2px 5px; border-radius:4px; font-size:9px;">${art.tag || '健康コラム'}</span>
-                                        <span style="color:var(--text-secondary); font-size:9px;">${art.author || '医療顧問監修'}</span>
-                                    </div>
-                                    <div style="font-weight:700; color:var(--text-primary);">${art.title}</div>
-                                    <div style="color:var(--text-secondary); line-height:1.4;">${art.p || ''}</div>
-                                    ${art.external_link ? `
-                                        <a href="${art.external_link}" target="_blank" style="text-decoration:none; font-size:10px; color:var(--accent-blue); font-weight:700; margin-top:2px;">
-                                            📖 エビデンス論文を開く ➔
-                                        </a>
-                                    ` : ''}
-                                </div>
+                        const matches = db.filter(art => art.tags.includes(tag) || art.category === tag).slice(0, 3);
+                        if (matches.length > 0) {
+                            relatedArticlesContainer.innerHTML = matches.map(art => `
+                                <a href="article_view_business.html?id=${art.id}" style="display:block; text-decoration:none; padding:8px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:6px; margin-bottom:6px; transition:all 0.2s;">
+                                    <div style="font-size:10px; color:var(--accent-blue); font-weight:700; margin-bottom:2px;">${art.category}</div>
+                                    <div style="font-size:11px; color:var(--text-primary); font-weight:700; line-height:1.4;">${art.title}</div>
+                                    <div style="font-size:9px; color:var(--text-secondary); text-align:right; margin-top:4px;">監修: ${art.author} / 読了目安: ${art.readTime}</div>
+                                </a>
                             `).join('');
-                            relatedArticlesSection.style.display = 'block';
-                        }
-                        
-                        // Initialize breathing guide animation
-                        initBreathingGuide(calculatedStress.includes("高") || calculatedStress.includes("Stressed") ? "478" : "36");
-
-                        // Dynamically move the self-care card to the spacious left column container once scan finishes
-                        const leftContainer = document.getElementById('leftSideAdviceContainer');
-                        if (leftContainer) {
-                            leftContainer.appendChild(makeupGuideCard);
+                        } else {
+                            relatedArticlesContainer.innerHTML = '<div style="font-size:10px; color:var(--text-secondary);">関連記事はありません。</div>';
                         }
 
                         // Smoothly scroll the advice card into view
                         setTimeout(() => {
                             makeupGuideCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                        applyCustomHUDCoordinates();
+                            applyCustomHUDCoordinates();
                         }, 300);
                     })
                     .catch(err => console.error("Failed to load related articles in scanner:", err));

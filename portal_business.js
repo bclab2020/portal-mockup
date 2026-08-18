@@ -505,6 +505,21 @@ window.toggleBreathingGuide = function() {
                     txt.innerHTML = `<span style="color:#00bfff; font-weight:700;">ゆっくり吐く (Exhale)... ${9 - subSec}秒</span>`;
                 }
             }
+            
+            if (seconds >= 40) {
+                clearInterval(breathingTimer);
+                breathingActive = false;
+                balloon.style.width = '30px';
+                balloon.style.height = '30px';
+                balloon.style.transition = 'all 0.5s ease';
+                balloon.style.boxShadow = breathingType === "478" ? '0 0 15px var(--accent-red)' : '0 0 15px var(--accent-teal)';
+                txt.innerHTML = `<span style="color:var(--accent-teal); font-weight:800;">🏆 深呼吸セッション完了！ 自律神経が整いました。</span>`;
+                btn.innerText = "もう一度行う";
+                btn.style.borderColor = "var(--accent-teal)";
+                btn.style.color = "var(--accent-teal)";
+                btn.style.background = "rgba(100,255,218,0.06)";
+                return;
+            }
             seconds++;
         };
         
@@ -850,7 +865,7 @@ function switchSymptom(key) {
 let eyeGameActive = false;
 let eyeGameTimerId = null;
 let eyeGameStartTime = 0;
-let eyeGameDuration = 30000;
+let eyeGameDuration = 40000;
 
 function startEyeTrackingSession() {
     if (eyeGameActive) return;

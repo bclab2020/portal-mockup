@@ -942,6 +942,27 @@
 
     <!-- Scripting Logic -->
     <script>
+        // Global Error Monitor Banner for easy diagnostic feedback
+        window.onerror = function(message, source, lineno, colno, error) {
+            const errDiv = document.createElement('div');
+            errDiv.style.position = 'fixed';
+            errDiv.style.top = '0';
+            errDiv.style.left = '0';
+            errDiv.style.width = '100%';
+            errDiv.style.background = 'rgba(255, 82, 82, 0.95)';
+            errDiv.style.color = '#ffffff';
+            errDiv.style.padding = '12px';
+            errDiv.style.fontSize = '12px';
+            errDiv.style.fontWeight = 'bold';
+            errDiv.style.zIndex = '99999';
+            errDiv.style.fontFamily = 'monospace';
+            errDiv.style.textAlign = 'center';
+            errDiv.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+            errDiv.innerHTML = `⚠️ JS Error: ${message} at ${source}:${lineno}:${colno}`;
+            document.body.appendChild(errDiv);
+            return false;
+        };
+
         // DOM Elements
         const video = document.getElementById('webcamVideo');
         const canvas = document.getElementById('outputCanvas');
@@ -1266,6 +1287,14 @@
             } catch (initErr) {
                 console.error("MediaPipe FaceMesh initialization error:", initErr);
                 appStatusBar.innerText = "エラー: AIモジュールの読み込みに失敗しました。シミュレーションモードを起動します。";
+                startCameraSimulation();
+                return;
+            }
+
+            // Check browser support for MediaDevices
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                console.warn("navigator.mediaDevices.getUserMedia is not supported on this browser/environment.");
+                appStatusBar.innerText = "エラー: お使いのブラウザはカメラ接続をサポートしていません。シミュレータを起動します。";
                 startCameraSimulation();
                 return;
             }

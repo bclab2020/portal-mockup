@@ -2399,20 +2399,18 @@
                                 </div>
                             </div>
 
-                            <!-- 2段目: 眼球運動（常時表示、大きく） -->
+                            <!-- 2段目: 眼球運動（常時表示、大きく・フルスクリーンポップアップ対応） -->
                             <div class="glass-card" style="border: 1px solid rgba(100, 255, 218, 0.25); background: rgba(10, 20, 42, 0.45); padding: 25px; border-radius: 12px; box-shadow: 0 0 25px rgba(100, 255, 218, 0.05); width:100%; box-sizing:border-box;">
                                 <div style="font-size:15px; font-weight:800; color:var(--accent-blue); border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:10px; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
-                                    👀 <span style="background:linear-gradient(45deg, var(--accent-blue), var(--accent-teal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800;">2. 眼精疲労緩和・眼球運動トレーニングゲーム</span>
+                                    👀 <span style="background:linear-gradient(45deg, var(--accent-blue), var(--accent-teal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800;">2. 眼精疲労緩和・眼球運動トレーニング（全画面モード）</span>
                                 </div>
-                                <div class="eye-tracker-game-container" style="display:flex; flex-direction:column; align-items:center; padding:15px; background:rgba(0,191,255,0.02); border:1px dashed rgba(0,191,255,0.15); border-radius:8px; width:100%; box-sizing:border-box;">
-                                    <div style="font-size:12px; color:var(--accent-blue); font-weight:700; margin-bottom:12px; text-align:center;">頭を動かさず、グリーンの追従ターゲットを目で追いかけてください</div>
-                                    <div style="position:relative; width:100%; max-width:640px; height:280px; background:#050c1c; border:1px solid rgba(0,191,255,0.2); border-radius:8px; overflow:hidden; box-shadow: inset 0 0 20px rgba(0,191,255,0.2);">
-                                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,191,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,255,0.05) 1px, transparent 1px); background-size:20px 20px; pointer-events:none;"></div>
-                                        <canvas id="eyeGameCanvas" width="640" height="280" style="width:100%; height:100%; display:block;"></canvas>
-                                        <div id="eyeGameHudText" style="position:absolute; top:12px; left:12px; font-family:monospace; font-size:11px; color:#64ffda; font-weight:700; text-shadow: 0 0 5px #64ffda;">TARGET TRACKER: STANDBY</div>
-                                        <div id="eyeGameTimerText" style="position:absolute; top:12px; right:12px; font-family:monospace; font-size:11px; color:#ffaa00; font-weight:700; text-shadow: 0 0 5px #ffaa00;">TIME: --s</div>
+                                <div class="eye-tracker-game-container" style="display:flex; flex-direction:column; align-items:center; padding:25px; background:rgba(0,191,255,0.02); border:1px dashed rgba(0,191,255,0.15); border-radius:8px; width:100%; box-sizing:border-box; text-align:center;">
+                                    <div style="font-size:32px; margin-bottom:12px;">👀</div>
+                                    <div style="font-size:13px; color:var(--accent-blue); font-weight:700; margin-bottom:8px; line-height:1.4;">頭を動かさず、画面全体を滑らかに動くターゲットを目で追いかけます</div>
+                                    <div style="font-size:11px; color:var(--text-secondary); max-width:520px; line-height:1.6; margin-bottom:18px;">
+                                        視野を最大限に広げ、目の周りのピント調節筋（毛様体筋）と外眼筋をダイナミックに引き伸ばすため、自動でブラウザ全体を使った全画面ストレッチモードへと切り替えます。
                                     </div>
-                                    <button id="eyeGameBtn" onclick="toggleEyeGame()" style="margin-top:15px; padding:8px 30px; font-size:12px; font-weight:700; border-radius:20px; border:1px solid var(--accent-blue); color:var(--accent-blue); background:rgba(0,191,255,0.06); cursor:pointer; transition:all 0.2s;">▶ セッションを開始する</button>
+                                    <button id="eyeGameBtn" onclick="startEyeGameFullscreen()" style="padding:10px 35px; font-size:13px; font-weight:700; border-radius:25px; border:1px solid var(--accent-blue); color:var(--accent-blue); background:rgba(0,191,255,0.06); cursor:pointer; transition:all 0.2s; box-shadow: 0 0 15px rgba(0,191,255,0.15); font-family:inherit;">▶ 全画面トレーニングを開始する (40秒)</button>
                                 </div>
                             </div>
 
@@ -2442,31 +2440,6 @@
                             </div>
                         </div>
                     `;
-                    // Redraw canvas to initial grid on load
-                    setTimeout(() => {
-                        const canvas = document.getElementById('eyeGameCanvas');
-                        if (canvas) {
-                            const ctx = canvas.getContext('2d');
-                            ctx.fillStyle = '#050c1c';
-                            ctx.fillRect(0, 0, canvas.width, canvas.height);
-                            ctx.strokeStyle = 'rgba(0, 191, 255, 0.08)';
-                            ctx.lineWidth = 1;
-                            const gridSize = 25;
-                            for (let x = 0; x < canvas.width; x += gridSize) {
-                                ctx.beginPath();
-                                ctx.moveTo(x, 0);
-                                ctx.lineTo(x, canvas.height);
-                                ctx.stroke();
-                            }
-                            for (let y = 0; y < canvas.height; y += gridSize) {
-                                ctx.beginPath();
-                                ctx.moveTo(0, y);
-                                ctx.lineTo(canvas.width, y);
-                                ctx.stroke();
-                            }
-                        }
-                    }, 50);
-                    
                     // Initialize default tab stretch
                     switchSymptom(defaultSymptomKey);
                 }
@@ -2844,113 +2817,117 @@
         }
 
 // ----------------------------------------------------
-    // Canvas-based Eye Tracking Game Engine (Tier 2)
+    // Fullscreen Eye Tracking Game Engine (v1.1.7)
     // ----------------------------------------------------
     let eyeGameActive = false;
     let eyeGameTimerId = null;
     let eyeGameStartTime = 0;
     const eyeGameDuration = 40000; // 40s
     
-    function toggleEyeGame() {
-        if (eyeGameActive) {
-            stopEyeGame();
-        } else {
-            startEyeGame();
-        }
-    }
-    
-    function startEyeGame() {
+    function startEyeGameFullscreen() {
         if (eyeGameActive) return;
         eyeGameActive = true;
         
-        const canvas = document.getElementById('eyeGameCanvas');
-        if (!canvas) return;
+        const modal = document.getElementById('eyeGameModal');
+        const canvas = document.getElementById('eyeGameCanvasFullscreen');
+        const hudText = document.getElementById('eyeGameHudTextFullscreen');
+        const timerText = document.getElementById('eyeGameTimerTextFullscreen');
+        const completeBtn = document.getElementById('eyeGameCloseCompleteBtn');
+        
+        if (!modal || !canvas) return;
+        
+        // Show modal overlay
+        modal.style.display = 'flex';
+        completeBtn.style.display = 'none';
+        
+        // Resize canvas to window dimensions
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
         const ctx = canvas.getContext('2d');
-        const btn = document.getElementById('eyeGameBtn');
-        const hud = document.getElementById('eyeGameHudText');
-        const timer = document.getElementById('eyeGameTimerText');
-        
-        if (btn) {
-            btn.textContent = "■ セッションを停止する";
-            btn.style.borderColor = "var(--accent-red)";
-            btn.style.color = "var(--accent-red)";
-            btn.style.background = "rgba(255,82,82,0.06)";
-        }
-        
         eyeGameStartTime = performance.now();
         
+        // Handle window resize dynamically during training
+        const handleResize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+        window.addEventListener('resize', handleResize);
+        
         function tick(now) {
-            if (!eyeGameActive) return;
+            if (!eyeGameActive) {
+                window.removeEventListener('resize', handleResize);
+                return;
+            }
+            
             const elapsed = now - eyeGameStartTime;
             const pct = elapsed / eyeGameDuration;
             
             if (pct >= 1.0) {
-                stopEyeGame(true);
+                window.removeEventListener('resize', handleResize);
+                showEyeGameCompleteScreen(ctx, canvas, hudText, timerText, completeBtn);
                 return;
             }
             
             const remaining = Math.max(0, (eyeGameDuration - elapsed) / 1000).toFixed(1);
-            if (timer) timer.textContent = `TIME: ${remaining}s`;
+            if (timerText) timerText.textContent = `TIME: ${remaining}s`;
             
-            // Clear and draw grid
+            // Draw grid in black
             ctx.fillStyle = '#050c1c';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
             ctx.strokeStyle = 'rgba(0, 191, 255, 0.08)';
             ctx.lineWidth = 1;
-            const gridSize = 25;
+            const gridSize = 40;
             for (let x = 0; x < canvas.width; x += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, canvas.height);
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
             }
             for (let y = 0; y < canvas.height; y += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(canvas.width, y);
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
             }
             
-            // Calculate target position
+            // Calculate coordinates (utilizing the whole screen)
             const cX = canvas.width / 2;
             const cY = canvas.height / 2;
             let targetX = cX;
             let targetY = cY;
-            let targetRadius = 14;
+            let targetRadius = 24; // Larger ball for fullscreen clarity
             let phaseText = "";
             
             const phase = Math.floor(pct * 4);
             if (phase === 0) {
                 const subPct = (pct * 4) % 1.0;
-                targetY = cY + Math.sin(subPct * Math.PI * 2) * (canvas.height * 0.35);
-                phaseText = "【上下ストレッチ】頭を動かさず、光を上下に追ってください";
+                // Move vertically across 80% of window height
+                targetY = cY + Math.sin(subPct * Math.PI * 2) * (canvas.height * 0.4);
+                phaseText = "【上下ストレッチ】頭を動かさず、緑の光を上下限界まで目で追ってください";
             } else if (phase === 1) {
                 const subPct = (pct * 4) % 1.0;
-                targetX = cX + Math.sin(subPct * Math.PI * 2) * (canvas.width * 0.4);
-                phaseText = "【左右ストレッチ】ボールの左右の水平な動きを目だけで追います";
+                // Move horizontally across 86% of window width
+                targetX = cX + Math.sin(subPct * Math.PI * 2) * (canvas.width * 0.43);
+                phaseText = "【左右ストレッチ】緑のボールを左右の隅々まで目だけで追います";
             } else if (phase === 2) {
                 const subPct = (pct * 4) % 1.0;
                 const angle = subPct * Math.PI * 2;
-                targetX = cX + Math.cos(angle) * (canvas.width * 0.35);
-                targetY = cY + Math.sin(angle) * (canvas.height * 0.3);
-                phaseText = "【眼球円ローリング】大きく滑らかに円を描くように目を回します";
+                // Circle matching screen bounds
+                targetX = cX + Math.cos(angle) * (canvas.width * 0.43);
+                targetY = cY + Math.sin(angle) * (canvas.height * 0.38);
+                phaseText = "【眼球円ローリング】目を大きく限界まで回すようにぐるりと動かします";
             } else {
                 const subPct = (pct * 4) % 1.0;
                 const scale = 1.0 + Math.sin(subPct * Math.PI * 3) * 0.6;
-                targetRadius = Math.max(6, 14 * scale);
+                targetRadius = Math.max(10, 24 * scale);
                 const angle = subPct * Math.PI * 2;
-                targetX = cX + Math.sin(angle * 2) * 50;
-                phaseText = "【遠近フォーカス】ボールのサイズ変化に合わせてピントを合わせます";
+                targetX = cX + Math.sin(angle * 2) * 80;
+                phaseText = "【遠近フォーカス】ボールのサイズ変化（伸縮）に合わせてピントを合わせます";
             }
             
-            if (hud) hud.textContent = `TARGET TRACKER: ${phaseText}`;
+            if (hudText) hudText.textContent = `TARGET TRACKER: ${phaseText}`;
             
-            // Draw Target Ball with radial glow
-            const radGlow = ctx.createRadialGradient(targetX, targetY, 2, targetX, targetY, targetRadius * 2);
+            // Draw Target Ball with glowing aura
+            const radGlow = ctx.createRadialGradient(targetX, targetY, 4, targetX, targetY, targetRadius * 2);
             radGlow.addColorStop(0, '#ffffff');
             radGlow.addColorStop(0.2, '#64ffda');
-            radGlow.addColorStop(0.6, 'rgba(100, 255, 218, 0.4)');
+            radGlow.addColorStop(0.6, 'rgba(100, 255, 218, 0.45)');
             radGlow.addColorStop(1, 'transparent');
             
             ctx.fillStyle = radGlow;
@@ -2958,9 +2935,10 @@
             ctx.arc(targetX, targetY, targetRadius * 2, 0, Math.PI * 2);
             ctx.fill();
             
+            // Core dot
             ctx.fillStyle = '#ffffff';
             ctx.beginPath();
-            ctx.arc(targetX, targetY, 4, 0, Math.PI * 2);
+            ctx.arc(targetX, targetY, 6, 0, Math.PI * 2);
             ctx.fill();
             
             eyeGameTimerId = requestAnimationFrame(tick);
@@ -2969,60 +2947,41 @@
         eyeGameTimerId = requestAnimationFrame(tick);
     }
     
-    function stopEyeGame(completed = false) {
+    function showEyeGameCompleteScreen(ctx, canvas, hudText, timerText, completeBtn) {
         eyeGameActive = false;
         cancelAnimationFrame(eyeGameTimerId);
         
-        const canvas = document.getElementById('eyeGameCanvas');
-        const btn = document.getElementById('eyeGameBtn');
-        const hud = document.getElementById('eyeGameHudText');
-        const timer = document.getElementById('eyeGameTimerText');
+        if (timerText) timerText.textContent = "TIME: COMPLETE";
+        if (hudText) hudText.textContent = "🏆 全画面眼筋ストレッチ完了！";
+        if (completeBtn) completeBtn.style.display = 'block';
         
-        if (btn) {
-            btn.textContent = completed ? "もう一度行う" : "▶ セッションを開始する";
-            btn.style.borderColor = "var(--accent-blue)";
-            btn.style.color = "var(--accent-blue)";
-            btn.style.background = "rgba(0,191,255,0.06)";
-        }
+        // Draw completion banner on fullscreen canvas
+        ctx.fillStyle = 'rgba(5, 12, 28, 0.85)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        if (hud) {
-            hud.textContent = completed ? "🏆 眼筋トレーニング完了！" : "TARGET TRACKER: STANDBY";
-        }
-        if (timer) {
-            timer.textContent = completed ? "TIME: COMPLETE" : "TIME: --s";
-        }
+        // Circular grid decoration
+        ctx.strokeStyle = 'rgba(100, 255, 218, 0.1)';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(canvas.width/2, canvas.height/2, 100, 0, Math.PI*2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(canvas.width/2, canvas.height/2, 200, 0, Math.PI*2); ctx.stroke();
         
-        if (canvas) {
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#050c1c';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.strokeStyle = 'rgba(0, 191, 255, 0.08)';
-            ctx.lineWidth = 1;
-            const gridSize = 25;
-            for (let x = 0; x < canvas.width; x += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, canvas.height);
-                ctx.stroke();
-            }
-            for (let y = 0; y < canvas.height; y += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(canvas.width, y);
-                ctx.stroke();
-            }
-            
-            if (completed) {
-                ctx.fillStyle = 'rgba(100, 255, 218, 0.85)';
-                ctx.font = 'bold 16px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('🎉 眼筋ストレッチ・トレーニング完了！', canvas.width / 2, canvas.height / 2);
-                ctx.fillStyle = 'rgba(255,255,255,0.7)';
-                ctx.font = '12px sans-serif';
-                ctx.fillText('目の緊張がほぐれました。こまめに休憩を挟みましょう。', canvas.width / 2, canvas.height / 2 + 25);
-            }
-        }
+        ctx.fillStyle = 'rgba(100, 255, 218, 0.95)';
+        ctx.font = 'bold 24px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('🎉 眼筋ストレッチ・全画面セッション完了！', canvas.width / 2, canvas.height / 2 - 30);
+        
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.font = '14px sans-serif';
+        ctx.fillText('画面の隅々まで目を動かすことで、目の周りの筋肉の血流が改善されました。', canvas.width / 2, canvas.height / 2 + 10);
+        ctx.fillText('PCでの連続作業は避け、定期的に遠くを見つめましょう。', canvas.width / 2, canvas.height / 2 + 35);
+    }
+    
+    function stopEyeGameFullscreen(completed = false) {
+        eyeGameActive = false;
+        cancelAnimationFrame(eyeGameTimerId);
+        
+        const modal = document.getElementById('eyeGameModal');
+        if (modal) modal.style.display = 'none';
     }
 
                 // Redraw tips dynamically when user changes their age segment
@@ -3281,5 +3240,30 @@
         </div>
     </div>
 
+
+    <!-- Fullscreen Eye Training Modal (v1.1.7) -->
+    <div id="eyeGameModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #050c1c; z-index: 99999; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; box-sizing: border-box;">
+        <!-- Grid background -->
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,191,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,255,0.04) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 1;"></div>
+        
+        <!-- Fullscreen Canvas -->
+        <canvas id="eyeGameCanvasFullscreen" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; z-index: 2;"></canvas>
+        
+        <!-- Close button (Always on top) -->
+        <button onclick="stopEyeGameFullscreen(false)" style="position: absolute; top: 25px; right: 25px; z-index: 3; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 10px 20px; font-size: 13px; font-weight: 700; border-radius: 30px; cursor: pointer; transition: all 0.2s; font-family: inherit;">✕ トレーニングを閉じる</button>
+        
+        <!-- Center Complete Button overlay (Initially hidden) -->
+        <button id="eyeGameCloseCompleteBtn" onclick="stopEyeGameFullscreen(false)" style="display: none; position: absolute; top: 62%; left: 50%; transform: translate(-50%, -50%); z-index: 4; background: var(--accent-teal); border: none; color: #050c1c; padding: 12px 40px; font-size: 14px; font-weight: 800; border-radius: 30px; cursor: pointer; box-shadow: 0 0 20px rgba(100, 255, 218, 0.4); transition: all 0.2s; font-family: inherit;">ダッシュボードに戻る</button>
+
+        <!-- Top Instructions HUD -->
+        <div id="eyeGameHudTextFullscreen" style="position: absolute; top: 30px; left: 50%; transform: translateX(-50%); z-index: 3; font-family: sans-serif; font-size: 15px; color: #64ffda; font-weight: 800; text-shadow: 0 0 10px #64ffda; background: rgba(5,12,28,0.85); border: 1px solid rgba(100,255,218,0.25); padding: 10px 25px; border-radius: 30px; text-align: center; max-width: 80vw; letter-spacing: 0.5px;">
+            TARGET TRACKER: STANDBY
+        </div>
+        
+        <!-- Bottom Timer HUD -->
+        <div id="eyeGameTimerTextFullscreen" style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 3; font-family: monospace; font-size: 24px; color: #ffaa00; font-weight: 800; text-shadow: 0 0 10px #ffaa00; background: rgba(5,12,28,0.8); padding: 8px 30px; border-radius: 8px; border: 1px solid rgba(255,170,0,0.25);">
+            TIME: --s
+        </div>
+    </div>
 </body>
 </html>

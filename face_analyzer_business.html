@@ -1247,21 +1247,28 @@
             if (isCameraActive) return;
             appStatusBar.innerText = "カメラ起動要求を送信中... 許可してください。";
             
-            // Initialize MediaPipe Face Mesh object
-            faceMesh = new FaceMesh({
-                locateFile: (file) => {
-                    return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
-                }
-            });
+            try {
+                // Initialize MediaPipe Face Mesh object
+                faceMesh = new FaceMesh({
+                    locateFile: (file) => {
+                        return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+                    }
+                });
 
-            faceMesh.setOptions({
-                maxNumFaces: 1,
-                refineLandmarks: true,
-                minDetectionConfidence: 0.5,
-                minTrackingConfidence: 0.5
-            });
+                faceMesh.setOptions({
+                    maxNumFaces: 1,
+                    refineLandmarks: true,
+                    minDetectionConfidence: 0.5,
+                    minTrackingConfidence: 0.5
+                });
 
-            faceMesh.onResults(onFaceMeshResults);
+                faceMesh.onResults(onFaceMeshResults);
+            } catch (initErr) {
+                console.error("MediaPipe FaceMesh initialization error:", initErr);
+                appStatusBar.innerText = "エラー: AIモジュールの読み込みに失敗しました。シミュレーションモードを起動します。";
+                startCameraSimulation();
+                return;
+            }
 
             // Access WebCam
             navigator.mediaDevices.getUserMedia({
@@ -1270,23 +1277,29 @@
             }).then((stream) => {
                 function onMetadataLoaded() {
                     if (isCameraActive) return; // Prevent duplicate initialization
-                    isCameraActive = true;
-                    startCamBtn.disabled = true;
-                    startScanBtn.disabled = false;
-                    appStatusBar.innerText = "カメラ起動成功。顔を画面中央に合わせて「スキャン開始」を押してください。";
-                    resizeCanvas();
-                    
-                    // Create MediaPipe camera instance
-                    cameraHelper = new Camera(video, {
-                        onFrame: async () => {
-                            if (isCameraActive) {
-                                await faceMesh.send({ image: video });
-                            }
-                        },
-                        width: 640,
-                        height: 480
-                    });
-                    cameraHelper.start();
+                    try {
+                        isCameraActive = true;
+                        startCamBtn.disabled = true;
+                        startScanBtn.disabled = false;
+                        appStatusBar.innerText = "カメラ起動成功。顔を画面中央に合わせて「スキャン開始」を押してください。";
+                        resizeCanvas();
+                        
+                        // Create MediaPipe camera instance
+                        cameraHelper = new Camera(video, {
+                            onFrame: async () => {
+                                if (isCameraActive) {
+                                    await faceMesh.send({ image: video });
+                                }
+                            },
+                            width: 640,
+                            height: 480
+                        });
+                        cameraHelper.start();
+                    } catch (camErr) {
+                        console.error("Camera helper startup error:", camErr);
+                        appStatusBar.innerText = "エラー: AIカメラモジュールの起動に失敗しました。シミュレーションモードを起動します。";
+                        startCameraSimulation();
+                    }
                 }
 
                 // 1. Register listener FIRST to avoid race condition

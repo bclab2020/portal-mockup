@@ -2880,9 +2880,60 @@
             const elapsed = now - eyeGameStartTime;
             const pct = elapsed / eyeGameDuration;
             
-            if (pct >= 1.0) {
-                window.removeEventListener('resize', handleResize);
-                showEyeGameCompleteScreen(ctx, canvas, hudText, timerText, completeBtn);
+            // If training time is finished, enter fade out phase
+            if (elapsed >= eyeGameDuration) {
+                const fadeElapsed = elapsed - eyeGameDuration;
+                const fadeDuration = 2000; // 2s fade out
+                
+                if (fadeElapsed >= fadeDuration) {
+                    window.removeEventListener('resize', handleResize);
+                    showEyeGameCompleteScreen(ctx, canvas, hudText, timerText, completeBtn);
+                    return;
+                }
+                
+                const fadePct = 1.0 - (fadeElapsed / fadeDuration); // 1.0 -> 0.0
+                
+                if (timerText) timerText.textContent = "TIME: COMPLETE";
+                if (hudText) hudText.textContent = "調整中...";
+                
+                // Draw grid fading out
+                ctx.fillStyle = '#050c1c';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.strokeStyle = `rgba(0, 191, 255, ${0.08 * fadePct})`;
+                ctx.lineWidth = 1;
+                const gridSize = 40;
+                for (let x = 0; x < canvas.width; x += gridSize) {
+                    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+                }
+                for (let y = 0; y < canvas.height; y += gridSize) {
+                    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+                }
+                
+                // Keep moving target but fade out at center
+                const cX = canvas.width / 2;
+                const cY = canvas.height / 2;
+                let targetX = cX;
+                let targetY = cY;
+                let targetRadius = Math.max(8, 24 * fadePct);
+                
+                const radGlow = ctx.createRadialGradient(targetX, targetY, 4, targetX, targetY, targetRadius * 2);
+                radGlow.addColorStop(0, `rgba(255, 255, 255, ${fadePct})`);
+                radGlow.addColorStop(0.2, `rgba(100, 255, 218, ${fadePct})`);
+                radGlow.addColorStop(0.6, `rgba(100, 255, 218, ${0.45 * fadePct})`);
+                radGlow.addColorStop(1, 'transparent');
+                
+                ctx.fillStyle = radGlow;
+                ctx.beginPath();
+                ctx.arc(targetX, targetY, targetRadius * 2, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = `rgba(255, 255, 255, ${fadePct})`;
+                ctx.beginPath();
+                ctx.arc(targetX, targetY, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                eyeGameTimerId = requestAnimationFrame(tick);
                 return;
             }
             
@@ -3193,16 +3244,25 @@
                     
                     if (seconds >= 40) {
                         clearInterval(breathingTimer);
-                        breathingActive = false;
-                        balloon.style.width = '50px';
-                        balloon.style.height = '50px';
-                        balloon.style.transition = 'all 0.5s ease';
-                        balloon.style.boxShadow = breathingType === "478" ? '0 0 15px var(--accent-red)' : '0 0 15px var(--accent-teal)';
-                        txt.innerHTML = `<span style="color:var(--accent-teal); font-weight:800;">🏆 深呼吸セッション完了！ 自律神経が整いました。</span>`;
-                        btn.innerText = "もう一度行う";
-                        btn.style.borderColor = "var(--accent-teal)";
-                        btn.style.color = "var(--accent-teal)";
-                        btn.style.background = "rgba(100,255,218,0.06)";
+                        balloon.style.transition = 'all 2.0s ease-in-out';
+                        balloon.style.opacity = '0';
+                        balloon.style.width = '30px';
+                        balloon.style.height = '30px';
+                        txt.innerHTML = `<span style="color:var(--text-secondary); opacity:0.5;">整えています...</span>`;
+                        
+                        setTimeout(() => {
+                            breathingActive = false;
+                            balloon.style.transition = 'all 0.5s ease';
+                            balloon.style.opacity = '1';
+                            balloon.style.width = '50px';
+                            balloon.style.height = '50px';
+                            balloon.style.boxShadow = breathingType === "478" ? '0 0 15px var(--accent-red)' : '0 0 15px var(--accent-teal)';
+                            txt.innerHTML = `<span style="color:var(--accent-teal); font-weight:800;">🏆 深呼吸セッション完了！ 自律神経が整いました。</span>`;
+                            btn.innerText = "もう一度行う";
+                            btn.style.borderColor = "var(--accent-teal)";
+                            btn.style.color = "var(--accent-teal)";
+                            btn.style.background = "rgba(100,255,218,0.06)";
+                        }, 2000);
                         return;
                     }
                     seconds++;

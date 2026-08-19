@@ -508,16 +508,25 @@ window.toggleBreathingGuide = function() {
             
             if (seconds >= 40) {
                 clearInterval(breathingTimer);
-                breathingActive = false;
-                balloon.style.width = '30px';
-                balloon.style.height = '30px';
-                balloon.style.transition = 'all 0.5s ease';
-                balloon.style.boxShadow = breathingType === "478" ? '0 0 15px var(--accent-red)' : '0 0 15px var(--accent-teal)';
-                txt.innerHTML = `<span style="color:var(--accent-teal); font-weight:800;">🏆 深呼吸セッション完了！ 自律神経が整いました。</span>`;
-                btn.innerText = "もう一度行う";
-                btn.style.borderColor = "var(--accent-teal)";
-                btn.style.color = "var(--accent-teal)";
-                btn.style.background = "rgba(100,255,218,0.06)";
+                balloon.style.transition = 'all 2.0s ease-in-out';
+                balloon.style.opacity = '0';
+                balloon.style.width = '20px';
+                balloon.style.height = '20px';
+                txt.innerHTML = `<span style="color:var(--text-secondary); opacity:0.5;">整えています...</span>`;
+                
+                setTimeout(() => {
+                    breathingActive = false;
+                    balloon.style.transition = 'all 0.5s ease';
+                    balloon.style.opacity = '1';
+                    balloon.style.width = '30px';
+                    balloon.style.height = '30px';
+                    balloon.style.boxShadow = breathingType === "478" ? '0 0 15px var(--accent-red)' : '0 0 15px var(--accent-teal)';
+                    txt.innerHTML = `<span style="color:var(--accent-teal); font-weight:800;">🏆 深呼吸セッション完了！ 自律神経が整いました。</span>`;
+                    btn.innerText = "もう一度行う";
+                    btn.style.borderColor = "var(--accent-teal)";
+                    btn.style.color = "var(--accent-teal)";
+                    btn.style.background = "rgba(100,255,218,0.06)";
+                }, 2000);
                 return;
             }
             seconds++;

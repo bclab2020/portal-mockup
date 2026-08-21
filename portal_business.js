@@ -588,7 +588,7 @@ function applyCustomHUDCoordinates() {
 
 const symptomExercises = {
     twist: {
-        title: "🧘 30秒・椅子ひねりストレッチ（自律神経・腰痛ケア）",
+        title: "30秒・椅子ひねりストレッチ（自律神経・腰痛ケア）",
         desc: "<strong>【姿勢・方向】</strong>背筋をまっすぐ伸ばして椅子に深く腰掛け、上体を右へねじります。左手で背もたれを掴み、右手は椅子の座面後方を支えて固定します。<br><strong>【秒数】</strong>痛気持ちいいところでキープし、<strong>左右それぞれ15秒間（計30秒）</strong>行います。<br><strong>【呼吸法】</strong>ねじりながら息をゆっくり吐き出します。",
         img: "stretch_twist_jp.jpg?v=1.0.1",
         color: "#ff5252",
@@ -599,14 +599,14 @@ const symptomExercises = {
                     <path d="M0,0 L0,6 L6,3 Z" fill="#ff5252"/>
                 </marker>
             </defs>
-            <path d="M 200 120 Q 150 135 112 112" fill="none" stroke="#ff5252" stroke-width="2.5" marker-start="url(#portal-arrow-red)" marker-end="url(#portal-arrow-red)" stroke-dasharray="4 2"/>
-            <circle cx="200" cy="120" r="4.5" fill="#ff5252" stroke="#050c1c" stroke-width="1.5"/>
-            <text x="185" y="138" fill="#ff5252" font-size="10" font-weight="700" font-family="monospace">START (正面)</text>
-            <text x="88" y="102" fill="#ff5252" font-size="10" font-weight="700" font-family="monospace">END (ねじる)</text>
+            <path d="M 210 108 Q 161 135 117 112" fill="none" stroke="#ff5252" stroke-width="2.5" marker-start="url(#portal-arrow-red)" marker-end="url(#portal-arrow-red)" stroke-dasharray="4 2"/>
+            <circle cx="210" cy="108" r="4.5" fill="#ff5252" stroke="#050c1c" stroke-width="1.5"/>
+            <text x="194" y="126" fill="#ff5252" font-size="10" font-weight="700" font-family="monospace">START (正面)</text>
+            <text x="93" y="102" fill="#ff5252" font-size="10" font-weight="700" font-family="monospace">END (ねじる)</text>
         </svg>`
     },
     shoulder: {
-        title: "🧘 肩・肩甲骨拡張ストレッチ（肩こり解消）",
+        title: "肩・肩甲骨拡張ストレッチ（肩こり解消）",
         desc: "<strong>【姿勢・方向】</strong>右腕を左方向に真っ直ぐ伸ばし、左腕で右肘を抱え込むように胸に強く引き寄せます。肩甲骨が外側にしっかりと広がる感覚を意識します。<br><strong>【秒数】</strong>肩の奥が伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br><strong>【呼吸法】</strong>深く穏やかな胸式呼吸を繰り返します。",
         img: "stretch_shoulder_jp.jpg?v=1.0.1",
         color: "#00bfff",
@@ -624,7 +624,7 @@ const symptomExercises = {
         </svg>`
     },
     neck: {
-        title: "🧘 首・肩・頚椎アライメントストレッチ（首こり・頭痛）",
+        title: "首・肩・頚椎アライメントストレッチ（首こり・頭痛）",
         desc: "<strong>【姿勢・方向】</strong>背筋を伸ばし、右手を頭の左側に添え、頭をゆっくり右斜め前（45度方向）に傾けます。左肩が上がらないよう、意識して固定します。<br><strong>【秒数】</strong>首の左後ろが伸びる強さで、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br><strong>【呼吸法】</strong>息を細く長く吐き出しながら、じんわりと伸ばします。",
         img: "stretch_neck_jp.jpg?v=1.0.1",
         color: "#64ffda",
@@ -642,7 +642,7 @@ const symptomExercises = {
         </svg>`
     },
     chest: {
-        title: "🧘 大胸筋チェストオープナー（巻き肩・猫背リセット）",
+        title: "大胸筋チェストオープナー（巻き肩・猫背リセット）",
         desc: "<strong>【姿勢・方向】</strong>頭の後ろで両手を組み、息を吸いながら肘を大きく後ろに引きます。胸を天井に向けてしっかりと開きます。<br><strong>【秒数】</strong>胸の前の筋肉が心地よく広がる位置で、<strong>15秒間キープを2回</strong>行います。<br><strong>【呼吸法】</strong>胸いっぱいに息を吸い込み、吐きながらさらに深く開きます。",
         img: "stretch_chest_jp.jpg?v=1.0.1",
         color: "#ff44dd",
@@ -660,7 +660,7 @@ const symptomExercises = {
         </svg>`
     },
     wrist: {
-        title: "🧘 手首・前腕ストレッチ（タイピング疲労軽減）",
+        title: "手首・前腕ストレッチ（タイピング疲労軽減）",
         desc: "<strong>【姿勢・方向】</strong>腕を前に真っ直ぐ伸ばし、手のひらを前に向けます。反対の手で指先を手前に引き、前腕の内側を伸ばします。<br><strong>【秒数】</strong>手首から前腕が伸びる位置で、<strong>左右それぞれ15秒間</strong>キープします。<br><strong>【呼吸法】</strong>息を止めずに、リラックスして細く長い呼吸を続けます。",
         img: "stretch_wrist_jp.jpg?v=1.0.1",
         color: "#ffaa00",
@@ -678,7 +678,7 @@ const symptomExercises = {
         </svg>`
     },
     hamstring: {
-        title: "🧘 ハムストリングス伸ばし（足のむくみ・腰痛解消）",
+        title: "ハムストリングス伸ばし（足のむくみ・腰痛解消）",
         desc: "<strong>【姿勢・方向】</strong>片方の足を前に伸ばしてかかとを床につけます。背すじを伸ばしたまま、上体をゆっくり前に倒して太ももの裏を伸ばします。<br><strong>【秒数】</strong>もも裏が伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br><strong>【呼吸法】</strong>息を吐きながら上体を倒すと、効果的にストレッチできます。",
         img: "stretch_hamstring_jp.jpg?v=1.0.1",
         color: "#00e5ff",
@@ -696,7 +696,7 @@ const symptomExercises = {
         </svg>`
     },
     catcow: {
-        title: "🧘 キャット＆カウ（背骨・背中の柔軟性向上）",
+        title: "キャット＆カウ（背骨・背中の柔軟性向上）",
         desc: "<strong>【姿勢・方向】</strong>椅子に座ったまま両手で膝を掴みます。息を吐きながら背中を丸め、おへそを覗き込みます。次に息を吸いながら胸を前に押し出し、背骨を反らせます。<br><strong>【秒数】</strong>丸める・反らすを交互に<strong>各5秒間、3回往復（計30秒）</strong>行います。<br><strong>【呼吸法】</strong>呼吸と動作を深く連動させます。",
         img: "stretch_catcow_jp.jpg?v=1.0.1",
         color: "#76ff03",
@@ -714,7 +714,7 @@ const symptomExercises = {
         </svg>`
     },
     shrug: {
-        title: "🧘 肩すくめ＆脱力リフレッシュ（肩・首まわりのコリ解消）",
+        title: "肩すくめ＆脱力リフレッシュ（肩・首まわりのコリ解消）",
         desc: "<strong>【姿勢・方向】</strong>背筋を伸ばし、両肩を耳に近づけるように限界まで高く引き上げ、首回りにギュッと力を入れます。その後、一キーに肩の力を抜いてストンと落とします。<br><strong>【秒数】</strong>力を入れる(5秒)→抜く(10秒)を<strong>2〜3回反復</strong>します。<br><strong>【呼吸法】</strong>肩を上げる時に吸い、落とす時に一気に「はぁー」と吐き出します。",
         img: "stretch_shrug_jp.jpg?v=1.0.2",
         color: "#ffeb3b",

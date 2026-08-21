@@ -2,21 +2,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;700&display=swap');
 
 :root {
-    --bg-primary: #050811;
-    --bg-secondary: #0a1128;
-    --bg-card: rgba(16, 28, 48, 0.6);
-    --bg-glass: rgba(10, 20, 42, 0.7);
-    --border-color: rgba(100, 255, 218, 0.12);
-    --border-glow: rgba(0, 191, 255, 0.2);
+    --bg-primary: #0b0f19;
+    --bg-secondary: #121824;
+    --bg-card: rgba(18, 24, 38, 0.75);
+    --bg-glass: rgba(18, 24, 38, 0.8);
+    --border-color: rgba(148, 163, 184, 0.12);
+    --border-glow: rgba(59, 130, 246, 0.08);
     
     /* Neon Accents */
-    --accent-teal: #64ffda;
-    --accent-blue: #00bfff;
-    --accent-orange: #ff9100;
-    --accent-red: #ff5252;
-    --accent-green: #39ff14;
-    --accent-purple: #8a2be2;
-    --accent-pink: #ff1493;
+    --accent-teal: #0fb5ae;
+    --accent-blue: #3b82f6;
+    --accent-orange: #f59e0b;
+    --accent-red: #f87171;
+    --accent-green: #10b981;
+    --accent-purple: #8b5cf6;
+    --accent-pink: #ec4899;
     
     --text-primary: #f8f9fa;
     --text-secondary: #8892b0;
@@ -41,7 +41,7 @@ html, body {
 
 body {
     font-family: var(--font-sans);
-    background: radial-gradient(circle at top right, #0d1e40 0%, var(--bg-primary) 70%);
+    background: radial-gradient(circle at top right, #1e293b 0%, var(--bg-primary) 70%);
     background-color: var(--bg-primary);
     color: var(--text-primary);
     min-height: 100vh;
@@ -101,7 +101,7 @@ header {
     border-radius: 20px;
     font-size: 10px;
     letter-spacing: 0.5px;
-    text-shadow: 0 0 5px rgba(100, 255, 218, 0.3);
+    text-shadow: none;
 }
 
 /* Navigation Tabs */
@@ -134,7 +134,7 @@ header {
     color: var(--accent-blue);
     background: rgba(0, 191, 255, 0.08);
     border-color: rgba(0, 191, 255, 0.3);
-    box-shadow: 0 0 15px rgba(0, 191, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .tab-btn.disabled-btn {
@@ -238,7 +238,7 @@ header {
 .article-card:hover {
     transform: translateY(-4px);
     border-color: rgba(0, 191, 255, 0.3);
-    box-shadow: 0 12px 40px rgba(0, 191, 255, 0.1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 
 .article-image {
@@ -1110,10 +1110,10 @@ iframe#measurementIframe {
 
 /* Vertical Theme Overrides */
 body.theme-sports {
-    --accent-blue: #00bfff;
-    --accent-teal: #64ffda;
-    --accent-purple: #8a2be2;
-    background: radial-gradient(circle at top right, #0d1e40 0%, var(--bg-primary) 70%);
+    --accent-blue: #3b82f6;
+    --accent-teal: #0fb5ae;
+    --accent-purple: #8b5cf6;
+    background: radial-gradient(circle at top right, #1e293b 0%, var(--bg-primary) 70%);
 }
 
 body.theme-health {

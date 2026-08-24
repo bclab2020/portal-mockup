@@ -625,7 +625,7 @@
             border-color: rgba(255,255,255,0.15);
         }
         .symptom-tab-btn.active {
-            background: linear-gradient(45deg, rgba(100,255,218,0.15), rgba(0,191,255,0.15));
+            background: rgba(0, 0, 0, 0.03);
             color: var(--accent-teal);
             border-color: var(--accent-teal);
             box-shadow: 0 0 10px rgba(100,255,218,0.15);
@@ -802,7 +802,7 @@
                         <span class="metric-label">自律神経ストレス判定</span>
                         <span class="metric-val pink" id="resStress">--</span>
                     </div>
-                    <div class="metric-badge" style="grid-column: span 2; background: linear-gradient(135deg, rgba(100,255,218,0.05) 0%, rgba(100,255,218,0) 100%); border-color: rgba(100,255,218,0.25);">
+                    <div class="metric-badge" style="grid-column: span 2; background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.08);">
                         <span class="metric-label" style="color:var(--accent-teal); font-weight:700;">HRV心拍変動指標 (RMSSD)</span>
                         <span class="metric-val highlight" style="color:var(--accent-teal);" id="resHrv">-- ms</span>
                     </div>
@@ -921,7 +921,7 @@
 
                 <!-- Parent Portal postMessage button (only visible inside portal iframe) -->
                 <div class="portal-sender-box" id="portalSenderBox">
-                    <button class="btn btn-primary" id="sendPortalBtn" style="background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-red) 100%); box-shadow: 0 4px 15px rgba(255, 145, 0, 0.3);">
+                    <button class="btn btn-primary" id="sendPortalBtn" style="background: var(--accent-blue); color:#ffffff; font-weight:600; box-shadow: none; border-radius: 980px;">
                         📥 測定結果データをポータルに送信
                     </button>
                 </div>
@@ -2292,7 +2292,7 @@
                      <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:15px; margin-top:10px; background:rgba(255,82,82,0.02); border:1px dashed rgba(255,82,82,0.15); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
                         <div style="font-size:10px; color:var(--accent-red); font-weight:700; margin-bottom:12px; letter-spacing:0.5px;">呼吸ガイド（バルーンの伸縮と同調してください）</div>
                         <div style="width:120px; height:120px; display:flex; align-items:center; justify-content:center; position:relative;">
-                            <div id="breathingBalloon" style="width:40px; height:40px; border-radius:50%; background:radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%); box-shadow: 0 0 25px var(--accent-red); transition: all 1.5s ease-in-out;"></div>
+                            <div id="breathingBalloon" style="width:40px; height:40px; border-radius:50%; background:rgba(255, 59, 48, 0.12); border:1.5px solid rgba(255, 59, 48, 0.35); transition: all 1.5s ease-in-out;"></div>
                             <div style="position:absolute; width:15px; height:15px; border-radius:50%; background:#fff; box-shadow: 0 0 10px #fff;"></div>
                         </div>
                         <div id="breathingText" style="font-size:11px; font-weight:700; color:var(--text-primary); margin-top:12px; height:15px; letter-spacing:0.5px;">準備中...</div>
@@ -3217,7 +3217,8 @@
                             balloon.style.width = '110px';
                             balloon.style.height = '110px';
                             balloon.style.transition = 'all 4s ease-in-out';
-                            balloon.style.background = 'radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%)';
+                            balloon.style.background = 'rgba(255, 59, 48, 0.12)';
+                    balloon.style.border = '1.5px solid rgba(255, 59, 48, 0.35)';
                             balloon.style.boxShadow = 'none';
                             txt.innerHTML = `<span style="color:#ff5252; font-weight:700;">吸い込む (Inhale)... ${4 - subSec}秒</span>`;
                         } else if (subSec < 11) {
@@ -3249,7 +3250,8 @@
                             balloon.style.width = '40px';
                             balloon.style.height = '40px';
                             balloon.style.transition = 'all 6s ease-in-out';
-                            balloon.style.background = 'radial-gradient(circle, var(--accent-blue) 0%, rgba(0,191,255,0.4) 70%, transparent 100%)';
+                            balloon.style.background = 'rgba(0, 113, 227, 0.12)';
+                    balloon.style.border = '1.5px solid rgba(0, 113, 227, 0.35)';
                             balloon.style.boxShadow = '0 0 25px var(--accent-blue)';
                             txt.innerHTML = `<span style="color:#00bfff; font-weight:700;">ゆっくり吐く (Exhale)... ${9 - subSec}秒</span>`;
                         }

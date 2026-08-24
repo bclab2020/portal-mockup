@@ -64,22 +64,21 @@
 
         .form-input {
             width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            padding: 10px 14px;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 10px;
+            padding: 12px 14px;
             color: var(--text-primary);
             font-size: 14px;
             font-family: var(--font-sans);
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
             box-sizing: border-box;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: var(--accent-teal);
-            background: rgba(100, 255, 218, 0.04);
-            box-shadow: 0 0 10px rgba(100, 255, 218, 0.15);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
         }
 
         .login-btn {
@@ -138,22 +137,15 @@
         }
 
         .scan-promo-card {
-            background: linear-gradient(135deg, rgba(16, 28, 48, 0.8) 0%, rgba(10, 20, 42, 0.9) 100%);
-            border: 1.5px solid rgba(100, 255, 218, 0.2);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(100, 255, 218, 0.08);
+            box-shadow: var(--card-shadow);
         }
 
         .scan-promo-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(100, 255, 218, 0.12) 0%, transparent 70%);
-            pointer-events: none;
+            display: none;
         }
 
         .analytics-chart-container {
@@ -175,9 +167,8 @@
         .trend-bar {
             width: 14px;
             border-radius: 4px 4px 0 0;
-            background: linear-gradient(to top, var(--accent-blue), var(--accent-teal));
+            background: var(--accent-blue);
             transition: height 0.5s ease;
-            box-shadow: 0 0 8px rgba(100, 255, 218, 0.3);
             position: relative;
         }
 

@@ -1,388 +1,388 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>CORE CONNECT for Business - 健康経営自律神経ウェルネス</title>
-    
-    <!-- Link to the standard design system -->
-    <link rel="stylesheet" href="portal.css?v=1.3.0">
-    
-    <style>
-        /* Additional SaaS Specific Styles */
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background-color: var(--bg-primary);
-        }
-
-        .login-card {
-            width: 100%;
-            max-width: 420px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            box-shadow: var(--card-shadow);
-            border-radius: 18px;
-            padding: 40px 35px;
-            transition: all 0.2s ease;
-        }
-
-        .login-logo {
-            text-align: center;
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            margin-bottom: 25px;
-            color: var(--text-primary);
-            text-transform: uppercase;
-        }
-
-        .login-subtitle {
-            text-align: center;
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-top: -20px;
-            margin-bottom: 30px;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .form-input {
-            width: 100%;
-            background: #ffffff;
-            border: 1px solid rgba(0, 0, 0, 0.12);
-            border-radius: 10px;
-            padding: 12px 14px;
-            color: var(--text-primary);
-            font-size: 14px;
-            font-family: var(--font-sans);
-            transition: all 0.15s ease;
-            box-sizing: border-box;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
-        }
-
-        .login-btn {
-            width: 100%;
-            background: #1d1d1f;
-            border: none;
-            border-radius: 980px;
-            padding: 12px;
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            margin-top: 15px;
-        }
-
-        .login-btn:hover {
-            background: #000000;
-            transform: translateY(-1px);
-        }
-
-        /* SaaS Main View Styles */
-        .saas-header-info {
-            font-size: 12px;
-            color: var(--text-secondary);
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 5px 12px;
-            border-radius: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .employee-badge {
-            background: rgba(100, 255, 218, 0.12);
-            color: var(--accent-teal);
-            font-weight: 700;
-            padding: 1px 6px;
-            border-radius: 4px;
-            font-size: 10px;
-        }
-
-        /* Personal Analytics Card */
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        @media (max-width: 860px) {
-            .analytics-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .scan-promo-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-        }
-
-        .scan-promo-card::before {
-            display: none;
-        }
-
-        .analytics-chart-container {
-            height: 180px;
-            margin-top: 15px;
-            position: relative;
-            display: flex;
-            align-items: flex-end;
-        }
-
-        .trend-point {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .trend-bar {
-            width: 14px;
-            border-radius: 4px 4px 0 0;
-            background: var(--accent-blue);
-            transition: height 0.5s ease;
-            position: relative;
-        }
-
-        .trend-bar:hover::after {
-            content: attr(data-val);
-            position: absolute;
-            top: -24px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(5, 12, 28, 0.85);
-            color: #fff;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 9px;
-            border: 1.5px solid var(--accent-teal);
-            white-space: nowrap;
-            z-index: 10;
-        }
-
-        .trend-date {
-            font-size: 8px;
-            color: var(--text-secondary);
-            transform: rotate(-15deg);
-            white-space: nowrap;
-        }
-
-        .empty-chart-state {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            font-size: 12px;
-            text-align: center;
-            border: 1px dashed rgba(0, 0, 0, 0.12);
-            border-radius: 12px;
-            background: rgba(0, 0, 0, 0.02);
-            padding: 20px;
-            box-sizing: border-box;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- 1. SaaS Authentication Page (Shown by default if not logged in) -->
-    <div class="login-container" id="loginSection">
-        <div class="login-card">
-            <div class="login-logo">CORE CONNECT</div>
-            <div class="login-subtitle">健康経営自律神経ウェルネスプラットフォーム</div>
-            
-            <form id="b2bLoginForm" onsubmit="handleB2BLogin(event)">
-                <div class="form-group">
-                    <label for="tenantId">企業コード (Corporate Tenant ID)</label>
-                    <input type="text" id="tenantId" class="form-input" required value="BCLAB-CORP" placeholder="例: BCLAB-CORP">
-                </div>
-                <div class="form-group">
-                    <label for="employeeId">社員ID (Employee ID)</label>
-                    <input type="text" id="employeeId" class="form-input" required value="EMP-10023" placeholder="例: EMP-10023">
-                </div>
-                <div class="form-group">
-                    <label for="employeeName">社員氏名 (Employee Name)</label>
-                    <input type="text" id="employeeName" class="form-input" required value="社員デモ太郎" placeholder="例: 山田 太郎">
-                </div>
-                <div class="form-group">
-                    <label for="employeeDept">所属部署 (Department)</label>
-                    <select id="employeeDept" class="form-input" required>
-                        <option value="開発部">開発部</option>
-                        <option value="営業部">営業部</option>
-                        <option value="総務部">総務部</option>
-                        <option value="人事部">人事部</option>
-                        <option value="企画部">企画部</option>
-                    </select>
-                </div>
-                <button type="submit" class="login-btn">ログイン</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- 2. SaaS Main Platform Dashboard (Hidden by default) -->
-    <div id="portalSection" style="display: none;">
-        
-        <!-- Header -->
-        <header>
-            <div class="logo">
-                CORE CONNECT <span class="logo-badge" style="background:rgba(0,0,0,0.05); color:var(--text-primary);">for Business</span>
-            </div>
-            
-            <div style="display:flex; align-items:center; gap:15px;">
-                <div class="saas-header-info">
-                    <span class="employee-badge" id="displayDept">開発部</span>
-                    <span id="displayName" style="color:var(--text-primary); font-weight:700;">社員デモ太郎 様</span>
-                    <span style="color:rgba(0,0,0,0.12);">|</span>
-                    <span id="displayTenant" style="font-family:monospace; color:var(--text-secondary);">BCLAB-CORP</span>
-                </div>
-                <button class="btn btn-secondary" style="padding:5px 12px; font-size:11px; width:auto; border-radius:6px;" onclick="handleB2BLogout()">ログアウト</button>
-            </div>
-        </header>
-
-        <!-- Main Workspace -->
-        <div class="main-container">
-            
-            <!-- Left Panel: Stress Scans, HRV Analytics & Advisor Message -->
-            <div class="workspace-panel">
-                
-                <!-- Medical Advisor Card -->
-                <div class="glass-card" style="display:flex; gap:15px; align-items:center; border:1px solid var(--border-color); padding:20px; border-radius:14px;">
-                    <div style="width:50px; height:50px; border-radius:50%; background:rgba(0,0,0,0.03); border:1px solid rgba(0,0,0,0.08); color:var(--text-secondary); font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">MD</div>
-                    <div>
-                        <div style="font-size:11px; color:var(--text-secondary); font-weight:700; letter-spacing:0.5px;">MEDICAL ADVISOR</div>
-                        <div style="font-size:14px; font-weight:700; color:var(--text-primary);">顧問・医学監修：久保 肇 医師（医学博士）</div>
-                        <div style="font-size:11px; color:var(--text-secondary); line-height:1.4; margin-top:2px;">
-                            「自律神経活動のゆらぎ（HRV）は、過度なメンタル負荷を検知する国際的指標です。毎日決まった時間（朝など）に非接触スキャンを行い、自律神経トレンドから自身の最適なワークバランスを見出しましょう。」
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Interactive Scan CTA & HRV Analytics Grid -->
-                <div class="analytics-grid">
-                    
-                    <!-- Scan Promo Card -->
-                    <div class="glass-card scan-promo-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:28px; border-radius:18px;">
-                        <div>
-                            <div style="font-size:18px; font-weight:700; color:var(--text-primary); margin-bottom:8px; display:flex; align-items:center; gap:8px;">
-                                <span>自律神経ストレス測定</span>
-                                <span style="background:var(--accent-pink); font-size:9px; color:#fff; padding:2px 6px; border-radius:10px; font-weight:700; letter-spacing:0.5px; animation:pulse-glow 1.5s infinite alternate;">rPPGスキャン</span>
-                            </div>
-                            <div style="font-size:12px; color:var(--text-secondary); line-height:1.5; margin-bottom:20px;">
-                                カメラにお顔を30秒間映すだけで、血液の微細な輝度ゆらぎから自律神経ストレス指数（RMSSD）を測定します。個人データは会社に共有されませんので、安心して実施してください。
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" onclick="location.href='face_analyzer_business.html?vertical=health&v=1.3.0'" style="background: #1d1d1f; color:#ffffff; font-weight:600; box-shadow: none; border-radius: 980px; transition: background 0.15s ease;" onmouseover="this.style.background='#000000'" onmouseout="this.style.background='#1d1d1f'">
-                            30秒 非接触スキャナーを起動する
-                        </button>
-                    </div>
-
-                    <!-- Personal HRV History Chart -->
-                    <div class="glass-card" style="padding:24px; border-radius:18px;">
-                        <div style="font-size:14px; font-weight:700; color:var(--text-primary); display:flex; justify-content:space-between; align-items:center;">
-                            <span>📈 自律神経履歴 (RMSSD値)</span>
-                            <span style="font-size:10px; color:var(--text-secondary);">直近最大15回</span>
-                        </div>
-                        <div class="analytics-chart-container" id="hrvChart">
-                            <!-- Populated dynamically via JS -->
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Custom Header for column feed -->
-                <div style="margin-top:35px; border-bottom:1px solid var(--border-color); padding-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
-                    <div style="font-size:16px; font-weight:700; color:var(--text-primary); display:flex; align-items:center; gap:8px;">
-                        <span>💡 自律神経ケアコラム＆ストレッチガイド</span>
-                    </div>
-                </div>
-
-                <!-- Main column category tabs (restricted to B2B wellness) -->
-                <div class="tab-container" style="margin-top: 15px; margin-bottom: 20px;">
-                    <button class="tab-btn active" data-tab="stress">自律神経ストレスケア</button>
-                    <button class="tab-btn" data-tab="posture">デスクワーク姿勢・アライメント</button>
-                </div>
-
-                <!-- Feed grid -->
-                <div class="feed-container active" id="stress-feed">
-                    <div class="feed-grid" id="stress-grid"></div>
-                </div>
-                <div class="feed-container" id="posture-feed" style="display:none;">
-                    <div class="feed-grid" id="posture-grid"></div>
-                </div>
-
-            </div>
-
-            <!-- Right Panel: Personal Profile Info, Privacy Agreement -->
-            <div class="control-panel">
-                
-                <!-- Dynamic Remedy Suggestions Card (Dr. Kubo Advisor) -->
-                <div class="glass-card" style="padding:24px; border-radius:16px;">
-                    <div class="panel-title" style="color:var(--accent-blue); margin-bottom:10px;">自律神経ストレス改善提案 (久保医師監修)</div>
-                    <div id="remedyCardContainer">
-                        <!-- Populated dynamically via JS -->
-                    </div>
-                </div>
-
-                <div class="glass-card" style="padding:24px; border-radius:16px;">
-                    <div class="panel-title" style="color:var(--text-primary); margin-bottom:10px;">健康経営優良法人・福利厚生要件</div>
-                    <div style="font-size:12px; color:var(--text-secondary); line-height:1.6; margin-bottom:15px;">
-                        本アプリは企業の健康経営推進、ならびに「ストレスチェック制度」や「自律神経アライメントケア」の福利厚生要件に準拠しています。
-                    </div>
-                    
-                    <div style="background:rgba(0,0,0,0.02); border:1px solid rgba(0,0,0,0.05); padding:12px; border-radius:8px; font-size:11px; line-height:1.5; color:var(--text-secondary);">
-                        <strong style="color:var(--text-primary); display:block; margin-bottom:4px;">個人プライバシー保護ポリシー</strong>
-                        測定結果は暗号化されたローカル環境のみに安全に一時保存され、人事や管理者が特定の個人の心拍数やストレス数値を閲覧することはシステム上、不可能です。人事に提供されるのは統計匿名データのみとなります。
-                    </div>
-                </div>
-
-                <div class="glass-card" style="padding:24px; border-radius:16px;">
-                    <div class="panel-title" style="color:var(--text-primary); margin-bottom:10px;">人事健康管理ダッシュボードへのリンク</div>
-                    <div style="font-size:12px; color:var(--text-secondary); line-height:1.5; margin-bottom:15px;">
-                        健康管理責任者・産業医・人事部門の方は、こちらから企業全体の集計状況を確認することができます。
-                    </div>
-                    <button class="btn btn-secondary" onclick="location.href='admin_business.html'" style="background:rgba(0,0,0,0.04); border:1px solid rgba(0,0,0,0.08); color:var(--text-primary); padding:10px; width:100%; font-size:12px; font-weight:600; border-radius:980px;">
-                        🏢 健康管理責任者用ダッシュボード ➔
-                    </button>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- Script loading with cache buster -->
-    <script src="portal_business.js?v=1.3.0"></script>
-
-</body>
-</html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>CORE CONNECT for Business - 健康経営自律神経ウェルネス</title>
+    
+    <!-- Link to the standard design system -->
+    <link rel="stylesheet" href="portal.css?v=1.3.0">
+    
+    <style>
+        /* Additional SaaS Specific Styles */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: var(--bg-primary);
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+            border-radius: 18px;
+            padding: 40px 35px;
+            transition: all 0.2s ease;
+        }
+
+        .login-logo {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: -20px;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 10px;
+            padding: 12px 14px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: var(--font-sans);
+            transition: all 0.15s ease;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+        }
+
+        .login-btn {
+            width: 100%;
+            background: #1d1d1f;
+            border: none;
+            border-radius: 980px;
+            padding: 12px;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            margin-top: 15px;
+        }
+
+        .login-btn:hover {
+            background: #000000;
+            transform: translateY(-1px);
+        }
+
+        /* SaaS Main View Styles */
+        .saas-header-info {
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .employee-badge {
+            background: rgba(100, 255, 218, 0.12);
+            color: var(--accent-teal);
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+        }
+
+        /* Personal Analytics Card */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 860px) {
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .scan-promo-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .scan-promo-card::before {
+            display: none;
+        }
+
+        .analytics-chart-container {
+            height: 180px;
+            margin-top: 15px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .trend-point {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .trend-bar {
+            width: 14px;
+            border-radius: 4px 4px 0 0;
+            background: var(--accent-blue);
+            transition: height 0.5s ease;
+            position: relative;
+        }
+
+        .trend-bar:hover::after {
+            content: attr(data-val);
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(5, 12, 28, 0.85);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            border: 1.5px solid var(--accent-teal);
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .trend-date {
+            font-size: 8px;
+            color: var(--text-secondary);
+            transform: rotate(-15deg);
+            white-space: nowrap;
+        }
+
+        .empty-chart-state {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-align: center;
+            border: 1px dashed rgba(0, 0, 0, 0.12);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.02);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. SaaS Authentication Page (Shown by default if not logged in) -->
+    <div class="login-container" id="loginSection">
+        <div class="login-card">
+            <div class="login-logo">CORE CONNECT</div>
+            <div class="login-subtitle">健康経営自律神経ウェルネスプラットフォーム</div>
+            
+            <form id="b2bLoginForm" onsubmit="handleB2BLogin(event)">
+                <div class="form-group">
+                    <label for="tenantId">企業コード (Corporate Tenant ID)</label>
+                    <input type="text" id="tenantId" class="form-input" required value="BCLAB-CORP" placeholder="例: BCLAB-CORP">
+                </div>
+                <div class="form-group">
+                    <label for="employeeId">社員ID (Employee ID)</label>
+                    <input type="text" id="employeeId" class="form-input" required value="EMP-10023" placeholder="例: EMP-10023">
+                </div>
+                <div class="form-group">
+                    <label for="employeeName">社員氏名 (Employee Name)</label>
+                    <input type="text" id="employeeName" class="form-input" required value="社員デモ太郎" placeholder="例: 山田 太郎">
+                </div>
+                <div class="form-group">
+                    <label for="employeeDept">所属部署 (Department)</label>
+                    <select id="employeeDept" class="form-input" required>
+                        <option value="開発部">開発部</option>
+                        <option value="営業部">営業部</option>
+                        <option value="総務部">総務部</option>
+                        <option value="人事部">人事部</option>
+                        <option value="企画部">企画部</option>
+                    </select>
+                </div>
+                <button type="submit" class="login-btn">ログイン</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. SaaS Main Platform Dashboard (Hidden by default) -->
+    <div id="portalSection" style="display: none;">
+        
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                CORE CONNECT <span class="logo-badge" style="background:rgba(0,0,0,0.05); color:var(--text-primary);">for Business</span>
+            </div>
+            
+            <div style="display:flex; align-items:center; gap:15px;">
+                <div class="saas-header-info">
+                    <span class="employee-badge" id="displayDept">開発部</span>
+                    <span id="displayName" style="color:var(--text-primary); font-weight:700;">社員デモ太郎 様</span>
+                    <span style="color:rgba(0,0,0,0.12);">|</span>
+                    <span id="displayTenant" style="font-family:monospace; color:var(--text-secondary);">BCLAB-CORP</span>
+                </div>
+                <button class="btn btn-secondary" style="padding:5px 12px; font-size:11px; width:auto; border-radius:6px;" onclick="handleB2BLogout()">ログアウト</button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <div class="main-container">
+            
+            <!-- Left Panel: Stress Scans, HRV Analytics & Advisor Message -->
+            <div class="workspace-panel">
+                
+                <!-- Medical Advisor Card -->
+                <div class="glass-card" style="display:flex; gap:15px; align-items:center; border:1px solid var(--border-color); padding:20px; border-radius:14px;">
+                    <div style="width:50px; height:50px; border-radius:50%; background:rgba(0,0,0,0.03); border:1px solid rgba(0,0,0,0.08); color:var(--text-secondary); font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">MD</div>
+                    <div>
+                        <div style="font-size:11px; color:var(--text-secondary); font-weight:700; letter-spacing:0.5px;">MEDICAL ADVISOR</div>
+                        <div style="font-size:14px; font-weight:700; color:var(--text-primary);">顧問・医学監修：久保 肇 医師（医学博士）</div>
+                        <div style="font-size:11px; color:var(--text-secondary); line-height:1.4; margin-top:2px;">
+                            「自律神経活動のゆらぎ（HRV）は、過度なメンタル負荷を検知する国際的指標です。毎日決まった時間（朝など）に非接触スキャンを行い、自律神経トレンドから自身の最適なワークバランスを見出しましょう。」
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Scan CTA & HRV Analytics Grid -->
+                <div class="analytics-grid">
+                    
+                    <!-- Scan Promo Card -->
+                    <div class="glass-card scan-promo-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:28px; border-radius:18px;">
+                        <div>
+                            <div style="font-size:18px; font-weight:700; color:var(--text-primary); margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+                                <span>自律神経ストレス測定</span>
+                                <span style="background:var(--accent-pink); font-size:9px; color:#fff; padding:2px 6px; border-radius:10px; font-weight:700; letter-spacing:0.5px; animation:pulse-glow 1.5s infinite alternate;">rPPGスキャン</span>
+                            </div>
+                            <div style="font-size:12px; color:var(--text-secondary); line-height:1.5; margin-bottom:20px;">
+                                カメラにお顔を30秒間映すだけで、血液の微細な輝度ゆらぎから自律神経ストレス指数（RMSSD）を測定します。個人データは会社に共有されませんので、安心して実施してください。
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="location.href='face_analyzer_business.html?vertical=health&v=1.3.2'" style="background: #1d1d1f; color:#ffffff; font-weight:600; box-shadow: none; border-radius: 980px; transition: background 0.15s ease;" onmouseover="this.style.background='#000000'" onmouseout="this.style.background='#1d1d1f'">
+                            30秒 非接触スキャナーを起動する
+                        </button>
+                    </div>
+
+                    <!-- Personal HRV History Chart -->
+                    <div class="glass-card" style="padding:24px; border-radius:18px;">
+                        <div style="font-size:14px; font-weight:700; color:var(--text-primary); display:flex; justify-content:space-between; align-items:center;">
+                            <span>📈 自律神経履歴 (RMSSD値)</span>
+                            <span style="font-size:10px; color:var(--text-secondary);">直近最大15回</span>
+                        </div>
+                        <div class="analytics-chart-container" id="hrvChart">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Custom Header for column feed -->
+                <div style="margin-top:35px; border-bottom:1px solid var(--border-color); padding-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-size:16px; font-weight:700; color:var(--text-primary); display:flex; align-items:center; gap:8px;">
+                        <span>💡 自律神経ケアコラム＆ストレッチガイド</span>
+                    </div>
+                </div>
+
+                <!-- Main column category tabs (restricted to B2B wellness) -->
+                <div class="tab-container" style="margin-top: 15px; margin-bottom: 20px;">
+                    <button class="tab-btn active" data-tab="stress">自律神経ストレスケア</button>
+                    <button class="tab-btn" data-tab="posture">デスクワーク姿勢・アライメント</button>
+                </div>
+
+                <!-- Feed grid -->
+                <div class="feed-container active" id="stress-feed">
+                    <div class="feed-grid" id="stress-grid"></div>
+                </div>
+                <div class="feed-container" id="posture-feed" style="display:none;">
+                    <div class="feed-grid" id="posture-grid"></div>
+                </div>
+
+            </div>
+
+            <!-- Right Panel: Personal Profile Info, Privacy Agreement -->
+            <div class="control-panel">
+                
+                <!-- Dynamic Remedy Suggestions Card (Dr. Kubo Advisor) -->
+                <div class="glass-card" style="padding:24px; border-radius:16px;">
+                    <div class="panel-title" style="color:var(--accent-blue); margin-bottom:10px;">自律神経ストレス改善提案 (久保医師監修)</div>
+                    <div id="remedyCardContainer">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+
+                <div class="glass-card" style="padding:24px; border-radius:16px;">
+                    <div class="panel-title" style="color:var(--text-primary); margin-bottom:10px;">健康経営優良法人・福利厚生要件</div>
+                    <div style="font-size:12px; color:var(--text-secondary); line-height:1.6; margin-bottom:15px;">
+                        本アプリは企業の健康経営推進、ならびに「ストレスチェック制度」や「自律神経アライメントケア」の福利厚生要件に準拠しています。
+                    </div>
+                    
+                    <div style="background:rgba(0,0,0,0.02); border:1px solid rgba(0,0,0,0.05); padding:12px; border-radius:8px; font-size:11px; line-height:1.5; color:var(--text-secondary);">
+                        <strong style="color:var(--text-primary); display:block; margin-bottom:4px;">個人プライバシー保護ポリシー</strong>
+                        測定結果は暗号化されたローカル環境のみに安全に一時保存され、人事や管理者が特定の個人の心拍数やストレス数値を閲覧することはシステム上、不可能です。人事に提供されるのは統計匿名データのみとなります。
+                    </div>
+                </div>
+
+                <div class="glass-card" style="padding:24px; border-radius:16px;">
+                    <div class="panel-title" style="color:var(--text-primary); margin-bottom:10px;">人事健康管理ダッシュボードへのリンク</div>
+                    <div style="font-size:12px; color:var(--text-secondary); line-height:1.5; margin-bottom:15px;">
+                        健康管理責任者・産業医・人事部門の方は、こちらから企業全体の集計状況を確認することができます。
+                    </div>
+                    <button class="btn btn-secondary" onclick="location.href='admin_business.html'" style="background:rgba(0,0,0,0.04); border:1px solid rgba(0,0,0,0.08); color:var(--text-primary); padding:10px; width:100%; font-size:12px; font-weight:600; border-radius:980px;">
+                        🏢 健康管理責任者用ダッシュボード ➔
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Script loading with cache buster -->
+    <script src="portal_business.js?v=1.3.0"></script>
+
+</body>
+</html>

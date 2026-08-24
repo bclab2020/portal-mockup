@@ -98,7 +98,7 @@
         }
 
         .standalone-badge {
-            background: rgba(100, 255, 218, 0.1);
+            background: rgba(0, 0, 0, 0.04);
             border: 1px solid var(--accent-teal);
             color: var(--accent-teal);
             font-size: 10px;
@@ -488,8 +488,8 @@
         }
 
         .cosmetic-card {
-            background: rgba(5, 8, 17, 0.5);
-            border: 1px solid rgba(255, 20, 147, 0.1);
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.06);
             border-radius: 8px;
             padding: 10px;
             display: flex;
@@ -608,27 +608,25 @@
         }
     
         .symptom-tab-btn {
-            padding: 6px 12px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
+            padding: 6px 14px;
+            background: rgba(0, 0, 0, 0.04);
+            border: 1px solid transparent;
             border-radius: 20px;
             color: var(--text-secondary);
             font-size: 11px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
             outline: none;
         }
         .symptom-tab-btn:hover {
-            background: rgba(255,255,255,0.08);
+            background: rgba(0, 0, 0, 0.07);
             color: var(--text-primary);
-            border-color: rgba(255,255,255,0.15);
         }
         .symptom-tab-btn.active {
-            background: rgba(0, 0, 0, 0.03);
-            color: var(--accent-teal);
-            border-color: var(--accent-teal);
-            box-shadow: 0 0 10px rgba(100,255,218,0.15);
+            background: #ffffff;
+            color: var(--accent-blue);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         @media (max-width: 768px) {
@@ -814,7 +812,7 @@
                 </div>
 
                 <!-- Face Type Visualization & Celeb match (Only visible if face detected) -->
-                <div class="glass-card" id="faceVisualMatchCard" style="display: none; margin-top: 15px; border: 1px solid rgba(255, 20, 147, 0.2); background: rgba(10, 20, 42, 0.5); padding: 12px; border-radius: 10px;">
+                <div class="glass-card" id="faceVisualMatchCard" style="display: none; margin-top: 15px; border: 1px solid var(--border-color); background: var(--bg-card); padding: 12px; border-radius: 10px;">
                     <div style="font-size: 11px; font-weight: 700; color: var(--accent-pink); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
                         <span>👤 あなたの顔骨格タイプ ＆ 理想のイメージモデル</span>
                     </div>
@@ -2266,7 +2264,7 @@
                 ];
                 healthExercises = [
                     `<strong>リラックス腹式呼吸セッション (3秒吸う・6秒吐く)</strong>
-                     <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:15px; margin-top:10px; background:rgba(100,255,218,0.02); border:1px dashed rgba(100,255,218,0.15); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
+                     <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:15px; margin-top:10px; background:rgba(0,0,0,0.01); border:1px dashed rgba(0,0,0,0.08); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
                         <div style="font-size:10px; color:var(--accent-teal); font-weight:700; margin-bottom:12px; letter-spacing:0.5px;">呼吸ガイド（バルーンの伸縮と同調してください）</div>
                         <div style="width:120px; height:120px; display:flex; align-items:center; justify-content:center; position:relative;">
                             <div id="breathingBalloon" style="width:40px; height:40px; border-radius:50%; background:rgba(0, 113, 227, 0.12); border:1.5px solid rgba(0, 113, 227, 0.35); transition: all 1.5s ease-in-out;"></div>
@@ -2312,7 +2310,7 @@
                 ];
                 healthExercises = [
                     `<strong>4-7-8 自律神経調整呼吸法 (リフレッシュ)</strong>
-                     <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:15px; margin-top:10px; background:rgba(100,255,218,0.02); border:1px dashed rgba(100,255,218,0.15); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
+                     <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:15px; margin-top:10px; background:rgba(0,0,0,0.01); border:1px dashed rgba(0,0,0,0.08); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
                         <div style="font-size:10px; color:var(--accent-teal); font-weight:700; margin-bottom:12px; letter-spacing:0.5px;">呼吸ガイド（バルーンの伸縮と同調してください）</div>
                         <div style="width:120px; height:120px; display:flex; align-items:center; justify-content:center; position:relative;">
                             <div id="breathingBalloon" style="width:40px; height:40px; border-radius:50%; background:rgba(0, 113, 227, 0.12); border:1.5px solid rgba(0, 113, 227, 0.35); transition: all 1.5s ease-in-out;"></div>
@@ -2394,11 +2392,11 @@
                         <div style="display:flex; flex-direction:column; gap:20px; margin-top:15px; width:100%;">
                             
                             <!-- 1段目: 呼吸アプローチ -->
-                            <div class="glass-card" style="border: 1px solid rgba(100, 255, 218, 0.25); background: rgba(10, 20, 42, 0.45); padding: 25px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); width:100%; box-sizing:border-box;">
-                                <div style="font-size:15px; font-weight:800; color:var(--accent-teal); border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:10px; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
+                            <div class="glass-card" style="border: 1px solid var(--border-color); background: var(--bg-card); padding: 25px; border-radius: 12px; box-shadow: var(--card-shadow); width:100%; box-sizing:border-box;">
+                                <div style="font-size:15px; font-weight:800; color:var(--accent-teal); border-bottom:1px solid var(--border-color); padding-bottom:10px; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
                                     <span style="color:var(--text-primary); font-weight:800;">1. 自律神経調整・呼吸アプローチ (深呼吸セッション)</span>
                                 </div>
-                                <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:25px; background:rgba(100,255,218,0.02); border:1px dashed rgba(100,255,218,0.15); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
+                                <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:25px; background:rgba(0,0,0,0.01); border:1px dashed rgba(0,0,0,0.08); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
                                     <div style="font-size:12px; color:var(--accent-teal); font-weight:700; margin-bottom:15px; letter-spacing:0.5px;">呼吸ガイド（バルーンの伸縮と同調してください）</div>
                                     <div style="width:160px; height:160px; display:flex; align-items:center; justify-content:center; position:relative;">
                                         <div id="breathingBalloon" style="width:50px; height:50px; border-radius:50%; background:rgba(0, 113, 227, 0.12); border:1.5px solid rgba(0, 113, 227, 0.35); transition: all 1.5s ease-in-out;"></div>
@@ -2410,11 +2408,11 @@
                             </div>
 
                             <!-- 2段目: 眼球運動（常時表示、大きく・フルスクリーンポップアップ対応） -->
-                            <div class="glass-card" style="border: 1px solid rgba(100, 255, 218, 0.25); background: rgba(10, 20, 42, 0.45); padding: 25px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); width:100%; box-sizing:border-box;">
-                                <div style="font-size:15px; font-weight:800; color:var(--accent-blue); border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:10px; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
+                            <div class="glass-card" style="border: 1px solid var(--border-color); background: var(--bg-card); padding: 25px; border-radius: 12px; box-shadow: var(--card-shadow); width:100%; box-sizing:border-box;">
+                                <div style="font-size:15px; font-weight:800; color:var(--accent-blue); border-bottom:1px solid var(--border-color); padding-bottom:10px; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
                                     <span style="color:var(--text-primary); font-weight:800;">2. 眼精疲労緩和・眼球運動トレーニング（全画面モード）</span>
                                 </div>
-                                <div class="eye-tracker-game-container" style="display:flex; flex-direction:column; align-items:center; padding:25px; background:rgba(0,191,255,0.02); border:1px dashed rgba(0,191,255,0.15); border-radius:8px; width:100%; box-sizing:border-box; text-align:center;">
+                                <div class="eye-tracker-game-container" style="display:flex; flex-direction:column; align-items:center; padding:25px; background:rgba(0,0,0,0.01); border:1px dashed rgba(0,0,0,0.08); border-radius:8px; width:100%; box-sizing:border-box; text-align:center;">
                                     <div style="font-size:32px; margin-bottom:12px;">👀</div>
                                     <div style="font-size:13px; color:var(--accent-blue); font-weight:700; margin-bottom:8px; line-height:1.4;">頭を動かさず、画面全体を滑らかに動くターゲットを目で追いかけます</div>
                                     <div style="font-size:11px; color:var(--text-secondary); max-width:520px; line-height:1.6; margin-bottom:18px;">
@@ -2427,14 +2425,14 @@
                                             <option value="90000">90秒</option>
                                             <option value="120000">120秒</option>
                                         </select>
-                                        <button id="eyeGameBtn" onclick="startEyeGameFullscreen()" style="padding:8px 25px; font-size:12px; font-weight:700; border-radius:20px; border:1px solid var(--accent-blue); color:var(--accent-blue); background:rgba(0,191,255,0.06); cursor:pointer; transition:all 0.2s; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); font-family:inherit;">▶ トレーニングを開始する</button>
+                                        <button id="eyeGameBtn" onclick="startEyeGameFullscreen()" style="padding:8px 25px; font-size:12px; font-weight:600; border-radius:980px; border:none; color:#ffffff; background:#1d1d1f; cursor:pointer; transition:all 0.15s; font-family:inherit;" onmouseover="this.style.background='#000000'" onmouseout="this.style.background='#1d1d1f'">▶ トレーニングを開始する</button>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- 3段目: 骨格アライメント改善ストレッチ（大きく、眼精疲労は削除） -->
-                            <div class="glass-card" style="border: 1px solid rgba(100, 255, 218, 0.25); background: rgba(10, 20, 42, 0.45); padding: 25px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); width:100%; box-sizing:border-box;">
-                                <div style="font-size:15px; font-weight:800; color:var(--accent-teal); border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:10px; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
+                            <div class="glass-card" style="border: 1px solid var(--border-color); background: var(--bg-card); padding: 25px; border-radius: 12px; box-shadow: var(--card-shadow); width:100%; box-sizing:border-box;">
+                                <div style="font-size:15px; font-weight:800; color:var(--accent-teal); border-bottom:1px solid var(--border-color); padding-bottom:10px; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
                                     <span style="color:var(--text-primary); font-weight:800;">3. 肩甲骨・頚椎骨格アライメント改善ストレッチ</span>
                                 </div>
                                 <div class="symptom-selector-widget">
@@ -3034,21 +3032,21 @@
         if (completeBtn) completeBtn.style.display = 'block';
         
         // Draw completion banner on fullscreen canvas
-        ctx.fillStyle = 'rgba(5, 12, 28, 0.85)';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         // Circular grid decoration
-        ctx.strokeStyle = 'rgba(100, 255, 218, 0.1)';
+        ctx.strokeStyle = 'rgba(0, 113, 227, 0.15)';
         ctx.lineWidth = 2;
         ctx.beginPath(); ctx.arc(canvas.width/2, canvas.height/2, 100, 0, Math.PI*2); ctx.stroke();
         ctx.beginPath(); ctx.arc(canvas.width/2, canvas.height/2, 200, 0, Math.PI*2); ctx.stroke();
         
-        ctx.fillStyle = 'rgba(100, 255, 218, 0.95)';
+        ctx.fillStyle = '#1d1d1f';
         ctx.font = 'bold 24px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('眼筋ストレッチ・全画面セッション完了！', canvas.width / 2, canvas.height / 2 - 30);
         
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.fillStyle = '#86868b';
         ctx.font = '14px sans-serif';
         ctx.fillText('画面の隅々まで目を動かすことで、目の周りの筋肉の血流が改善されました。', canvas.width / 2, canvas.height / 2 + 10);
         ctx.fillText('PCでの連続作業は避け、定期的に遠くを見つめましょう。', canvas.width / 2, canvas.height / 2 + 35);

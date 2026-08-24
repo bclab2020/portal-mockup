@@ -794,7 +794,7 @@ function switchSymptom(key) {
                         <div style="font-size:10px; color:var(--text-secondary); max-width:240px; line-height:1.5; margin-bottom:12px;">
                             画面中央からスタートするグリーンの光を、頭を動かさずに目だけで追ってください。
                         </div>
-                        <button id="startEyeGameBtn" onclick="startEyeTrackingSession()" style="padding:6px 20px; font-size:11px; font-weight:600; color:#ffffff; background:var(--accent-blue); border:none; border-radius:980px; cursor:pointer; transition:all 0.2s; font-family:inherit;">
+                        <button id="startEyeGameBtn" onclick="startEyeTrackingSession()" style="padding:6px 20px; font-size:11px; font-weight:600; color:#ffffff; background:#1d1d1f; border:none; border-radius:980px; cursor:pointer; transition:all 0.15s; font-family:inherit;" onmouseover="this.style.background='#000000'" onmouseout="this.style.background='#1d1d1f'">
                             ▶ セッションを開始する
                         </button>
                     </div>

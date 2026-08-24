@@ -598,162 +598,162 @@ const symptomExercises = {
         title: "30秒・椅子ひねりストレッチ（自律神経・腰痛ケア）",
         desc: "<strong>【姿勢・方向】</strong>背筋をまっすぐ伸ばして椅子に深く腰掛け、上体を右へねじります。左手で背もたれを掴み、右手は椅子の座面後方を支えて固定します。<br><strong>【秒数】</strong>痛気持ちいいところでキープし、<strong>左右それぞれ15秒間（計30秒）</strong>行います。<br><strong>【呼吸法】</strong>ねじりながら息をゆっくり吐き出します。",
         img: "stretch_twist_jp.jpg?v=1.0.1",
-        color: "#ff5252",
+        color: "#0071e3",
         svgId: "arrow-red",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
                 <marker id="portal-arrow-red" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
-                    <path d="M0,0 L0,6 L6,3 Z" fill="#ff5252"/>
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#0071e3"/>
                 </marker>
             </defs>
-            <path d="M 210 108 Q 161 135 117 112" fill="none" stroke="#ff5252" stroke-width="2.5" marker-start="url(#portal-arrow-red)" marker-end="url(#portal-arrow-red)" stroke-dasharray="4 2"/>
-            <circle cx="210" cy="108" r="4.5" fill="#ff5252" stroke="#050c1c" stroke-width="1.5"/>
-            <text x="194" y="126" fill="#ff5252" font-size="10" font-weight="700" font-family="monospace">START (正面)</text>
-            <text x="93" y="102" fill="#ff5252" font-size="10" font-weight="700" font-family="monospace">END (ねじる)</text>
+            <path d="M 210 108 Q 161 135 117 112" fill="none" stroke="#0071e3" stroke-width="2.5" marker-start="url(#portal-arrow-red)" marker-end="url(#portal-arrow-red)" stroke-dasharray="4 2"/>
+            <circle cx="210" cy="108" r="4.5" fill="#0071e3" stroke="#ffffff" stroke-width="1.5"/>
+            <text x="194" y="126" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">START (正面)</text>
+            <text x="93" y="102" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">END (ねじる)</text>
         </svg>`
     },
     shoulder: {
         title: "肩・肩甲骨拡張ストレッチ（肩こり解消）",
         desc: "<strong>【姿勢・方向】</strong>右腕を左方向に真っ直ぐ伸ばし、左腕で右肘を抱え込むように胸に強く引き寄せます。肩甲骨が外側にしっかりと広がる感覚を意識します。<br><strong>【秒数】</strong>肩の奥が伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br><strong>【呼吸法】</strong>深く穏やかな胸式呼吸を繰り返します。",
         img: "stretch_shoulder_jp.jpg?v=1.0.1",
-        color: "#00bfff",
+        color: "#0071e3",
         svgId: "arrow-blue",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
                 <marker id="portal-arrow-blue" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
-                    <path d="M0,0 L0,6 L6,3 Z" fill="#3b82f6"/>
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#0071e3"/>
                 </marker>
             </defs>
-            <path d="M 195 76 Q 262 115 306 100" fill="none" stroke="#3b82f6" stroke-width="2.5" marker-start="url(#portal-arrow-blue)" marker-end="url(#portal-arrow-blue)" stroke-dasharray="4 2"/>
-            <circle cx="195" cy="76" r="4.5" fill="#3b82f6" stroke="#050c1c" stroke-width="1.5"/>
-            <text x="148" y="72" fill="#3b82f6" font-size="10" font-weight="700" font-family="monospace">START (胸元)</text>
-            <text x="279" y="90" fill="#3b82f6" font-size="10" font-weight="700" font-family="monospace">END (指先を伸ばす)</text>
+            <path d="M 195 76 Q 262 115 306 100" fill="none" stroke="#0071e3" stroke-width="2.5" marker-start="url(#portal-arrow-blue)" marker-end="url(#portal-arrow-blue)" stroke-dasharray="4 2"/>
+            <circle cx="195" cy="76" r="4.5" fill="#0071e3" stroke="#ffffff" stroke-width="1.5"/>
+            <text x="148" y="72" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">START (胸元)</text>
+            <text x="279" y="90" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">END (指先を伸ばす)</text>
         </svg>`
     },
     neck: {
         title: "首・肩・頚椎アライメントストレッチ（首こり・頭痛）",
         desc: "<strong>【姿勢・方向】</strong>背筋を伸ばし、右手を頭の左側に添え、頭をゆっくり右斜め前（45度方向）に傾けます。左肩が上がらないよう、意識して固定します。<br><strong>【秒数】</strong>首の左後ろが伸びる強さで、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br><strong>【呼吸法】</strong>息を細く長く吐き出しながら、じんわりと伸ばします。",
         img: "stretch_neck_jp.jpg?v=1.0.1",
-        color: "#64ffda",
+        color: "#0071e3",
         svgId: "arrow-teal",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
                 <marker id="portal-arrow-teal" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
-                    <path d="M0,0 L0,6 L6,3 Z" fill="#0fb5ae"/>
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#0071e3"/>
                 </marker>
             </defs>
-            <path d="M 229 66 Q 240 84 265 101" fill="none" stroke="#0fb5ae" stroke-width="2.5" marker-start="url(#portal-arrow-teal)" marker-end="url(#portal-arrow-teal)" stroke-dasharray="4 2"/>
-            <circle cx="229" cy="66" r="4.5" fill="#0fb5ae" stroke="#050c1c" stroke-width="1.5"/>
-            <text x="210" y="61" fill="#0fb5ae" font-size="10" font-weight="700" font-family="monospace">START (正面)</text>
-            <text x="250" y="113" fill="#0fb5ae" font-size="10" font-weight="700" font-family="monospace">END (傾けてキープ)</text>
+            <path d="M 229 66 Q 240 84 265 101" fill="none" stroke="#0071e3" stroke-width="2.5" marker-start="url(#portal-arrow-teal)" marker-end="url(#portal-arrow-teal)" stroke-dasharray="4 2"/>
+            <circle cx="229" cy="66" r="4.5" fill="#0071e3" stroke="#ffffff" stroke-width="1.5"/>
+            <text x="210" y="61" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">START (正面)</text>
+            <text x="250" y="113" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">END (傾けてキープ)</text>
         </svg>`
     },
     chest: {
         title: "大胸筋チェストオープナー（巻き肩・猫背リセット）",
         desc: "<strong>【姿勢・方向】</strong>頭の後ろで両手を組み、息を吸いながら肘を大きく後ろに引きます。胸を天井に向けてしっかりと開きます。<br><strong>【秒数】</strong>胸の前の筋肉が心地よく広がる位置で、<strong>15秒間キープを2回</strong>行います。<br><strong>【呼吸法】</strong>胸いっぱいに息を吸い込み、吐きながらさらに深く開きます。",
         img: "stretch_chest_jp.jpg?v=1.0.1",
-        color: "#ff44dd",
+        color: "#0071e3",
         svgId: "arrow-pink",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
                 <marker id="portal-arrow-pink" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
-                    <path d="M0,0 L0,6 L6,3 Z" fill="#ec4899"/>
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#0071e3"/>
                 </marker>
             </defs>
-            <path d="M 147 83 Q 169 142 238 101" fill="none" stroke="#ec4899" stroke-width="2.5" marker-start="url(#portal-arrow-pink)" marker-end="url(#portal-arrow-pink)" stroke-dasharray="4 2"/>
-            <circle cx="147" cy="83" r="4.5" fill="#ec4899" stroke="#050c1c" stroke-width="1.5"/>
-            <text x="117" y="68" fill="#ec4899" font-size="10" font-weight="700" font-family="monospace">START (組む)</text>
-            <text x="248" y="86" fill="#ec4899" font-size="10" font-weight="700" font-family="monospace">END (開く)</text>
+            <path d="M 147 83 Q 169 142 238 101" fill="none" stroke="#0071e3" stroke-width="2.5" marker-start="url(#portal-arrow-pink)" marker-end="url(#portal-arrow-pink)" stroke-dasharray="4 2"/>
+            <circle cx="147" cy="83" r="4.5" fill="#0071e3" stroke="#ffffff" stroke-width="1.5"/>
+            <text x="117" y="68" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">START (組む)</text>
+            <text x="248" y="86" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">END (開く)</text>
         </svg>`
     },
     wrist: {
         title: "手首・前腕ストレッチ（タイピング疲労軽減）",
         desc: "<strong>【姿勢・方向】</strong>腕を前に真っ直ぐ伸ばし、手のひらを前に向けます。反対の手で指先を手前に引き、前腕の内側を伸ばします。<br><strong>【秒数】</strong>手首から前腕が伸びる位置で、<strong>左右それぞれ15秒間</strong>キープします。<br><strong>【呼吸法】</strong>息を止めずに、リラックスして細く長い呼吸を続けます。",
         img: "stretch_wrist_jp.jpg?v=1.0.1",
-        color: "#ffaa00",
+        color: "#0071e3",
         svgId: "arrow-orange",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
                 <marker id="portal-arrow-orange" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
-                    <path d="M0,0 L0,6 L6,3 Z" fill="#f59e0b"/>
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#0071e3"/>
                 </marker>
             </defs>
-            <path d="M 230 103 Q 168 117 77 109" fill="none" stroke="#f59e0b" stroke-width="2.5" marker-start="url(#portal-arrow-orange)" marker-end="url(#portal-arrow-orange)" stroke-dasharray="4 2"/>
-            <circle cx="230" cy="103" r="4.5" fill="#f59e0b" stroke="#050c1c" stroke-width="1.5"/>
-            <text x="186" y="96" fill="#f59e0b" font-size="10" font-weight="700" font-family="monospace">START (手首)</text>
-            <text x="68" y="99" fill="#f59e0b" font-size="10" font-weight="700" font-family="monospace">END (引く)</text>
+            <path d="M 230 103 Q 168 117 77 109" fill="none" stroke="#0071e3" stroke-width="2.5" marker-start="url(#portal-arrow-orange)" marker-end="url(#portal-arrow-orange)" stroke-dasharray="4 2"/>
+            <circle cx="230" cy="103" r="4.5" fill="#0071e3" stroke="#ffffff" stroke-width="1.5"/>
+            <text x="186" y="96" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">START (手首)</text>
+            <text x="68" y="99" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">END (引く)</text>
         </svg>`
     },
     hamstring: {
         title: "ハムストリングス伸ばし（足のむくみ・腰痛解消）",
         desc: "<strong>【姿勢・方向】</strong>片方の足を前に伸ばしてかかとを床につけます。背すじを伸ばしたまま、上体をゆっくり前に倒して太ももの裏を伸ばします。<br><strong>【秒数】</strong>もも裏が伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br><strong>【呼吸法】</strong>息を吐きながら上体を倒すと、効果的にストレッチできます。",
         img: "stretch_hamstring_jp.jpg?v=1.0.1",
-        color: "#00e5ff",
+        color: "#0071e3",
         svgId: "arrow-cyan",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
                 <marker id="portal-arrow-cyan" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
-                    <path d="M0,0 L0,6 L6,3 Z" fill="#06b6d4"/>
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#0071e3"/>
                 </marker>
             </defs>
-            <path d="M 202 125 Q 156 143 91 145" fill="none" stroke="#06b6d4" stroke-width="2.5" marker-start="url(#portal-arrow-cyan)" marker-end="url(#portal-arrow-cyan)" stroke-dasharray="4 2"/>
-            <circle cx="202" cy="125" r="4.5" fill="#06b6d4" stroke="#050c1c" stroke-width="1.5"/>
-            <text x="157" y="115" fill="#06b6d4" font-size="10" font-weight="700" font-family="monospace">START (股関節)</text>
-            <text x="101" y="135" fill="#06b6d4" font-size="10" font-weight="700" font-family="monospace">END (伸ばす)</text>
+            <path d="M 202 125 Q 156 143 91 145" fill="none" stroke="#0071e3" stroke-width="2.5" marker-start="url(#portal-arrow-cyan)" marker-end="url(#portal-arrow-cyan)" stroke-dasharray="4 2"/>
+            <circle cx="202" cy="125" r="4.5" fill="#0071e3" stroke="#ffffff" stroke-width="1.5"/>
+            <text x="157" y="115" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">START (股関節)</text>
+            <text x="101" y="135" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">END (伸ばす)</text>
         </svg>`
     },
     catcow: {
         title: "キャット＆カウ（背骨・背中の柔軟性向上）",
         desc: "<strong>【姿勢・方向】</strong>椅子に座ったまま両手で膝を掴みます。息を吐きながら背中を丸め、おへそを覗き込みます。次に息を吸いながら胸を前に押し出し、背骨を反らせます。<br><strong>【秒数】</strong>丸める・反らすを交互に<strong>各5秒間、3回往復（計30秒）</strong>行います。<br><strong>【呼吸法】</strong>呼吸と動作を深く連動させます。",
         img: "stretch_catcow_jp.jpg?v=1.0.1",
-        color: "#76ff03",
+        color: "#0071e3",
         svgId: "arrow-lime",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
                 <marker id="portal-arrow-lime" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
-                    <path d="M0,0 L0,6 L6,3 Z" fill="#84cc16"/>
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#0071e3"/>
                 </marker>
             </defs>
-            <path d="M 227 86 Q 193 109 194 154" fill="none" stroke="#84cc16" stroke-width="2.5" marker-start="url(#portal-arrow-lime)" marker-end="url(#portal-arrow-lime)" stroke-dasharray="4 2"/>
-            <circle cx="227" cy="86" r="4.5" fill="#84cc16" stroke="#050c1c" stroke-width="1.5"/>
-            <text x="242" y="86" fill="#84cc16" font-size="10" font-weight="700" font-family="monospace">START (背中上)</text>
-            <text x="209" y="154" fill="#84cc16" font-size="10" font-weight="700" font-family="monospace">END (骨盤後傾)</text>
+            <path d="M 227 86 Q 193 109 194 154" fill="none" stroke="#0071e3" stroke-width="2.5" marker-start="url(#portal-arrow-lime)" marker-end="url(#portal-arrow-lime)" stroke-dasharray="4 2"/>
+            <circle cx="227" cy="86" r="4.5" fill="#0071e3" stroke="#ffffff" stroke-width="1.5"/>
+            <text x="242" y="86" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">START (背中上)</text>
+            <text x="209" y="154" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">END (骨盤後傾)</text>
         </svg>`
     },
     shrug: {
         title: "肩すくめ＆脱力リフレッシュ（肩・首まわりのコリ解消）",
         desc: "<strong>【姿勢・方向】</strong>背筋を伸ばし、両肩を耳に近づけるように限界まで高く引き上げ、首回りにギュッと力を入れます。その後、一キーに肩の力を抜いてストンと落とします。<br><strong>【秒数】</strong>力を入れる(5秒)→抜く(10秒)を<strong>2〜3回反復</strong>します。<br><strong>【呼吸法】</strong>肩を上げる時に吸い、落とす時に一気に「はぁー」と吐き出します。",
         img: "stretch_shrug_jp.jpg?v=1.0.2",
-        color: "#ffeb3b",
+        color: "#0071e3",
         svgId: "arrow-yellow",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
                 <marker id="portal-arrow-yellow" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
-                    <path d="M0,0 L0,6 L6,3 Z" fill="#eab308"/>
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#0071e3"/>
                 </marker>
             </defs>
-            <path d="M 149 98 Q 149 79 149 59" fill="none" stroke="#eab308" stroke-width="2.5" marker-start="url(#portal-arrow-yellow)" marker-end="url(#portal-arrow-yellow)" stroke-dasharray="4 2"/>
-            <circle cx="149" cy="98" r="4.5" fill="#eab308" stroke="#050c1c" stroke-width="1.5"/>
-            <text x="104" y="98" fill="#eab308" font-size="10" font-weight="700" font-family="monospace">START (脱力)</text>
-            <text x="103" y="67" fill="#eab308" font-size="10" font-weight="700" font-family="monospace">END (すくめる)</text>
+            <path d="M 149 98 Q 149 79 149 59" fill="none" stroke="#0071e3" stroke-width="2.5" marker-start="url(#portal-arrow-yellow)" marker-end="url(#portal-arrow-yellow)" stroke-dasharray="4 2"/>
+            <circle cx="149" cy="98" r="4.5" fill="#0071e3" stroke="#ffffff" stroke-width="1.5"/>
+            <text x="104" y="98" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">START (脱力)</text>
+            <text x="103" y="67" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">END (すくめる)</text>
         </svg>`
     },
     eyes: {
         title: "眼球ストレッチ＆遠近ピント調整（眼精疲労軽減）",
         desc: "<strong>【姿勢・方向】</strong>顔を正面に向けたまま、目を大きく開けて眼球を上下左右,円を描くようにぐるぐると回します。その後、近くの指先と遠くの景色を交互に見つめます。<br><strong>【秒数】</strong>眼球ローリング左右各3周、遠近ピント調整を<strong>15秒間（計30秒）</strong>行います。<br><strong>【呼吸法】</strong>呼吸を止めずに穏やかに繰り返します。",
         img: "stretch_eyes_jp.jpg?v=1.0.1",
-        color: "#e040fb",
+        color: "#0071e3",
         svgId: "arrow-magenta",
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
                 <marker id="portal-arrow-magenta" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
-                    <path d="M0,0 L0,6 L6,3 Z" fill="#e040fb"/>
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#0071e3"/>
                 </marker>
             </defs>
-            <path d="M 150 75 Q 165 55 180 75" fill="none" stroke="#portal-arrow-magenta" stroke-width="2.5" marker-start="url(#portal-arrow-magenta)" marker-end="url(#portal-arrow-magenta)" stroke-dasharray="4 2"/>
-            <circle cx="150" cy="75" r="4.5" fill="#e040fb" stroke="#050c1c" stroke-width="1.5"/>
-            <text x="120" y="70" fill="#e040fb" font-size="10" font-weight="700" font-family="monospace">START (遠く)</text>
-            <text x="185" y="70" fill="#e040fb" font-size="10" font-weight="700" font-family="monospace">END (閉じる)</text>
+            <path d="M 150 75 Q 165 55 180 75" fill="none" stroke="#0071e3" stroke-width="2.5" marker-start="url(#portal-arrow-magenta)" marker-end="url(#portal-arrow-magenta)" stroke-dasharray="4 2"/>
+            <circle cx="150" cy="75" r="4.5" fill="#0071e3" stroke="#ffffff" stroke-width="1.5"/>
+            <text x="120" y="70" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">START (遠く)</text>
+            <text x="185" y="70" fill="#1d1d1f" font-size="10" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif">END (閉じる)</text>
         </svg>`
     }
 };

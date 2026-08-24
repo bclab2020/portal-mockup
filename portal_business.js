@@ -147,8 +147,8 @@ function renderLatestHrvRemedies() {
             </div>
             <div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-teal); box-shadow: 0 0 12px rgba(100, 255, 218, 0.2);'>
                 <img src='stretch_neck_jp.jpg' style='width:100%; display:block;'>
-                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(100,255,218,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(100,255,218,0.06) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
-                <div style='position:absolute; top:10px; right:10px; background:rgba(100,255,218,0.85); color:#050c1c; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-teal);'>ALIGNMENT: OK</div>
+                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,113,227,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,113,227,0.03) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
+                <div style='position:absolute; top:10px; right:10px; background:#e5e5e7; color:var(--text-primary); font-size:8px; font-weight:600; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--border-color);'>ALIGNMENT: OK</div>
                 <!-- Holographic Overlay SVG -->
                 <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
                     <defs>
@@ -167,22 +167,22 @@ function renderLatestHrvRemedies() {
     } else if (statusText === '高' || latest.hrv < 30) {
         badgeColor = 'var(--accent-red)';
         remedyText = `
-            <span style="color:var(--accent-red); font-weight:700;">⚠️ 自律神経ストレス過多の兆候</span><br>
+            <span style="color:var(--accent-red); font-weight:700;">自律神経ストレス過多の兆候</span><br>
             HRV数値が低下しており、交感神経が優位な緊張状態です。デスクで即座にできる以下のリセットケアを行ってください：
             <ul style="padding-left:15px; margin:8px 0 0 0; display:flex; flex-direction:column; gap:4px; font-size:11px;">
-                <li>🧘 <strong>30秒・椅子ひねりストレッチ</strong> (背もたれを持って上体をゆっくりねじり、背骨の緊張をほぐします)</li>
+                <li><strong>30秒・椅子ひねりストレッチ</strong> (背もたれを持って上体をゆっくりねじり、背骨の緊張をほぐします)</li>
                 <li>👃 <strong>4-7-8 呼吸リフレッシュ</strong> (4秒吸って7秒止め、8秒かけて細く長く吐き出します)</li>
             </ul>
             <!-- Breathing Balloon Widget -->
             <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; margin-top:10px; background:rgba(255,82,82,0.02); border:1px dashed rgba(255,82,82,0.15); border-radius:8px; text-align:center;">
-                <div style="font-size:9px; color:var(--accent-red); font-weight:700; margin-bottom:10px; letter-spacing:0.5px;">🧘 呼吸ガイド（バルーンの伸縮と同調してください）</div>
+                <div style="font-size:9px; color:var(--accent-red); font-weight:700; margin-bottom:10px; letter-spacing:0.5px;">呼吸ガイド（バルーンの伸縮と同調してください）</div>
                 <div style="width:100px; height:100px; display:flex; align-items:center; justify-content:center; position:relative;">
                     <div id="breathingBalloon" style="width:30px; height:30px; border-radius:50%; background:radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%); box-shadow: 0 0 20px var(--accent-red); transition: all 1.5s ease-in-out;"></div>
                     <div style="position:absolute; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow: 0 0 8px #fff;"></div>
                 </div>
                 <div id="breathingText" style="font-size:10px; font-weight:700; color:var(--text-primary); margin-top:10px; height:15px; letter-spacing:0.5px;">準備中...</div>
-                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 4px 15px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
-                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 4px 15px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
+                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 6px 15px; font-size: 10px; font-weight: 600; border-radius: 980px; border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); background: rgba(0,0,0,0.03); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
+                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 6px 15px; font-size: 10px; font-weight: 600; border-radius: 980px; border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); background: rgba(0,0,0,0.03); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
             </div>
             <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(255,82,82,0.02); border:1px solid rgba(255,82,82,0.08); padding:8px; border-radius:6px;">
                 <strong>【姿勢・方向】</strong>背筋を伸ばし椅子に深く座り、息を吐きながら上体を右へゆっくりねじります。左手で背もたれを掴み、右手は椅子の座面後方を支えます。<br>
@@ -191,7 +191,7 @@ function renderLatestHrvRemedies() {
             </div>
             <div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-red); box-shadow: 0 0 12px rgba(255, 82, 82, 0.2);'>
                 <img src='stretch_twist_jp.jpg' style='width:100%; display:block;'>
-                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(255,82,82,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,82,82,0.06) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
+                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(255,59,48,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,59,48,0.03) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
                 <div style='position:absolute; top:10px; right:10px; background:rgba(255,82,82,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-red);'>ALIGNMENT: OK</div>
                 <!-- Holographic Overlay SVG -->
                 <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
@@ -215,18 +215,18 @@ function renderLatestHrvRemedies() {
             ストレスレベルは標準範囲内ですが、PC作業の連続により疲労が蓄積しやすくなっています。以下のリフレッシュを行ってください：
             <ul style="padding-left:15px; margin:8px 0 0 0; display:flex; flex-direction:column; gap:4px; font-size:11px;">
                 <li>肩こり <strong>肩甲骨引き寄せロール</strong> (両肩をすくめてストンと落とし、肘を曲げて後ろに引きます)</li>
-                <li>👀 <strong>遠近ピント合わせ法</strong> (近くの指先と3m先の壁を交互に3秒ずつ見つめ、眼筋をほぐします)</li>
+                <li><strong>遠近ピント合わせ法</strong> (近くの指先と3m先の壁を交互に3秒ずつ見つめ、眼筋をほぐします)</li>
             </ul>
             <!-- Breathing Balloon Widget -->
-            <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; margin-top:10px; background:rgba(100,255,218,0.02); border:1px dashed rgba(100,255,218,0.15); border-radius:8px; text-align:center;">
-                <div style="font-size:9px; color:var(--accent-teal); font-weight:700; margin-bottom:10px; letter-spacing:0.5px;">🧘 呼吸ガイド（バルーンの伸縮と同調してください）</div>
+            <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; margin-top:10px; background:rgba(0,0,0,0.01); border:1px dashed rgba(0,0,0,0.08); border-radius:8px; text-align:center;">
+                <div style="font-size:9px; color:var(--accent-teal); font-weight:700; margin-bottom:10px; letter-spacing:0.5px;">呼吸ガイド（バルーンの伸縮と同調してください）</div>
                 <div style="width:100px; height:100px; display:flex; align-items:center; justify-content:center; position:relative;">
-                    <div id="breathingBalloon" style="width:30px; height:30px; border-radius:50%; background:radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%); box-shadow: 0 0 20px var(--accent-teal); transition: all 1.5s ease-in-out;"></div>
+                    <div id="breathingBalloon" style="width:30px; height:30px; border-radius:50%; background:rgba(0, 113, 227, 0.12); border:1.5px solid rgba(0, 113, 227, 0.35); transition: all 1.5s ease-in-out;"></div>
                     <div style="position:absolute; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow: 0 0 8px #fff;"></div>
                 </div>
                 <div id="breathingText" style="font-size:10px; font-weight:700; color:var(--text-primary); margin-top:10px; height:15px; letter-spacing:0.5px;">準備中...</div>
-                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 4px 15px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
-                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 4px 15px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
+                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 6px 15px; font-size: 10px; font-weight: 600; border-radius: 980px; border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); background: rgba(0,0,0,0.03); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
+                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 6px 15px; font-size: 10px; font-weight: 600; border-radius: 980px; border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); background: rgba(0,0,0,0.03); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
             </div>
             <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(0,191,255,0.02); border:1px solid rgba(0,191,255,0.08); padding:8px; border-radius:6px;">
                 <strong>【姿勢・方向】</strong>右腕を左方向に真っ直ぐ伸ばし、左腕で右肘を抱え込むように胸に引き寄せます。肩甲骨が外側に広がるのを意識します。<br>
@@ -235,7 +235,7 @@ function renderLatestHrvRemedies() {
             </div>
             <div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-blue); box-shadow: 0 0 12px rgba(0, 191, 255, 0.2);'>
                 <img src='stretch_shoulder_jp.jpg' style='width:100%; display:block;'>
-                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,191,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,255,0.06) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
+                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,113,227,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,113,227,0.03) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
                 <div style='position:absolute; top:10px; right:10px; background:rgba(0,191,255,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-blue);'>ALIGNMENT: OK</div>
                 <!-- Holographic Overlay SVG -->
                 <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
@@ -383,7 +383,7 @@ function renderGrid(container, articles) {
             <div class="glass-card feed-item" style="padding:16px; display:flex; flex-direction:column; justify-content:space-between; gap:10px;">
                 <div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <span class="category-badge" style="background:rgba(100,255,218,0.08); border:1px solid rgba(100,255,218,0.15); color:var(--accent-teal); font-size:10px; padding:2px 6px; border-radius:4px;">${art.tag || '健康コラム'}</span>
+                        <span class="category-badge" style="background:rgba(0,0,0,0.04); border:none; color:var(--text-secondary); font-size:10px; padding:2px 6px; border-radius:4px;">${art.tag || '健康コラム'}</span>
                         <span style="font-size:10px; color:var(--text-secondary);">${art.author || '✍️ 医療顧問監修'}</span>
                     </div>
                     <div class="item-title" style="font-size:13px; font-weight:700; color:var(--text-primary); margin-bottom:6px; line-height:1.4;">${art.title}</div>
@@ -420,15 +420,18 @@ function initBreathingGuide(type) {
     balloon.style.width = '30px';
     balloon.style.height = '30px';
     balloon.style.transition = 'all 0.5s ease';
-    balloon.style.background = type === "478" ? 'radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%)' : 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
-    balloon.style.boxShadow = type === "478" ? '0 0 15px var(--accent-red)' : '0 0 15px var(--accent-teal)';
+    balloon.style.background = type === "478" ? 'rgba(255, 59, 48, 0.12)' : 'rgba(0, 113, 227, 0.12)';
+        balloon.style.border = type === "478" ? '1.5px solid rgba(255, 59, 48, 0.35)' : '1.5px solid rgba(0, 113, 227, 0.35)';
+    balloon.style.boxShadow = 'none';
     txt.innerHTML = `<span style="color:var(--text-secondary);">一時停止中</span>`;
     
     if (btn) {
         btn.innerText = "▶ ガイドを開始する";
         btn.style.borderColor = type === "478" ? "var(--accent-red)" : "var(--accent-teal)";
         btn.style.color = type === "478" ? "var(--accent-red)" : "var(--accent-teal)";
-        btn.style.background = type === "478" ? "rgba(255,82,82,0.06)" : "rgba(100,255,218,0.06)";
+        btn.style.background = "rgba(0,0,0,0.03)";
+        btn.style.color = "var(--text-primary)";
+        btn.style.borderColor = "rgba(0,0,0,0.08)";
     }
 }
 
@@ -445,12 +448,14 @@ window.toggleBreathingGuide = function() {
         balloon.style.width = '30px';
         balloon.style.height = '30px';
         balloon.style.transition = 'all 0.5s ease';
-        balloon.style.boxShadow = breathingType === "478" ? '0 0 15px var(--accent-red)' : '0 0 15px var(--accent-teal)';
+        balloon.style.boxShadow = 'none';
         txt.innerHTML = `<span style="color:var(--text-secondary);">一時停止中</span>`;
         btn.innerText = "▶ ガイドを開始する";
         btn.style.borderColor = breathingType === "478" ? "var(--accent-red)" : "var(--accent-teal)";
         btn.style.color = breathingType === "478" ? "var(--accent-red)" : "var(--accent-teal)";
-        btn.style.background = breathingType === "478" ? "rgba(255,82,82,0.06)" : "rgba(100,255,218,0.06)";
+        btn.style.background = "rgba(0,0,0,0.03)";
+        btn.style.color = "var(--text-primary)";
+        btn.style.borderColor = "rgba(0,0,0,0.08)";
     } else {
         btn.innerText = "⏸ ガイドを一時停止";
         btn.style.borderColor = "var(--text-primary)";
@@ -471,20 +476,21 @@ window.toggleBreathingGuide = function() {
                     balloon.style.height = '90px';
                     balloon.style.transition = 'all 4s ease-in-out';
                     balloon.style.background = 'radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%)';
-                    balloon.style.boxShadow = '0 0 20px var(--accent-red)';
+                    balloon.style.boxShadow = 'none';
                     txt.innerHTML = `<span style="color:#ff5252; font-weight:700;">吸い込む (Inhale)... ${4 - subSec}秒</span>`;
                 } else if (subSec < 11) {
                     balloon.style.width = '90px';
                     balloon.style.height = '90px';
                     balloon.style.transition = 'all 0.5s ease';
-                    balloon.style.boxShadow = subSec % 2 === 0 ? '0 0 35px #ff5252' : '0 0 20px #ff5252';
+                    balloon.style.boxShadow = 'none';
                     txt.innerHTML = `<span style="color:#ff9100; font-weight:700;">止める (Hold)... ${11 - subSec}秒</span>`;
                 } else {
                     balloon.style.width = '30px';
                     balloon.style.height = '30px';
                     balloon.style.transition = 'all 8s ease-in-out';
-                    balloon.style.background = 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
-                    balloon.style.boxShadow = '0 0 20px var(--accent-teal)';
+                    balloon.style.background = 'rgba(0, 113, 227, 0.12)';
+                    balloon.style.border = '1.5px solid rgba(0, 113, 227, 0.35)';
+                    balloon.style.boxShadow = 'none';
                     txt.innerHTML = `<span style="color:#64ffda; font-weight:700;">ゆっくり吐く (Exhale)... ${19 - subSec}秒</span>`;
                 }
             } else {
@@ -493,15 +499,16 @@ window.toggleBreathingGuide = function() {
                     balloon.style.width = '90px';
                     balloon.style.height = '90px';
                     balloon.style.transition = 'all 3s ease-in-out';
-                    balloon.style.background = 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
-                    balloon.style.boxShadow = '0 0 20px var(--accent-teal)';
+                    balloon.style.background = 'rgba(0, 113, 227, 0.12)';
+                    balloon.style.border = '1.5px solid rgba(0, 113, 227, 0.35)';
+                    balloon.style.boxShadow = 'none';
                     txt.innerHTML = `<span style="color:#64ffda; font-weight:700;">吸い込む (Inhale)... ${3 - subSec}秒</span>`;
                 } else {
                     balloon.style.width = '30px';
                     balloon.style.height = '30px';
                     balloon.style.transition = 'all 6s ease-in-out';
                     balloon.style.background = 'radial-gradient(circle, var(--accent-blue) 0%, rgba(0,191,255,0.4) 70%, transparent 100%)';
-                    balloon.style.boxShadow = '0 0 20px var(--accent-blue)';
+                    balloon.style.boxShadow = 'none';
                     txt.innerHTML = `<span style="color:#00bfff; font-weight:700;">ゆっくり吐く (Exhale)... ${9 - subSec}秒</span>`;
                 }
             }
@@ -520,12 +527,12 @@ window.toggleBreathingGuide = function() {
                     balloon.style.opacity = '1';
                     balloon.style.width = '30px';
                     balloon.style.height = '30px';
-                    balloon.style.boxShadow = breathingType === "478" ? '0 0 15px var(--accent-red)' : '0 0 15px var(--accent-teal)';
-                    txt.innerHTML = `<span style="color:var(--accent-teal); font-weight:800;">🏆 深呼吸セッション完了！ 自律神経が整いました。</span>`;
+                    balloon.style.boxShadow = 'none';
+                    txt.innerHTML = `<span style="color:var(--accent-teal); font-weight:800;">深呼吸セッション完了！ 自律神経が整いました。</span>`;
                     btn.innerText = "もう一度行う";
                     btn.style.borderColor = "var(--accent-teal)";
                     btn.style.color = "var(--accent-teal)";
-                    btn.style.background = "rgba(100,255,218,0.06)";
+                    btn.style.background = "rgba(0,0,0,0.03)";
                 }, 2000);
                 return;
             }
@@ -732,7 +739,7 @@ const symptomExercises = {
         </svg>`
     },
     eyes: {
-        title: "🧘 眼球ストレッチ＆遠近ピント調整（眼精疲労軽減）",
+        title: "眼球ストレッチ＆遠近ピント調整（眼精疲労軽減）",
         desc: "<strong>【姿勢・方向】</strong>顔を正面に向けたまま、目を大きく開けて眼球を上下左右,円を描くようにぐるぐると回します。その後、近くの指先と遠くの景色を交互に見つめます。<br><strong>【秒数】</strong>眼球ローリング左右各3周、遠近ピント調整を<strong>15秒間（計30秒）</strong>行います。<br><strong>【呼吸法】</strong>呼吸を止めずに穏やかに繰り返します。",
         img: "stretch_eyes_jp.jpg?v=1.0.1",
         color: "#e040fb",
@@ -779,29 +786,29 @@ function switchSymptom(key) {
         if (isEyeGame) {
             rightColumnHtml = `
                 <div class="eye-tracker-game-container" style="position:relative; width:100%; height:100%; min-height:220px; background:#050c1c; display:flex; flex-direction:column; align-items:center; justify-content:center; box-sizing:border-box; padding:10px;">
-                    <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(100,255,218,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(100,255,218,0.04) 1px, transparent 1px); background-size:15px 15px; pointer-events:none; z-index:1;"></div>
-                    <div id="eyeTargetBall" style="position:absolute; top:50%; left:50%; width:16px; height:16px; margin-left:-8px; margin-top:-8px; border-radius:50%; background:radial-gradient(circle, #64ffda 0%, rgba(100,255,218,0.6) 60%, transparent 100%); box-shadow: 0 0 15px #64ffda; z-index:5; transform: translate(0, 0); transition: transform 0.05s linear, width 0.2s, height 0.2s, margin-left 0.2s, margin-top 0.2s; display:none;"></div>
+                    <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,113,227,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,113,227,0.03) 1px, transparent 1px); background-size:15px 15px; pointer-events:none; z-index:1;"></div>
+                    <div id="eyeTargetBall" style="position:absolute; top:50%; left:50%; width:16px; height:16px; margin-left:-8px; margin-top:-8px; border-radius:50%; background:rgba(0, 113, 227, 0.15); border:1.5px solid rgba(0, 113, 227, 0.35); z-index:5; transform: translate(0, 0); transition: transform 0.05s linear, width 0.2s, height 0.2s, margin-left 0.2s, margin-top 0.2s; display:none;"></div>
                     
                     <div id="eyeGameStatus" style="z-index:2; text-align:center; padding:10px;">
-                        <div style="font-size:13px; font-weight:800; color:var(--accent-teal); margin-bottom:8px;">👀 眼筋ストレッチ・ガイド</div>
+                        <div style="font-size:13px; font-weight:800; color:var(--accent-teal); margin-bottom:8px;">眼筋ストレッチ・ガイド</div>
                         <div style="font-size:10px; color:var(--text-secondary); max-width:240px; line-height:1.5; margin-bottom:12px;">
                             画面中央からスタートするグリーンの光を、頭を動かさずに目だけで追ってください。
                         </div>
-                        <button id="startEyeGameBtn" onclick="startEyeTrackingSession()" style="padding:6px 20px; font-size:11px; font-weight:700; color:#050c1c; background:var(--accent-teal); border:none; border-radius:20px; cursor:pointer; box-shadow: 0 0 10px rgba(100,255,218,0.3); transition:all 0.2s; font-family:inherit;">
+                        <button id="startEyeGameBtn" onclick="startEyeTrackingSession()" style="padding:6px 20px; font-size:11px; font-weight:600; color:#ffffff; background:var(--accent-blue); border:none; border-radius:980px; cursor:pointer; transition:all 0.2s; font-family:inherit;">
                             ▶ セッションを開始する
                         </button>
                     </div>
                     
-                    <div id="eyeGameInstruct" style="position:absolute; top:12px; left:12px; right:12px; z-index:2; font-size:10px; font-weight:700; color:var(--text-primary); background:rgba(5,12,28,0.85); border:1px solid rgba(100,255,218,0.2); padding:6px 10px; border-radius:6px; text-align:center; display:none;">
+                    <div id="eyeGameInstruct" style="position:absolute; top:12px; left:12px; right:12px; z-index:2; font-size:10px; font-weight:700; color:var(--text-primary); background:rgba(255,255,255,0.9); border:1px solid rgba(0,0,0,0.08); color:var(--text-primary); padding:6px 10px; border-radius:6px; text-align:center; display:none;">
                         準備中...
                     </div>
                     
-                    <div id="eyeGameTimer" style="position:absolute; bottom:12px; right:12px; z-index:2; font-size:10px; font-weight:700; font-family:monospace; color:var(--accent-teal); background:rgba(5,12,28,0.8); padding:3px 6px; border-radius:4px; border:1px solid rgba(100,255,218,0.15); display:none;">
+                    <div id="eyeGameTimer" style="position:absolute; bottom:12px; right:12px; z-index:2; font-size:10px; font-weight:700; font-family:monospace; color:var(--accent-teal); background:rgba(255,255,255,0.9); padding:3px 6px; border-radius:4px; border:1px solid rgba(0,0,0,0.08); color:var(--text-primary); display:none;">
                         30.0s
                     </div>
                     
                     <div id="eyeGameDone" style="z-index:2; text-align:center; display:none; padding:10px;">
-                        <div style="font-size:24px; margin-bottom:8px;">🎉</div>
+                        
                         <div style="font-size:12px; font-weight:700; color:var(--accent-teal); margin-bottom:6px;">眼筋リフレッシュ完了！</div>
                         <div style="font-size:10px; color:var(--text-secondary); margin-bottom:12px;">目の周りのピント調整筋の緊張がほぐれました。</div>
                         <button onclick="resetEyeTrackingSession()" style="padding:4px 15px; font-size:10px; font-weight:700; color:var(--text-secondary); background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:15px; cursor:pointer; font-family:inherit;">
@@ -858,7 +865,7 @@ function switchSymptom(key) {
             border-color: rgba(255,255,255,0.15);
         }
         .symptom-tab-btn.active {
-            background: linear-gradient(45deg, rgba(100,255,218,0.15), rgba(0,191,255,0.15));
+            
             color: var(--accent-teal);
             border-color: var(--accent-teal);
             box-shadow: 0 0 10px rgba(100,255,218,0.15);
@@ -936,7 +943,7 @@ function startEyeTrackingSession() {
             instruct = "【遠近フォーカス】ボールのサイズ（遠近）変化に合わせてピントを合わせます";
         }
         
-        if (instructDiv) instructDiv.innerHTML = `🧘 ${instruct}`;
+        if (instructDiv) instructDiv.innerHTML = `${instruct}`;
         if (ball) {
             ball.style.transform = `translate(${x}px, ${y}px)`;
             const baseSize = 16;

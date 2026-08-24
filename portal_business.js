@@ -686,13 +686,13 @@ const symptomExercises = {
         defaultSVG: `<svg viewBox="0 0 330 220" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;">
             <defs>
                 <marker id="portal-arrow-cyan" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
-                    <path d="M0,0 L0,6 L6,3 Z" fill="#00e5ff"/>
+                    <path d="M0,0 L0,6 L6,3 Z" fill="#06b6d4"/>
                 </marker>
             </defs>
-            <path d="M 100 150 Q 150 170 200 190" fill="none" stroke="#00e5ff" stroke-width="2.5" marker-start="url(#portal-arrow-cyan)" marker-end="url(#portal-arrow-cyan)" stroke-dasharray="4 2"/>
-            <circle cx="100" cy="150" r="4.5" fill="#00e5ff" stroke="#050c1c" stroke-width="1.5"/>
-            <text x="78" y="145" fill="#00e5ff" font-size="10" font-weight="700" font-family="monospace">START (股関節)</text>
-            <text x="205" y="185" fill="#00e5ff" font-size="10" font-weight="700" font-family="monospace">END (伸ばす)</text>
+            <path d="M 202 125 Q 156 143 91 145" fill="none" stroke="#06b6d4" stroke-width="2.5" marker-start="url(#portal-arrow-cyan)" marker-end="url(#portal-arrow-cyan)" stroke-dasharray="4 2"/>
+            <circle cx="202" cy="125" r="4.5" fill="#06b6d4" stroke="#050c1c" stroke-width="1.5"/>
+            <text x="157" y="115" fill="#06b6d4" font-size="10" font-weight="700" font-family="monospace">START (股関節)</text>
+            <text x="101" y="135" fill="#06b6d4" font-size="10" font-weight="700" font-family="monospace">END (伸ばす)</text>
         </svg>`
     },
     catcow: {

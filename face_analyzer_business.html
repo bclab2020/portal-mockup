@@ -774,7 +774,7 @@
                 </div>
                 <div class="input-group" style="margin-top: 15px;">
                     <label>rPPG 測定スキャン時間</label>
-                    <div id="scanDurationBadge" style="font-size: 13px; font-weight:700; color:var(--accent-teal); padding: 8px 12px; background:rgba(100,255,218,0.08); border:1px solid rgba(100,255,218,0.2); border-radius:8px; display:inline-block; width:100%; box-sizing:border-box;">
+                    <div id="scanDurationBadge" style="font-size: 13px; font-weight:600; color:var(--text-primary); padding: 8px 12px; background:rgba(0,0,0,0.02); border:1px solid rgba(0,0,0,0.05); border-radius:8px; display:inline-block; width:100%; box-sizing:border-box;">
                         ⏱️ 30秒固定 (学術的エビデンスに基づく高精度測定)
                     </div>
                 </div>
@@ -1308,7 +1308,20 @@
                         cameraHelper = new Camera(video, {
                             onFrame: async () => {
                                 if (isCameraActive) {
-                                    await faceMesh.send({ image: video });
+                                    try {
+                                        await faceMesh.send({ image: video });
+                                    } catch (sendErr) {
+                                        console.error("FaceMesh send error:", sendErr);
+                                        if (cameraHelper) {
+                                            try { cameraHelper.stop(); } catch(e){}
+                                        }
+                                        if (stream) {
+                                            try { stream.getTracks().forEach(t => t.stop()); } catch(e){}
+                                        }
+                                        isCameraActive = false;
+                                        appStatusBar.innerText = "エラー: AIモジュール実行でエラーが発生しました。シミュレータに切り替えます。";
+                                        startCameraSimulation();
+                                    }
                                 }
                             },
                             width: 640,
@@ -1617,7 +1630,8 @@
 
         // MediaPipe Face Mesh results callback
         function onFaceMeshResults(results) {
-            if (!isCameraActive) return;
+            try {
+                if (!isCameraActive) return;
 
             // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1680,6 +1694,12 @@
             } else {
                 faceDetected = false;
                 hudFaceStatus.innerHTML = `<div style="width:6px; height:6px; background:#ff5252; border-radius:50%;"></div><span>FACE DISENGAGED: LOST</span>`;
+            }
+            } catch (meshErr) {
+                console.error("onFaceMeshResults processing error:", meshErr);
+                isCameraActive = false;
+                appStatusBar.innerText = "エラー: AIスキャナーでエラーが発生しました。シミュレータに切り替えます。";
+                startCameraSimulation();
             }
         }
 
@@ -2032,8 +2052,8 @@
                     return;
                 }
                 
-                countdownNumber.style.color = 'var(--accent-teal)';
-                countdownNumber.style.textShadow = '0 0 10px rgba(0, 0, 0, 0.9), 0 0 30px rgba(100, 255, 218, 0.7)';
+                countdownNumber.style.color = 'var(--accent-blue)';
+                countdownNumber.style.textShadow = 'none';
 
                 count--;
                 if (count > 0) {
@@ -2249,11 +2269,11 @@
                      <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:15px; margin-top:10px; background:rgba(100,255,218,0.02); border:1px dashed rgba(100,255,218,0.15); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
                         <div style="font-size:10px; color:var(--accent-teal); font-weight:700; margin-bottom:12px; letter-spacing:0.5px;">呼吸ガイド（バルーンの伸縮と同調してください）</div>
                         <div style="width:120px; height:120px; display:flex; align-items:center; justify-content:center; position:relative;">
-                            <div id="breathingBalloon" style="width:40px; height:40px; border-radius:50%; background:radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%); box-shadow: 0 0 25px var(--accent-teal); transition: all 1.5s ease-in-out;"></div>
+                            <div id="breathingBalloon" style="width:40px; height:40px; border-radius:50%; background:rgba(0, 113, 227, 0.12); border:1.5px solid rgba(0, 113, 227, 0.35); transition: all 1.5s ease-in-out;"></div>
                             <div style="position:absolute; width:15px; height:15px; border-radius:50%; background:#fff; box-shadow: 0 0 10px #fff;"></div>
                         </div>
                         <div id="breathingText" style="font-size:11px; font-weight:700; color:var(--text-primary); margin-top:12px; height:15px; letter-spacing:0.5px;">準備中...</div>
-                        <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 12px; padding: 5px 18px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
+                        <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 12px; padding: 6px 18px; font-size: 10px; font-weight: 600; border-radius: 980px; border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); background: rgba(0,0,0,0.03); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
                      </div>`
                 ];
                 healthDesks = [
@@ -2276,7 +2296,7 @@
                             <div style="position:absolute; width:15px; height:15px; border-radius:50%; background:#fff; box-shadow: 0 0 10px #fff;"></div>
                         </div>
                         <div id="breathingText" style="font-size:11px; font-weight:700; color:var(--text-primary); margin-top:12px; height:15px; letter-spacing:0.5px;">準備中...</div>
-                        <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 12px; padding: 5px 18px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
+                        <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 12px; padding: 6px 18px; font-size: 10px; font-weight: 600; border-radius: 980px; border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); background: rgba(0,0,0,0.03); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
                      </div>`
                 ];
                 healthDesks = [
@@ -2295,11 +2315,11 @@
                      <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:15px; margin-top:10px; background:rgba(100,255,218,0.02); border:1px dashed rgba(100,255,218,0.15); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
                         <div style="font-size:10px; color:var(--accent-teal); font-weight:700; margin-bottom:12px; letter-spacing:0.5px;">呼吸ガイド（バルーンの伸縮と同調してください）</div>
                         <div style="width:120px; height:120px; display:flex; align-items:center; justify-content:center; position:relative;">
-                            <div id="breathingBalloon" style="width:40px; height:40px; border-radius:50%; background:radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%); box-shadow: 0 0 25px var(--accent-teal); transition: all 1.5s ease-in-out;"></div>
+                            <div id="breathingBalloon" style="width:40px; height:40px; border-radius:50%; background:rgba(0, 113, 227, 0.12); border:1.5px solid rgba(0, 113, 227, 0.35); transition: all 1.5s ease-in-out;"></div>
                             <div style="position:absolute; width:15px; height:15px; border-radius:50%; background:#fff; box-shadow: 0 0 10px #fff;"></div>
                         </div>
                         <div id="breathingText" style="font-size:11px; font-weight:700; color:var(--text-primary); margin-top:12px; height:15px; letter-spacing:0.5px;">準備中...</div>
-                        <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 12px; padding: 5px 18px; font-size: 10px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
+                        <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 12px; padding: 6px 18px; font-size: 10px; font-weight: 600; border-radius: 980px; border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); background: rgba(0,0,0,0.03); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
                      </div>`
                 ];
                 healthDesks = [
@@ -2381,11 +2401,11 @@
                                 <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:25px; background:rgba(100,255,218,0.02); border:1px dashed rgba(100,255,218,0.15); border-radius:8px; text-align:center; width:100%; box-sizing:border-box;">
                                     <div style="font-size:12px; color:var(--accent-teal); font-weight:700; margin-bottom:15px; letter-spacing:0.5px;">呼吸ガイド（バルーンの伸縮と同調してください）</div>
                                     <div style="width:160px; height:160px; display:flex; align-items:center; justify-content:center; position:relative;">
-                                        <div id="breathingBalloon" style="width:50px; height:50px; border-radius:50%; background:radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%); box-shadow: 0 0 35px var(--accent-teal); transition: all 1.5s ease-in-out;"></div>
+                                        <div id="breathingBalloon" style="width:50px; height:50px; border-radius:50%; background:rgba(0, 113, 227, 0.12); border:1.5px solid rgba(0, 113, 227, 0.35); transition: all 1.5s ease-in-out;"></div>
                                         <div style="position:absolute; width:20px; height:20px; border-radius:50%; background:#fff; box-shadow: 0 0 12px #fff;"></div>
                                     </div>
                                     <div id="breathingText" style="font-size:14px; font-weight:700; color:var(--text-primary); margin-top:15px; height:20px; letter-spacing:0.5px;">準備中...</div>
-                                    <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 15px; padding: 8px 30px; font-size: 12px; font-weight: 700; border-radius: 20px; border: 1px solid var(--accent-teal); color: var(--accent-teal); background: rgba(100,255,218,0.06); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
+                                    <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 15px; padding: 8px 30px; font-size: 12px; font-weight: 600; border-radius: 980px; border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); background: rgba(0,0,0,0.03); cursor: pointer; transition: all 0.2s;">▶ ガイドを開始する</button>
                                 </div>
                             </div>
 
@@ -3146,15 +3166,16 @@
             balloon.style.width = '40px';
             balloon.style.height = '40px';
             balloon.style.transition = 'all 0.5s ease';
-            balloon.style.background = type === "478" ? 'radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%)' : 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
-            balloon.style.boxShadow = type === "478" ? '0 0 15px var(--accent-red)' : '0 0 15px var(--accent-teal)';
+            balloon.style.background = type === "478" ? 'rgba(255, 59, 48, 0.12)' : 'rgba(0, 113, 227, 0.12)';
+            balloon.style.border = type === "478" ? '1.5px solid rgba(255, 59, 48, 0.35)' : '1.5px solid rgba(0, 113, 227, 0.35)';
+            balloon.style.boxShadow = 'none';
             txt.innerHTML = `<span style="color:var(--text-secondary);">一時停止中 (準備ができたら開始を押してください)</span>`;
             
             if (btn) {
                 btn.innerText = "▶ ガイドを開始する";
-                btn.style.borderColor = type === "478" ? "var(--accent-red)" : "var(--accent-teal)";
-                btn.style.color = type === "478" ? "var(--accent-red)" : "var(--accent-teal)";
-                btn.style.background = type === "478" ? "rgba(255,82,82,0.06)" : "rgba(100,255,218,0.06)";
+                btn.style.borderColor = type === "478" ? "rgba(255,59,48,0.25)" : "rgba(0,0,0,0.08)";
+                btn.style.color = type === "478" ? "var(--accent-red)" : "var(--text-primary)";
+                btn.style.background = type === "478" ? "rgba(255,59,48,0.04)" : "rgba(0,0,0,0.03)";
             }
         }
         
@@ -3209,7 +3230,8 @@
                             balloon.style.width = '40px';
                             balloon.style.height = '40px';
                             balloon.style.transition = 'all 8s ease-in-out';
-                            balloon.style.background = 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
+                            balloon.style.background = 'rgba(0, 113, 227, 0.12)';
+                    balloon.style.border = '1.5px solid rgba(0, 113, 227, 0.35)';
                             balloon.style.boxShadow = 'none';
                             txt.innerHTML = `<span style="color:#64ffda; font-weight:700;">ゆっくり吐く (Exhale)... ${19 - subSec}秒</span>`;
                         }
@@ -3219,7 +3241,8 @@
                             balloon.style.width = '110px';
                             balloon.style.height = '110px';
                             balloon.style.transition = 'all 3s ease-in-out';
-                            balloon.style.background = 'radial-gradient(circle, var(--accent-teal) 0%, rgba(100,255,218,0.4) 70%, transparent 100%)';
+                            balloon.style.background = 'rgba(0, 113, 227, 0.12)';
+                    balloon.style.border = '1.5px solid rgba(0, 113, 227, 0.35)';
                             balloon.style.boxShadow = 'none';
                             txt.innerHTML = `<span style="color:#64ffda; font-weight:700;">吸い込む (Inhale)... ${3 - subSec}秒</span>`;
                         } else {
@@ -3247,7 +3270,7 @@
                             balloon.style.width = '50px';
                             balloon.style.height = '50px';
                             balloon.style.boxShadow = 'none';
-                            txt.innerHTML = `<span style="color:var(--accent-teal); font-weight:800;">深呼吸セッション完了！ 自律神経が整いました。</span>`;
+                            txt.innerHTML = `<span style="color:var(--text-primary); font-weight:700;">深呼吸セッション完了！ 自律神経が整いました。</span>`;
                             btn.innerText = "もう一度行う";
                             btn.style.borderColor = "rgba(255,255,255,0.15)";
                             btn.style.color = "#ffffff";

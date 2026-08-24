@@ -20,24 +20,25 @@
 
     <style>
         :root {
-            --bg-primary: #0b0f19;
-            --bg-secondary: #121824;
-            --bg-card: rgba(18, 24, 38, 0.75);
-            --bg-glass: rgba(18, 24, 38, 0.8);
-            --border-color: rgba(148, 163, 184, 0.15);
-            --border-glow: rgba(59, 130, 246, 0.08);
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+            --border-color: rgba(0, 0, 0, 0.06);
+            --border-glow: transparent;
             
-            --accent-teal: #0fb5ae;
-            --accent-blue: #3b82f6;
-            --accent-orange: #f59e0b;
-            --accent-red: #f87171;
-            --accent-green: #10b981;
-            --accent-purple: #8b5cf6;
-            --accent-pink: #ec4899;
+            --accent-teal: #1d1d1f;
+            --accent-blue: #0071e3;
+            --accent-orange: #ff9500;
+            --accent-red: #ff3b30;
+            --accent-green: #34c759;
+            --accent-purple: #af52de;
+            --accent-pink: #ff2d55;
             
-            --text-primary: #f8f9fa;
-            --text-secondary: #8892b0;
-            --font-sans: 'Outfit', 'Noto Sans JP', sans-serif;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Noto Sans JP', sans-serif;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
         }
 
         * {
@@ -55,7 +56,6 @@
         }
         body {
             font-family: var(--font-sans);
-            background: radial-gradient(circle at top right, #1e293b 0%, var(--bg-primary) 70%);
             background-color: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
@@ -65,39 +65,36 @@
         }
 
         header {
-            background: rgba(5, 8, 17, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.01);
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
-            letter-spacing: 2px;
-            background: linear-gradient(45deg, var(--accent-teal), var(--accent-blue), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            color: var(--text-primary);
             text-transform: uppercase;
         }
 
         .logo-badge {
-            background: var(--bg-secondary);
-            border: 1px solid var(--accent-pink);
-            color: var(--accent-pink);
+            background: rgba(0, 0, 0, 0.05);
+            border: none;
+            color: var(--text-primary);
             padding: 2px 8px;
             border-radius: 20px;
             font-size: 9px;
             letter-spacing: 0.5px;
-            text-shadow: 0 0 5px rgba(255, 20, 147, 0.3);
         }
 
         .standalone-badge {
@@ -138,10 +135,10 @@
             position: relative;
             width: 100%;
             aspect-ratio: 4/3;
-            background: radial-gradient(circle at center, #1e293b 0%, #0b0f19 100%);
-            border-radius: 16px;
+            background-color: #e5e5e7;
+            border-radius: 18px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
             overflow: hidden;
         }
 
@@ -170,9 +167,9 @@
             position: absolute;
             left: 0;
             width: 100%;
-            height: 4px;
-            background: linear-gradient(180deg, transparent, var(--accent-pink), transparent);
-            box-shadow: 0 0 15px var(--accent-pink);
+            height: 2px;
+            background: var(--accent-blue);
+            box-shadow: 0 0 8px var(--accent-blue);
             z-index: 3;
             animation: scan 3s linear infinite;
             display: none;
@@ -188,10 +185,11 @@
         .hud-overlay {
             position: absolute;
             padding: 10px 15px;
-            background: rgba(5, 8, 17, 0.7);
-            backdrop-filter: blur(8px);
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            color: var(--text-primary);
             font-size: 11px;
             z-index: 4;
             display: flex;
@@ -234,10 +232,10 @@
             left: 15px;
             right: 15px;
             height: 70px;
-            background: rgba(5, 12, 28, 0.75);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 191, 255, 0.2);
-            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
             padding: 8px 12px;
             z-index: 4;
             display: flex;
@@ -266,9 +264,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(5, 8, 17, 0.15);
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
             z-index: 5;
             display: flex;
             flex-direction: column;
@@ -286,15 +283,13 @@
         .countdown-number {
             font-size: 80px;
             font-weight: 700;
-            color: var(--accent-teal);
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.9), 0 0 30px rgba(100, 255, 218, 0.7);
+            color: var(--accent-blue);
             margin-bottom: 10px;
         }
 
         .countdown-label {
             font-size: 14px;
             color: var(--text-primary);
-            text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
             letter-spacing: 1px;
         }
 
@@ -307,11 +302,9 @@
 
         .glass-card {
             background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 18px;
+            padding: 24px;
             box-shadow: var(--card-shadow);
         }
 
@@ -322,9 +315,9 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 10px;
-            color: var(--accent-teal);
+            color: var(--text-primary);
         }
 
         .panel-title.pink {
@@ -345,31 +338,31 @@
         }
 
         .glass-select, .glass-input {
-            background: rgba(5, 8, 17, 0.6);
-            border: 1px solid var(--border-color);
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.12);
             color: var(--text-primary);
-            padding: 10px 15px;
-            border-radius: 8px;
+            padding: 12px 15px;
+            border-radius: 10px;
             font-size: 13px;
             font-family: var(--font-sans);
             outline: none;
             width: 100%;
-            transition: all 0.3s;
+            transition: all 0.15s ease;
         }
 
         .glass-select:focus, .glass-input:focus {
             border-color: var(--accent-blue);
-            box-shadow: 0 0 10px rgba(0, 191, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
         }
 
         .btn {
             padding: 12px 25px;
-            border-radius: 25px;
+            border-radius: 980px;
             border: none;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -378,15 +371,13 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            background: var(--accent-blue);
             color: #ffffff;
-            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
         }
 
         .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
-            filter: brightness(1.1);
+            background: #0077ed;
+            transform: translateY(-1px);
         }
 
         .btn-primary:disabled {
@@ -395,13 +386,13 @@
         }
 
         .btn-secondary {
-            background: transparent;
-            border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.08);
             color: var(--text-primary);
         }
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--accent-blue);
+            background: rgba(0, 0, 0, 0.06);
+            border-color: rgba(0, 0, 0, 0.12);
         }
 
         /* Results Display CSS */
@@ -413,8 +404,8 @@
         }
 
         .metric-badge {
-            background: rgba(5, 8, 17, 0.4);
-            border: 1px solid rgba(255,255,255,0.04);
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 10px;
             padding: 12px;
             text-align: center;
@@ -734,7 +725,7 @@
             
             <!-- Dr. Hajime Kubo Medical Advisor Card -->
             <div class="glass-card" style="display:flex; gap:15px; align-items:center; border:1px solid var(--border-color); padding:15px; margin-bottom:15px; border-radius:8px;">
-                <div style="width:50px; height:50px; border-radius:50%; background:rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.1); color:var(--text-secondary); font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">MD</div>
+                <div style="width:50px; height:50px; border-radius:50%; background:rgba(0,0,0,0.03); border:1px solid rgba(0,0,0,0.08); color:var(--text-secondary); font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">MD</div>
                 <div>
                     <div style="font-size:11px; color:var(--text-secondary); font-weight:700; letter-spacing:0.5px;">MEDICAL ADVISOR</div>
                     <div style="font-size:14px; font-weight:700; color:var(--text-primary);">顧問・医学監修：久保 肇 医師（医学博士）</div>
@@ -743,7 +734,7 @@
             </div>
 
             <!-- Privacy protection notice banner -->
-            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08); padding:12px; border-radius:8px; font-size:11px; color:var(--text-secondary); line-height:1.5; margin-bottom:15px;">
+            <div style="background:rgba(0,0,0,0.02); border:1px solid rgba(0,0,0,0.05); padding:12px; border-radius:8px; font-size:11px; color:var(--text-secondary); line-height:1.5; margin-bottom:15px;">
                 <div style="font-weight:700; font-size:12px; margin-bottom:4px; display:flex; align-items:center; gap:6px; color:var(--text-primary);">
                     <span>プライバシー徹底保護宣言 (管理者非公開)</span>
                 </div>
@@ -764,7 +755,7 @@
                 <div class="input-group" id="desiredFaceTypeGroup">
                     <label for="desiredFaceType">本日の測定目的 (自律神経解析アライメント)</label>
                     <select class="glass-select" id="desiredFaceType">
-                        <option value="cute">ストレス解消・メンタルケア (副交感神経優位度を評価)</option>
+                        <option value="cute">ストレス解消・メンタルケア</option>
                         <option value="cool">🔥 生産性・集中力測定 (交感神経活動・自律神経活性度)</option>
                         <option value="elegant">💤 睡眠・リカバリーチェック (夜間休息に向けた調整状態)</option>
                     </select>
@@ -1449,11 +1440,11 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
                 // Dark background gradient
-                ctx.fillStyle = "#050f28";
+                ctx.fillStyle = "#f5f5f7";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
                 // Grid guides
-                ctx.strokeStyle = "rgba(0, 191, 255, 0.05)";
+                ctx.strokeStyle = "rgba(0, 0, 0, 0.04)";
                 ctx.lineWidth = 1;
                 for(let i=0; i<canvas.width; i+=40) {
                     ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
@@ -1463,7 +1454,7 @@
                 }
 
                 // Draw mock landmark point cloud (simulated MediaPipe 468 points)
-                ctx.fillStyle = isScanning ? "rgba(255, 20, 147, 0.65)" : "rgba(100, 255, 218, 0.65)";
+                ctx.fillStyle = isScanning ? "rgba(52, 199, 89, 0.55)" : "rgba(0, 113, 227, 0.35)";
                 simulatedLandmarks.forEach(pt => {
                     // Add subtle micro-jitter for high-fidelity scanning aesthetic
                     const jitterX = (Math.random() - 0.5) * 0.8;
@@ -1477,9 +1468,8 @@
                 const cX = canvas.width / 2;
                 const cY = canvas.height / 2;
                 
-                ctx.strokeStyle = isScanning ? "#ff1493" : "#64ffda";
-                ctx.shadowColor = ctx.strokeStyle;
-                ctx.shadowBlur = 12;
+                ctx.strokeStyle = isScanning ? "#34c759" : "#0071e3";
+                ctx.shadowBlur = 0;
                 ctx.lineWidth = 1.2;
                 
                 // Oval face contour
@@ -1696,7 +1686,7 @@
         // Draw custom sleek facial wireframe instead of heavy default lines
         function drawSleekFaceMesh(landmarks) {
             // Draw all 468 MediaPipe Face Mesh landmark points as small glowing dots
-            ctx.fillStyle = isScanning ? "rgba(255, 20, 147, 0.75)" : "rgba(100, 255, 218, 0.75)";
+            ctx.fillStyle = isScanning ? "rgba(52, 199, 89, 0.65)" : "rgba(255, 255, 255, 0.5)";
             for (let i = 0; i < landmarks.length; i++) {
                 const pt = landmarks[i];
                 const coords = getCanvasCoords(pt);
@@ -1705,9 +1695,9 @@
                 ctx.fill();
             }
 
-            ctx.strokeStyle = isScanning ? "#ff1493" : "#64ffda";
+            ctx.strokeStyle = isScanning ? "#34c759" : "rgba(255, 255, 255, 0.5)";
             ctx.lineWidth = 0.8;
-            ctx.fillStyle = isScanning ? "rgba(255, 20, 147, 0.02)" : "rgba(100, 255, 218, 0.01)";
+            ctx.fillStyle = isScanning ? "rgba(52, 199, 89, 0.02)" : "rgba(255, 255, 255, 0.01)";
 
             // 1. Draw outer face contour
             const faceContourPoints = [
@@ -2897,10 +2887,10 @@
                 if (hudText) hudText.textContent = "調整中...";
                 
                 // Draw grid fading out
-                ctx.fillStyle = '#050c1c';
+                ctx.fillStyle = '#f5f5f7';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                ctx.strokeStyle = `rgba(0, 191, 255, ${0.08 * fadePct})`;
+                ctx.strokeStyle = `rgba(0, 0, 0, ${0.04 * fadePct})`;
                 ctx.lineWidth = 1;
                 const gridSize = 40;
                 for (let x = 0; x < canvas.width; x += gridSize) {
@@ -2919,8 +2909,8 @@
                 
                 const radGlow = ctx.createRadialGradient(targetX, targetY, 4, targetX, targetY, targetRadius * 2);
                 radGlow.addColorStop(0, `rgba(255, 255, 255, ${fadePct})`);
-                radGlow.addColorStop(0.2, `rgba(100, 255, 218, ${fadePct})`);
-                radGlow.addColorStop(0.6, `rgba(100, 255, 218, ${0.45 * fadePct})`);
+                radGlow.addColorStop(0.2, `rgba(0, 113, 227, ${fadePct})`);
+                radGlow.addColorStop(0.6, `rgba(0, 113, 227, ${0.3 * fadePct})`);
                 radGlow.addColorStop(1, 'transparent');
                 
                 ctx.fillStyle = radGlow;
@@ -2941,10 +2931,10 @@
             if (timerText) timerText.textContent = `TIME: ${remaining}s`;
             
             // Draw grid in black
-            ctx.fillStyle = '#050c1c';
+            ctx.fillStyle = '#f5f5f7';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            ctx.strokeStyle = 'rgba(148, 163, 184, 0.06)';
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.04)';
             ctx.lineWidth = 1;
             const gridSize = 40;
             for (let x = 0; x < canvas.width; x += gridSize) {
@@ -2967,12 +2957,12 @@
                 const subPct = (pct * 4) % 1.0;
                 // Move vertically across 80% of window height
                 targetY = cY + Math.sin(subPct * Math.PI * 2) * (canvas.height * 0.4);
-                phaseText = "【上下ストレッチ】頭を動かさず、緑の光を上下限界まで目で追ってください";
+                phaseText = "【上下ストレッチ】頭を動かさず、青いボールを上下限界まで目で追ってください";
             } else if (phase === 1) {
                 const subPct = (pct * 4) % 1.0;
                 // Move horizontally across 86% of window width
                 targetX = cX + Math.sin(subPct * Math.PI * 2) * (canvas.width * 0.43);
-                phaseText = "【左右ストレッチ】緑のボールを左右の隅々まで目だけで追います";
+                phaseText = "【左右ストレッチ】青いボールを左右の隅々まで目だけで追います";
             } else if (phase === 2) {
                 const subPct = (pct * 4) % 1.0;
                 const angle = subPct * Math.PI * 2;
@@ -2994,8 +2984,8 @@
             // Draw Target Ball with glowing aura
             const radGlow = ctx.createRadialGradient(targetX, targetY, 4, targetX, targetY, targetRadius * 2);
             radGlow.addColorStop(0, '#ffffff');
-            radGlow.addColorStop(0.2, '#0fb5ae');
-            radGlow.addColorStop(0.6, 'rgba(15, 181, 174, 0.35)');
+            radGlow.addColorStop(0.2, '#0071e3');
+            radGlow.addColorStop(0.6, 'rgba(0, 113, 227, 0.3)');
             radGlow.addColorStop(1, 'transparent');
             
             ctx.fillStyle = radGlow;
@@ -3284,31 +3274,31 @@
         };
 </script>
     <!-- Admin Dashboard Preview Modal -->
-    <div id="adminPreviewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 17, 0.85); justify-content: center; align-items: center; z-index: 1000; padding: 20px; box-sizing: border-box;">
-        <div class="glass-card" style="width: 100%; max-width: 550px; padding: 25px; border: 1.5px solid var(--accent-blue); position: relative; max-height: 90vh; overflow-y: auto; text-align: left; box-shadow: 0 10px 40px rgba(0, 191, 255, 0.25);">
+    <div id="adminPreviewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); justify-content: center; align-items: center; z-index: 1000; padding: 20px; box-sizing: border-box;">
+        <div class="glass-card" style="width: 100%; max-width: 550px; padding: 25px; border: 1px solid var(--border-color); position: relative; max-height: 90vh; overflow-y: auto; text-align: left; box-shadow: var(--card-shadow);">
             <div style="font-size: 15px; font-weight: 700; color: var(--accent-blue); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
                 <span>企業管理者に開示される統計画面のサンプル</span>
                 <button type="button" onclick="closeAdminPreviewModal()" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 5px;">✕</button>
             </div>
-            <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 15px; background: rgba(100,255,218,0.06); padding: 10px; border-radius: 6px; border: 1px solid rgba(100,255,218,0.15);">
+            <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 15px; background: rgba(0, 0, 0, 0.02); padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);">
                 💡 <strong>【プライバシーの安全担保】</strong> 会社管理者（人事担当者等）には、以下のように部署ごとに「集計・匿名化されたデータ」のみが表示されます。個人の顔写真、氏名、個別測定のスコアはシステム的にも一切送信・保存されないため特定できません。
             </div>
             
             <!-- Mini Admin Mock -->
-            <div style="background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.06); padding: 15px; border-radius: 8px; font-family: sans-serif;">
-                <div style="font-size: 11px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px;">部署別ストレス集計状況 (BCLAB-CORP)</div>
+            <div style="background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.06); padding: 15px; border-radius: 8px; font-family: sans-serif;">
+                <div style="font-size: 11px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; border-bottom: 1px solid rgba(0, 0, 0, 0.06); padding-bottom: 6px;">部署別ストレス集計状況 (BCLAB-CORP)</div>
                 <div style="font-size: 10px; display: flex; flex-direction: column; gap: 8px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; color: var(--text-primary);">
-                        <span style="font-weight: 700; width: 60px;">💻 開発部</span>
+                        <span style="font-weight: 700; width: 60px;">開発部</span>
                         <span style="color: var(--text-secondary);">実施率: 88%</span>
-                        <span style="color: var(--accent-teal);">平均HRV: 45ms (良好)</span>
+                        <span style="color: var(--accent-blue);">平均HRV: 45ms (良好)</span>
                         <span style="color: var(--text-secondary);">ストレス注意者率: 12%</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.03); padding-top: 6px; color: var(--text-primary);">
-                        <span style="font-weight: 700; width: 60px;">🚶 営業部</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0, 0, 0, 0.05); padding-top: 6px; color: var(--text-primary);">
+                        <span style="font-weight: 700; width: 60px;">営業部</span>
                         <span style="color: var(--text-secondary);">実施率: 74%</span>
                         <span style="color: var(--accent-orange);">平均HRV: 32ms (通常)</span>
-                        <span style="color: var(--accent-red);">ストレス注意者率: 37% ⚠️</span>
+                        <span style="color: var(--accent-red);">ストレス注意者率: 37%</span>
                     </div>
                 </div>
             </div>
@@ -3319,26 +3309,26 @@
 
 
     <!-- Fullscreen Eye Training Modal (v1.1.8) -->
-    <div id="eyeGameModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #050c1c; z-index: 99999; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; box-sizing: border-box;">
+    <div id="eyeGameModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 99999; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; box-sizing: border-box;">
         <!-- Grid background -->
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,191,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,255,0.04) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 1;"></div>
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 1;"></div>
         
         <!-- Fullscreen Canvas -->
         <canvas id="eyeGameCanvasFullscreen" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; z-index: 2;"></canvas>
         
         <!-- Close button (Always on top) -->
-        <button onclick="stopEyeGameFullscreen(false)" style="position: absolute; top: 25px; right: 25px; z-index: 3; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 10px 20px; font-size: 13px; font-weight: 700; border-radius: 30px; cursor: pointer; transition: all 0.2s; font-family: inherit;">✕ トレーニングを閉じる</button>
+        <button onclick="stopEyeGameFullscreen(false)" style="position: absolute; top: 25px; right: 25px; z-index: 3; background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); padding: 10px 20px; font-size: 13px; font-weight: 600; border-radius: 30px; cursor: pointer; transition: all 0.2s; font-family: inherit;">✕ トレーニングを閉じる</button>
         
         <!-- Center Complete Button overlay (Initially hidden) -->
-        <button id="eyeGameCloseCompleteBtn" onclick="stopEyeGameFullscreen(false)" style="display: none; position: absolute; top: 62%; left: 50%; transform: translate(-50%, -50%); z-index: 4; background: var(--accent-teal); border: none; color: #050c1c; padding: 12px 40px; font-size: 14px; font-weight: 800; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 12px rgba(15, 181, 174, 0.2); transition: all 0.2s; font-family: inherit;">ダッシュボードに戻る</button>
+        <button id="eyeGameCloseCompleteBtn" onclick="stopEyeGameFullscreen(false)" style="display: none; position: absolute; top: 62%; left: 50%; transform: translate(-50%, -50%); z-index: 4; background: var(--accent-blue); border: none; color: #ffffff; padding: 12px 40px; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; transition: all 0.2s; font-family: inherit;">ダッシュボードに戻る</button>
 
         <!-- Bottom Left Instructions HUD (avoid overlap with moving target) -->
-        <div id="eyeGameHudTextFullscreen" style="position: absolute; bottom: 25px; left: 25px; z-index: 3; font-family: sans-serif; font-size: 13px; color: #64ffda; font-weight: 800; text-shadow: 0 0 10px #64ffda; background: rgba(5,12,28,0.85); border: 1px solid rgba(100,255,218,0.25); padding: 8px 20px; border-radius: 20px; text-align: left; max-width: 60vw; letter-spacing: 0.5px;">
+        <div id="eyeGameHudTextFullscreen" style="position: absolute; bottom: 25px; left: 25px; z-index: 3; font-family: sans-serif; font-size: 13px; color: var(--text-primary); font-weight: 600; background: rgba(255,255,255,0.9); border: 1px solid rgba(0,0,0,0.08); padding: 8px 20px; border-radius: 20px; text-align: left; max-width: 60vw; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
             TARGET TRACKER: STANDBY
         </div>
         
         <!-- Bottom Right Timer HUD (avoid overlap with moving target) -->
-        <div id="eyeGameTimerTextFullscreen" style="position: absolute; bottom: 25px; right: 25px; z-index: 3; font-family: monospace; font-size: 16px; color: #ffaa00; font-weight: 800; text-shadow: 0 0 10px #ffaa00; background: rgba(5,12,28,0.8); border: 1px solid rgba(255,170,0,0.25); padding: 6px 20px; border-radius: 20px;">
+        <div id="eyeGameTimerTextFullscreen" style="position: absolute; bottom: 25px; right: 25px; z-index: 3; font-family: monospace; font-size: 15px; color: var(--text-primary); font-weight: 600; background: rgba(255,255,255,0.9); border: 1px solid rgba(0,0,0,0.08); padding: 6px 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
             TIME: --s
         </div>
     </div>

@@ -303,7 +303,7 @@ header {
 
 /* Measurement launch button hook */
 .btn-hook {
-    background: var(--accent-blue);
+    background: #1d1d1f;
     color: #fff;
     border: none;
     padding: 8px 18px;
@@ -314,11 +314,11 @@ header {
     display: flex;
     align-items: center;
     gap: 6px;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
 }
 
 .btn-hook:hover {
-    background: #0077ed;
+    background: #000000;
     transform: translateY(-1px);
 }
 

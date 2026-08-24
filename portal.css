@@ -2,27 +2,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;700&display=swap');
 
 :root {
-    --bg-primary: #0b0f19;
-    --bg-secondary: #121824;
-    --bg-card: rgba(18, 24, 38, 0.75);
-    --bg-glass: rgba(18, 24, 38, 0.8);
-    --border-color: rgba(148, 163, 184, 0.12);
-    --border-glow: rgba(59, 130, 246, 0.08);
+    --bg-primary: #f5f5f7;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --bg-glass: rgba(255, 255, 255, 0.85);
+    --border-color: rgba(0, 0, 0, 0.06);
+    --border-glow: transparent;
     
-    /* Neon Accents */
-    --accent-teal: #0fb5ae;
-    --accent-blue: #3b82f6;
-    --accent-orange: #f59e0b;
-    --accent-red: #f87171;
-    --accent-green: #10b981;
-    --accent-purple: #8b5cf6;
-    --accent-pink: #ec4899;
+    /* Apple Accents */
+    --accent-teal: #1d1d1f;      /* Primary black */
+    --accent-blue: #0071e3;      /* Apple Blue */
+    --accent-orange: #ff9500;    /* Apple Orange */
+    --accent-red: #ff3b30;       /* Apple Red */
+    --accent-green: #34c759;     /* Apple Green */
+    --accent-purple: #af52de;    /* Apple Purple */
+    --accent-pink: #ff2d55;      /* Apple Pink */
     
-    --text-primary: #f8f9fa;
-    --text-secondary: #8892b0;
+    --text-primary: #1d1d1f;
+    --text-secondary: #86868b;
     
-    --font-sans: 'Outfit', 'Noto Sans JP', sans-serif;
-    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Noto Sans JP', sans-serif;
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
 }
 
 * {
@@ -41,7 +41,6 @@ html, body {
 
 body {
     font-family: var(--font-sans);
-    background: radial-gradient(circle at top right, #1e293b 0%, var(--bg-primary) 70%);
     background-color: var(--bg-primary);
     color: var(--text-primary);
     min-height: 100vh;
@@ -53,23 +52,23 @@ body {
     width: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: var(--bg-primary);
+    background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.15);
+    border: none;
     border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-blue);
+    background: rgba(0, 0, 0, 0.3);
 }
 
 /* Header styling */
 header {
-    background: rgba(5, 8, 17, 0.85);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-bottom: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -77,49 +76,49 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.01);
 }
 
 .logo {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
-    letter-spacing: 2px;
-    background: linear-gradient(45deg, var(--accent-teal), var(--accent-blue), var(--accent-purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+    color: var(--text-primary);
     text-transform: uppercase;
 }
 
 .logo-badge {
-    background: var(--bg-secondary);
-    border: 1px solid var(--accent-teal);
-    color: var(--accent-teal);
+    background: rgba(0, 0, 0, 0.05);
+    border: none;
+    color: var(--text-primary);
     padding: 2px 8px;
     border-radius: 20px;
     font-size: 10px;
     letter-spacing: 0.5px;
-    text-shadow: none;
 }
 
 /* Navigation Tabs */
 .nav-tabs {
     display: flex;
-    gap: 10px;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 4px;
+    border-radius: 24px;
 }
 
 .tab-btn {
     background: transparent;
-    border: 1px solid transparent;
+    border: none;
     color: var(--text-secondary);
-    padding: 8px 18px;
+    padding: 6px 16px;
     border-radius: 20px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -127,14 +126,13 @@ header {
 
 .tab-btn:hover {
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(0, 0, 0, 0.03);
 }
 
 .tab-btn.active {
     color: var(--accent-blue);
-    background: rgba(0, 191, 255, 0.08);
-    border-color: rgba(0, 191, 255, 0.3);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .tab-btn.disabled-btn {
@@ -218,15 +216,13 @@ header {
 /* Article Card Glassmorphism */
 .article-card {
     background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: 18px;
     overflow: hidden;
     display: grid;
     grid-template-columns: 240px 1fr;
     box-shadow: var(--card-shadow);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
 }
 
 @media (max-width: 768px) {
@@ -236,9 +232,9 @@ header {
 }
 
 .article-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(0, 191, 255, 0.3);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
 }
 
 .article-image {
@@ -307,24 +303,23 @@ header {
 
 /* Measurement launch button hook */
 .btn-hook {
-    background: linear-gradient(135deg, var(--accent-purple) 0%, #6f21c5 100%);
+    background: var(--accent-blue);
     color: #fff;
     border: none;
-    padding: 8px 16px;
+    padding: 8px 18px;
     font-size: 12px;
-    font-weight: 700;
-    border-radius: 20px;
+    font-weight: 600;
+    border-radius: 980px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 6px;
-    box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .btn-hook:hover {
-    box-shadow: 0 4px 20px rgba(138, 43, 226, 0.5);
-    transform: scale(1.03);
+    background: #0077ed;
+    transform: translateY(-1px);
 }
 
 .btn-hook span {
@@ -342,10 +337,9 @@ header {
 
 .widget {
     background: var(--bg-card);
-    backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 18px;
+    padding: 24px;
     box-shadow: var(--card-shadow);
 }
 

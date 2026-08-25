@@ -302,7 +302,30 @@
             <!-- Right Panel: Core Health Management policies -->
             <div class="control-panel">
                 
-                <div class="glass-card" style="padding:20px;">
+                <!-- ⚙️ Content Publishing Control Panel -->
+                <div class="glass-card" style="padding:20px; border-left: 4px solid var(--accent-teal); margin-bottom: 20px;">
+                    <div class="panel-title" style="color:var(--accent-teal); margin-bottom:10px;">⚙️ 自律神経ケアコラム 公開管理</div>
+                    <div style="font-size:12px; color:var(--text-secondary); line-height:1.6; margin-bottom:15px;">
+                        ダッシュボード下部に掲載する健康コラムやストレッチ記事の公開日数ステージを設定します。
+                    </div>
+                    <div class="form-group" style="margin-bottom:15px;">
+                        <label for="adminCurrentDaySelect" style="display:block; font-size:11px; font-weight:700; color:var(--text-primary); margin-bottom:6px;">公開ステージ (全コラム公開時は Day 8 を選択)</label>
+                        <select id="adminCurrentDaySelect" style="width:100%; padding:10px 12px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); color:#fff; font-size:12px; cursor:pointer; font-weight:600; outline:none; box-sizing:border-box;">
+                            <option value="day1" style="background:#0f172a; color:#fff;">Day 1 (導入初期・baselineのみ)</option>
+                            <option value="day2" style="background:#0f172a; color:#fff;">Day 2</option>
+                            <option value="day3" style="background:#0f172a; color:#fff;">Day 3</option>
+                            <option value="day4" style="background:#0f172a; color:#fff;">Day 4</option>
+                            <option value="day5" style="background:#0f172a; color:#fff;">Day 5</option>
+                            <option value="day6" style="background:#0f172a; color:#fff;">Day 6</option>
+                            <option value="day7" style="background:#0f172a; color:#fff;">Day 7</option>
+                            <option value="day8" style="background:#0f172a; color:#fff;">Day 8 (ストック記事すべて最新・全公開)</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveAdminCurrentDay()" style="width:100%; background:var(--accent-teal); color:#050c1c; font-weight:700; font-size:12px; padding:10px; border-radius:6px; border:none; cursor:pointer; text-align:center; box-sizing:border-box;">設定を適用する</button>
+                    <div id="adminSaveStatus" style="font-size:10px; color:var(--accent-teal); text-align:center; margin-top:8px; display:none; font-weight:700;">✓ 設定が保存されました。再読み込み後に反映されます。</div>
+                </div>
+
+                <div class="glass-card" style="padding:20px; margin-bottom: 20px;">
                     <div class="panel-title" style="color:var(--accent-blue); margin-bottom:10px;">🩺 産業医・アドバイザー窓口</div>
                     <div style="font-size:12px; color:var(--text-secondary); line-height:1.6; margin-bottom:15px;">
                         高ストレス注意者の比率が30%を超えた部署（例：営業部）に対しては、産業医によるメンタル面談勧奨の検討、および顧問である久保医師監修の「部署向けマインドフルネス呼吸セッション」を終礼等に導入することを強く推奨します。
@@ -328,6 +351,20 @@
             checkB2BAdminSession();
         });
 
+        function saveAdminCurrentDay() {
+            const select = document.getElementById('adminCurrentDaySelect');
+            const status = document.getElementById('adminSaveStatus');
+            if (select) {
+                localStorage.setItem('debug_current_day', select.value);
+                if (status) {
+                    status.style.display = 'block';
+                    setTimeout(() => {
+                        status.style.display = 'none';
+                    }, 3000);
+                }
+            }
+        }
+
         function checkB2BAdminSession() {
             const adminSession = JSON.parse(localStorage.getItem('b2b_admin_session'));
             const login = document.getElementById('adminLoginSection');
@@ -339,6 +376,11 @@
                 
                 document.getElementById('displayAdminUser').innerText = adminSession.adminUser;
                 document.getElementById('displayAdminTenant').innerText = adminSession.adminTenantId;
+                
+                // Pre-populate dropdown select with current value
+                const storedDay = localStorage.getItem('debug_current_day') || 'day2';
+                const select = document.getElementById('adminCurrentDaySelect');
+                if (select) select.value = storedDay;
             } else {
                 login.style.display = 'flex';
                 portal.style.display = 'none';

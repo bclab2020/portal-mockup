@@ -2560,7 +2560,7 @@ function renderFeed(vertical) {
     }
     
     // Daily published articles up to current_day
-    const currentDay = articlesDb.current_day || 'day1';
+    const currentDay = localStorage.getItem('debug_current_day') || articlesDb.current_day || 'day1';
     const currentDayNum = parseInt(currentDay.replace('day', '')) || 1;
     for (let i = 1; i <= currentDayNum; i++) {
         const dKey = 'day' + i;
@@ -2748,7 +2748,7 @@ function getAllArticlesForCategory(category) {
     if (articlesDb.baseline && articlesDb.baseline[category]) {
         list = list.concat(articlesDb.baseline[category]);
     }
-    const currentDay = articlesDb.current_day || 'day1';
+    const currentDay = localStorage.getItem('debug_current_day') || articlesDb.current_day || 'day1';
     const currentDayNum = parseInt(currentDay.replace('day', '')) || 1;
     for (let i = 1; i <= currentDayNum; i++) {
         const dKey = 'day' + i;

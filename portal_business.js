@@ -265,325 +265,91 @@ function renderHrvTrendChart() {
 // 2.5 Render Latest HRV Status & Desk Remedies on Dashboard
 
 function renderLatestHrvRemedies() {
-
     const remedyContainer = document.getElementById('remedyCardContainer');
-
     if (!remedyContainer) return;
-
     
-
     const history = JSON.parse(localStorage.getItem('b2b_hrv_history') || '[]');
-
     if (history.length === 0) {
-
         remedyContainer.innerHTML = `
-
             <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
-
                 本日の自律神経測定データがまだありません。カメラ起動ボタンから30秒間のストレススキャンを実行してください。
-
             </div>
-
         `;
-
         return;
-
     }
-
     
-
     const latest = history[history.length - 1];
-
     
-
     let badgeColor = 'var(--accent-teal)';
-
     let remedyText = '';
-
     let statusText = latest.stress || '通常';
-
     
-
     if (statusText === '良好' || latest.hrv >= 50) {
-
         badgeColor = 'var(--accent-teal)';
-
         remedyText = `
-
             <span style="color:var(--accent-teal); font-weight:700;">🧘 良好なコンディションです</span><br>
-
             自律神経バランスは非常に良好に安定しています。この状態をキープするため、PC作業中は以下のデスクケアを行ってください：
-
             <ul style="padding-left:15px; margin:8px 0 0 0; display:flex; flex-direction:column; gap:4px; font-size:11px;">
-
                 <li>👀 <strong>10秒まばたき眼筋ストレッチ</strong> (目を閉じたまま上下左右に眼球を動かします)</li>
-
                 <li>👂 <strong>耳介マッサージ</strong> (両耳をつまんで上下左右に引っ張り、血流を促します)</li>
-
             </ul>
-
-            <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(100,255,218,0.02); border:1px solid rgba(100,255,218,0.08); padding:8px; border-radius:6px;">
-
-                <strong>【姿勢・方向】</strong>背筋を伸ばし、右手を頭の左側に添え、頭をゆっくり右斜め前（45度方向）に傾けます。左肩が上がらないよう、意識して固定します。<br>
-
-                <strong>【秒数】</strong>首の左後ろが心地よく伸びる強さで、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br>
-
-                <strong>【呼吸法】</strong>息を細く長く吐き出しながら、頭の重みを利用してじんわりとストレッチします。
-
-            </div>
-
-            <div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-teal); box-shadow: 0 0 12px rgba(100, 255, 218, 0.2);'>
-
-                <img src='stretch_neck_jp.jpg' style='width:100%; display:block;'>
-
-                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,113,227,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,113,227,0.03) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
-
-                <div style='position:absolute; top:10px; right:10px; background:#e5e5e7; color:var(--text-primary); font-size:8px; font-weight:600; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--border-color);'>ALIGNMENT: OK</div>
-
-                <!-- Holographic Overlay SVG -->
-
-                <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
-
-                    <defs>
-
-                        <marker id='portal-arrow-teal' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
-
-                            <path d='M0,0 L6,3 L0,6 Z' fill='#64ffda'/>
-
-                        </marker>
-
-                    </defs>
-
-                    <path d='M 120 45 Q 140 52 148 76' fill='none' stroke='#64ffda' stroke-width='2.5' marker-end='url(#portal-arrow-teal)' stroke-dasharray='4 2'/>
-
-                    <circle cx="120" cy="45" r="4.5" fill="#64ffda" stroke="#050c1c" stroke-width="1.5"/>
-
-                    <text x="80" y="42" fill="#64ffda" font-size="8.5" font-weight="700" font-family="sans-serif">START (正面)</text>
-
-                    <text x="155" y="85" fill="#64ffda" font-size="8.5" font-weight="700" font-family="sans-serif">END (傾けてキープ)</text>
-
-                </svg>
-
-                <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-teal); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-teal); font-family:monospace;'>LEFT SHOULDER: LOCK DOWN</div>
-
-            </div>
-
         `;
-
     } else if (statusText === '高' || latest.hrv < 30) {
-
         badgeColor = 'var(--accent-red)';
-
         remedyText = `
-
             <span style="color:var(--accent-red); font-weight:700;">自律神経ストレス過多の兆候</span><br>
-
             HRV数値が低下しており、交感神経が優位な緊張状態です。デスクで即座にできる以下のリセットケアを行ってください：
-
             <ul style="padding-left:15px; margin:8px 0 0 0; display:flex; flex-direction:column; gap:4px; font-size:11px;">
-
                 <li><strong>30秒・椅子ひねりストレッチ</strong> (背もたれを持って上体をゆっくりねじり、背骨の緊張をほぐします)</li>
-
                 <li>👃 <strong>4-7-8 呼吸リフレッシュ</strong> (4秒吸って7秒止め、8秒かけて細く長く吐き出します)</li>
-
             </ul>
-
             <!-- Breathing Balloon Widget -->
-
             <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; margin-top:10px; background:rgba(255,82,82,0.02); border:1px dashed rgba(255,82,82,0.15); border-radius:8px; text-align:center;">
-
                 <div style="font-size:9px; color:var(--accent-red); font-weight:700; margin-bottom:10px; letter-spacing:0.5px;">呼吸ガイド（バルーンの伸縮と同調してください）</div>
-
                 <div style="width:100px; height:100px; display:flex; align-items:center; justify-content:center; position:relative;">
-
                     <div id="breathingBalloon" style="width:30px; height:30px; border-radius:50%; background:radial-gradient(circle, var(--accent-red) 0%, rgba(255,82,82,0.4) 70%, transparent 100%); box-shadow: 0 0 20px var(--accent-red); transition: all 1.5s ease-in-out;"></div>
-
                     <div style="position:absolute; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow: 0 0 8px #fff;"></div>
-
                 </div>
-
                 <div id="breathingText" style="font-size:10px; font-weight:700; color:var(--text-primary); margin-top:10px; height:15px; letter-spacing:0.5px;">準備中...</div>
-
                 <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 6px 15px; font-size: 10px; font-weight: 600; border-radius: 980px; border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); background: rgba(0,0,0,0.03); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
-
-                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 6px 15px; font-size: 10px; font-weight: 600; border-radius: 980px; border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); background: rgba(0,0,0,0.03); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
-
             </div>
-
-            <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(255,82,82,0.02); border:1px solid rgba(255,82,82,0.08); padding:8px; border-radius:6px;">
-
-                <strong>【姿勢・方向】</strong>背筋を伸ばし椅子に深く座り、息を吐きながら上体を右へゆっくりねじります。左手で背もたれを掴み、右手は椅子の座面後方を支えます。<br>
-
-                <strong>【秒数】</strong>痛気持ちいいところでキープし、<strong>左右それぞれ15秒間（計30秒）</strong>行います。<br>
-
-                <strong>【呼吸法】</strong><strong>吸う4秒・吐く8秒</strong>の腹式呼吸をゆっくり繰り返します。
-
-            </div>
-
-            <div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-red); box-shadow: 0 0 12px rgba(255, 82, 82, 0.2);'>
-
-                <img src='stretch_twist_jp.jpg' style='width:100%; display:block;'>
-
-                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(255,59,48,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,59,48,0.03) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
-
-                <div style='position:absolute; top:10px; right:10px; background:rgba(255,82,82,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-red);'>ALIGNMENT: OK</div>
-
-                <!-- Holographic Overlay SVG -->
-
-                <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
-
-                    <defs>
-
-                        <marker id='portal-arrow-red' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
-
-                            <path d='M0,0 L6,3 L0,6 Z' fill='#ff5252'/>
-
-                        </marker>
-
-                    </defs>
-
-                    <path d='M 200 120 Q 150 135 112 112' fill='none' stroke='#ff5252' stroke-width='2.5' marker-end='url(#portal-arrow-red)' stroke-dasharray='4 2'/>
-
-                    <circle cx="200" cy="120" r="4.5" fill="#ff5252" stroke="#050c1c" stroke-width="1.5"/>
-
-                    <text x="185" y="138" fill="#ff5252" font-size="8.5" font-weight="700" font-family="sans-serif">START (正面)</text>
-
-                    <text x="70" y="98" fill="#ff5252" font-size="8.5" font-weight="700" font-family="sans-serif">END (ねじる)</text>
-
-                </svg>
-
-                <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-red); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-red); font-family:monospace;'>SPINE ROTATION: 35°</div>
-
-            </div>
-
         `;
-
     } else {
-
         badgeColor = 'var(--accent-orange)';
-
         remedyText = `
-
             <span style="color:var(--accent-orange); font-weight:700;">🚶 平均的な自律神経バランスです</span><br>
-
             ストレスレベルは標準範囲内ですが、PC作業の連続により疲労が蓄積しやすくなっています。以下のリフレッシュを行ってください：
-
             <ul style="padding-left:15px; margin:8px 0 0 0; display:flex; flex-direction:column; gap:4px; font-size:11px;">
-
                 <li>肩こり <strong>肩甲骨引き寄せロール</strong> (両肩をすくめてストンと落とし、肘を曲げて後ろに引きます)</li>
-
                 <li><strong>遠近ピント合わせ法</strong> (近くの指先と3m先の壁を交互に3秒ずつ見つめ、眼筋をほぐします)</li>
-
             </ul>
-
             <!-- Breathing Balloon Widget -->
-
             <div class="breathing-widget-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; margin-top:10px; background:rgba(0,0,0,0.01); border:1px dashed rgba(0,0,0,0.08); border-radius:8px; text-align:center;">
-
                 <div style="font-size:9px; color:var(--accent-teal); font-weight:700; margin-bottom:10px; letter-spacing:0.5px;">呼吸ガイド（バルーンの伸縮と同調してください）</div>
-
                 <div style="width:100px; height:100px; display:flex; align-items:center; justify-content:center; position:relative;">
-
                     <div id="breathingBalloon" style="width:30px; height:30px; border-radius:50%; background:rgba(0, 113, 227, 0.12); border:1.5px solid rgba(0, 113, 227, 0.35); transition: all 1.5s ease-in-out;"></div>
-
                     <div style="position:absolute; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow: 0 0 8px #fff;"></div>
-
                 </div>
-
                 <div id="breathingText" style="font-size:10px; font-weight:700; color:var(--text-primary); margin-top:10px; height:15px; letter-spacing:0.5px;">準備中...</div>
-
                 <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 6px 15px; font-size: 10px; font-weight: 600; border-radius: 980px; border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); background: rgba(0,0,0,0.03); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
-
-                <button id="breathingControlBtn" onclick="toggleBreathingGuide()" style="margin-top: 10px; padding: 6px 15px; font-size: 10px; font-weight: 600; border-radius: 980px; border: 1px solid rgba(0,0,0,0.08); color: var(--text-primary); background: rgba(0,0,0,0.03); cursor: pointer; transition: all 0.2s; width:100%;">▶ ガイドを開始する</button>
-
             </div>
-
-            <div style="font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:10px; background:rgba(0,191,255,0.02); border:1px solid rgba(0,191,255,0.08); padding:8px; border-radius:6px;">
-
-                <strong>【姿勢・方向】</strong>右腕を左方向に真っ直ぐ伸ばし、左腕で右肘を抱え込むように胸に引き寄せます。肩甲骨が外側に広がるのを意識します。<br>
-
-                <strong>【秒数】</strong>肩の奥が心地よく伸びる位置で、<strong>左右それぞれ15秒間（計30秒）</strong>キープします。<br>
-
-                <strong>【呼吸法】</strong>肩をすくめず、深く穏やかな呼吸を繰り返します。
-
-            </div>
-
-            <div style='position:relative; margin-top:8px; border-radius:8px; overflow:hidden; border:1px solid var(--accent-blue); box-shadow: 0 0 12px rgba(0, 191, 255, 0.2);'>
-
-                <img src='stretch_shoulder_jp.jpg' style='width:100%; display:block;'>
-
-                <div style='position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(rgba(0,113,227,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,113,227,0.03) 1px, transparent 1px); background-size:15px 15px; pointer-events:none;'></div>
-
-                <div style='position:absolute; top:10px; right:10px; background:rgba(0,191,255,0.85); color:#fff; font-size:8px; font-weight:700; padding:2px 6px; border-radius:4px; font-family:monospace; border:1px solid var(--accent-blue);'>ALIGNMENT: OK</div>
-
-                <!-- Holographic Overlay SVG -->
-
-                <svg style='position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;'>
-
-                    <defs>
-
-                        <marker id='portal-arrow-blue' markerWidth='6' markerHeight='6' refX='3' refY='3' orient='auto'>
-
-                            <path d='M0,0 L6,3 L0,6 Z' fill='#00bfff'/>
-
-                        </marker>
-
-                    </defs>
-
-                    <path d='M 100 80 L 214 80' fill='none' stroke='#00bfff' stroke-width='2.5' marker-end='url(#portal-arrow-blue)' stroke-dasharray='4 2'/>
-
-                    <circle cx="100" cy="80" r="4.5" fill="#00bfff" stroke="#050c1c" stroke-width="1.5"/>
-
-                    <text x="75" y="92" fill="#00bfff" font-size="8.5" font-weight="700" font-family="sans-serif">START (胸元)</text>
-
-                    <text x="200" y="70" fill="#00bfff" font-size="8.5" font-weight="700" font-family="sans-serif">END (指先を伸ばす)</text>
-
-                </svg>
-
-                <div style='position:absolute; bottom:10px; left:10px; background:rgba(5,12,28,0.8); border:1px solid var(--accent-blue); padding:2px 5px; border-radius:4px; font-size:8px; color:var(--accent-blue); font-family:monospace;'>SCAPULA RETRACTION: ENGAGED</div>
-
-            </div>
-
         `;
-
     }
-
     
-
     remedyContainer.innerHTML = `
-
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 8px;">
-
             <div style="font-size:11px; color:var(--text-secondary);">${latest.date} 測定</div>
-
             <div style="font-size:11px; font-weight:700; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); padding:3px 8px; border-radius:12px; color:var(--text-primary);">
-
                 HRV: <span style="color:${badgeColor}; font-weight:700;">${latest.hrv} ms</span> | 心拍: <span>${latest.hr} bpm</span>
-
             </div>
-
         </div>
-
         <div style="font-size:12px; color:var(--text-secondary); line-height:1.6;">
-
             ${remedyText}
-
         </div>
-
     `;
-
     
-
-    // Initialize breathing guide animation in sidebar if balloon element exists
-
-    if (document.getElementById('breathingBalloon')) {
-
-        initBreathingGuide(statusText === '高' || latest.hrv < 30 ? "478" : "36");
-
-    }
-
-    applyCustomHUDCoordinates();
-
+    // Auto-restart breathing guide animations if a guide is visible
+    resetBreathingGuideState();
 }
 
 
